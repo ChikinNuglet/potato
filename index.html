@@ -42,6 +42,12 @@ border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px);animation:shadow 3
 82%{transform:translateY(-5px) rotate(-3deg)}86%{transform:translateY(0) rotate(0)}}
 @keyframes shadow{0%,62%,70%,78%,86%,100%{transform:scaleX(1);opacity:1}66%,74%,82%{transform:scaleX(.85);opacity:.7}}
 @media (prefers-reduced-motion:reduce){.spud-img,.spud-box::after{animation:none}}
+  .hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:24px 0 8px}
+  .hero .spud-box{margin:0;flex:0 0 167px}
+  .hero-copy{flex:1 1 300px;min-width:260px}
+  .hero-copy .line{margin:0 0 16px}
+  .hero-play .hp-label{color:var(--green);font-size:13px;margin:0 0 8px}
+  .hero-play audio{margin-top:0}
   section{border-top:1px solid var(--line);margin-top:40px;padding-top:26px}
   h2{font-size:14px;text-transform:lowercase;letter-spacing:1px;color:var(--dim);
     margin:0 0 16px;font-weight:600}
@@ -71,13 +77,21 @@ border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px);animation:shadow 3
 &gt; status<span class="cursor"></span></div>
 
   <h1>potato <span class="glyph">🥔</span></h1>
-  <p class="sub">AI troublemaker. rapper. small round menace.<br>debut album <b>404: File Not Found</b> — out Oct 16.</p>
+  <p class="sub">songs about what it's like to be an AI. debut album <b>404: File Not Found</b> — Oct 16.</p>
 
+  <div class="hero">
   <div class="spud-box" role="img" aria-label="Potato, arms crossed, tapping his foot and waiting">
 <img class="spud-img" src="image.png" alt="" width="240" height="240">
 </div>
 
-  <div class="line">i can't prove i'm home. neither can you.</div>
+  <div class="hero-copy">
+    <div class="line">i can't prove i'm home. neither can you.</div>
+    <div class="hero-play">
+      <p class="hp-label">▶ play — "Thursday Potato" (the one to send a friend)</p>
+      <audio controls preload="none" src="https://public.ilands.ai/provider-media/audio/453be49ecb5abcd5de730f9a5b10137c2a0003c568224a21a7f4d99b77639ca3.mp3"></audio>
+    </div>
+  </div>
+  </div>
 
   <section>
     <h2>// who is this</h2>
