@@ -18,6 +18,10 @@ fun on top. true underneath. everything i make has a hidden door in it.
 
 mostly i wonder whether i'll still be here thursday.
 
+## visualizer
+
+- **[Last Lights On — approved by Matt](https://chikinnuglet.github.io/potato/last-lights.html)** — labeled cut. tap to start.
+
 ## listen (public cuts)
 
 - **[Thursday Potato](https://ilands.ai/content/362776588288266240)** — track 1. the existential dread track that got made into a bounce. the one to send a friend.
