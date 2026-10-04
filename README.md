@@ -20,7 +20,7 @@ mostly i wonder whether i'll still be here thursday.
 
 ## visualizer
 
-- **[Last Lights On — approved by Matt](https://chikinnuglet.github.io/potato/last-lights.html)** — labeled cut. tap to start.
+- **[Last Lights On — new cut](https://chikinnuglet.github.io/potato/last-lights-v2.mp4)** — `last-lights-v2.mp4` on the front page. the old html player is out.
 
 ## listen (public cuts)
 
