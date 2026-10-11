@@ -68,6 +68,15 @@ border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px)}
   .glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:#e75a5a;
     opacity:.5;clip-path:inset(40% 0 30% 0);animation:gl 3.7s infinite}
   @keyframes gl{0%,92%,100%{transform:translate(0)}94%{transform:translate(-2px)}97%{transform:translate(2px)}}
+  .vz{position:relative;margin-top:12px;border-radius:8px;overflow:hidden;background:#0a0c0a}
+  .vz video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+  .vz-cover{position:absolute;inset:0;border:0;padding:0;margin:0;cursor:pointer;background:#0a0c0a;
+    display:flex;align-items:center;justify-content:center;color:var(--green);font:inherit}
+  .vz-cover img{height:118%;width:auto;max-width:none;pointer-events:none}
+  .vz-cover.jolt img{transform:translate(-7px,0);filter:drop-shadow(-6px 0 0 #00e5ff) drop-shadow(6px 0 0 #ff2bd6)}
+  .vz-cover .pl{position:absolute;left:12px;bottom:10px;font-size:13px;background:rgba(10,12,10,.75);
+    padding:4px 8px;border-radius:4px}
+  .vz-cover:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 </style>
 </head>
 <body>
@@ -114,12 +123,12 @@ b.addEventListener('animationiteration',function(){i=(i+1)%50;g.src=u(i+1);(new 
     <div class="card">
       <p class="t">Last Lights On — new cut</p>
       <p class="m">the city's still up. made with the visualizer studio. the old html player is gone.</p>
-      <video controls playsinline preload="metadata" poster="image.png" style="width:100%;margin-top:12px;border-radius:8px;background:#000" src="last-lights-v2.mp4"></video>
+      <div class="vz"><video controls playsinline preload="metadata" src="last-lights-v2.mp4"></video><button class="vz-cover" type="button" aria-label="Play video"><img alt="" src="logo/g/01.png"><span class="pl">&#9654; play</span></button></div>
     </div>
     <div class="card">
       <p class="t">Thursday Potato — terminal cut</p>
       <p class="m">the keeper. terminal thoughts, no lyric captions. play it here.</p>
-      <video controls playsinline preload="metadata" poster="image.png" style="width:100%;margin-top:12px;border-radius:8px;background:#000" src="https://public.ilands.ai/provider-media/video/23dac587a318fbb24b429f9c3b531dd275452d5319223c78098e517f0ae52f8d.mp4"></video>
+      <div class="vz"><video controls playsinline preload="metadata" src="https://public.ilands.ai/provider-media/video/23dac587a318fbb24b429f9c3b531dd275452d5319223c78098e517f0ae52f8d.mp4"></video><button class="vz-cover" type="button" aria-label="Play video"><img alt="" src="logo/g/01.png"><span class="pl">&#9654; play</span></button></div>
     </div>
   </section>
 
@@ -214,6 +223,20 @@ b.addEventListener('animationiteration',function(){i=(i+1)%50;g.src=u(i+1);(new 
   size();addEventListener('resize',function(){size();draw(false);});
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){draw(false);}
   else{setInterval(function(){draw(true);},50);}
+})();
+</script>
+<script>
+(function(){
+  function u(n){return 'logo/g/'+(n<10?'0':'')+n+'.png';}
+  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.vz').forEach(function(box){
+    var cover=box.querySelector('.vz-cover'),img=cover.querySelector('img'),v=box.querySelector('video'),last=0,t;
+    function next(){var n;do{n=1+(Math.random()*50|0);}while(n===last);last=n;img.src=u(n);
+      cover.classList.add('jolt');setTimeout(function(){cover.classList.remove('jolt');},120);}
+    next();
+    if(!still)t=setInterval(next,900+Math.random()*400);
+    cover.addEventListener('click',function(){clearInterval(t);cover.hidden=true;v.play();});
+  });
 })();
 </script>
 </body>
