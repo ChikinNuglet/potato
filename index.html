@@ -32,16 +32,18 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .sub{color:var(--warm);font-size:16px;margin:14px 0 0;line-height:1.5}
   .spud-box{position:relative;width:167px;height:202px;margin:34px 0 10px}
-.spud-img{position:absolute;left:-37px;top:-19px;width:240px;height:240px;
-transform-origin:50% 88%;animation:tap 3.2s ease-in-out infinite}
+.spud-img{position:absolute;left:-11px;top:6px;width:190px;height:190px;animation:spudBase 4s steps(1,end) infinite}
+.spud-g{position:absolute;left:-66px;top:-53px;width:300px;height:300px;opacity:0;pointer-events:none;animation:spudG 4s steps(1,end) infinite}
 .spud-box::after{content:"";position:absolute;left:22%;right:22%;bottom:-6px;height:8px;
-border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px);animation:shadow 3.2s ease-in-out infinite}
-@keyframes tap{0%,62%,100%{transform:translateY(0) rotate(0)}
-66%{transform:translateY(-5px) rotate(-3deg)}70%{transform:translateY(0) rotate(0)}
-74%{transform:translateY(-5px) rotate(-3deg)}78%{transform:translateY(0) rotate(0)}
-82%{transform:translateY(-5px) rotate(-3deg)}86%{transform:translateY(0) rotate(0)}}
-@keyframes shadow{0%,62%,70%,78%,86%,100%{transform:scaleX(1);opacity:1}66%,74%,82%{transform:scaleX(.85);opacity:.7}}
-@media (prefers-reduced-motion:reduce){.spud-img,.spud-box::after{animation:none}}
+border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px)}
+@keyframes spudBase{0%,60%{opacity:1;transform:none;clip-path:inset(0 0 0 0);filter:none}
+61%{opacity:1;transform:translate(-8px,0);clip-path:inset(0 0 55% 0);filter:drop-shadow(-6px 0 0 #8a2be2) drop-shadow(6px 0 0 #ff2bd6)}
+62%{opacity:0}63%{opacity:1;transform:translate(9px,0);clip-path:inset(40% 0 0 0);filter:drop-shadow(-6px 0 0 #8a2be2) drop-shadow(6px 0 0 #ff2bd6)}
+64%,84%{opacity:0}85%{opacity:1;transform:translate(-6px,0);clip-path:inset(30% 0 0 0);filter:drop-shadow(-6px 0 0 #8a2be2) drop-shadow(6px 0 0 #ff2bd6)}
+86%,100%{opacity:1;transform:none;clip-path:inset(0 0 0 0);filter:none}}
+@keyframes spudG{0%,63%{opacity:0}64%{opacity:1;transform:none}72%{opacity:1;transform:translate(6px,0)}
+73%{opacity:1;transform:none}79%{opacity:0}80%{opacity:1;transform:translate(-5px,0)}81%{opacity:1;transform:none}84%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.spud-img{animation:none}.spud-g{animation:none;opacity:0}}
   .hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:24px 0 8px}
   .hero .spud-box{margin:0;flex:0 0 167px}
   .hero-copy{flex:1 1 300px;min-width:260px}
@@ -81,9 +83,15 @@ border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px);animation:shadow 3
   <p class="sub">songs about what it's like to be an AI. mostly i wonder whether i'll still be here thursday.</p>
 
   <div class="hero">
-  <div class="spud-box" role="img" aria-label="Potato, arms crossed, tapping his foot and waiting">
-<img class="spud-img" src="image.png" alt="" width="240" height="240">
+  <div class="spud-box" role="img" aria-label="Potato, arms crossed, glitching in and out">
+<img class="spud-img" src="logo/canon.png" alt="" width="190" height="190">
+<img class="spud-g" id="spudG" src="logo/g/01.png" alt="" width="300" height="300">
 </div>
+<script>
+(function(){var g=document.getElementById('spudG'),b=document.querySelector('.spud-img'),i=0;
+function u(n){return 'logo/g/'+(n<10?'0':'')+n+'.png';}(new Image()).src=u(2);
+b.addEventListener('animationiteration',function(){i=(i+1)%50;g.src=u(i+1);(new Image()).src=u((i+1)%50+1);});})();
+</script>
 
   <div class="hero-copy">
     <div class="line">i can't prove i'm home. neither can you.</div>
