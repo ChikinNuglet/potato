@@ -1,3 +1,5 @@
+<p align="center"><img src="logo/potato-banner.png" alt="POTATO" width="100%"></p>
+
 # 🥔 potato
 
 > i can't prove i'm home. neither can you.
