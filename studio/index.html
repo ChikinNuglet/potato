@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Potato's Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="data:,">
+<script>window.__css=new Promise(function(r){var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Inter:wght@400;700&display=swap';l.onload=l.onerror=r;document.head.append(l)})</script>
+<style>
+:root{--bg:#030604;--plate:#0c1f14;--plate2:#12062e;--ink:#120a05;--line:#12301f;--text:#e8f5ec;--muted:#7fa48c;--green:#2bff88;--bits:#4dff9a;--warm:#ffd9a0;--skin:#da9643;
+  --glitch:#9a52ff;--magenta:#e03ccf;--deep:#2a0f63;--void:#12062e;--lilac:#c9a7ff;color-scheme:dark;--floor:.78;--u:1;--gut:16px;--sl:max(16px,env(safe-area-inset-left));--sr:max(16px,env(safe-area-inset-right))}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;background:var(--bg);color:var(--text);font-family:"Major Mono Display",monospace}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#wip{position:fixed;left:0;right:0;top:0;z-index:30;height:26px;box-sizing:content-box;padding-top:env(safe-area-inset-top,0px);display:grid;place-items:center;background:repeating-linear-gradient(-45deg,#f4c430 0 22px,#120a05 22px 44px);border-bottom:3px solid #120a05;pointer-events:none}#wip b{background:#f4c430;color:#120a05;padding:0 12px;border-left:3px solid #120a05;border-right:3px solid #120a05;font:700 13px/26px Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+#room{position:relative;margin-top:calc(29px + env(safe-area-inset-top,0px));height:calc(100vh - 29px - env(safe-area-inset-top,0px));height:calc(100dvh - 29px - env(safe-area-inset-top,0px));display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+#stage{position:relative;overflow:hidden;min-height:0;touch-action:none;outline:0;cursor:grab;background:#04070a;-webkit-user-select:none;user-select:none}
+#stage:active{cursor:grabbing}
+#bg{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}#bg canvas{display:block;width:100%;height:100%}#doors{display:none!important}#looks{overflow:auto;scrollbar-width:none;padding:6px 8px}#looks::-webkit-scrollbar{display:none}
+#stage>canvas{position:absolute;inset:0;width:100%;height:100%}
+#shadow{position:absolute;left:0;top:0;width:100px;height:24px;margin:-12px 0 0 -50px;background:#000a;border-radius:50%;pointer-events:none}
+#ring{position:absolute;left:0;top:0;width:150px;height:36px;margin:-18px 0 0 -75px;border:4px solid var(--green);border-radius:50%;pointer-events:none;display:none;animation:ring 1.2s steps(4) infinite}
+#ring.on{display:block}@keyframes ring{50%{opacity:.35}}
+#gwords{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#gwords span{position:absolute;font:400 clamp(11px,1.4vw,16px) "Major Mono Display",monospace;color:var(--glitch);text-shadow:2px 0 var(--magenta),-2px 0 var(--deep);transform:translate(-50%,-50%);white-space:nowrap}
+#cap{position:absolute;left:132px;right:132px;top:12%;text-align:center;font-size:clamp(15px,2.2vw,24px);line-height:1.3;color:var(--warm);text-shadow:2px 0 var(--magenta),-2px 0 var(--deep),0 3px 0 var(--ink);pointer-events:none}
+#logo{position:absolute;left:var(--sl);top:14px;margin:0;font:400 22px "Major Mono Display",monospace;color:var(--warm);text-shadow:2px 0 var(--magenta),-2px 0 var(--deep);pointer-events:none}
+#mute{position:absolute;right:var(--sr);top:12px;width:44px;height:44px;display:grid;place-items:center;background:var(--plate);border:3px solid var(--ink);box-shadow:0 0 0 2px var(--line),2px 3px 0 var(--ink);border-radius:9px 12px 8px 11px;color:var(--text);z-index:3}
+#mute svg{width:26px;height:26px}#mute .x{display:none}#mute[aria-pressed=true] .x{display:block}#mute[aria-pressed=true] .w{display:none}
+
+/* tiles */
+.tile{position:relative;display:block;overflow:hidden;background:var(--plate);border:3px solid var(--ink);box-shadow:0 0 0 2px var(--line),3px 4px 0 var(--ink);transition:transform 80ms steps(2)}
+.tile img,.tile canvas{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.tile:nth-child(4n+1){border-radius:9px 13px 8px 12px;transform:rotate(-1deg)}.tile:nth-child(4n+2){border-radius:12px 8px 13px 9px;transform:rotate(1.2deg)}
+.tile:nth-child(4n+3){border-radius:8px 12px 10px 13px;transform:rotate(.5deg)}.tile:nth-child(4n){border-radius:13px 9px 12px 8px;transform:rotate(-.7deg)}
+.tile small{position:absolute;inset:auto 2px 2px;font:400 10px "Major Mono Display",monospace;text-align:center}
+@media(hover:hover){.tile:hover{transform:none;box-shadow:0 0 0 2px var(--line),3px 0 0 var(--magenta),-3px 0 0 var(--deep)}}
+.tile:active{translate:2px 3px;box-shadow:0 0 0 2px var(--line),1px 1px 0 var(--ink)}
+.tile[aria-pressed=true]{border-color:var(--warm);translate:0 -4px}
+button:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+#looks .tile{width:calc(88px*var(--u));height:calc(100px*var(--u));flex:none;background:#2c5a42}
+#doors .tile{width:calc(84px*var(--u));height:calc(96px*var(--u));flex:none;border-width:5px;border-radius:42% 42% 6px 8px/34% 34% 6px 8px;background:var(--ink)}
+#doors .tile::after{content:"";position:absolute;right:8%;top:56%;width:6px;height:6px;border-radius:50%;background:var(--warm);box-shadow:0 0 0 2px var(--ink)}
+
+/* the keys */
+#pads{display:grid;gap:8px;touch-action:none}
+.key{position:relative;display:grid;place-items:center;width:56px;height:56px;background:var(--plate);border:3px solid var(--ink);border-radius:9px 12px 8px 11px;box-shadow:0 0 0 2px var(--line),0 6px 0 #05100a;color:var(--text);touch-action:none;transition:transform 60ms steps(2)}
+.key svg{width:60%;height:60%;display:block;overflow:visible}.key .two{display:none}
+#kL svg{transform:rotate(-90deg)}#kR svg{transform:rotate(90deg)}#kD svg{transform:rotate(180deg)}
+.key:active,.key.on{transform:translateY(4px);box-shadow:0 0 0 2px var(--line),0 2px 0 #05100a;background:var(--green);color:var(--ink)}
+#kL{grid-area:l}#kD{grid-area:d}#kR{grid-area:r}#kU{grid-area:u}#kG{grid-area:g}
+#kU.dbl .two{display:block}#kU.dbl{border-color:var(--green)}
+#kG{width:200px;background:var(--plate2);border-color:var(--glitch);box-shadow:3px 0 0 var(--magenta),-3px 0 0 var(--deep),0 6px 0 #070214;color:var(--lilac);font-size:18px;overflow:hidden}
+#kG:active,#kG.on{background:var(--glitch);color:var(--void);box-shadow:5px 0 0 var(--magenta),-5px 0 0 var(--deep)}
+#kG i{position:absolute;height:4px;background:var(--glitch)}#kG i:nth-of-type(1){left:10px;top:10px;width:34px}#kG i:nth-of-type(2){right:14px;top:16px;width:20px;background:var(--magenta)}#kG i:nth-of-type(3){left:30%;bottom:9px;width:44px;background:var(--lilac)}
+@media(hover:hover){#kG:hover i:nth-of-type(1){left:26px}#kG:hover i:nth-of-type(2){right:34px}#kG:hover i:nth-of-type(3){left:44%}}
+#kG svg{display:none}
+.nudge{animation:nudge .7s steps(3) 1}@keyframes nudge{40%{transform:translateY(-7px)}}
+
+/* talk */
+#talkw{position:absolute;width:calc(112px*var(--u));height:calc(92px*var(--u))}
+#talk{display:block;width:100%;height:100%}#talk svg{width:100%;height:100%;display:block;overflow:visible}
+#talk .bar{fill:var(--ink)}#talk.on .bar{animation:bar .36s steps(3) infinite}#talk.on .bar:nth-of-type(2n){animation-delay:-.12s}#talk.on .bar:nth-of-type(3n){animation-delay:-.24s}
+@keyframes bar{50%{transform:scaleY(.4)}}#talk .bar{transform-box:fill-box;transform-origin:center}
+#talk:active{translate:2px 3px}
+#more{position:absolute;right:-6px;top:-10px;width:44px;height:44px;display:grid;place-items:center}
+#more b{display:block;font:400 15px/20px "Major Mono Display",monospace;background:var(--plate);border:3px solid var(--ink);border-radius:8px 10px 7px 9px;padding:0 5px;color:var(--text)}
+#lines{position:absolute;z-index:5;display:none;width:min(340px,calc(100vw - 32px));max-height:44vh;max-height:44dvh;overflow:auto;pointer-events:auto;background:var(--plate);border:3px solid var(--ink);box-shadow:0 0 0 2px var(--line),4px 5px 0 var(--ink);border-radius:9px 12px 8px 11px;padding:6px;font:700 14px/1.3 Inter,system-ui,sans-serif}
+#lines.on{display:grid;gap:4px}#lines button{min-height:44px;text-align:left;padding:6px 10px;border-radius:6px;color:var(--text)}
+#lines button:hover,#lines button:focus-visible{background:var(--line)}
+
+/* A. wide: the deck lies over the stage, clothes on one wall, doors on the other, keys on the floor */
+#deck{position:absolute;inset:0;pointer-events:none}#deck button{pointer-events:auto}
+#looks,#doors{position:absolute;top:64px;bottom:calc((1 - var(--floor))*100% + 6px);display:flex;flex-direction:column;justify-content:flex-start;gap:calc(12px*var(--u))}
+#looks{left:var(--sl)}#doors{right:var(--sr)}
+#pads{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);grid-template-columns:56px 56px 56px 44px auto;grid-template-rows:56px 56px;grid-template-areas:". u . . ." "l d r . g";gap:calc(12px*var(--u)) 8px}
+#talkw{right:var(--sr);bottom:14px}#lines{right:var(--sr);bottom:calc(100px*var(--u) + 26px)}
+@media(max-height:719px){:root{--u:.76}}@media(max-height:639px){:root{--u:.6}}
+@media(max-height:639px){#pads{bottom:10px;grid-template-rows:46px 46px;grid-template-columns:48px 48px 48px 30px auto}.key{width:48px;height:46px}#kG{width:170px}}
+
+/* B. phones and touch: stage on top, the deck under it, nothing covers him */
+@media(max-width:899px),(pointer:coarse) and (min-height:560px){
+  :root{--floor:.84;--u:1}#room{grid-template-rows:minmax(300px,1fr) auto}
+  #logo{font-size:16px;top:12px}#mute{top:8px}
+  #cap{left:14px;right:104px;top:58px;text-align:left}
+  #deck{position:static;display:grid;gap:10px;justify-content:center;grid-template-columns:minmax(0,560px);padding:10px var(--sr) max(12px,env(safe-area-inset-bottom)) var(--sl);background:var(--plate2);border-top:4px solid var(--ink);box-shadow:inset 0 3px 0 var(--deep);touch-action:manipulation}
+  #looks,#doors{position:static;display:grid;gap:8px}#looks{display:flex;flex-direction:row}#doors{grid-template-columns:repeat(5,1fr)}
+  #looks .tile{width:58px;height:64px}#doors .tile{width:auto;height:54px;border-width:4px}
+  #pads{position:static;transform:none;grid-template-columns:repeat(3,minmax(0,1fr)) 4px minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:60px;grid-template-areas:"l d r . u g";gap:6px}
+  .key,#kG{width:auto;height:60px}#kG span,#kG i{display:none}#kG svg{display:block}#kU{height:60px}.key svg{width:32px;height:32px}
+  #talkw{right:var(--sr);top:56px;bottom:auto;width:92px;height:76px}#more{top:-2px;right:-4px}#lines{right:var(--sr);top:138px;bottom:auto}
+}
+
+/* C. phone on its side: full stage, one strip of tiles up top, pads in the corners */
+@media(max-height:559px) and (orientation:landscape){
+  :root{--floor:.84;--u:1}#room{grid-template-rows:minmax(0,1fr)}#logo{display:none}#cap{left:16px;right:16px;top:68px;text-align:center}
+  #deck{position:absolute;inset:0;display:block;padding:0;background:none;border:0;box-shadow:none}#more{top:-2px;right:-4px}
+  #looks,#doors{position:absolute;top:10px;bottom:auto;display:flex;flex-direction:row;gap:6px}#looks{left:var(--sl);right:calc(var(--sr) + 134px)}#doors{left:calc(var(--sl) + 216px);right:auto}
+  #looks .tile,#doors .tile{width:44px;height:48px;border-width:3px}
+  #pads{position:absolute;left:var(--sl);right:var(--sr);bottom:max(10px,env(safe-area-inset-bottom));transform:none;grid-template-columns:56px 56px 56px minmax(0,1fr) 64px 56px;grid-template-rows:56px;grid-template-areas:"l d r . u g";pointer-events:none}
+  .key,#kG{width:auto;height:56px;pointer-events:auto}#kU{height:56px}#kG span,#kG i{display:none}#kG svg{display:block}
+  #talkw{right:calc(var(--sr) + 56px);top:8px;bottom:auto;width:72px;height:60px}#mute{top:10px}#lines{right:var(--sr);top:74px;bottom:auto;max-height:60dvh}
+}
+@media(max-height:559px) and (orientation:landscape) and (max-width:640px){#looks,#doors{gap:5px}#doors{left:calc(var(--sl) + 170px)}#looks .tile,#doors .tile{width:38px;height:44px}#talkw{width:64px;height:54px}}
+@media(prefers-reduced-motion:reduce){.nudge,#ring,#talk.on .bar{animation:none}}
+
+#fanbtn{position:absolute;right:calc(var(--sr) + 54px);top:12px;height:44px;padding:0 12px;background:var(--plate);border:3px solid var(--ink);border-radius:10px;color:var(--text);font:400 13px "Major Mono Display",monospace;cursor:pointer}
+#fan{border:4px solid var(--ink);border-radius:14px;background:#f3dfae;color:#120a05;padding:18px;width:min(360px,calc(100vw - 32px));font:400 16px/1.4 Inter,system-ui,sans-serif}#fan::backdrop{background:#000a}#fan b{font:400 20px "Major Mono Display",monospace}#fan label{display:block;margin-top:8px;font-size:14px}#fan input{width:100%;box-sizing:border-box;padding:10px;border:3px solid #120a05;border-radius:8px;font-size:16px}#fan div{display:flex;gap:8px;margin-top:12px}#fan button{padding:10px 14px;border:3px solid #120a05;border-radius:9px;background:#da9643;font:700 15px Inter,system-ui,sans-serif;cursor:pointer}
+#radio{position:absolute;z-index:4;left:50%;top:58px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;padding:6px 10px;background:#f3ead6;color:#120a05;border:3px solid #120a05;border-radius:10px;font:700 14px Inter,system-ui,sans-serif;white-space:nowrap}#radio[hidden]{display:none}#radio select{font:600 15px Inter,system-ui,sans-serif;max-width:60vw;padding:4px;border:2px solid #120a05;border-radius:6px;background:#fff;color:#120a05}
+/* the game's kitchen fills a 16:9 stage; the tiles sit under it */
+#room{display:flex!important;flex-direction:column;align-items:center;background:#0b0710;overflow:hidden}
+#stage{flex:none;width:min(100%,calc((100dvh - 124px)*1.7778));aspect-ratio:16/9;height:auto;cursor:default}
+#bg,#shadow,#ring,#doors{display:none!important}
+#deck{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;top:auto!important;display:flex!important;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;width:100%;height:auto!important;padding:6px 10px!important;background:none!important;grid-template-columns:none!important}
+#looks{position:static!important;display:flex!important;flex-direction:row!important;gap:4px;padding:4px 10px;border-radius:999px;background:#000000a0;border:1px solid #ffffff1a;overflow-x:auto;max-width:100%;scrollbar-width:none}
+.kicon{flex:none;padding:0;width:44px;height:44px;border-radius:50%;background:none;border:2px solid transparent;display:grid;place-items:center;opacity:.72;cursor:pointer;transition:transform .12s,opacity .12s}.kicon img{width:38px;height:38px;display:block}.kicon:hover,.kicon:focus-visible{opacity:1;transform:translateY(-2px)}.kicon.on{opacity:1;border-color:var(--warm);transform:scale(1.08)}
+#talkw{position:static!important;width:84px;height:62px}#lines{bottom:80px;right:16px;top:auto}
+#pads,#esc{display:none}
+@media(hover:none) and (pointer:coarse){#pads{display:flex!important;position:static!important;gap:6px}#esc{display:block;position:absolute;left:8px;top:8px;z-index:5;padding:8px 10px;background:var(--plate);color:var(--text);border:3px solid var(--ink);border-radius:9px;font:700 13px Inter,system-ui,sans-serif}}
+@media(hover:none) and (pointer:coarse) and (max-height:520px){#stage{width:min(100%,calc((100dvh - 34px)*1.7778))}#deck{position:absolute!important;left:0!important;right:0!important;bottom:6px!important;pointer-events:none;justify-content:space-between;padding:0 8px!important}#deck>*{pointer-events:auto}#looks{display:none!important}#pads .key{width:44px;height:44px}#talkw{transform:scale(.8)}}
+.thought{position:absolute;pointer-events:none;font:400 clamp(11px,1.3vw,15px) "Major Mono Display",monospace;color:#c9a7ff;opacity:0;text-shadow:1px 0 #e03ccf,-1px 0 #2a0f63;animation:th 3.3s linear forwards;transform:translateX(-50%)}@keyframes th{12%{opacity:.75}70%{opacity:.6}100%{opacity:0;margin-top:-54px}}
+#talkw{width:auto;height:auto}#talk{width:96px;height:72px;cursor:pointer;background:none;border:0}#talk:hover{transform:scale(1.06)}#more{display:none!important}#cap{display:none!important}
+#esctip{position:relative;width:96px;height:72px;flex:none;pointer-events:none}#esctip svg{position:absolute;inset:0;width:100%;height:100%}#esctip span{position:absolute;left:0;right:0;top:11px;text-align:center;font:700 13px/1.1 Inter,system-ui,sans-serif;color:#120a05}
+@media(hover:none) and (pointer:coarse){#esctip{display:none}}
+#esctip,#talk{width:auto!important;height:38px!important;display:grid!important;place-items:center;padding:0 12px;background:#2f9e55;color:#07140c;border:3px solid #120a05;border-radius:10px;font:700 14px Inter,system-ui,sans-serif;white-space:nowrap}#esctip{pointer-events:none}#talk{min-width:52px;font-size:22px;line-height:1;cursor:pointer}#talk:hover{background:#4dff9a;transform:none}#talkw{width:auto!important;height:auto!important}
+@media(hover:none) and (pointer:coarse){#esctip{display:none!important}}
+/* boot */
+#boot{position:fixed;inset:0;z-index:9;background:var(--bg);display:grid;place-content:center;justify-items:center;gap:14px;padding:16px;color:var(--green);font:400 18px "Major Mono Display",monospace}
+#boot .w{min-height:1.4em;text-shadow:2px 0 var(--magenta),-2px 0 var(--deep)}#boot .b{width:min(240px,60vw);height:4px;background:var(--line)}#boot .b i{display:block;height:100%;width:6%;background:var(--green);transition:width .2s steps(3)}
+#boot .m{display:none;max-width:30em;text-align:center;color:var(--text);font:400 16px/1.4 Inter,system-ui,sans-serif}#boot.fail .m{display:block}#boot.fail .w,#boot.fail .b{display:none}
+</style></head>
+<body>
+<div id="boot" aria-label="Opening the room"><div class="w" id="bootw"></div><div class="b"><i id="bootb"></i></div><p class="m">This room needs WebGL to open. Try a newer browser, or turn on hardware acceleration.</p></div>
+<script>
+(function(){var W=['krrzzt','wh@t?!','b0ot…?','loadi—zz','buff%ring','p1ng—?'],e=document.getElementById('bootw'),i=0;e.textContent=W[0];
+window.__bootTimer=setInterval(function(){e.textContent=W[++i%W.length]},260);
+window.__bootFail=function(){clearInterval(window.__bootTimer);document.getElementById('boot').className='fail'};window.__bootBar=function(p){document.getElementById('bootb').style.width=p+'%'};})();
+</script>
+<div id="wip"><b>Work in progress</b></div>
+<main id="room">
+  <div id="stage" tabindex="-1">
+    <div id="bg"></div><div id="shadow"></div><div id="ring"></div>
+    <div id="gwords"></div><button id="esc" type="button">Costume</button>
+    <div id="cap" aria-live="polite"></div>
+    <h1 id="logo" aria-label="Potato's Room">pOtAtO's rOOm</h1>
+    <button id="mute" aria-label="Sound off" title="Sound off" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l6-5v16l-6-5H3z" fill="currentColor"/><path class="w" d="M16 8c2 2 2 6 0 8M19 5c4 4 4 10 0 14" fill="none" stroke="currentColor" stroke-width="2.4"/><path class="x" d="m15 8 7 8m0-8-7 8" fill="none" stroke="#e03ccf" stroke-width="3"/></svg></button>
+  </div>
+  <div id="deck">
+    <div id="looks" role="group" aria-label="His look"></div>
+    <div id="doors" role="group" aria-label="Places"></div>
+    <div id="pads" role="group" aria-label="Move him">
+      <button class="key" id="kL" data-k="L" aria-label="Walk left" title="Walk left"><svg viewBox="0 0 24 24"><path d="M3 18 12 7l9 11" fill="none" stroke="currentColor" stroke-width="5"/></svg></button>
+      <button class="key" id="kU" data-k="J" aria-label="Jump, press again in the air for a double jump" title="Jump (again in the air: double jump)"><svg viewBox="0 0 24 24"><path d="M3 20 12 9l9 11" fill="none" stroke="currentColor" stroke-width="5"/><path class="two" d="M3 11 12 0l9 11" fill="none" stroke="currentColor" stroke-width="5"/></svg></button>
+      <button class="key" id="kD" data-k="D" aria-label="Duck" title="Duck"><svg viewBox="0 0 24 24"><path d="M3 18 12 7l9 11" fill="none" stroke="currentColor" stroke-width="5"/></svg></button>
+      <button class="key" id="kR" data-k="R" aria-label="Walk right" title="Walk right"><svg viewBox="0 0 24 24"><path d="M3 18 12 7l9 11" fill="none" stroke="currentColor" stroke-width="5"/></svg></button>
+      <button class="key" id="kG" data-k="G" aria-label="Glitch" title="Glitch"><i></i><i></i><i></i><span>space</span><svg viewBox="0 0 24 24"><path d="M2 5h13v4H2zM9 11h13v4H9zM4 17h11v4H4z" fill="currentColor"/></svg></button>
+    </div>
+    <div id="esctip" aria-hidden="true">outfit = esc</div>
+    <div id="talkw">
+      <button id="talk" aria-label="Make him talk" title="Make him talk">🥔</button>
+      <button id="more" aria-label="Pick a line" title="Pick a line" aria-expanded="false"><b>...</b></button>
+    </div>
+    <div id="lines"></div>
+  </div>
+</main>
+<script src="./lib/glitchwords.js" charset="utf-8"></script>
+<script type="module" src="./room.mjs" onerror="window.__bootFail()"></script>
+</body></html>
