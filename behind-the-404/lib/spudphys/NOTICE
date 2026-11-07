@@ -1,0 +1,53 @@
+spudphys
+Copyright (c) 2026 ChikinNuglet. MIT licence (LICENSE).
+
+This package borrows from the inventor of position-based dynamics / XPBD.
+
+Matthias Müller, "Ten Minute Physics"
+  https://matthias-research.github.io/pages/tenMinutePhysics/
+  https://github.com/matthias-research/pages   (MIT, licence stated in each file's header; the repo has no
+  top-level licence file, so the per-file headers are what count)
+  YouTube: https://www.youtube.com/channel/UCTG_vrRdKYfrpqCv_WV4eyA
+
+Files adapted from his code. Each keeps his copyright line and the full MIT permission notice at its top, followed by
+a line saying what was changed:
+
+  src/constraints/distance.mjs
+      from tenMinutePhysics/10-softBodies.html (SoftBody.solveEdges)          "Copyright 2021 Matthias Müller - Ten Minute Physics"
+      and  tenMinutePhysics/14-cloth.html (Cloth.solveStretching/solveBending) "Copyright 2022 Matthias Müller - Ten Minute Physics"
+  src/constraints/tetvolume.mjs
+      from tenMinutePhysics/10-softBodies.html (getTetVolume, initPhysics masses, solveVolumes, volIdOrder)
+                                                                                "Copyright 2021 Matthias Müller - Ten Minute Physics"
+  src/build/clothtopo.mjs
+      from tenMinutePhysics/14-cloth.html (findTriNeighbors, stretching/bending id lists)
+                                                                                "Copyright 2022 Matthias Müller - Ten Minute Physics"
+  src/build/hash.mjs
+      from tenMinutePhysics/11-hashing.html (class Hash)                       "Copyright 2022 Matthias Müller - Ten Minute Physics"
+  src/build/skin.mjs
+      from tenMinutePhysics/12-softBodySkinning.html (computeSkinningInfo, updateVisMesh)
+                                                                                "Copyright 2022 Matthias Müller - Ten Minute Physics"
+
+Written from papers (no code copied), credited here:
+  - The XPBD substep loop in src/world.mjs follows his demos 10 and 14 and the paper: M. Macklin, M. Müller,
+    N. Chentanez, "XPBD: Position-Based Simulation of Compliant Constrained Dynamics", MIG 2016; and
+    M. Macklin, K. Storey, M. Lu, P. Terdiman, N. Chentanez, S. Jeschke, M. Müller, "Small Steps in Physics
+    Simulation", SCA 2019 (tenMinutePhysics/09-xpbd.pdf).
+  - src/polar.mjs: M. Müller, J. Bender, N. Chentanez, M. Macklin, "A Robust Method to Extract the Rotational Part
+    of Deformations", MIG 2016.
+  - src/constraints/shapematch.mjs: M. Müller, B. Heidelberger, M. Teschner, M. Gross, "Meshless Deformations
+    Based on Shape Matching", SIGGRAPH 2005.
+  - Position-based friction in src/colliders.mjs: M. Macklin, M. Müller, N. Chentanez, T.-Y. Kim, "Unified
+    Particle Physics for Real-Time Applications", SIGGRAPH 2014.
+  - src/dmath.mjs uses the public fdlibm polynomial coefficients and split constants (Sun Microsystems, 1993:
+    "Developed at SunPro, a Sun Microsystems, Inc. business. Permission to use, copy, modify, and distribute this
+    software is freely granted, provided that this notice is preserved.").
+
+Read, not used:
+  - tenMinutePhysics/15-selfCollision.html (MIT, Müller 2022): the plan for cape self-collision later, with its
+    Math.random jitter replaced by the world's seeded rng. Not in v1.
+  - challenges/softBody.html ("Copyright (c) 2021 NVIDIA", MIT): Neo-Hookean tets, maybe later. Not in v1.
+  - challenges/bodyChainPBD.html: carries no licence, so it was read for ideas only; nothing is copied from it.
+
+Reference copies of the files above, untouched with their headers, are in vendor-ref/ (not part of the package).
+
+Backups noted, not used: Rapier (Apache-2.0, dimforge), cannon-es (MIT, pmndrs), JoltPhysics.js (MIT, jrouwe).
