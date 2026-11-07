@@ -1,0 +1,1 @@
+Copied from game/assets3d/physics/src (spudphys, ours) on Nov 5, 2026 for costume motion (capes, ropes, tassels). The master stays in game/assets3d/physics.
