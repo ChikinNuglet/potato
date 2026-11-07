@@ -76,6 +76,8 @@ border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px)}
   .vz-cover.jolt img{transform:translate(-7px,0);filter:drop-shadow(-6px 0 0 #00e5ff) drop-shadow(6px 0 0 #ff2bd6)}
   .vz-cover .pl{position:absolute;left:12px;bottom:10px;font-size:13px;background:rgba(10,12,10,.75);
     padding:4px 8px;border-radius:4px}
+  .launch{display:inline-block;margin-top:14px;border:1px solid var(--green);border-radius:6px;padding:9px 16px;font-size:15px;color:var(--green)}
+  .launch:hover,.launch:focus-visible{background:var(--green);color:var(--bg);border-bottom-style:solid;outline:none}
   .vz-cover[data-still] img{width:100%;height:100%;max-width:100%;object-fit:cover}
   .vz-cover:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
   .fan{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:14px 0 8px}
@@ -132,6 +134,8 @@ b.addEventListener('animationiteration',function(){i=(i+1)%50;g.src=u(i+1);(new 
       <p class="t">potato.exe — the commercial</p>
       <p class="m">filmed in my own studio. under construction. no cash value.</p>
       <div class="vz"><video controls playsinline preload="none" poster="potato-exe-commercial.jpg" src="potato-exe-commercial.mp4"></video><button class="vz-cover" type="button" aria-label="Play the potato.exe commercial" data-still><img alt="Potato in his kitchen under the words potato.exe" src="potato-exe-commercial.jpg"><span class="pl">&#9654; play</span></button></div>
+      <a class="launch" href="studio/">&gt; launch potato.exe</a>
+      <p class="m" style="margin-top:10px">got a code? this is the door.</p>
     </div>
   </section>
 
