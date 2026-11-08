@@ -28,11 +28,12 @@ let muted = store.get('potato-room-muted') === '1', audio = null, line = null;
 const initS = () => { initSfx(); setSfxMuted(muted); };
 // each room brings its song, no words: the game kitchen's ~32 s loops, crossfading on every change. The first touch or key starts it. It dips while he talks.
 let kmusic = null, kmusicId = null, mLevel = 0.8; const faint = new Set();
+let jukePlaying = false;   // (a jukebox song overrides the room's music: nothing else plays under it, Chikin Nov 8)
 function fadeAudio(a, to, ms, done) { const from = a.volume, t0 = performance.now(), tk = a.__fade = (a.__fade || 0) + 1; const step = () => { if (a.__fade !== tk) return; const k = Math.min(1, (performance.now() - t0) / ms); a.volume = from + (to - from) * k; if (k < 1) setTimeout(step, 16); else if (done) done(); }; step(); }
-function roomMusic(id) { if (id && id === kmusicId && kmusic) { if (kmusic.paused) kmusic.play().catch(() => {}); return; }
+function roomMusic(id) { if (id && id === kmusicId && kmusic) { if (kmusic.paused && !jukePlaying) kmusic.play().catch(() => {}); return; }
   if (kmusic) { const old = kmusic; if (BLEED && !REDUCED) { faint.add(old); fadeAudio(old, 0.1, 300, () => fadeAudio(old, 0, 5600, () => { old.pause(); faint.delete(old); })); } else fadeAudio(old, 0, 350, () => old.pause()); }
   kmusicId = id; kmusic = null; if (!id) return; const a = kmusic = new Audio('music/' + id + '.inst.mp3'); a.loop = true; a.muted = muted; a.volume = 0;
-  a.play().then(() => { if (a === kmusic) fadeAudio(a, mLevel, 500); }).catch(() => {}); }
+  if (!jukePlaying) a.play().then(() => { if (a === kmusic) fadeAudio(a, mLevel, 500); }).catch(() => {}); }
 const duckMusic = on => { mLevel = on ? 0.22 : 0.8; if (kmusic && !kmusic.paused) fadeAudio(kmusic, mLevel, 200); };
 const songOf = i => STYLES[i].level;
 
@@ -70,8 +71,17 @@ async function main() {
   // THE JUKEBOX (Chikin, Nov 8: "cycle through the full album in order by room, halloween included"): each press = the next song, in the
   // order the rooms sit on the row (Thursday first ... Last Lights On, then Boo Not Found), from whatever is playing now; then round again
   const ALBUM = [...new Set(ORDER.map(songOf).filter(id => id && (RADIO.some(r => r[0] === id) || id === 'boo-not-found')))];
-  const jukebox = () => { const k = ALBUM.indexOf(kmusicId), id = ALBUM[(k + 1) % ALBUM.length]; store.set('potato-room-radio', id); roomMusic(id); };
-  const portal = installPortal({ glitch: glitchOnly, opened() { store.set('potato-room-door', '1'); }, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
+  // a coin (glitch the jukebox) = ONE full song, the next on the album; glitch it again = off. When the song ends the jukebox goes quiet.
+  let jukeA = null, jukeLast = -1;
+  const roomBack = () => { jukePlaying = false; if (kmusic && kmusic.paused) { kmusic.volume = 0; kmusic.play().then(() => fadeAudio(kmusic, mLevel, 600)).catch(() => {}); } };
+  const jukeStop = () => { if (!jukeA) return; const a = jukeA; jukeA = null; fadeAudio(a, 0, 400, () => a.pause()); roomBack(); };
+  const jukebox = on => { if (!on) { jukeStop(); return; }
+    jukeStop(); jukeLast = (jukeLast + 1) % ALBUM.length; const id = ALBUM[jukeLast]; store.set('potato-room-radio', id);
+    jukePlaying = true; if (kmusic) kmusic.pause(); for (const f of faint) f.pause(); faint.clear();
+    const a = jukeA = window.__juke = new Audio('music/' + id + '.mp3'); a.muted = muted; a.volume = 0.9;
+    setTimeout(() => { if (jukeA === a) a.play().catch(() => {}); }, 700);   // (after the coin drops)
+    a.onended = () => { if (jukeA !== a) return; jukeA = null; intro.propOff && intro.propOff('juke'); roomBack(); }; };
+  const portal = installPortal({ glitch: glitchOnly, opened() { store.set('potato-room-door', '1'); }, music: on => { if (!kmusic) return; on ? (jukePlaying ? 0 : kmusic.play().catch(() => {})) : kmusic.pause(); } });
   // the right door: locked everywhere except Potato's own (Regular), which the password opens. It leads to the demo for now
   Object.defineProperty(intro, 'leftShut', { get() { return false; } });   // (Nov 8: the front door opens now: into the simulation)   // the living room's front door: it opens a crack onto the street, for now (intro.mjs peekOut)
   Object.defineProperty(intro, 'rightOpen', { get() { return true; } });   // (Nov 8: every door opens, down the line)
@@ -79,16 +89,16 @@ async function main() {
   window.__boothNext = () => pick(step(room, 1));
   // CAVE (Nov 7): the trapdoor in the kitchen floor (kitchens.mjs prop 'cave') drops him into the cave (cave.mjs). The kitchen loop pauses while he's down there.
   const cave = installCave({ T, renderer, scene, pivot, intro, fx, wordsHome: $('gwords'), face, spud, sfx: SFX, glitch: glitchOnly, walkable: on => { boothBusy = on; intro.noPaint = on; },
-    music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); }, muted: () => muted });
+    music: on => { if (!kmusic) return; on ? (jukePlaying ? 0 : kmusic.play().catch(() => {})) : kmusic.pause(); }, muted: () => muted });
   const intoCave = () => { if (cave.isOpen()) return; const x0 = pivot.position.x, x1 = ((200 + 328 * 0.76) / 1600 - 0.5) * viewW, t0 = performance.now();   // (a beat: the hatch flips open, the light comes up, he steps over the hole, crouches, drops)
     const step = () => { const k = Math.min(1, (performance.now() - t0) / 220); pivot.position.x = x0 + (x1 - x0) * k; if (k < 1) requestAnimationFrame(step); else spud.duck(true); }; step();
     setTimeout(() => { spud.duck(false); cave.open(); }, 600); };
-  const arcade = installArcade({ intro, glitch: glitchOnly, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
+  const arcade = installArcade({ intro, glitch: glitchOnly, music: on => { if (!kmusic) return; on ? (jukePlaying ? 0 : kmusic.play().catch(() => {})) : kmusic.pause(); } });
   // sit on the couch (with the controller beside him) and the game starts: after a short beat seated; once per sit (stand up to re-arm)
   { let seatedAt = 0, armed = true; setInterval(() => { const on = inLiving && intro.props().on === 'couch'; if (!on) { seatedAt = 0; armed = true; return; }
       if (!seatedAt) seatedAt = performance.now(); if (armed && performance.now() - seatedAt > 700) { armed = false; arcade.start(); } }, 150); }
   intro.onProp = (id, on) => { if (id === 'console') return arcade.start(); if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
-    if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(); if (id === 'photobooth') booth.open(); };
+    if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(on); if (id === 'photobooth') booth.open(); };
   const go = (i, watch) => { intro.showKitchen(i, { back: true, watch }); };
   intro.onEnter = how => {   // how: 'play' = the left door, 'demo' = the right door
     const enter = i => { room = i; go(i); tiles(); roomMusic(songOf(i)); };
@@ -116,7 +126,7 @@ async function main() {
   { const first = () => { removeEventListener('pointerdown', first); removeEventListener('keydown', first); roomMusic(songOf(room)); }; addEventListener('pointerdown', first); addEventListener('keydown', first); }
 
   // ---- sound on or off
-  const setMute = m => { muted = m; store.set('potato-room-muted', m ? '1' : '0'); setSfxMuted(m); if (audio) audio.muted = m; if (kmusic) kmusic.muted = m; faint.forEach(a => { a.muted = m; }); const b = $('mute'), s = m ? 'Sound on' : 'Sound off'; b.setAttribute('aria-pressed', m); b.setAttribute('aria-label', s); b.title = s; };
+  const setMute = m => { muted = m; store.set('potato-room-muted', m ? '1' : '0'); setSfxMuted(m); if (audio) audio.muted = m; if (kmusic) kmusic.muted = m; if (window.__juke) window.__juke.muted = m; faint.forEach(a => { a.muted = m; }); const b = $('mute'), s = m ? 'Sound on' : 'Sound off'; b.setAttribute('aria-pressed', m); b.setAttribute('aria-label', s); b.title = s; };
   $('mute').onclick = () => setMute(!muted); setMute(muted);
 
   // ---- his voice: the mp3 is the clock; his mouth flips between his real drawn faces on the line's timings
