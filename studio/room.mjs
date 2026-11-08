@@ -67,7 +67,10 @@ async function main() {
     if (inLiving) { STYLES[LIVING].outfit = STYLES[i].outfit; return intro.dressOnly(STYLES[i].outfit); }   // (in the living room a glitch changes his clothes, not the room)
     room = i; intro.setStyle(i); tiles(); roomMusic(songOf(i)); }
   const glitchOnly = () => { initS(); intro.poke(); SFX.glitch && SFX.glitch(); };
-  const jukebox = () => { const k = RADIO.findIndex(r => r[0] === songOf(intro.style())), id = RADIO[(k + 1) % RADIO.length][0]; store.set('potato-room-radio', id); roomMusic(id); };
+  // THE JUKEBOX (Chikin, Nov 8: "cycle through the full album in order by room, halloween included"): each press = the next song, in the
+  // order the rooms sit on the row (Thursday first ... Last Lights On, then Boo Not Found), from whatever is playing now; then round again
+  const ALBUM = [...new Set(ORDER.map(songOf).filter(id => id && (RADIO.some(r => r[0] === id) || id === 'boo-not-found')))];
+  const jukebox = () => { const k = ALBUM.indexOf(kmusicId), id = ALBUM[(k + 1) % ALBUM.length]; store.set('potato-room-radio', id); roomMusic(id); };
   const portal = installPortal({ glitch: glitchOnly, opened() { store.set('potato-room-door', '1'); }, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
   // the right door: locked everywhere except Potato's own (Regular), which the password opens. It leads to the demo for now
   Object.defineProperty(intro, 'leftShut', { get() { return false; } });   // (Nov 8: the front door opens now: into the simulation)   // the living room's front door: it opens a crack onto the street, for now (intro.mjs peekOut)
