@@ -96,21 +96,37 @@ async function main() {
   const arcade = installArcade({ intro, glitch: glitchOnly, music: on => { if (!kmusic) return; on ? (jukePlaying ? 0 : kmusic.play().catch(() => {})) : kmusic.pause(); } });
   // THE TERMS (Chikin, Nov 8): in Read the Terms' room, walk up to the paper on the table and a question bar asks if you want to read the
   // terms. Yes = Read the Terms' level select (Play / Machine Learning). The house is a playground: you find it by walking up to it.
-  const TERMS_ROOM = STYLES.findIndex(st => st.id === 'suit-tie');
-  { const bar = document.createElement('div'); bar.id = 'termsbar'; bar.setAttribute('role', 'dialog'); bar.setAttribute('aria-label', 'read the terms?');
-    bar.innerHTML = '<span>read the terms?</span><button type="button" data-y>yes</button><button type="button" data-n>no</button>';
+  // MACHINE LEARNING, its own thing (Chikin, Nov 8): in the cyborg room, stand still under the ring light: it lowers onto his head and
+  // the binary Potato learning Read the Terms plays. Walk away (or close it) and it goes back up.
+  { const CYB = STYLES.findIndex(st => st.id === 'circuit-cyborg'); let under = 0, fired = false;
+    setInterval(() => { const st = STYLES[CYB]; if (!st) return; const live = !inLiving && !inBooth && room === CYB && intro.shown() && !document.getElementById('arc');
+      const P = live ? intro.props() : null, ok = live && P.on == null && P.x > 700 && P.x < 840 && P.y < 0.05;
+      if (!ok) { under = 0; if (!document.getElementById('arc')) { fired = false; st.mlRing = 0; } return; }
+      if (!under) under = performance.now(); if (fired || performance.now() - under < 700) return;
+      fired = true; st.mlRing = performance.now(); st.mlX = P.x; SFX.hum && SFX.hum();
+      setTimeout(() => arcade.learn([{ title: 'read the terms', src: 'demo/read-the-terms-ml.mp4' }, { title: 'ghost in the group chat', src: 'demo/ghost-in-the-group-chat.mp4' }]), 1700); }, 120); }
+  const TERMS_ROOM = STYLES.findIndex(st => st.id === 'suit-tie'), GHOST_ROOM = STYLES.findIndex(st => st.id === 'sheet-ghost');
+  // the question bar (one for the house): "read the terms?" at the paper; "join the chat?" when he answers Ghost's old phone (Nov 8)
+  { const bar = document.createElement('div'); bar.id = 'termsbar'; bar.setAttribute('role', 'dialog');
+    bar.innerHTML = '<span></span><button type="button" data-y>yes</button><button type="button" data-n>no</button>';
     bar.style.cssText = 'position:fixed;left:50%;bottom:110px;transform:translate(-50%,20px);z-index:7;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 18px;background:#f7f2e4;color:#120a05;border:4px solid #120a05;border-radius:10px;box-shadow:4px 4px 0 #120a05;font:700 18px/1 "Major Mono Display",monospace;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s';
     const st2 = document.createElement('style'); st2.textContent = '#termsbar button{padding:7px 14px;border:3px solid #120a05;border-radius:8px;font:700 15px Inter,system-ui,sans-serif;cursor:pointer}#termsbar [data-y]{background:#4dff9a}#termsbar [data-n]{background:#fff}#termsbar.on{opacity:1!important;pointer-events:auto!important;transform:translate(-50%,0)!important}';
     document.head.append(st2); document.body.append(bar);
-    let dismissed = false, shown = false;
-    const show = on => { if (on === shown) return; shown = on; bar.classList.toggle('on', on); };
-    bar.querySelector('[data-y]').onclick = () => { show(false); dismissed = true; arcade.select(); };
-    bar.querySelector('[data-n]').onclick = () => { show(false); dismissed = true; };
-    window.__termsAsk = () => { dismissed = false; show(true); };
-    setInterval(() => { const here = !inLiving && !inBooth && room === TERMS_ROOM && intro.shown() && !document.getElementById('arc'); const P = here ? intro.props() : null;
-      const near = here && P.near >= 0 && P.list[P.near] && P.list[P.near].id === 'terms';
-      if (!near) { dismissed = false; show(false); return; } if (!dismissed) show(true); }, 150); }
-  intro.onProp = (id, on) => { if (id === 'terms') { intro.propOff('terms'); return window.__termsAsk && window.__termsAsk(); } if (id === 'console') return; if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
+    let shown = null, dismissed = null, answered = false;
+    const ASKS = { terms: { text: 'read the terms?', yes: () => arcade.select() }, phone: { text: 'join the chat?', yes: () => arcade.play('ghost-in-the-group-chat', 'ghost in the group chat') } };
+    const show = key => { if (key === shown) return; shown = key; if (key) bar.querySelector('span').textContent = ASKS[key].text; bar.setAttribute('aria-label', key ? ASKS[key].text : ''); bar.classList.toggle('on', !!key); };
+    bar.querySelector('[data-y]').onclick = () => { const k = shown; show(null); dismissed = k; if (k === 'phone') { answered = false; intro.propOff('phone'); } ASKS[k] && ASKS[k].yes(); };
+    bar.querySelector('[data-n]').onclick = () => { const k = shown; show(null); dismissed = k; if (k === 'phone') { answered = false; intro.propOff('phone'); } };
+    window.__answerPhone = () => { answered = true; dismissed = null; };
+    setInterval(() => { const live = !inLiving && !inBooth && intro.shown() && !document.getElementById('arc'), P = live ? intro.props() : null, nearId = live && P.near >= 0 && P.list[P.near] ? P.list[P.near].id : null;
+      let want = null;
+      if (live && room === TERMS_ROOM && nearId === 'terms') want = 'terms';   // walk up to the paper
+      if (live && room === GHOST_ROOM && answered) want = nearId === 'phone' ? 'phone' : null;   // answer the phone (glitch it), stay by it
+      if (live && room === GHOST_ROOM && answered && nearId !== 'phone') { answered = false; intro.propOff('phone'); }   // walked away: he hangs up
+      if (want !== dismissed && dismissed !== null && !want) dismissed = null;
+      if (!want) { if (shown) show(null); if (dismissed && dismissed !== want) dismissed = null; return; }
+      if (dismissed !== want) show(want); }, 150); }
+  intro.onProp = (id, on) => { if (id === 'terms') { intro.propOff('terms'); return; } if (id === 'phone') { if (on) window.__answerPhone && window.__answerPhone(); return; } if (id === 'console') return; if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
     if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(on); if (id === 'photobooth') booth.open(); };
   const go = (i, watch) => { intro.showKitchen(i, { back: true, watch }); };
   intro.onEnter = how => {   // how: 'play' = the left door, 'demo' = the right door

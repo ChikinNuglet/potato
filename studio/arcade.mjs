@@ -18,6 +18,8 @@ const css = `
 #arc button.play{background:#4dff9a;color:#0b0710}#arc button.ml{background:#2a0f63;color:#c9a7ff;border-color:#7b3cf2}
 #arc button.back{background:none;border:0;color:#c9a7ff;text-decoration:underline;font-weight:400;font-size:15px}
 #arc button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#arc .wip{margin:0;font:400 14px/1.4 Inter,system-ui,sans-serif;color:#c9a7ff}
+#arc .full .wipbar{position:absolute;left:16px;top:16px;z-index:2;margin:0;padding:6px 10px;border-radius:8px;background:#0b0710d0;color:#c9a7ff;font:400 13px Inter,system-ui,sans-serif}
 #arc .full{position:fixed;inset:0;background:#000;display:grid;place-items:center}
 #arc .full iframe,#arc .full video{width:100%;height:100%;border:0;object-fit:contain;background:#000}
 #arc .full .x{position:absolute;right:16px;top:16px;z-index:2;background:#0b0710d0;color:#c9a7ff;border:1px solid #c9a7ff66;font-weight:400}`;
@@ -59,14 +61,13 @@ export function installArcade({ intro, glitch, music }) {
   function close(o, pad) { o.classList.remove('on'); setTimeout(() => o.remove(), 260); if (pad) pad.remove(); intro.propOff && intro.propOff('console'); music(true); glitch(); busy = false; }
 
   function full(o, html) {
-    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = html + '<button type="button" class="x">Back to the couch</button>'; o.append(f);
+    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = html + '<button type="button" class="x">Back</button>'; o.append(f);
     const v = f.querySelector('video'); if (v) v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
     f.querySelector('.x').onclick = () => { if (v) v.pause(); f.remove(); o.querySelector('.menu button.play').focus(); };
   }
 
   // straight to the level select (the paper on Read the Terms' table, Nov 8): the binary wipe, then Play / Machine Learning
-  async function select() { if (busy) return; busy = true; await menu(null); }
-  async function start() {
+    async function start() {
     if (busy) return; busy = true;
     if (intro.props().on !== 'couch') intro.sitOn && intro.sitOn('couch');
     for (let i = 0; i < 40 && intro.props().on !== 'couch'; i++) await wait(100);   // (until he's sat down: 4 s at most)
@@ -75,19 +76,38 @@ export function installArcade({ intro, glitch, music }) {
     const pad = await flipPad();
     await wait(350);
     await menu(pad); }
-  async function menu(pad) {
-    glitch(); music(false);
-    const o = document.createElement('div'); o.id = 'arc'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'level select');
-    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">select level</span><h2>read the terms</h2>
-      <div class="row"><button type="button" class="play">▶ Play</button><button type="button" class="ml">Machine Learning</button></div>
-      <button type="button" class="back">Back to the couch</button></div>`;
+  // the binary wipe, then straight into it: a level (iframe of the game, one level only) or a video. Always says it's a work in progress
+  // (Chikin, Nov 8: "on the game menus there is a disclaimer that these are works in progress and the final game may be different").
+  async function shell(title, inner, label) {
+    if (busy) return; busy = true; glitch(); music(false);
+    const o = document.createElement('div'); o.id = 'arc'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', label);
+    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">loading</span><h2>${title}</h2><p class="wip">work in progress: the finished game may be different.</p></div>`;
     document.body.append(o); requestAnimationFrame(() => o.classList.add('on'));
     const stop = binary(o.querySelector('canvas'));
-    await wait(1100); o.classList.add('ready'); o.querySelector('.play').focus();
-    o.querySelector('.play').onclick = () => full(o, `<iframe src="${GAME}" allow="autoplay; fullscreen" title="Read the Terms"></iframe>`);
-    o.querySelector('.ml').onclick = () => full(o, `<video src="${ML_VIDEO}" controls playsinline></video>`);
-    o.querySelector('.back').onclick = () => { stop(); close(o, pad); };
-    addEventListener('keydown', function esc(e) { if (e.key !== 'Escape' || !o.isConnected) return; if (o.querySelector('.full')) return; removeEventListener('keydown', esc); stop(); close(o, pad); });
+    await wait(1500); o.classList.add('ready'); await wait(1300);
+    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = inner + '<p class="wipbar">work in progress: the finished game may be different.</p><button type="button" class="x">Back to the house</button>'; o.append(f);
+    const v = f.querySelector('video'); if (v) v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+    const shut = () => { if (!o.isConnected) return; if (v) v.pause(); stop(); close(o, null); removeEventListener('keydown', esc); };
+    function esc(e) { if (e.key === 'Escape') shut(); }
+    f.querySelector('.x').onclick = shut; addEventListener('keydown', esc); f.querySelector('.x').focus();
+    return o;
   }
-  return { start, select };
+  const play = (id, title) => shell(title, `<iframe src="../arcade/run/?play=${id}" allow="autoplay; fullscreen" title="${title}"></iframe>`, title);
+  const watch = (src, title) => shell(title, `<video src="${src}" controls playsinline></video>`, title);
+  // MACHINE LEARNING (the cyborg room's ring light): after the wipe, pick which run to watch: Read the Terms or Ghost in the Group Chat
+  async function learn(list) {
+    if (busy) return; busy = true; glitch(); music(false);
+    const o = document.createElement('div'); o.id = 'arc'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'machine learning');
+    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">machine learning</span><h2>watch him learn</h2><div class="row">${list.map((d, i) => `<button type="button" class="${i ? 'ml' : 'play'}" data-i="${i}">${d.title}</button>`).join('')}</div><p class="wip">work in progress: the finished game may be different.</p><button type="button" class="back">Back to the house</button></div>`;
+    document.body.append(o); requestAnimationFrame(() => o.classList.add('on'));
+    const stop = binary(o.querySelector('canvas'));
+    await wait(1300); o.classList.add('ready'); o.querySelector('[data-i="0"]').focus();
+    const shut = () => { if (!o.isConnected) return; stop(); close(o, null); removeEventListener('keydown', esc); };
+    function esc(e) { if (e.key === 'Escape' && !o.querySelector('.full')) shut(); }
+    addEventListener('keydown', esc); o.querySelector('.back').onclick = shut;
+    o.querySelectorAll('[data-i]').forEach(b => { b.onclick = () => full(o, `<video src="${list[+b.dataset.i].src}" controls playsinline></video><p class="wipbar">work in progress: the finished game may be different.</p>`); });
+  }
+  async function select() { return play('read-the-terms', 'read the terms'); }   // (the paper: straight into the level; Machine Learning is its own thing now: the living-room TV)
+  async function menu() { return select(); }
+  return { start, select, play, watch, learn };
 }
