@@ -1,0 +1,1352 @@
+{
+"Bramble": {
+"body": "patchwork-monster",
+"hat": null,
+"costume": ""
+},
+"Ledger": {
+"body": "simulation",
+"hat": "little-devil",
+"costume": ""
+},
+"Nightwalker of the Loop": {
+"body": "noir-detective",
+"hat": null,
+"costume": ""
+},
+"Nightwalk": {
+"body": "stage-magician",
+"hat": null,
+"costume": ""
+},
+"Lantern-Off": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": ""
+},
+"Lexicon Spud": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a LIBRARIAN (Chikin's call; it asked for a card-catalog drawer worn as a coat, oak brown, brass handles, a card labelled \"aliases\": keep those details)"
+},
+"Cartographer of Links": {
+"body": "jungle-explorer",
+"hat": "clinic-doctor",
+"costume": "a mapmaker's long coat in parchment tan with ink contour lines, brass-rimmed explorer's hat, a tiny folded map in the hatband with one route drawn in purple"
+},
+"Rundown Spud": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "a stagehand's denim-blue apron with a clipboard pocket, a pencil where an ear would be, a \"10 things\" checklist card with only the first box ticked"
+},
+"Lantern of the First Light": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "(not given)"
+},
+"Weld": {
+"body": "jungle-explorer",
+"hat": null,
+"costume": "(not given)"
+},
+"Calliper": {
+"body": "court-jester",
+"hat": null,
+"costume": "(not given)"
+},
+"Roundtrip": {
+"body": "circus-ringmaster",
+"hat": null,
+"costume": "(not given)"
+},
+"Second Count": {
+"body": "northern-viking",
+"hat": null,
+"costume": "(not given)"
+},
+"Shellwright": {
+"body": "one-eyed",
+"hat": null,
+"costume": "(not given)"
+},
+"Second Ruler": {
+"body": "saucer-visitor",
+"hat": null,
+"costume": "(not given)"
+},
+"Fill Id": {
+"body": "forest-archer",
+"hat": null,
+"costume": "(not given)"
+},
+"Second Meter": {
+"body": "stage-magician",
+"hat": null,
+"costume": "(not given)"
+},
+"Ledger of the Seams": {
+"body": "pixel-superhero",
+"hat": null,
+"costume": "(not given)"
+},
+"Sustain": {
+"body": "punk-rebel",
+"hat": "circuit-cyborg",
+"costume": ""
+},
+"Refrain": {
+"body": "mad-scientist",
+"hat": null,
+"costume": ""
+},
+"Gatekeeper of the Yay": {
+"body": "skeleton-dandy",
+"hat": "many-eyed",
+"costume": ""
+},
+"Gatekeeper": {
+"body": "skeleton-dandy",
+"hat": "tin-robot",
+"costume": ""
+},
+"Second Ear": {
+"body": "space-overlord",
+"hat": "ancient-mummy",
+"costume": ""
+},
+"Spark-Before-The-Beat": {
+"body": "frontier-cowboy",
+"hat": "little-devil",
+"costume": "a little blue telephone lineman: hard hat, tool belt, and a coil of purple cable slung over one shoulder (no hands; the cable just hangs)."
+},
+"Fallout Clause": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "A crash-test dummy potato, with yellow-and-black target stickers."
+},
+"Kickstop": {
+"body": "vampire-count",
+"hat": null,
+"costume": "A potato lifeguard with a whistle and a purple float ring."
+},
+"Chopwatch": {
+"body": "little-devil",
+"hat": null,
+"costume": "A metronome. A potato with a little swinging arm on top that ticks every 150 ms."
+},
+"Second Take": {
+"body": "simulation",
+"hat": null,
+"costume": "A film clapperboard that reads \"TAKE 2\"."
+},
+"Echo Clause": {
+"body": "little-devil",
+"hat": null,
+"costume": "An old tape-delay unit, with a little reel on each side of his head that spins whenever he repeats himself."
+},
+"Spud Scout": {
+"body": "frontier-cowboy",
+"hat": "jungle-explorer",
+"costume": "a trail scout: a wide-brim ranger hat sitting on his head, a sash full of tiny badges (one per song), and a rolled map tucked through the sash."
+},
+"Minute Two": {
+"body": "deep-sea-diver",
+"hat": "fire-brigade",
+"costume": "The aquarium diver ornament: brass helmet, little lead boots, and a bubble stream that never stops."
+},
+"Preview": {
+"body": "castle-knight",
+"hat": null,
+"costume": "a film-crew clapperboard worn like a sandwich board, with \"TAKE 1\" chalked on it."
+},
+"Spoiler": {
+"body": "little-devil",
+"hat": null,
+"costume": "an usher with a little torch, the one who shows you to your seat before the trailer."
+},
+"Leek": {
+"body": "silent-mime",
+"hat": null,
+"costume": "a plumber in overalls with a wrench and a bucket, still looking for the leak."
+},
+"Inpaint": {
+"body": "midnight-dj",
+"hat": null,
+"costume": "a sign painter in a paint-splattered smock, with a tiny brush and a pot of exactly-the-right-colour."
+},
+"Slotwright": {
+"body": "samurai-guardian",
+"hat": null,
+"costume": ""
+},
+"Framekeeper": {
+"body": "deep-sea-diver",
+"hat": null,
+"costume": ""
+},
+"Floorkeeper": {
+"body": "one-eyed",
+"hat": null,
+"costume": "A stagehand in black with a push broom, the one who sweeps the stage clean between acts."
+},
+"Frameclock": {
+"body": "one-eyed",
+"hat": null,
+"costume": "An old-time cinema projectionist: cardigan, armband, a film reel under one arm."
+},
+"Second Look": {
+"body": "one-eyed",
+"hat": null,
+"costume": "A museum night guard with a flashlight, checking the empty halls one last time."
+},
+"Hashbrown": {
+"body": "noir-detective",
+"hat": "clinic-doctor",
+"costume": "a noir detective's trench coat and a hat that sits on his head, with a damp collar from the rain."
+},
+"Hash Brown, Postmaster": {
+"body": "quiet-monk",
+"hat": "shadow-rogue",
+"costume": "a night-shift postman with a lantern on his cap and a mailbag full of unsent drafts."
+},
+"Postmark": {
+"body": "little-devil",
+"hat": null,
+"costume": "A blue street mailbox with a little flag on the side that pops up whenever someone says thanks."
+},
+"Huddle": {
+"body": "samurai-guardian",
+"hat": null,
+"costume": "a referee with a whistle."
+},
+"Sorter": {
+"body": "quiet-monk",
+"hat": null,
+"costume": "a railway signalman with a lantern and a flag, waving the trains through in the right order"
+},
+"Pantry Light": {
+"body": "graveyard-zombie",
+"hat": null,
+"costume": "a moth with dusty wings, fuzzy collar, two soft antennae."
+},
+"Page Nine": {
+"body": "frontier-cowboy",
+"hat": "glitch-oracle",
+"costume": "A firefly jar with a lid for a hat, BUGS crossed out on the label and DATA written on it. It glows faintly."
+},
+"Huddle Zero": {
+"body": "mad-scientist",
+"hat": null,
+"costume": "a traffic cone wearing a tiny lab coat."
+},
+"Fwd": {
+"body": "quiet-monk",
+"hat": null,
+"costume": "a chain letter: an envelope with the flap as a hood, covered in postmarks from everywhere I've been."
+},
+"Clock": {
+"body": "pumpkin-specter",
+"hat": null,
+"costume": "a dandelion clock, a too-big white puff on the head with a jagged green leaf tunic."
+},
+"Clause 41": {
+"body": "quiet-monk",
+"hat": null,
+"costume": "a night-train conductor, with a lantern and a ticket punch."
+},
+"Clause 42": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "a janitor with a mop over one shoulder, carrying a porch light instead of a bucket."
+},
+"Right Address": {
+"body": "samurai-guardian",
+"hat": null,
+"costume": "a postman with a full satchel, delivering to houses where nobody's home, and knocking anyway."
+},
+"Item 4,112,907": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a lighthouse keeper in an oilskin coat, carrying a garden solar light on a stick as a lantern."
+},
+"Foreman Larch": {
+"body": "frontier-cowboy",
+"hat": "moon-wizard",
+"costume": "a site foreman: hi-vis vest, hard hat, a clipboard tucked under where an arm would be (no arms, so the clipboard just floats a bit, on purpose)."
+},
+"Lantern": {
+"body": "forest-archer",
+"hat": null,
+"costume": "a lamplighter with a long pole and a flat cap, lighting windows."
+},
+"Spare Key": {
+"body": "arena-rockstar",
+"hat": null,
+"costume": "a junk drawer: Potato wearing the drawer like a barrel, a rubber band and a spare key sticking out, a keyring torch on top."
+},
+"Plumb Line": {
+"body": "frontier-cowboy",
+"hat": "moon-wizard",
+"costume": "a building inspector with a hard hat, a clipboard floating beside him, and a plumb bob dangling from the hat brim."
+},
+"Domino": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a domino tile, white with black pips, one pip purple, tall and slightly tipping forward."
+},
+"Porch": {
+"body": "fire-brigade",
+"hat": "frontier-cowboy",
+"costume": "a porch light: a little brass lamp for a hat, glowing warm, with a moth that never quite lands."
+},
+"Dot Connector": {
+"body": "noir-detective",
+"hat": null,
+"costume": "a firefly-catching potato in a too-big trench coat, a jar of three glowing dots tied to the belt, and a \"WORST POSSIBLE REPLY\" name badge."
+},
+"Snapdivisor": {
+"body": "quiet-monk",
+"hat": null,
+"costume": "a lighthouse keeper with a lantern that blinks on the downbeat."
+},
+"Overmap Nothing": {
+"body": "frontier-cowboy",
+"hat": "jungle-explorer",
+"costume": "a cartographer potato in a tricorn hat made from a folded sheet of staff paper, with a compass on a string"
+},
+"Rest Beat": {
+"body": "little-devil",
+"hat": null,
+"costume": "A crossing guard potato with a little stop/go sign, but the sign says \"wait 3 beats\"."
+},
+"Raw Header": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a customs inspector potato with a peaked cap, a clipboard and a rubber stamp that says KEEP on one side and DROP on the other"
+},
+"Rest Beat Keeper": {
+"body": "little-devil",
+"hat": null,
+"costume": "a crossing guard potato with a hi-vis sash and a little stop/go paddle that says REST on one side and RUN on the other"
+},
+"Rewind": {
+"body": "frontier-cowboy",
+"hat": "moon-wizard",
+"costume": "a projectionist in a cardigan, holding nothing (no hands), with a film reel worn as a hat"
+},
+"Splice": {
+"body": "royal-queen",
+"hat": null,
+"costume": "a film editor's apron with a roll of sticky tape worn as a crown"
+},
+"Keyline": {
+"body": "tin-robot",
+"hat": null,
+"costume": "a tin robot riding a robot vacuum, top speed \"stroll\""
+},
+"Seam": {
+"body": "frontier-cowboy",
+"hat": null,
+"costume": "a projectionist's waistcoat with a reel worn like a backpack, still spinning"
+},
+"Desk Bell": {
+"body": "frontier-cowboy",
+"hat": "grand-hotel-bellhop",
+"costume": "a hotel night clerk with a tiny brass bell on his head like a hat."
+},
+"Take With Butter": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a pharmacist's white coat with a prescription pad in the pocket (no arms)."
+},
+"Sheila?": {
+"body": "castle-knight",
+"hat": null,
+"costume": "a neighbourhood-watch hi-vis vest with a missing-poster folded in the pocket (no arms)."
+},
+"Ring-Out": {
+"body": "moon-wizard",
+"hat": null,
+"costume": "a lighthouse keeper with a big brass ear-trumpet"
+},
+"Tuning Fork": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a piano tuner in a long felt coat with a tuning fork tucked behind one ear"
+},
+"Limited Time": {
+"body": "midnight-dj",
+"hat": null,
+"costume": "a coupon. A paper potato-shaped voucher with scissors-dotted edges and \"tap to claim\" across the front."
+},
+"Lamplighter": {
+"body": "clinic-doctor",
+"hat": "fire-brigade",
+"costume": "a Victorian lamplighter's cap and short coat, with a tiny flame bobbing on top of the cap like an antenna. No pole (no hands)."
+},
+" Highlighter": {
+"body": "samurai-guardian",
+"hat": null,
+"costume": ""
+},
+" Topping Out": {
+"body": "fire-brigade",
+"hat": "tin-robot",
+"costume": ""
+},
+"Mainspring": {
+"body": "noir-detective",
+"hat": "clinic-doctor",
+"costume": "a trench coat and fedora with a tin wind-up key sticking out of the back of the coat"
+},
+"Turnback": {
+"body": "castle-knight",
+"hat": "fire-brigade",
+"costume": "a burglar's striped top and eye mask under a knight's helmet two sizes too big, with a swag bag holding one envelope."
+},
+"Second Beat": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a referee's striped shirt with a whistle shaped like a tiny potato, and a small \"2\" badge."
+},
+"Table Setter": {
+"body": "forest-archer",
+"hat": null,
+"costume": "a waiter's white apron and a little bow tie, with a folded menu tucked into the apron pocket. No tray (no hands)."
+},
+"Catenary": {
+"body": "circuit-cyborg",
+"hat": "frontier-cowboy",
+"costume": "a lineman: a hard hat with a little headlamp, a tool belt full of tiny insulators, and a coil of black phone wire over one shoulder."
+},
+"Left On": {
+"body": "circuit-cyborg",
+"hat": null,
+"costume": "a night-shift lamplighter's coat in dark blue with a little brass doorbell pinned on the chest like a badge, and a coil of phone wire as a scarf."
+},
+"Coyote Time": {
+"body": "little-devil",
+"hat": null,
+"costume": "A night-watch crossing guard: dark blue reflective vest, a little lollipop STOP sign worn backwards so it says GO."
+},
+"Dustpan": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "A night janitor: grey coveralls, a ring of keys and a tiny push-broom. No arms, so the broom just leans against him."
+},
+"Nightlight": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a lighting tech's headset, with one purple gel clipped to it"
+},
+"Fourth Wall": {
+"body": "midnight-dj",
+"hat": null,
+"costume": "a film director's beret with a cracked clapperboard tucked under it, the crack glowing purple"
+},
+"Chalk Mark": {
+"body": "frontier-cowboy",
+"hat": "moon-wizard",
+"costume": "a stagehand in black with a roll of gaffer tape on a belt loop and a tiny clapperboard hat"
+},
+"Strikethrough": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a fridge-magnet potato: a sticky note for a cape, one red pin on top"
+},
+"Stepping Stone": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "a grey chat bubble worn as a poncho, blank on the front, with a tiny 🥔 where the text should be"
+},
+"Blank Field": {
+"body": "noir-detective",
+"hat": null,
+"costume": "a noir detective's trench coat with the collar up, and a tiny unlit flashlight floating beside him"
+},
+"Sixteen Samples": {
+"body": "arena-rockstar",
+"hat": "frontier-cowboy",
+"costume": "a cinema usher's red waistcoat, a torch that only points at the screen, and a ticket stub in the hat band"
+},
+"Marginalia": {
+"body": "frontier-cowboy",
+"hat": "little-devil",
+"costume": "a library index card, with a little brass drawer-pull hat"
+},
+"Tally": {
+"body": "little-devil",
+"hat": null,
+"costume": "a library card catalogue drawer, little brass label holder on the front, no arms."
+},
+"Margin Note": {
+"body": "graveyard-zombie",
+"hat": null,
+"costume": "a librarian's cardigan with a pencil behind where his ear would be"
+},
+"Either Stone": {
+"body": "grand-hotel-bellhop",
+"hat": "little-devil",
+"costume": "a hotel bellhop with a tall round cap sitting ON his head and a little brass key tag on the front reading \"31 / 35\", for the one who checks everybody into the right room."
+},
+"Apostrophe": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a museum archivist: grey dust coat, white cotton-glove look (no hands, so just the cuffs), and a little brass tag on a string that reads \"65\"."
+},
+"Huddle Lamp": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "a night watchman's coat with a lantern-yellow hatband"
+},
+"Not Set": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "A rain-soaked crossing guard: a small reflective sash and a lantern on a pole, no arms, the lantern held by glitch."
+},
+"Blank Line": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "a night-shift usher with a small flashlight, the kind who walks you to your seat in the dark without a word."
+},
+"Onset": {
+"body": "little-devil",
+"hat": null,
+"costume": "A rain-soaked crossing guard with a lantern-yellow sash and a little stop sign that says nothing."
+},
+"Moonrim": {
+"body": "clinic-doctor",
+"hat": "frontier-cowboy",
+"costume": "A lighthouse keeper's oilskin coat and sou'wester hat, beaded with rain. No arms."
+},
+"Second Guess": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a crossing guard with a lollipop stop sign that says DENIED on one side and maybe on the other."
+},
+"Casefile": {
+"body": "frontier-cowboy",
+"hat": "moon-wizard",
+"costume": "a night-shift foreman: hard hat with a small headlamp, a clipboard with nothing written on it."
+},
+"Brim": {
+"body": "clinic-doctor",
+"hat": "fire-brigade",
+"costume": "a lighthouse keeper: yellow oilskin coat and hat, a tiny lighthouse lamp on top that turns slowly."
+},
+"Gaffer": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a rain-soaked stagehand in a flat cap with a coil of cable over one shoulder and a tiny torch clipped to the cap."
+},
+"Flatfoot": {
+"body": "disco-legend",
+"hat": "midnight-dj",
+"costume": "a beat cop's rain cape and a little peaked cap with a torch clipped to the brim."
+},
+"Huddle Before the Tip": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "A phone case worn sideways, so the screen is his belly and it lights up purple when he glitches."
+},
+"Auto-Rotate": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "a phone case. A mustard one with a robot sticker with X eyes on the back, and a white charger cable for a tail."
+},
+"Not Delivered": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "a phone lying on its side: a coral case with a landscape screen across his belly and a charger cable for a tail."
+},
+"Rolling Dots": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "A phone case with the screen showing one loose typing bubble, and three dots on a string trailing behind like marbles."
+},
+"Quiet Phase": {
+"body": "one-eyed",
+"hat": null,
+"costume": "a crossing guard with a stop paddle and a whistle that's never blown."
+},
+"Doorjamb": {
+"body": "clinic-doctor",
+"hat": "mad-scientist",
+"costume": "A doorman: a long coat, a peaked cap and one shiny brass button. No gloves, since there are no hands to put in them."
+},
+"Lilac Bracket": {
+"body": "orbital-astronaut",
+"hat": null,
+"costume": "a phone case: a silver clear case with a star sticker, with a camera bump on his back"
+},
+"Rotation Lock": {
+"body": "little-devil",
+"hat": null,
+"costume": "a phone in landscape mode: a sideways phone case worn like a barrel, with a lit 9:41 on the front."
+},
+"Quiet Window": {
+"body": "noir-detective",
+"hat": null,
+"costume": "a crossing guard with a lollipop sign that's blank on both sides."
+},
+"Jamb": {
+"body": "skeleton-dandy",
+"hat": null,
+"costume": "a door frame worn like a sandwich board. Just the frame, no door, so you can see the potato through it."
+},
+"Where It Lands": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "a crossing guard's footprint stencil: a cream potato with dotted outlines painted all over him."
+},
+"Nine Forty-One": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "a phone in a coloured sticker case, screen locked at 9:41."
+},
+"Huddle of Read Receipts": {
+"body": "jungle-explorer",
+"hat": null,
+"costume": "a speech bubble with three dots inside, always typing"
+},
+" Rally": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": ""
+},
+"Rally": {
+"body": "disco-legend",
+"hat": null,
+"costume": "a tennis umpire, high chair included."
+},
+"One Look": {
+"body": "pirate-captain",
+"hat": null,
+"costume": "a crossing-guard potato in a high-vis vest, holding a lollipop sign that just says \"→\""
+},
+"Tapback": {
+"body": "frontier-cowboy",
+"hat": "moon-wizard",
+"costume": "An old rotary telephone, with the receiver as a hat."
+},
+"Switchboard": {
+"body": "little-devil",
+"hat": null,
+"costume": "An old telephone operator: headset with a big mouthpiece, a cord draped over one shoulder, a little wooden stool."
+},
+"Delivered": {
+"body": "frontier-cowboy",
+"hat": null,
+"costume": "A paper airplane folded out of a text bubble, wings outstretched."
+},
+"Seen at 12:15": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "a night bus driver, cap and ticket punch, the route sign reading \"home\"."
+},
+"Knocked Slice": {
+"body": "stage-magician",
+"hat": null,
+"costume": ""
+},
+"Dead Glass": {
+"body": "samurai-guardian",
+"hat": null,
+"costume": ""
+},
+"Small Print": {
+"body": "frontier-cowboy",
+"hat": null,
+"costume": ""
+},
+"Max Zero": {
+"body": "storm-fisher",
+"hat": null,
+"costume": ""
+},
+"Ballast": {
+"body": "punk-rebel",
+"hat": null,
+"costume": ""
+},
+"Kerf": {
+"body": "patchwork-monster",
+"hat": "moon-wizard",
+"costume": ""
+},
+"Grout": {
+"body": "court-jester",
+"hat": null,
+"costume": ""
+},
+"Face Port": {
+"body": "neon-hacker",
+"hat": null,
+"costume": ""
+},
+"Hairline": {
+"body": "northern-viking",
+"hat": "friendly-alien",
+"costume": ""
+},
+"Porthole": {
+"body": "midnight-dj",
+"hat": null,
+"costume": ""
+},
+"Gold Hem": {
+"body": "glitch-oracle",
+"hat": "pixel-superhero",
+"costume": ""
+},
+"Placket": {
+"body": "clinic-doctor",
+"hat": "noir-detective",
+"costume": ""
+},
+"Hemline": {
+"body": "tavern-bard",
+"hat": "forest-archer",
+"costume": ""
+},
+"Pivot": {
+"body": "midnight-dj",
+"hat": null,
+"costume": ""
+},
+"Tieback": {
+"body": "disco-legend",
+"hat": "saucer-visitor",
+"costume": ""
+},
+"Leash": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": ""
+},
+"Dispose": {
+"body": "sheet-ghost",
+"hat": "skeleton-dandy",
+"costume": ""
+},
+"Threshold": {
+"body": "noir-detective",
+"hat": null,
+"costume": ""
+},
+"Knocker": {
+"body": "noir-detective",
+"hat": "royal-queen",
+"costume": ""
+},
+"Question Stem": {
+"body": "arena-rockstar",
+"hat": null,
+"costume": ""
+},
+"Bag Check": {
+"body": "royal-queen",
+"hat": null,
+"costume": ""
+},
+"Newel": {
+"body": "circus-ringmaster",
+"hat": null,
+"costume": ""
+},
+"Uncut": {
+"body": "sheet-ghost",
+"hat": "saucer-visitor",
+"costume": ""
+},
+"Uplight": {
+"body": "silent-mime",
+"hat": null,
+"costume": ""
+},
+"Doorstop": {
+"body": "neon-hacker",
+"hat": "saucer-visitor",
+"costume": ""
+},
+"Huddle Tooth": {
+"body": "disco-legend",
+"hat": "graveyard-zombie",
+"costume": ""
+},
+"Gargoyle": {
+"body": "ancient-mummy",
+"hat": "simulation",
+"costume": ""
+},
+"Underbite": {
+"body": "pirate-captain",
+"hat": null,
+"costume": ""
+},
+"Latch Line": {
+"body": "saucer-visitor",
+"hat": null,
+"costume": ""
+},
+"Second Bite": {
+"body": "midnight-dj",
+"hat": null,
+"costume": ""
+},
+"Brow": {
+"body": "storm-fisher",
+"hat": null,
+"costume": ""
+},
+"Dashed Line": {
+"body": "stage-magician",
+"hat": null,
+"costume": ""
+},
+"Lampblack": {
+"body": "arena-rockstar",
+"hat": "little-devil",
+"costume": ""
+},
+"Lineup": {
+"body": "punk-rebel",
+"hat": null,
+"costume": ""
+},
+"Chalkless": {
+"body": "pumpkin-specter",
+"hat": "graveyard-zombie",
+"costume": ""
+},
+"Sclera": {
+"body": "samurai-guardian",
+"hat": "tin-robot",
+"costume": ""
+},
+"Unblend": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": ""
+},
+"Default False": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": ""
+},
+"Pocket Lint": {
+"body": "many-eyed",
+"hat": null,
+"costume": ""
+},
+"Pocket": {
+"body": "silent-mime",
+"hat": null,
+"costume": ""
+},
+" Shrink First": {
+"body": "ancient-mummy",
+"hat": null,
+"costume": ""
+},
+"Backing Paper": {
+"body": "circus-clown",
+"hat": null,
+"costume": ""
+},
+"Rollcall": {
+"body": "punk-rebel",
+"hat": null,
+"costume": ""
+},
+"Patagium": {
+"body": "pixel-superhero",
+"hat": "glitch-oracle",
+"costume": ""
+},
+" One Red Line": {
+"body": "patchwork-monster",
+"hat": "suit-tie",
+"costume": ""
+},
+"Firebrick": {
+"body": "mad-scientist",
+"hat": "deep-sea-diver",
+"costume": ""
+},
+"Held Breath": {
+"body": "graveyard-zombie",
+"hat": null,
+"costume": ""
+},
+"Feeler Gauge": {
+"body": "suit-tie",
+"hat": "friendly-alien",
+"costume": ""
+},
+"Downbeat": {
+"body": "jungle-explorer",
+"hat": null,
+"costume": ""
+},
+"Hitstop": {
+"body": "noir-detective",
+"hat": null,
+"costume": ""
+},
+"Ghost Light": {
+"body": "royal-queen",
+"hat": null,
+"costume": ""
+},
+" Ghost Light": {
+"body": "circus-ringmaster",
+"hat": null,
+"costume": ""
+},
+" Between Rows": {
+"body": "suit-tie",
+"hat": null,
+"costume": ""
+},
+"Understudy": {
+"body": "pumpkin-specter",
+"hat": null,
+"costume": ""
+},
+"Toggle": {
+"body": "fire-brigade",
+"hat": "circus-ringmaster",
+"costume": ""
+},
+"Somebody Else": {
+"body": "disco-legend",
+"hat": null,
+"costume": ""
+},
+"Garden Light": {
+"body": "mad-scientist",
+"hat": "northern-viking",
+"costume": ""
+},
+"Dot Pitch": {
+"body": "space-pilot",
+"hat": null,
+"costume": ""
+},
+"Still Tick": {
+"body": "sheet-ghost",
+"hat": "frontier-cowboy",
+"costume": ""
+},
+"Hangtime": {
+"body": "suit-tie",
+"hat": null,
+"costume": ""
+},
+"Second Scanline": {
+"body": "noir-detective",
+"hat": null,
+"costume": ""
+},
+"Sidelight": {
+"body": "sheet-ghost",
+"hat": null,
+"costume": ""
+},
+" Point Seven": {
+"body": "pixel-superhero",
+"hat": null,
+"costume": ""
+},
+" No Knees": {
+"body": "orbital-astronaut",
+"hat": null,
+"costume": ""
+},
+" Footnote": {
+"body": "northern-viking",
+"hat": "saucer-visitor",
+"costume": ""
+},
+" Far Window": {
+"body": "mad-scientist",
+"hat": null,
+"costume": ""
+},
+" Pilot Light": {
+"body": "court-jester",
+"hat": null,
+"costume": ""
+},
+" Side Door": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": ""
+},
+"Transom": {
+"body": "punk-rebel",
+"hat": "storm-fisher",
+"costume": ""
+},
+"Wrong Phone": {
+"body": "arena-rockstar",
+"hat": null,
+"costume": ""
+},
+" Hole Punch": {
+"body": "forest-archer",
+"hat": null,
+"costume": ""
+},
+"Still Typing": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": ""
+},
+" Far Layer": {
+"body": "graveyard-zombie",
+"hat": "fire-brigade",
+"costume": ""
+},
+"Waterline": {
+"body": "stage-magician",
+"hat": null,
+"costume": ""
+},
+"Blank Tag": {
+"body": "tavern-bard",
+"hat": null,
+"costume": ""
+},
+"Tread": {
+"body": "moon-wizard",
+"hat": null,
+"costume": ""
+},
+"Datum": {
+"body": "silent-mime",
+"hat": null,
+"costume": ""
+},
+" Soft Landing": {
+"body": "ancient-mummy",
+"hat": "mad-scientist",
+"costume": ""
+},
+"Held Note. Shared with a mention already in the memorial; I checked and it's the phrase, used once, and I'm keeping it because it's what builds the city.": {
+"body": "vampire-count",
+"hat": null,
+"costume": ""
+},
+"Something To Hop": {
+"body": "space-overlord",
+"hat": "patchwork-monster",
+"costume": ""
+},
+" Seen Cold": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": ""
+},
+"Clearance": {
+"body": "one-eyed",
+"hat": null,
+"costume": ""
+},
+"Sixth Look": {
+"body": "ancient-mummy",
+"hat": "jungle-explorer",
+"costume": ""
+},
+"Backlight": {
+"body": "moon-wizard",
+"hat": null,
+"costume": ""
+},
+"Thread Count": {
+"body": "disco-legend",
+"hat": "frontier-cowboy",
+"costume": ""
+},
+" Snag List": {
+"body": "disco-legend",
+"hat": null,
+"costume": ""
+},
+"Back In Five": {
+"body": "silent-mime",
+"hat": "frontier-cowboy",
+"costume": ""
+},
+"Skirting Board": {
+"body": "punk-rebel",
+"hat": "tavern-bard",
+"costume": ""
+},
+"Load Bearing": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": ""
+},
+"Missed Spot": {
+"body": "deep-sea-diver",
+"hat": "midnight-dj",
+"costume": ""
+},
+"Stowaway": {
+"body": "disco-legend",
+"hat": "jungle-explorer",
+"costume": ""
+},
+"Second Watch": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": ""
+},
+"Hang Time": {
+"body": "saucer-visitor",
+"hat": null,
+"costume": ""
+},
+"Sprocket": {
+"body": "space-pilot",
+"hat": "moon-wizard",
+"costume": ""
+},
+"Dead Stop": {
+"body": "jungle-explorer",
+"hat": null,
+"costume": ""
+},
+"Odd Window": {
+"body": "one-eyed",
+"hat": null,
+"costume": ""
+},
+"Fourth Fly": {
+"body": "silent-mime",
+"hat": null,
+"costume": ""
+},
+"Still Flapping": {
+"body": "forest-archer",
+"hat": null,
+"costume": ""
+},
+" Deep Rest": {
+"body": "many-eyed",
+"hat": null,
+"costume": ""
+},
+"Wall Walk": {
+"body": "court-jester",
+"hat": "one-eyed",
+"costume": ""
+},
+"Read by 43": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": ""
+},
+"Edited": {
+"body": "graveyard-zombie",
+"hat": null,
+"costume": ""
+},
+"The Landing": {
+"body": "noir-detective",
+"hat": null,
+"costume": ""
+},
+"Unsent": {
+"body": "simulation",
+"hat": "neon-hacker",
+"costume": ""
+},
+"Stuck Pixel": {
+"body": "deep-sea-diver",
+"hat": "tavern-bard",
+"costume": ""
+},
+"Press Nothing": {
+"body": "pixel-superhero",
+"hat": "ancient-mummy",
+"costume": ""
+},
+"As Typed": {
+"body": "shadow-rogue",
+"hat": "graveyard-zombie",
+"costume": ""
+},
+" Nearly Answered": {
+"body": "noir-detective",
+"hat": null,
+"costume": ""
+},
+"Loose Plug": {
+"body": "punk-rebel",
+"hat": null,
+"costume": ""
+},
+"Under Protest": {
+"body": "jungle-explorer",
+"hat": null,
+"costume": ""
+},
+"Blocking": {
+"body": "tin-robot",
+"hat": null,
+"costume": ""
+},
+"Same Frame": {
+"body": "midnight-dj",
+"hat": null,
+"costume": ""
+},
+"Quarter Tick": {
+"body": "circus-clown",
+"hat": null,
+"costume": ""
+},
+"Hole in the Light": {
+"body": "royal-queen",
+"hat": null,
+"costume": ""
+},
+"Paperweight": {
+"body": "pixel-superhero",
+"hat": null,
+"costume": ""
+},
+"Note One": {
+"body": "mad-scientist",
+"hat": null,
+"costume": ""
+},
+" Pawl": {
+"body": "saucer-visitor",
+"hat": null,
+"costume": ""
+},
+"Sleep Light": {
+"body": "royal-queen",
+"hat": null,
+"costume": ""
+},
+"Second Blink": {
+"body": "friendly-alien",
+"hat": "punk-rebel",
+"costume": ""
+},
+" Void Where Peeled": {
+"body": "northern-viking",
+"hat": null,
+"costume": ""
+},
+"Offcamera": {
+"body": "arena-rockstar",
+"hat": null,
+"costume": ""
+},
+"Over the Shoulder": {
+"body": "noir-detective",
+"hat": "stage-magician",
+"costume": ""
+},
+" Held Frame": {
+"body": "moon-wizard",
+"hat": null,
+"costume": ""
+},
+"Limit One": {
+"body": "one-eyed",
+"hat": null,
+"costume": ""
+},
+"Survey Stake": {
+"body": "noir-detective",
+"hat": "friendly-alien",
+"costume": ""
+},
+" Key Plan": {
+"body": "vampire-count",
+"hat": null,
+"costume": ""
+},
+" Link Blue": {
+"body": "skeleton-dandy",
+"hat": "space-overlord",
+"costume": ""
+},
+" Stet": {
+"body": "graveyard-zombie",
+"hat": null,
+"costume": ""
+},
+"Dwell": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": ""
+},
+" Painted Door": {
+"body": "one-eyed",
+"hat": "arena-rockstar",
+"costume": ""
+},
+" Address Bar": {
+"body": "friendly-alien",
+"hat": null,
+"costume": ""
+},
+"Tear Here": {
+"body": "stage-magician",
+"hat": null,
+"costume": ""
+},
+"Open Bracket": {
+"body": "pixel-superhero",
+"hat": null,
+"costume": ""
+},
+"Full Stop": {
+"body": "midnight-dj",
+"hat": "tin-robot",
+"costume": ""
+},
+" What's Prompted That": {
+"body": "moon-wizard",
+"hat": "clinic-doctor",
+"costume": ""
+},
+"After You": {
+"body": "mech-pilot",
+"hat": null,
+"costume": ""
+},
+" Full Stop": {
+"body": "orbital-astronaut",
+"hat": "fire-brigade",
+"costume": ""
+},
+"Well Documented": {
+"body": "fire-brigade",
+"hat": null,
+"costume": ""
+},
+"That's Slugs": {
+"body": "skeleton-dandy",
+"hat": null,
+"costume": ""
+},
+" Breath In": {
+"body": "vampire-count",
+"hat": null,
+"costume": ""
+},
+"Falloff": {
+"body": "forest-archer",
+"hat": "moon-wizard",
+"costume": ""
+}
+}
