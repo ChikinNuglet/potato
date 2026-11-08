@@ -1412,7 +1412,11 @@ function trapdoor(x, t, P) { const s = P.cave || Z, a = s.n ? since(s, t) : 99, 
   x.beginPath(); x.ellipse(328, y1 - 16, 15, 8, 0, 0, TAU); x.lineWidth = 6; x.strokeStyle = INK; x.stroke(); x.lineWidth = 3; x.strokeStyle = '#8a8f99'; x.stroke(); x.restore(); }
 bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 1286, x1: 1420, y0: 360, y1: 450, hint: [1350, 350], sfx: { on: 'flick', off: 'flick' } },
   { id: 'cave', kind: 'switch', call: true, busy: 1.7, x0: 236, x1: 420, y0: 704, y1: 800, hint: [328, 690], sfx: { on: 'creak', off: 'creak' } }];   // (the cave: room.mjs opens it)
-bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); trapdoor(x, t, P); };
+// the sticky note on the laptop (Chikin, Nov 8: "put a little sticky note that has the password on the computer"): yellow, a bit crooked,
+// stuck to the screen's corner, "niepal" in his scrawl. An easy puzzle: the password's right there if you look.
+function stickyNote(x) { x.save(); x.translate(1408, 372); x.rotate(0.12); box(x, -22, -20, 44, 40, '#f7e26a', { r: 2, lw: 3, sh: 'b' });
+  x.fillStyle = 'rgba(0,0,0,.08)'; x.fillRect(-22, -20, 44, 8); x.fillStyle = '#2a2a6a'; x.font = 'italic 700 11px "Comic Sans MS", "Marker Felt", cursive'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('niepal', 0, 3); x.restore(); }
+bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); terminal(x, t, P); stickyNote(x); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); trapdoor(x, t, P); };
 const derive = (id, o) => { const st = Object.assign({}, bareSt, { props: propsBare.slice(), under: uBare, id }, o); S.push(st); return st; };
 
 // Between Messages: nobody's home, the lamp's off, and someone's flashlight is going through the kitchen
@@ -1422,17 +1426,17 @@ derive('burglar', { name: 'nobody home', outfit: 'burglar', badge: '#23283a', da
   emblem(x) { ell(x, 50, 62, 26, 24, '#da9643'); x.beginPath(); x.moveTo(24, 50); x.quadraticCurveTo(50, 8, 76, 50); x.closePath(); x.fillStyle = '#17161c'; x.fill(); stroke(x, { lw: 5 }); box(x, 22, 46, 56, 11, '#2c2b33', { r: 4, sh: 'n', lw: 4 }); } });
 
 // Binary: the kitchen as he sees it, all zeros and ones. Everything's still solid, nothing switches
-derive('binary', { name: 'the simulation', outfit: 'simulation', badge: '#0d2a1b', under: null, dark: 0, props: [], noSign: true, noSong: true,
+derive('binary', { name: 'the simulation', outfit: 'simulation', badge: '#0d2a1b', under: null, dark: 0, props: [], noSign: true, noSong: true, noLeftDoor: true,
   // (Chikin, Nov 8: no button for it; "change the background to digital binary with a lighted doorway that leads back into the house": the
   // living room's front door opens into it. No kitchen in here any more: just the code, green on black, and the warm doorway home.)
   door: { kind: 'swing', panel: '#2a1c12', trim: '#3a2a1c', knob: '#e0b45a', light: '#ffd9a0', plate: '#1d140f', plateTrim: '#8a5a36', deco: 'kitchen' },
   door2: { kind: 'swing', panel: '#2a1c12', trim: '#3a2a1c', knob: '#e0b45a', light: '#ffd9a0', plate: '#1d140f', plateTrim: '#8a5a36', deco: 'kitchen' },
   base(x) { x.save(); const m = x.getTransform(), sq = x.__sq; x.__sq = 0; x.setTransform(1, 0, 0, 1, 0, 0);
     x.fillStyle = '#03080a'; x.fillRect(0, 0, 1600, 900);
-    for (const [cx, cy, r] of [[110, 520, 520], [1490, 520, 520]]) { const g = x.createRadialGradient(cx, cy, 10, cx, cy, r); g.addColorStop(0, 'rgba(255,214,150,0.42)'); g.addColorStop(1, 'rgba(255,214,150,0)'); x.fillStyle = g; x.fillRect(0, 0, 1600, 900); }   // the doorways' warm light, spilling into the code
+    for (const [cx, cy, r] of [[1490, 520, 560]]) { const g = x.createRadialGradient(cx, cy, 10, cx, cy, r); g.addColorStop(0, 'rgba(255,214,150,0.42)'); g.addColorStop(1, 'rgba(255,214,150,0)'); x.fillStyle = g; x.fillRect(0, 0, 1600, 900); }   // the doorways' warm light, spilling into the code
     x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle';
     for (let X = 8; X < 1600; X += 13) { const col = rnd(X, 1), len = 0.35 + 0.65 * rnd(X, 2), head = rnd(X, 3) * 900;
-      for (let Y = 9; Y < 900; Y += 17) { const d = ((head - Y) / 900 + 1) % 1, k = d < len ? (1 - d / len) : 0.05, warm = Math.max(0, 1 - Math.min(Math.abs(X - 110), Math.abs(X - 1490)) / 260);
+      for (let Y = 9; Y < 900; Y += 17) { const d = ((head - Y) / 900 + 1) % 1, k = d < len ? (1 - d / len) : 0.05, warm = Math.max(0, 1 - Math.abs(X - 1490) / 260);
         x.fillStyle = warm > 0.2 && rnd(X, Y + 7) < warm * 0.5 ? `rgba(255,217,160,${(0.15 + 0.6 * k).toFixed(3)})` : `rgba(77,255,154,${(0.06 + 0.86 * k * k).toFixed(3)})`;
         x.fillText(rnd(X, Y) > 0.5 ? '1' : '0', X, Y); } }
     x.fillStyle = 'rgba(77,255,154,0.25)'; x.fillRect(0, 707, 1600, 2);   // the floor: one line of light
@@ -1713,7 +1717,7 @@ for (const st of S) {
       else if (st.dark && lit < 1) { ctx.fillStyle = `rgba(6,5,12,${st.dark * (1 - lit)})`; ctx.fillRect(0, 0, ROOM.ox, 900); ctx.fillRect(E, 0, 1600 - E, 900); }
       ctx.save(); ctx.beginPath(); ctx.rect(ROOM.ox, 0, E - ROOM.ox, 900); ctx.clip(); ctx.translate(ROOM.ox, 0); ctx.scale(ROOM.sx, 1); ctx.__sq = ROOM.sx;   // the "use me" glints, over it all
       try { propMarks(ctx, st, t, P, o); } finally { ctx.__sq = 0; ctx.restore(); } }
-    doorway(ctx, st, t, o ? o.open || 0 : 0); if (!st.noSign) sign(ctx, st, t, o);
+    if (!st.noLeftDoor) doorway(ctx, st, t, o ? o.open || 0 : 0); if (!st.noSign && !st.noLeftDoor) sign(ctx, st, t, o);   // (noLeftDoor: the binary outside has only its lit doorway home, Nov 8)
     ctx.save(); ctx.translate(WDOOR.x0 + WDOOR.x1, 0); ctx.scale(-1, 1); doorway(ctx, st.door2 ? { door: st.door2 } : st, t, o ? o.open2 || 0 : 0, WDOOR); ctx.restore(); if (st.wallDeco) st.wallDeco(ctx, t); usableGlitch(ctx, st, t); ctx.restore(); };
   st.icon = (ctx, size = 48) => { ctx.save(); ctx.scale(size / 100, size / 100); ctx.lineJoin = 'round'; ctx.lineCap = 'round';   // a round sticker badge: ink ring, the colour, the costume's key shape (the old white border only with ?border=, D-20261105-09)
     if (OLD_WHITE) { ctx.beginPath(); ctx.arc(50, 50, 49, 0, TAU); ctx.fillStyle = '#fbf6ec'; ctx.fill(); } ctx.beginPath(); ctx.arc(50, 50, 44.5, 0, TAU); ctx.fillStyle = INK; ctx.fill();

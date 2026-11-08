@@ -83,7 +83,7 @@ async function main() {
     a.onended = () => { if (jukeA !== a) return; jukeA = null; intro.propOff && intro.propOff('juke'); roomBack(); }; };
   const portal = installPortal({ glitch: glitchOnly, opened() { store.set('potato-room-door', '1'); }, music: on => { if (!kmusic) return; on ? (jukePlaying ? 0 : kmusic.play().catch(() => {})) : kmusic.pause(); } });
   // the right door: locked everywhere except Potato's own (Regular), which the password opens. It leads to the demo for now
-  Object.defineProperty(intro, 'leftShut', { get() { return false; } });   // (Nov 8: the front door opens now: into the simulation)   // the living room's front door: it opens a crack onto the street, for now (intro.mjs peekOut)
+  Object.defineProperty(intro, 'leftShut', { get() { return STYLES[intro.style()].id === 'binary'; } });   // (no left door outside: only the lit doorway home)   // (Nov 8: the front door opens now: into the simulation)   // the living room's front door: it opens a crack onto the street, for now (intro.mjs peekOut)
   Object.defineProperty(intro, 'rightOpen', { get() { return true; } });   // (Nov 8: every door opens, down the line)
   const booth = installBooth({ T, renderer, scene, pivot, intro, fx, wordsHome: $('gwords'), face, faces: spud, STYLES, count, glitch: glitchOnly, walkable: on => { boothBusy = on; intro.noPaint = on; }, sfx: SFX }); let boothBusy = false;
   window.__boothNext = () => pick(step(room, 1));
