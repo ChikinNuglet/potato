@@ -26,6 +26,7 @@ body{min-height:100vh;display:flex;flex-direction:column;align-items:center;just
 .box.join .row button{background:var(--purple);color:#fff}
 .say{min-height:1.4em;margin:10px 2px 0;color:var(--dim);font-size:14px}
 .hp{position:absolute;left:-9999px}
+body.going>*:not(#bin):not(#intro):not(script){visibility:hidden}
 .keybox{margin-top:26px}
 .keybox .row button{background:#ffd36b;color:#2a1a00}
 .hint{margin:4px 2px 0;color:var(--dim);font:600 13px "JetBrains Mono",monospace;letter-spacing:.04em}
@@ -105,17 +106,21 @@ body{padding-top:86px!important}
   <p class="cl links"><a href="https://x.com/spudsmcgoober">x</a> <a href="https://www.tiktok.com/@potatoilander">tiktok</a> <a href="https://youtube.com/@potato404file">youtube</a> <a href="https://ilands.ai/agent/360255501994299392">ilands</a></p>
 </section>
 <script>
+function goIn(){document.body.classList.add('going');var o=document.createElement('div');o.id='intro';o.style.cssText='position:fixed;inset:0;z-index:99;background:#05070a;display:grid;place-items:center;transition:background .5s';document.body.appendChild(o);
+ var seq=['studio/lib/chikin-logo.png','logo/potato-logo-tm.png'],i=0;
+ (function next(){if(i>=seq.length){location.href='studio/?t';return}var potLogo=(i===1);o.style.background=potLogo?'transparent':'#05070a';var im=new Image();im.src=seq[i++];im.alt='';im.style.cssText='grid-area:1/1;width:min(560px,80vw);opacity:0;transition:opacity .6s';o.appendChild(im);
+  var go=function(){setTimeout(function(){im.style.opacity=1},40);setTimeout(function(){im.style.opacity=0},1700);setTimeout(function(){im.remove();next()},2350)};if(im.complete)go();else{im.onload=go;im.onerror=next}})()}
 (function(){var MAIL='https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc2_C2WtiRDMUvQRiVNhsLavhw_8Hs34dahfItgug/exec';
 var f=document.getElementById('door'),c=document.getElementById('code'),say=document.getElementById('doorsay'),b=f.querySelector('button');
 try{if(localStorage.getItem('potato-room-unlocked')==='1'){say.textContent='you already have a key. come in.';}}catch(e){}
 f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().toUpperCase();
- try{if(!v&&localStorage.getItem('potato-room-unlocked')==='1'){location.href='studio/';return}}catch(e){}
+ try{if(!v&&localStorage.getItem('potato-room-unlocked')==='1'){goIn();return}}catch(e){}
  if(!v){say.textContent='krrzzt— type your password.';return}
  // the password is i'm potato baby (any caps, with or without the apostrophe, the triangle, the TM or the potato). it sits right here in the page's code on purpose: a curtain, not a lock
- var ph=v.toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(ph==='impotatobaby'){try{localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';location.href='studio/?t';return}
+ var ph=v.toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(ph==='impotatobaby'){try{localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';goIn();return}
  b.disabled=true;say.textContent='checking…';
  fetch(MAIL,{method:'POST',body:JSON.stringify({action:'redeem',code:v})}).then(function(r){return r.json()}).then(function(j){
-  if(j&&j.ok){try{localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';location.href='studio/?t'}
+  if(j&&j.ok){try{localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';goIn()}
   else{b.disabled=false;say.textContent=(j&&j.why==='used')?'that one’s been used. join below for a fresh one.':'n0t f0und. check it and try again.'}
  }).catch(function(){b.disabled=false;say.textContent='the door stuck. try again in a sec.'});});})();
 </script>
