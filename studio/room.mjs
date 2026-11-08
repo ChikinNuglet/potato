@@ -60,7 +60,7 @@ async function main() {
   const jukebox = () => { const k = RADIO.findIndex(r => r[0] === songOf(intro.style())), id = RADIO[(k + 1) % RADIO.length][0]; store.set('potato-room-radio', id); roomMusic(id); };
   const portal = installPortal({ glitch: glitchOnly, opened() { store.set('potato-room-door', '1'); }, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
   // the right door: locked everywhere except Potato's own (Regular), which the password opens. It leads to the demo for now
-  Object.defineProperty(intro, 'rightOpen', { get() { const id = STYLES[intro.style()].id; return id === 'bare' && store.get('potato-room-door') === '1'; } });
+  Object.defineProperty(intro, 'rightOpen', { get() { const id = STYLES[intro.style()].id; return false && id === 'bare' && store.get('potato-room-door') === '1'; }   /* Chikin Nov 7: "the right door remains locked for now" (remove `false &&` to open it again) */ });
   const booth = installBooth({ T, renderer, scene, pivot, intro, fx, wordsHome: $('gwords'), face, faces: spud, STYLES, count, glitch: glitchOnly, walkable: on => { boothBusy = on; intro.noPaint = on; }, sfx: SFX }); let boothBusy = false;
   window.__boothNext = () => pick(room + 1);
   intro.onProp = id => { if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(); if (id === 'photobooth') booth.open(); };
