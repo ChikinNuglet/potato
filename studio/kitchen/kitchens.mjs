@@ -1590,7 +1590,7 @@ function sign(x, st, t, o) {
   plate(x, d, t, SIGN);
   if (!o || !o.name) return;
   x.save(); x.textBaseline = 'middle';
-  x.font = MONO(22); x.textAlign = 'left'; x.fillStyle = '#ffd9a0'; x.fillText(String(o.num).padStart(2, '0'), x0 + 26, y0 + 30);
+  x.font = MONO(22); x.textAlign = 'left'; x.fillStyle = '#ffd9a0'; /* (Chikin, Nov 8: no numbers on the door signs) */
   const lit = !!o.cleared; circ(x, x1 - 32, y0 + 30, 10, lit ? '#ffcf8a' : '#2a2620', { sh: 'n', lw: 4 }); if (lit) { glow(x, x1 - 32, y0 + 30, 34, '#ffcf8a', 0.6); circ(x, x1 - 35, y0 + 27, 3, '#fff6e0', { sh: 'n', lw: 0 }); }
   const name = o.name.toLowerCase(); let size = 34, lines = wrap(x, name, size, W - 44);
   while ((lines.length > 2 || lines.some(l => x.measureText(l).width > W - 44)) && size > 18) { size -= 2; lines = wrap(x, name, size, W - 44); }
