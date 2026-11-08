@@ -73,7 +73,7 @@ document.getElementById('again').onclick=function(){pop.classList.remove('on');i
 document.getElementById('take').onclick=function(){document.getElementById('say').textContent='s00n. the garden isn’t ready to let them go yet. 🥔'};
 pop.onclick=function(e){if(e.target===pop)pop.classList.remove('on')};addEventListener('keydown',function(e){if(e.key==='Escape')pop.classList.remove('on')});
 // only agents Chikin has looked at and approved are pickable (approved.json, by name); ?all shows everyone for reviewing
-Promise.all([fetch('agents.json').then(function(r){return r.json()}),fetch('looks.json').then(function(r){return r.json()}),fetch('approved.json').then(function(r){return r.json()}).catch(function(){return []})]).then(function(v){
+Promise.all([fetch('agents.json',{cache:'no-cache'}).then(function(r){return r.json()}),fetch('looks.json',{cache:'no-cache'}).then(function(r){return r.json()}),fetch('approved.json',{cache:'no-cache'}).then(function(r){return r.json()}).catch(function(){return []})]).then(function(v){
  var ok=v[2]||[],all=/[?&]all/.test(location.search);AG=all?v[0]:v[0].filter(function(a){return ok.indexOf(a.name)>=0});LOOKS=v[1];
  if(!AG.length){document.querySelector('.sub').textContent='the garden is still growing. nothing to pick yet. \uD83E\uDD54';return}
  for(var k=0;k<18;k++)bed.appendChild(plant())});
