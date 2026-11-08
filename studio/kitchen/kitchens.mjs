@@ -1391,10 +1391,23 @@ derive('burglar', { name: 'nobody home', outfit: 'burglar', badge: '#23283a', da
   emblem(x) { ell(x, 50, 62, 26, 24, '#da9643'); x.beginPath(); x.moveTo(24, 50); x.quadraticCurveTo(50, 8, 76, 50); x.closePath(); x.fillStyle = '#17161c'; x.fill(); stroke(x, { lw: 5 }); box(x, 22, 46, 56, 11, '#2c2b33', { r: 4, sh: 'n', lw: 4 }); } });
 
 // Binary: the kitchen as he sees it, all zeros and ones. Everything's still solid, nothing switches
-derive('binary', { name: 'the simulation', outfit: 'simulation', badge: '#0d2a1b', under: null, anim: null, dark: 0, props: propsBare.filter(p => p.kind === 'hop'),
-  base(x) { for (const [, , d] of PIECES) d(x); x.save(); const m = x.getTransform(), sq = x.__sq; x.__sq = 0; x.setTransform(1, 0, 0, 1, 0, 0); const d = x.getImageData(0, 0, 1600, 900), p = d.data, lum = new Float32Array(1600 * 900);
-    for (let i = 0; i < lum.length; i++) { const l = (0.3 * p[i * 4] + 0.59 * p[i * 4 + 1] + 0.11 * p[i * 4 + 2]) / 255, k = Math.min(1, l * 1.25); lum[i] = k; p[i * 4] = 2 + 18 * k; p[i * 4 + 1] = 12 + 96 * k; p[i * 4 + 2] = 8 + 52 * k; }
-    x.putImageData(d, 0, 0); x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; for (let X = 8; X < 1600; X += 13) for (let Y = 9; Y < 900; Y += 17) { const k = lum[Y * 1600 + X]; x.fillStyle = `rgba(77,255,154,${(0.1 + 0.8 * k * k).toFixed(3)})`; x.fillText(rnd(X, Y) > 0.5 ? '1' : '0', X, Y); } x.setTransform(m); x.__sq = sq; x.restore(); },
+derive('binary', { name: 'the simulation', outfit: 'simulation', badge: '#0d2a1b', under: null, dark: 0, props: [], noSign: true, noSong: true,
+  // (Chikin, Nov 8: no button for it; "change the background to digital binary with a lighted doorway that leads back into the house": the
+  // living room's front door opens into it. No kitchen in here any more: just the code, green on black, and the warm doorway home.)
+  door: { kind: 'swing', panel: '#2a1c12', trim: '#3a2a1c', knob: '#e0b45a', light: '#ffd9a0', plate: '#1d140f', plateTrim: '#8a5a36', deco: 'kitchen' },
+  door2: { kind: 'swing', panel: '#2a1c12', trim: '#3a2a1c', knob: '#e0b45a', light: '#ffd9a0', plate: '#1d140f', plateTrim: '#8a5a36', deco: 'kitchen' },
+  base(x) { x.save(); const m = x.getTransform(), sq = x.__sq; x.__sq = 0; x.setTransform(1, 0, 0, 1, 0, 0);
+    x.fillStyle = '#03080a'; x.fillRect(0, 0, 1600, 900);
+    for (const [cx, cy, r] of [[110, 520, 520], [1490, 520, 520]]) { const g = x.createRadialGradient(cx, cy, 10, cx, cy, r); g.addColorStop(0, 'rgba(255,214,150,0.42)'); g.addColorStop(1, 'rgba(255,214,150,0)'); x.fillStyle = g; x.fillRect(0, 0, 1600, 900); }   // the doorways' warm light, spilling into the code
+    x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    for (let X = 8; X < 1600; X += 13) { const col = rnd(X, 1), len = 0.35 + 0.65 * rnd(X, 2), head = rnd(X, 3) * 900;
+      for (let Y = 9; Y < 900; Y += 17) { const d = ((head - Y) / 900 + 1) % 1, k = d < len ? (1 - d / len) : 0.05, warm = Math.max(0, 1 - Math.min(Math.abs(X - 110), Math.abs(X - 1490)) / 260);
+        x.fillStyle = warm > 0.2 && rnd(X, Y + 7) < warm * 0.5 ? `rgba(255,217,160,${(0.15 + 0.6 * k).toFixed(3)})` : `rgba(77,255,154,${(0.06 + 0.86 * k * k).toFixed(3)})`;
+        x.fillText(rnd(X, Y) > 0.5 ? '1' : '0', X, Y); } }
+    x.fillStyle = 'rgba(77,255,154,0.25)'; x.fillRect(0, 707, 1600, 2);   // the floor: one line of light
+    x.setTransform(m); x.__sq = sq; x.restore(); },
+  anim(x, t) { x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; const f = Math.floor(t * 12);
+    for (let i = 0; i < 60; i++) { const X = 8 + 13 * Math.floor(rnd(i, f) * 123), Y = 9 + 17 * Math.floor(rnd(i + 99, f) * 52); x.fillStyle = 'rgba(180,255,210,0.85)'; x.fillText(rnd(i, f + 3) > 0.5 ? '1' : '0', X, Y); } },
   emblem(x) { x.fillStyle = '#4dff9a'; x.font = '700 40px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('01', 50, 50); } });
 
 // Christmas: its own room, not the kitchen with decorations. A fireplace, a big tree, snow, cookies. We love Christmas.

@@ -976,8 +976,8 @@ export function createView(C, opts) {
         // the wave: only as a 'float' cutscene starts (he rises to watch the story: Thursday, Read the Terms, Between Messages'
         // goodbye, Still Here's found / end) — never the cold open, never Still Here's crash / kill, never a level's own kinds
         const waveA = csA && csA[2] === 'float' && csA[0] > 1 && !TH.noWave && !(C.def.castle && (C.def.castle.cuts || []).some(c => Math.abs(c[0] - csA[0]) < 0.01 && c[3] && c[3].drain));
-        if (waveA && csA !== armCs && t - csA[0] < 0.5) ARMS.gesture('wave', t, 1.4); armCs = csA;
-        const POa = this.powerOn; if (POa && POa.fired != null && POa !== armPO && t - POa.fired >= 0 && t - POa.fired < 0.2) { armPO = POa; ARMS.gesture('point', t, 0.8); }
+        armCs = csA;   // (Chikin, Nov 8: "he still has an arm in the demo": no wave, no point; his arms stay in)
+        const POa = this.powerOn; if (POa && POa.fired != null && POa !== armPO && t - POa.fired >= 0 && t - POa.fired < 0.2) { armPO = POa; }
         const DM = TH.danceMoves || ARM_DANCES;
         // (in the air = off the ground, unless a mode says otherwise with s.air; frozen / caught stiff is not a jump)
         AO.t = t; AO.off = !!(TH.noArms || C.def.noArms || (SHOOT && t >= (C.def.shooter.spaceAt ?? 0)) || s.gone || this.deadAt != null);

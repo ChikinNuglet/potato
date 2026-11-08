@@ -58,7 +58,7 @@ async function main() {
   // down the line"): the simulation is the first button; the living room's front door opens into it; every kitchen's left door = the one
   // before it on the row, right door = the one after (the last one's right door = the photo booth). ORDER = the row, left to right.
   const BIN = STYLES.findIndex(s => s.id === 'binary');
-  const ORDER = Array.from({ length: count() }, (_, i) => i);   // (Chikin, Nov 8 later: "move binary to before halloween again": the row is back in its own order; the front door still opens into the simulation)
+  const ORDER = Array.from({ length: count() }, (_, i) => i).filter(i => i !== BIN);   // (no button for the simulation: only the living room's front door goes there)   // (Chikin, Nov 8 later: "move binary to before halloween again": the row is back in its own order; the front door still opens into the simulation)
   const step = (i, d) => ORDER[(ORDER.indexOf(i) + d + ORDER.length) % ORDER.length];
   ORDER.forEach(i => addTile(i));
   const tiles = () => { [...row.children].forEach(b => { const on = +b.dataset.i === room; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }); };
@@ -91,6 +91,7 @@ async function main() {
     const enter = i => { room = i; go(i); tiles(); roomMusic(songOf(i)); };
     if (inLiving) { inLiving = false; STYLES[LIVING].outfit = null; if (how === 'demo') enter(room); else enter(BIN >= 0 ? BIN : ORDER[0]); return; }   // right = back where he came from; the front door = the simulation
     if (inBooth) { inBooth = false; STYLES[BOOTH].outfit = null; enter(room); return; }
+    if (room === BIN) { inLiving = true; room = ORDER[0]; STYLES[LIVING].outfit = null; intro.showKitchen(LIVING, { back: true, watch: true }); tiles(); return; }   // the simulation's lit doorway: back into the house (the living room)
     const pos = ORDER.indexOf(room);
     if (how !== 'demo') { if (pos <= 0 && LIVING >= 0) { inLiving = true; STYLES[LIVING].outfit = STYLES[room].outfit; intro.showKitchen(LIVING, { back: true, watch: true }); return; } enter(ORDER[pos - 1]); return; }
     if (pos >= ORDER.length - 1) { inBooth = true; STYLES[BOOTH].outfit = STYLES[boothLook = room].outfit; go(BOOTH); tiles(); return; }   // the end of the line: the photo booth
