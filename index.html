@@ -26,6 +26,8 @@ body{min-height:100vh;display:flex;flex-direction:column;align-items:center;just
 .box.join .row button{background:var(--purple);color:#fff}
 .say{min-height:1.4em;margin:10px 2px 0;color:var(--dim);font-size:14px}
 .hp{position:absolute;left:-9999px}
+.keybox{margin-top:26px}
+.keybox .row button{background:#ffd36b;color:#2a1a00}
 .hint{margin:4px 2px 0;color:var(--dim);font:600 13px "JetBrains Mono",monospace;letter-spacing:.04em}
 .contact{margin-top:40px}.cl{margin:6px 2px;font:600 16px "JetBrains Mono",monospace}.cl a{color:var(--green);text-decoration:none}.cl a:hover{text-decoration:underline}
 .links{display:flex;gap:18px;flex-wrap:wrap}.links a{color:#c9a7ff}
@@ -80,7 +82,11 @@ body{padding-top:86px!important}
   <h2 data-spud="&gt; p@ssw0rd?! krrzzt">&gt; password</h2>
   <div class="row"><input id="code" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="password" aria-describedby="doorsay"><button type="submit" data-spud="spüd">enter</button></div>
   <p class="say" id="doorsay" role="status"></p>
-  <p class="hint" data-spud="h@v3 a p0t4t0? 3nt3r th3 k3y">have a potato? enter the key.</p>
+</form>
+<form class="box keybox" id="keybox" novalidate>
+  <h2 data-spud="&gt; h@v3 a p0t4t0? 3nt3r th3 k3y">&gt; have a potato? enter the key</h2>
+  <div class="row"><input id="potkey" autocomplete="off" spellcheck="false" placeholder="your potato's key"><button type="submit" data-spud="spüd">key</button></div>
+  <p class="say" id="keysay" role="status"></p>
 </form>
 <div class="or" data-spud="n0 p0t4t0?">no password?</div>
 <img id="perch" src="logo/potato-3d.png" alt="" aria-hidden="true">
@@ -155,7 +161,7 @@ if(still){for(var k=0;k<120;k++)step()}else{(function loop(){step();setTimeout(f
 <script>
 (function(){var lw=document.getElementById('lw'),H=[].slice.call(lw.querySelectorAll('.hole')),cur=-1,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function glitch(ms){lw.classList.add('glitch');setTimeout(function(){lw.classList.remove('glitch')},ms)}
-var P=document.getElementById('perch'),spots=H.map(function(h){return {hole:h}}).concat([{box:document.getElementById('door')},{box:document.querySelector('.box.join')},{box:document.getElementById('contact')},{or:document.querySelector('.or')}]),at=-1,swapped=[];
+var P=document.getElementById('perch'),spots=H.map(function(h){return {hole:h}}).concat([{box:document.getElementById('door')},{box:document.getElementById('keybox')},{box:document.querySelector('.box.join')},{box:document.getElementById('contact')},{or:document.querySelector('.or')}]),at=-1,swapped=[];
 var R=function(a){return a[Math.floor(Math.random()*a.length)]};
 function leet(t){return t.replace(/[aeiost]/gi,function(c){var m={a:['4','@','△'],e:['3'],i:['1','!'],o:['0'],s:['5','$'],t:['7','+']}[c.toLowerCase()];return Math.random()<.6?R(m):c})}
 var POOL={h2:['&gt; j0in th3 p0t4t0 l1st','&gt; f33d m3 t0k3ns','&gt; sp0ud m41l','&gt; 404: l1st n0t f0und','&gt; kn0ck --0n --p0t4t0','&gt; d1rt r0ck cl4ub'],btn:['\uD83E\uDD54','spüd','krrzzt','m4sh','fr13s','b4k3d','wh@t?!'],ph:['y0u@p0t4t0','d1rt.r0ck@404','sp00d@th3.d00r','m4sh3d@k1tch3n','n0t.f0und@404'],or:['n0 p0t4t0?','wh3r3 p0t4t0?','f0rg0t th3 p@ss?','404: p@ss n0t f0und','tr7 th3 c0up0n']};
@@ -250,5 +256,9 @@ setInterval(function(){if(still||Math.random()>.4)return;P.classList.add('tw');s
 if(/[?&]debug/.test(location.search))window.__pot={stuck:function(){var L=plats();var f=L[L.length-1];X=innerWidth*.8;Y=f.y;on=f;stuck()},ship:function(){var L=plats();var f=L[L.length-1];X=innerWidth*.3;Y=f.y;on=f;shipUp()}};
 function hop(){hid=true;fromHole(H[Math.random()<.5?0:2]);requestAnimationFrame(step)}
 if(still){H[0].classList.add('up')}else{setTimeout(hop,600);setInterval(function(){if(Math.random()<.35)glitch(90+Math.random()*140)},1700)}})();
+</script>
+<script>
+// placeholder: potato keys (for people who adopt a potato) aren't live yet
+document.getElementById('keybox').addEventListener('submit',function(e){e.preventDefault();document.getElementById('keysay').textContent='s00n. th3 g4rd3n 1sn\u2019t r34dy y3t. \uD83E\uDD54'});
 </script>
 </body></html>
