@@ -28,7 +28,7 @@ export function installPortal({ glitch, music, opened = () => {} }) {
     o.querySelector('.back').onclick = () => close(o); }
   function video(back) { const o = screen(`<div class="frame"><video src="demo/read-the-terms.mp4" controls autoplay playsinline></video></div><button type="button" class="back">Back to the kitchen</button>`); o.querySelector('.back').onclick = () => close(o, back); }
   // the way in, for someone who bought it: their one-time code, once per device (a curtain, not a lock)
-  function gate() { return new Promise(done => { const o = screen(exe('your code') + `<p class="note">${PHONE_NOTE}</p><p class="note">Trouble getting in? Email thursdaypotato404@gmail.com</p>`); o.style.zIndex = 100; o.style.transition = 'none'; o.classList.add('on');
+  function gate() { return new Promise(done => { const o = screen(exe('your code') + `<p class="note">${PHONE_NOTE}</p><p class="note">Trouble getting in? Email inquiries@thursdaypotato.com</p>`); o.style.zIndex = 100; o.style.transition = 'none'; o.classList.add('on');
     runExe(o, v => plain(v) === plain('petunia-404'), () => { o.remove(); music(true); done(); }); }); }
   return { open, video, gate };
 }
