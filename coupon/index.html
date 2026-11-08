@@ -21,8 +21,8 @@ var spud=document.getElementById('spud'),say=document.getElementById('say'),c=do
 if(!key){spud.disabled=true;say.textContent='locked. this one only opens for its owner.'}
 function draw(code){x.drawImage(base,0,0,1200,675);x.fillStyle='#120a05';x.font='400 50px "Major Mono Display",monospace';x.textBaseline='middle';x.textAlign='left';var t=code.toLowerCase(),sp=2,w=0,i;for(i=0;i<t.length;i++)w+=x.measureText(t[i]).width+sp;var px=420+(700-w)/2+sp/2;for(i=0;i<t.length;i++){x.fillText(t[i],px,412);px+=x.measureText(t[i]).width+sp}}
 spud.addEventListener('click',function(){spud.disabled=true;acts.classList.remove('on');say.textContent='krrzzt...';
- Promise.all([Promise.resolve({ok:true,codes:["I'M POTATO BABY"]}),base.decode(),document.fonts.load('50px "Major Mono Display"')]).then(function(a){
-  var j=a[0];if(!j.ok||!j.codes||!j.codes[0])throw 0;var code=j.codes[0];draw(code);c.hidden=false;text='one (1) potato. the password: '+code+' \uD83E\uDD54  '+LINK;
+ Promise.all([fetch(MAIL,{method:'POST',body:JSON.stringify({action:'mint',secret:key,count:1,note:'phone coupon'})}).then(function(r){return r.json()}),base.decode(),document.fonts.load('50px "Major Mono Display"')]).then(function(a){   // Nov 8: a fresh ONE-TIME key from Potato's mail room (the password no longer opens the door)
+  var j=a[0];if(!j.ok||!j.codes||!j.codes[0])throw 0;var code=j.codes[0];draw(code);c.hidden=false;text='one (1) potato. your one-time key: '+code+' \uD83E\uDD54  '+LINK;
   document.getElementById('sms').href='sms:?&body='+encodeURIComponent(text);document.getElementById('mail').href='mailto:?subject='+encodeURIComponent('one (1) potato')+'&body='+encodeURIComponent(text);
   c.toBlob(function(b){file=new File([b],'potato coupon '+code+'.png',{type:'image/png'});acts.classList.add('on');say.textContent='fresh code. '+code.toLowerCase();spud.disabled=false},'image/png');
  }).catch(function(){say.textContent="that one didn't land. try again?";spud.disabled=false})});
