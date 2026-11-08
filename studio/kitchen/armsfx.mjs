@@ -1,5 +1,5 @@
 // armsfx.mjs — when his arms come out, in every level and in the kitchen (Nov 1).
-// Matt: "he should have arms whenever he jumps around and spins around, and you can use them when it makes sense for the
+// Chikin: "he should have arms whenever he jumps around and spins around, and you can use them when it makes sense for the
 // story. Give him some dance moves" + "they should disappear when hes just standing still or waddling".
 //   · standing / waddling / ducking: NO arms (not even folded). They retract into him (len -> 0 inside his body).
 //   · every jump: they pop out and swing up, then follow the arc (up on the way up, out wide at the top, trailing up as he
@@ -12,7 +12,7 @@
 // One driver per spud (the kitchen and the levels share him). Per frame: a few compares; spud.arms() is only called on a
 // change; while he's in the air the pose object is edited in place (spud reads it every frame, no new objects). Callers pass
 // one reused options object (no garbage per frame).
-// MOVE_ARMS: arms on jumps / spins / the glitch-flight. Off (Matt, Nov 2 eve): arms only when he needs them — a story gesture or a dance.
+// MOVE_ARMS: arms on jumps / spins / the glitch-flight. Off (Chikin, Nov 2 eve): arms only when he needs them — a story gesture or a dance.
 const MOVE_ARMS = false;
 const clamp = (x, a, b) => x < a ? a : x > b ? b : x, sstep = (a, b, x) => { const k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); };
 
@@ -39,7 +39,7 @@ export function armsDriver(spud) {
       if (oAir && !wasAir) airAt = t; wasAir = oAir;
       if (spud.armsMotion) spud.armsMotion(air ? k : 0);
       if (o.dance) { if (on !== 'dance') on = 'dance'; spud.dance(o.dance, o.beat || 0, o.body === false ? NOBODY : BODY); return; }
-      if (MOVE_ARMS) {   // (OFF since Nov 2 eve — Matt: "No more arms when he jumps and spins in any level, potato can have arms when he needs arms")
+      if (MOVE_ARMS) {   // (OFF since Nov 2 eve — Chikin: "No more arms when he jumps and spins in any level, potato can have arms when he needs arms")
       const Y = spud.state && spud.state.yaw, rem = Y ? Math.abs(Y.to - Y.x) : 0, yv = Y ? Y.v : 0, ta = t - airAt;
       // the first blink of every jump (a jump spin too, which is nearly every jump in the levels): out low and wound back
       // (anticipation; his own jump isn't held up — he's already rising), then flung into the arc / the spin

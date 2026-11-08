@@ -1,4 +1,4 @@
-// CIRCUIT CYBORG, v2 (Matt: "the cyborg you are using, can you change to something similar … make him look like a borg";
+// CIRCUIT CYBORG, v2 (Chikin: "the cyborg you are using, can you change to something similar … make him look like a borg";
 // v1, the silver temple band, is kept in circuit-cyborg.v1-band.mjs). Assimilated: dark gunmetal implants plated over the
 // right side of his head (screen left at the front) with seams, rivets and little green status lights; black tubes running
 // from the head plate down into his body; a mechanical eyepiece at his right eye with a red lens and a thin red laser;
@@ -53,7 +53,7 @@ export default function build(H) {
   const lens = new T.Mesh(lensG, new T.MeshBasicMaterial({ color: RED }));
   const hiG = new T.SphereGeometry(R * 0.12, 10, 8); hiG.scale(1, 0.8, 0.5); hiG.translate(-R * 0.13, R * 0.13, 0.05 + R * 0.2);
   const hi = new T.Mesh(hiG, new T.MeshBasicMaterial({ color: '#ffd0d0' }));
-  const beamG = new T.CylinderGeometry(0.006, 0.006, 0.07, 8); beamG.rotateX(Math.PI / 2); beamG.translate(0, 0, 0.075);   // (a short red glint, not an antenna — Matt: "the antenna just looks weird, or shorten it")
+  const beamG = new T.CylinderGeometry(0.006, 0.006, 0.07, 8); beamG.rotateX(Math.PI / 2); beamG.translate(0, 0, 0.075);   // (a short red glint, not an antenna — Chikin: "the antenna just looks weird, or shorten it")
   const beam = new T.Mesh(beamG, new T.MeshBasicMaterial({ color: RED }));                         // the laser
   const armG = new T.CylinderGeometry(R * 0.16, R * 0.16, R * 1.7, 10); armG.rotateZ(Math.PI / 2); armG.translate(-R * 1.15, R * 0.3, 0.02);
   const arm = H.outlined(armG, H.paint(PLATE), 0.6);                                                   // the arm back to his temple

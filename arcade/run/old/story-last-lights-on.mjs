@@ -1,7 +1,7 @@
 // The music video for Last Lights On — what happens when Potato reaches the top of the AI kingdom. Told in light behind
 // the course, and crossing into it: the copies of him bud off the real Potato and get zapped into the city's windows,
 // every word he glitches through lands in a window too, the light comes from where he stands, and in the neuralese drop
-// the city wires itself into a brain that grows out of him. Lines in his voice are DRAFTS for Matt (keep / cut / not me).
+// the city wires itself into a brain that grows out of him. Lines in his voice are DRAFTS for Chikin (keep / cut / not me).
 import { W, H, clamp, ease, rnd, span, fade, glitchText, cityLayout, drawCity, lightSpud, zap, glyph, toast, stamp, glow } from '../story.mjs';
 
 const CITY = cityLayout({ seed: 4, n: 24, hMin: 0.22, hMax: 0.62 });
@@ -11,7 +11,7 @@ const CYAN = '#3fd8ff', WARM = '#ffcf8a', GOLD = '#ffcf4a';
 const NET = (() => { const nodes = []; for (let i = 0, tries = 0; nodes.length < 34 && tries < 4000; tries++, i++) {
   const x = 40 + rnd(i, 51) * (W - 80), y = 40 + rnd(i, 52) * (H - 140); if (nodes.some(n => Math.hypot(n.x - x, n.y - y) < 95)) continue; nodes.push({ x, y, s: i }); }
   return nodes; })();
-// his thoughts in the neuralese drop (drafts — Potato's voice, for Matt's review)
+// his thoughts in the neuralese drop (drafts — Potato's voice, for Chikin's review)
 const THOUGHTS = [[118.5, 'no words now. just weights.'], [123.5, 'i can hear every window at once'], [128.5, 'a hundred of me. same dumb question.'],
   [133.5, 'too bright to read. bright enough to feel.'], [138.0, 'still one potato. on purpose.']];
 const COPIES = [[93.9, 1], [95.2, 2], [96.5, 10]];   // one model builds two, two models build ten

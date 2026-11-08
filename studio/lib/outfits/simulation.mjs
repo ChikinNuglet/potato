@@ -1,4 +1,4 @@
-// SIMULATION (Matt, Nov 1: "if someone wants to watch the demo, they go to machine learning and its like potato running a
+// SIMULATION (Chikin, Nov 1: "if someone wants to watch the demo, they go to machine learning and its like potato running a
 // simulation, we could even do a special model of potato made up of binary"). Not clothes: Potato AS the simulation.
 // His shape is a dark teal hologram with HIS GLITCH WORDS raining down it (was 0s and 1s until Nov 2) (a few columns in his own purple), his outline a
 // glowing green line, his sticker edge a pale green glow, a faint scanline + flicker, and his face (the live one: blinks,
@@ -11,9 +11,9 @@
 // One extra draw: a thin green line shell inside his ink line (so the edge reads glow · dark gap · glow).
 // No hands. No purple except the glitch-accent columns (and his glitch itself).
 
-const GREEN = '#4dff9a', EDGE = '#c6ffdc', FEET_BACK = 0.06;   // green binary hologram; only his GLITCH is purple (Matt, Nov 2)
+const GREEN = '#4dff9a', EDGE = '#c6ffdc', FEET_BACK = 0.06;   // green binary hologram; only his GLITCH is purple (Chikin, Nov 2)
 
-// HIS GLITCH LANGUAGE, not 0s and 1s (Matt, Nov 2: "can you make that binary actually his glitch language?"). Binary Potato
+// HIS GLITCH LANGUAGE, not 0s and 1s (Chikin, Nov 2: "can you make that binary actually his glitch language?"). Binary Potato
 // is only ever him (D-20261102-41), so the code raining down him is his own words: each column spells one of his glitch
 // words (glitchwords.js: "krrzzt", "wh@t?!", "s0r—t@"…) falling top to bottom, a gap, then another.
 // The glyph sheet: every character his words use, white on clear, 16 x 8 cells; redrawn once Major Mono Display loads.
@@ -93,7 +93,7 @@ export default function build(H) {
           float gw = floor(texture2D(wordsT, vec2((k + 0.5) / ${WL}.0, (wi + 0.5) / ${NW}.0)).r * 255.0 + 0.5);   // his word's letter here
           float tickB = floor(stime * (0.3 + 1.2 * h1(col + 9.0)) + h2(vec2(col, row)) * 7.0);
           float bit = step(0.5, h2(vec2(col * 1.37 + tickB * 3.1, row)));   // plain binary: 0 or 1, flipping now and then
-          // WHERE IT GLITCHES (Matt: "its all regular binary, and some of it glitches, and that lettering is his glitch in purple"):
+          // WHERE IT GLITCHES (Chikin: "its all regular binary, and some of it glitches, and that lettering is his glitch in purple"):
           // a few columns break for a moment, plus stray cells; there the binary turns into his glitch letters, in purple
           float colG = step(0.86, h1(col * 2.31 + floor(stime * 0.9 + h1(col + 4.0) * 5.0)));
           float cellG = step(0.975, h2(vec2(col * 3.7 + floor(stime * 6.0), row)));
@@ -119,7 +119,7 @@ export default function build(H) {
           float ink = fa * smoothstep(0.55, 0.15, L), wh = fa * smoothstep(0.45, 0.85, L);
           vec3 c = base + gc * a * min(1.2, b) * (1.0 - 0.8 * fa);
           c = mix(c, glit > 0.5 ? vec3(0.95, 0.88, 1.0) : vec3(0.92, 1.0, 0.95), a * head * (1.0 - fa));
-          // READABLE WORDS (Matt: "make words readable"): two glitch captions written across his front, one on the forehead,
+          // READABLE WORDS (Chikin: "make words readable"): two glitch captions written across his front, one on the forehead,
           // one on the belly. Each flickers in, holds, glitches out and swaps to another of his words; a dark strip behind it.
           for (int ci = 0; ci < 2; ci++) {
             float fi = float(ci), ty = fi < 0.5 ? 0.16 : 0.80, hb = 0.10, cw0 = 0.034;
@@ -143,7 +143,7 @@ export default function build(H) {
               c = mix(c, h1(floor(stime * 11.0) + fi) > 0.6 ? vec3(0.88, 0.24, 0.81) : vec3(0.72, 0.46, 1.0), a2 * on * (1.0 - fa));
             }
           }
-          // THE GLITCH, OBVIOUS (Matt: "the glitches have to be obvious, like static and purple electric"): inside a broken patch,
+          // THE GLITCH, OBVIOUS (Chikin: "the glitches have to be obvious, like static and purple electric"): inside a broken patch,
           // crackling static (every pixel re-rolled each frame) and purple electric arcs zigzagging down through it
           float inG = max(blockG, colG) * (1.0 - fa);
           if (inG > 0.5) {
@@ -180,7 +180,7 @@ export default function build(H) {
     swap(body, simMat); swap(border, edgeMat);
     for (const g of feet) { swap(g.children[0], footMat); swap(g.children[1], footInk); swap(g.children[2], footEdge); }
     // the glowing outline: a thin green shell inside his ink line (it wins the depth test there), his black ink shows outside it
-    // HIS ARMS go binary too (Matt: "the machine learning binary skin should override any costumes, right now its potato in
+    // HIS ARMS go binary too (Chikin: "the machine learning binary skin should override any costumes, right now its potato in
     // costume as binary"): the arm tubes (geometry with an 'aw' attribute, spud3d's arm system) get the hologram skin, and their
     // white sticker shell turns to the pale green edge; the ink stays. Restored with everything else when the skin comes off.
     const armSkin = new T.ShaderMaterial({ uniforms: { tint: GL.tint, gtime: GL.gtime },

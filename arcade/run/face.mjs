@@ -1,4 +1,4 @@
-// face.mjs — Potato's face reacts (Matt: no lip-sync; "he should have expressions when he jumps, gets hit, uses a power").
+// face.mjs — Potato's face reacts (Chikin: no lip-sync; "he should have expressions when he jumps, gets hit, uses a power").
 // The expressions are Vega's, from the drawn model, unwrapped onto the 3D face map (draw/faceexpr.py -> play/faces/).
 // At rest: the canon side-eye, with blinks. Events swap in an expression for a moment, then he settles back.
 import * as T from '../play/vendor/three.module.js';

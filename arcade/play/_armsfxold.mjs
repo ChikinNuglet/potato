@@ -1,5 +1,5 @@
 // armsfx.mjs — when his arms come out, in every level and in the kitchen (Nov 1).
-// Matt: "he should have arms whenever he jumps around and spins around, and you can use them when it makes sense for the
+// Chikin: "he should have arms whenever he jumps around and spins around, and you can use them when it makes sense for the
 // story. Give him some dance moves" + "they should disappear when hes just standing still or waddling".
 //   · standing / waddling / ducking: NO arms (not even folded). They retract into him (len -> 0 inside his body).
 //   · every jump: they pop out and swing up, then follow the arc (up on the way up, out wide at the top, trailing up as he

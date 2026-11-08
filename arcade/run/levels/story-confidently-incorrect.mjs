@@ -155,7 +155,7 @@ function room(ctx, e, t, U) {
   const sh = proj(s.x - 2.95, 3.0), sh2 = proj(s.x - 1.7, 2.85); box(ctx, sh.x, sh.y, sh2.x - sh.x, sh2.y - sh.y, '#6b4a2e', { ink: 2.5 });
   const r0 = proj(s.x - 2.65, 3.45), r1 = proj(s.x - 2.0, 3.0); box(ctx, r0.x, r0.y, r1.x - r0.x, r1.y - r0.y, '#2a2f38', { ink: 2.5, band: '#1d2128' });
   for (const k of [0.3, 0.7]) { ctx.lineWidth = 2.5; ctx.strokeStyle = INK; ctx.beginPath(); ctx.moveTo(r0.x + (r1.x - r0.x) * k, r0.y); ctx.lineTo(r0.x + (r1.x - r0.x) * k + 4, r0.y - 22); ctx.stroke(); }
-  const blink = Math.max(span(t, -14.05, -13.65) ? 1 : 0, 0)   /* (on Matt's tap −14.05) */, led = { x: r0.x + 10, y: (r0.y + r1.y) / 2 };
+  const blink = Math.max(span(t, -14.05, -13.65) ? 1 : 0, 0)   /* (on Chikin's tap −14.05) */, led = { x: r0.x + 10, y: (r0.y + r1.y) / 2 };
   circ(ctx, led.x, led.y, 4, blink ? PURPLE : '#3dff8a', 1.5); if (blink) glow(ctx, led.x, led.y, 60, PURPLE, 0.8);
   // the laptop: desktop wallpaper (flat, one band), the chat window, the taskbar he stands on
   ctx.save(); ctx.beginPath(); ctx.rect(L.x, L.y, L.w, L.h);
@@ -191,7 +191,7 @@ const BOOT = [['> answer.exe', '#7dff9a'], ['> load facts ...... FAIL', '#ff6a5a
 function bootText(ctx, t, L) { if (t < 5.63 || t > 10.79) return; const n = Math.min(BOOT.length, 1 + Math.floor((t - 5.63) / 0.62));
   const x = L.x + L.w * 0.5, y0 = L.y + L.h * 0.36; box(ctx, x - 8, y0 - 22, L.w * 0.47, 26 + BOOT.length * 22, '#06120b', { ink: 3 });
   for (let i = 0; i < n; i++) { const [s, c] = BOOT[i], jit = i === n - 1 && rnd(i, Math.floor(t * 20)) < 0.3 ? (rnd(i, Math.floor(t * 30)) - 0.5) * 10 : 0; txt(ctx, s, x + jit, y0 + i * 22, 14, c, { align: 'left' }); } }
-// Kevin's chat bar on the laptop (top centre): sticker style, a plain ink send arrow. Rework: Matt's exact wording on two lines in a
+// Kevin's chat bar on the laptop (top centre): sticker style, a plain ink send arrow. Rework: Chikin's exact wording on two lines in a
 // plain readable face ("Dear Potato, what is the capital of Neipal?" / "thanks, -Kevin"); after send every letter of the question
 // lifts off in reading order and streams into his head (deskFront); "Neipal?" waits glowing and goes in last, on 1.134.
 const CHAT_F = '600', CHAT_PX = 17, LIFT0 = -1.95, LIFT_STEP = 0.035, NEIPAL_PULL = 0.534, NEIPAL_LAND = 1.134;
@@ -258,7 +258,7 @@ function factoryBack(ctx, e, t, mt, pal, U, kick, snare, hat, bass) {
     x: bgx(13.4, 0.7, t, 0.4), y: proj(0, 3.7).y }; if (hp.x > -200 && hp.x < W + 200) hopper(ctx, hp.x, hp.y, t, pal); }
   // ---- the zone set pieces in the background ----
   backSet(ctx, e, t, mt, pal, U, kick, bass, par, rk);
-  // the story stickers (Matt: "large so we can see, but a bit transparent"), behind the belt, the crates and him
+  // the story stickers (Chikin: "large so we can see, but a bit transparent"), behind the belt, the crates and him
   if (!SET) stickerLayer(ctx, e, t, U, kick, roof, deli, dark);   // (set strip: the story stickers + Kevin's sticker (Chikin: "the assets are supposed to go away"); the crew re-picks)
   // LIES SHIPPED: the counter on the wall + the output stack under it (left: what's behind him)
   if (!BLANK_Q) liesCounter(ctx, t, pal);   // (?blank: no counter — D-20261103-24)
@@ -271,7 +271,7 @@ function factoryBack(ctx, e, t, mt, pal, U, kick, snare, hat, bass) {
 // the width) and see-through (0.42), in front of the back-wall machines, behind the belt, the crates and Potato. ONE at a time:
 // a sticker whose word comes < 0.9 s after the one on the wall is skipped, and each peels off before the next slaps on. Its top
 // 14% fades out (the lyric band) and its bottom 24% melts into the belt. Never Bezos (a real person's likeness) and not Einstein
-// (his estate enforces his likeness; Matt plans to sell the game): the fax sticker covers that moment. Kevin's own sticker comes in
+// (his estate enforces his likeness; Chikin plans to sell the game): the fax sticker covers that moment. Kevin's own sticker comes in
 // on "Kevin?" (145.52), gets worried on "Kevin?!" (146.71), SCARED on 147.09 (the same scared face as the kidnapped Kevin, shaking)
 // and breaks up into the factory's green binary on "HE'S" (147.82): he's in the data now.
 const STK_BASE = new URL('../../play/stickers-ci2/', import.meta.url).href, STK_IMG = {}, STK_FADE = {};
@@ -510,7 +510,7 @@ function deskFront(ctx, t, s, U) {
   for (let r = 0; r < 3; r++) for (let i = 0; i < 15; i++) { const kx = 30 + i * 62 + r * 14, ky = deck + 10 + r * U * 0.48; if (kx > W - 60) continue; box(ctx, kx, ky, 52, U * 0.36, '#262b33', { ink: 2 }); }
   box(ctx, W * 0.42, deck + U * 1.55, W * 0.16, U * 0.5, '#3d444f', { ink: 2.5 });
   const mug = proj(s.x + 10.3, 0); box(ctx, mug.x, mug.y - U * 0.9, U * 0.6, U * 0.9, '#d9443a', { ink: 3.5, border: 5, band: '#b5352d' }); ctx.lineWidth = 5; ctx.strokeStyle = INK; ctx.beginPath(); ctx.arc(mug.x + U * 0.65, mug.y - U * 0.45, U * 0.18, -1.3, 1.3); ctx.stroke();
-  // send (−2.2): the question is digitally absorbed into his head (Matt: "so we understand why he glitches"). Each letter lifts off
+  // send (−2.2): the question is digitally absorbed into his head (Chikin: "so we understand why he glitches"). Each letter lifts off
   // the screen in reading order, glows, holds, then streams in an arc into his head, flipping to 0/1 halfway; "Neipal?" hangs
   // glowing on the screen and goes in last, landing on 1.134. The sign-off "thanks, -Kevin" drops onto the desk as the slip.
   const [, sent] = D.MESSAGES[0], head = proj(s.x, s.y + 1.1);
@@ -629,7 +629,7 @@ function lowCrate(ctx, r, p, U, t, after, kick) {
   if (r.what === 'yak' && t < 23.79) { const k = clamp((t - 23.2) / 0.59); if (k <= 0) return; y = lerp(p.y - h - U * 3, y, k * k); }      // dropped by the press on "battle"
   if (r.what === 'hats' || r.what === 'crown') return;                                                                                      // (their own pictures)
   if (r.what === 'overflow' || r.what === 'hurricane' || r.what === 'bigscrew') { const k = clamp(1 + after / 1.0); rot = (1 - k) * (r.what === 'hurricane' ? 6 : 3); x += (1 - k) * U * 3; }   // drawn rolling / tumbling in
-  // (review fix, Matt's belt note at 12.8: the belt's first crate is on screen from the push-through: it rides the conveyor in at the
+  // (review fix, Chikin's belt note at 12.8: the belt's first crate is on screen from the push-through: it rides the conveyor in at the
   //  right edge and waits there until its real spot scrolls on — only extra warning, the hitbox never moves; drawn = real from ~14.9)
   if (r.tp === 15.89 && t > 13.18) { const edge = W - w - U * 0.5, x0 = x; x = Math.min(x, edge); if (x < x0) rot = Math.sin(t * 9) * 0.03; }
   if (r.kind === 'hurdle') { const k = clamp((t - 185.0) / 0.4); if (t < 185.0) return; y = lerp(p.y - h - U * 3.6, y, k * k); }   // the raccoon knocks the first crate off the shelf at 185.0 (seen ~1.2 s before he meets it); on the drop the rest follow behind him
@@ -763,7 +763,7 @@ function vat(ctx, r, p, U, t, after) { const w = r.kind === 'dbl' ? U * 0.75 * 1
   for (let i = 0; i < 6; i++) circ(ctx, x + w * (0.1 + 0.16 * i), gy - U * 0.9 + Math.sin(t * 6 + i) * 4 - boil * U * 0.3, U * (0.14 + 0.06 * (i % 2)), col, 2); ctx.restore();
   if (r.what === 'spaghetti') { ctx.save(); ctx.strokeStyle = '#f2c45a'; ctx.lineWidth = 3; for (let i = 0; i < 5; i++) { ctx.beginPath(); ctx.moveTo(x + w * (0.15 + 0.17 * i), gy - U * 0.95); ctx.bezierCurveTo(x + w * (0.2 + 0.17 * i), gy - U * (1.3 + boil), x + w * (0.1 + 0.17 * i), gy - U * (0.8 + boil * 0.8), x + w * (0.18 + 0.17 * i), gy - U * 0.2); ctx.stroke(); } ctx.restore(); }
   if (r.label) txt(ctx, r.label, x + w / 2, gy - U * 0.4, Math.min(12, w / (r.label.length * 0.62)), '#fff2dc', { stroke: 4 }); }
-// a vat cut out of the belt (stage 2): the tub under the gap, its slurry boiling on the bass, the label on its rim (Matt's products only)
+// a vat cut out of the belt (stage 2): the tub under the gap, its slurry boiling on the bass, the label on its rim (Chikin's products only)
 const VATCOL = { spaghetti: '#f2c45a', stew: '#9a4a2a', eagles: '#6fc2b4', professor: '#3a3f4a', paper: '#7ad0c0', wheel: '#7ad0c0', fake: '#6fc2b4', bot: '#6fc2b4', vat: '#6fc2b4', launch: '#6fc2b4' };
 function vatHole(ctx, hl, t, U) { if (SET) hl = { ...hl, what: 'vat' };   // (set strip: a plain vat, no QUANTUM SPAGHETTI / STEW, no strands)
   const a = proj(hl.x0, hl.gy), b = proj(hl.x1, hl.gy); if (b.x < -40 || a.x > W + 40) return;
@@ -870,7 +870,7 @@ function kevinCrate(ctx, t, s, U, CR) {
 }
 function kevin(ctx, x, y, U, mood, t) { const sc = U / 60;
   // Chat's Kevin (the same kid everywhere: the full figure while he's pulled out of the monitor, head + hoodie out of the crate after);
-  // he tips his head up to the screen when Mom types, bobs when the hats rain. Rework (Matt: "make kevin look scared when he gets
+  // he tips his head up to the screen when Mom types, bobs when the hats rain. Rework (Chikin: "make kevin look scared when he gets
   // kidnapped"): 'worried' (brows) in the monitor, 'scared' / 'fullscared' when he's taken: a face drawn over the art, head shaking
   const full = mood === 'full' || mood === 'fullscared', fear = mood === 'scared' || mood === 'fullscared' ? 'scared' : mood === 'worried' ? 'worried' : null;
   if (full ? art('turn_kevin_front') : art('kevin_bust')) { ctx.save(); ctx.translate(x, y); ctx.scale(sc, sc);
@@ -1030,7 +1030,7 @@ function dawn(ctx, t, s) {
   // the chair, empty, turned a little
   box(ctx, 880, 250, 70, 130, '#3a3f4a', { ink: 4, band: '#2c3038' }); box(ctx, 860, 380, 100, 20, '#3a3f4a', { ink: 3 }); ctx.fillStyle = INK; ctx.fillRect(905, 400, 6, 120); }
   ctx.fillStyle = 'rgba(255,200,140,' + (0.12 * d) + ')'; ctx.fillRect(0, 0, W, H);
-  // 246.63 → 247.30: the newspaper spins in on the beats and lands on Matt's last big tap
+  // 246.63 → 247.30: the newspaper spins in on the beats and lands on Chikin's last big tap
   if (t > 246.63) { const k = clamp((t - 246.63) / 0.67), a = (1 - ease(k)) * 9, sc = 0.2 + 0.8 * ease(k); ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(a + (k >= 1 ? -0.04 : 0)); ctx.scale(sc, sc);
     box(ctx, -330, -200, 660, 400, '#f2eee2', { ink: 5, border: 10 }); txt(ctx, 'THE DAILY', 0, -168, 22, INK); ctx.fillStyle = INK; ctx.fillRect(-310, -150, 620, 4);
     txt(ctx, 'LOCAL BOY, KEVIN,', 0, -108, 40, INK); txt(ctx, 'MISSING.', 0, -60, 40, INK);

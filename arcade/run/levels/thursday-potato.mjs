@@ -1,5 +1,5 @@
 // THURSDAY POTATO — minute one. Song 1 of 10, the tutorial for the whole album. Plan: game/stories/thursday-potato.md (its
-// "Album pass" wins) + stories/ALBUM.md §5/6/8. Matt: "thursday potato's visualizer has like his thoughts loading, thats what
+// "Album pass" wins) + stories/ALBUM.md §5/6/8. Chikin: "thursday potato's visualizer has like his thoughts loading, thats what
 // this level is, potato loading in for the first time on thursday, its minute one".
 // THE ONE PLACE: the inside of his head while it boots. Dark digital space, falling binary in three layers of depth, inked
 // wires carrying pulses of thought on the real kicks, his name in bulbs in the sky. The camera stays at his level and never
@@ -53,7 +53,7 @@
 //                                 103.09 the rain parts, a seam of light; 104.1 the door swings open and pumps on every kick;
 //                                 104.75 he turns, side-eye, "> minute one. clean, on purpose."; white on the last note.
 // Lines in Potato's voice are DRAFT (stories/words/POTATO-LINES.md): they live in story-thursday-potato.mjs, marked.
-// Decisions Matt hasn't answered (kept easy to change): retries restart at the section you died in (RETRY below; the first
+// Decisions Chikin hasn't answered (kept easy to change): retries restart at the section you died in (RETRY below; the first
 // stretch restarts at 8.0 with the boot wall); the boot log's three teaching lines stay (world text).
 import { parseWords } from './kit.mjs';
 import { story, setSong, setCourse, thuView, zoomAt } from './story-thursday-potato.mjs';
@@ -254,8 +254,8 @@ export function build(words, map, viz) {
   return {
     speed: 8, coyote: 0.09, jumpBuffer: 0.12, streakRefill: 8, landBoost: true, hopBeats: HOPB, glitchFor: GLF, duckFor: DUCKF, glitchReach: 2.6, padPress: 0.35, padH: 2.2, chargeBeats: 2,   // (the glitch comes back on the next 2-beat line, not the next bar: a late glitch on a soft wall can't steal the next real one)
     fxQuiet: (t, s) => VAN.some(([a, b]) => s.glitchAt != null && s.glitchAt > a - 0.32 && s.glitchAt < a + 0.15 && t >= s.glitchAt && t < b),   // (the vanish on "gone?": no glitch-word burst, just absence)
-    story, costume: null, modeView: thuView, zoomAt, codeUntil: 41.15,   // he's code (the binary skin) until "Potato, baby": then his own skin floods in (Matt: "it starts in binary, because hes just code")
-                             // bare Potato all song (Matt); thuView draws the foreground (asides, cue ring, holes, the wire)
+    story, costume: null, modeView: thuView, zoomAt, codeUntil: 41.15,   // he's code (the binary skin) until "Potato, baby": then his own skin floods in (Chikin: "it starts in binary, because hes just code")
+                             // bare Potato all song (Chikin); thuView draws the foreground (asides, cue ring, holes, the wire)
     lights: t => at(LIGHTS, t), faces: FACES, onStep, softCuts: true,
     csLift: t => { for (const [a, b] of [[42.34, 42.97], [84.06, 84.71]]) if (t >= a && t < b) return 1.25 * Math.sin(Math.PI * Math.min(1, (t - a) / (b - a)) ** 0.6); return 0; },   // the sign lifts him on "name"
     hideAt: (t, s) => (t < 4.4 && !(s.sc && s.sc.from >= 1)) || t > END - 0.12 || VAN.some(([a, b]) => s.glitchAt != null && s.glitchAt > a - 0.32 && s.glitchAt < a + 0.15 && t >= s.glitchAt && t < b),

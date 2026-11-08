@@ -1,4 +1,4 @@
-// kit.mjs — builds a level's course from its song: cue words (Matt: "the words are the timing of the jumps"), the
+// kit.mjs — builds a level's course from its song: cue words (Chikin: "the words are the timing of the jumps"), the
 // visualizer's analysis for the stretches without words, and a level's own set pieces. Every level file uses this.
 //   cue kinds: hop (jump on the word, land on the next block a beat later) · wall (a firewall: glitch, don't jump) ·
 //   hurdle (the word stands in the way: hop it, land on the same block) · held (a long gap: jump + double jump + glitch) ·
@@ -18,7 +18,7 @@ export function parseWords(text) {
     for (let i = 0; i < out.length; i++) out[i].t1 = Math.min(out[i].t0 + 1.2, i + 1 < out.length ? out[i + 1].t0 : out[i].t0 + 0.4);
     return out;
   }
-  // tsv: either "start end line word note" (machine listen) or "seconds line word note" (Matt's tapper)
+  // tsv: either "start end line word note" (machine listen) or "seconds line word note" (Chikin's tapper)
   const rows = text.split('\n').filter(l => l && !l.startsWith('#')).map(l => l.split('\t')).filter(c => c[0] !== '' && !isNaN(+c[0]));
   const five = rows.length && rows[0].length >= 5 && !isNaN(+rows[0][1]) && rows[0][1] !== '';
   let out = rows.filter(c => (five ? c[4] : c[3]) !== 'untapped' && (five ? c[4] : c[3]) !== 'missing')
@@ -110,12 +110,12 @@ export function beatCues(viz, map, t0, t1, o = {}) {
   return cues;
 }
 
-// ---------- v2c: every sung word is an obstacle (Matt: "the lyrics … should be the obstacles") ----------
+// ---------- v2c: every sung word is an obstacle (Chikin: "the lyrics … should be the obstacles") ----------
 // Words are grouped into obstacles spaced so each is physically possible (a jump lasts a beat); every word appears in
 // exactly one obstacle. Kinds: low (jump it) · high (duck under it) · wall (glitch through) · armor (the level's power
 // blasts it) · launch (a held word: a pad throws him over it). The ground is the level's own terrain, never words.
 export function wordCourse(words, map, viz, o = {}) {
-  const P = map.period, O = map.offset, B = t => (t - O) / P, T = b => O + b * P, snapT = t => { if (o.snap === false) return t; const b = B(t); return Math.abs(b - Math.round(b)) < 0.3 ? T(Math.round(b)) : t; };   // snap:false = Matt's taps: the obstacle sits exactly on the tapped word
+  const P = map.period, O = map.offset, B = t => (t - O) / P, T = b => O + b * P, snapT = t => { if (o.snap === false) return t; const b = B(t); return Math.abs(b - Math.round(b)) < 0.3 ? T(Math.round(b)) : t; };   // snap:false = Chikin's taps: the obstacle sits exactly on the tapped word
   const from = o.from ?? 0, to = o.to ?? 1e9, density = o.density || (() => 2);
   const gw = o.glitchWords || new Set(), lw = o.launchWords || new Set(), dw = o.duckWords || new Set();
   // 1. group the words into obstacles
@@ -176,7 +176,7 @@ export function wordCourse(words, map, viz, o = {}) {
   let side = 0, lowN = 0, stepN = 0, stepEnd = -1e9;
   for (const g of all) {
     const gy = groundAt(g.t), x0 = g.t;   // (placed by time: X(t) in the course)
-    if ((g.kind === 'low' || g.kind === 'high' || g.kind === 'wall') && g.t - stepEnd < (g.kind === 'low' ? 1.0 : 1.35) * P) continue;   // nothing waiting where he drops off a ledge (Matt: "some is punishing immediately")
+    if ((g.kind === 'low' || g.kind === 'high' || g.kind === 'wall') && g.t - stepEnd < (g.kind === 'low' ? 1.0 : 1.35) * P) continue;   // nothing waiting where he drops off a ledge (Chikin: "some is punishing immediately")
     const base = { k: 'word', t: g.t, text: g.text, filler: !!g.filler, w: 0.95 };
     if (g.kind === 'orbpit') { objs.push({ k: 'orb', t: g.t, y: gy + 1.75 }); continue; }
     if (g.kind === 'low' && !o.flip && o.igBlocks !== false && !g.filler && (lowN++ % 2 === 1)) {   // the Impossible Game: every other one is a block you land on (its side kills)
@@ -186,8 +186,8 @@ export function wordCourse(words, map, viz, o = {}) {
       objs.push({ k: 'block', t: g.t - 0.12 * P, tEnd: g.t + run, y: gy + (tall ? 1.6 : 0.8), h: tall ? 1.6 : 0.8, step: true, text: g.text, ...(o.stepProps || {}) }); stepEnd = g.t + run;   // each level's blocks behave their own way (round 6)
     } else if (g.kind === 'low') {
       if (o.flip) { const top = o.flipTop || 4, onCeil = (side++ % 2) === 1; objs.push({ ...base, wk: 'low', y0: onCeil ? top - 0.85 : 0, y1: onCeil ? top : 0.85, ceil: onCeil }); }
-      else objs.push({ ...base, wk: 'low', w: 0.45, y0: gy, y1: gy + 0.45 });   // a spike: deadly only in its middle and low — one jump clears it (Matt: "a single jump doesnt make it over a triangle")   // a spike: a little narrower and lower than it looks, the way the Impossible Game's are fair
-    } else if (g.kind === 'high') objs.push({ ...base, wk: 'high', y0: gy + 1.0, y1: gy + 2.6 });   // hanging spikes: a ducked Potato clearly fits under (Matt: "just a little to low")
+      else objs.push({ ...base, wk: 'low', w: 0.45, y0: gy, y1: gy + 0.45 });   // a spike: deadly only in its middle and low — one jump clears it (Chikin: "a single jump doesnt make it over a triangle")   // a spike: a little narrower and lower than it looks, the way the Impossible Game's are fair
+    } else if (g.kind === 'high') objs.push({ ...base, wk: 'high', y0: gy + 1.0, y1: gy + 2.6 });   // hanging spikes: a ducked Potato clearly fits under (Chikin: "just a little to low")
     else if (g.kind === 'wall') objs.push({ ...base, wk: 'wall', w: 0.7, y0: gy - 0.6, y1: gy + 8 });
     else if (g.kind === 'armor') objs.push({ ...base, wk: 'armor', auto: g.auto, w: g.auto ? 1.8 : 1.3, y0: gy - 0.6, y1: gy + 8, needs: g.needs, gateT: g.gateT ?? g.t - 8 * P, gateEnd: g.gateEnd ?? g.t });
     else if (g.kind === 'launch') {               // a gold pad a beat before; the held word stretched long under the arc

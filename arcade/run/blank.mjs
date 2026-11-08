@@ -1,4 +1,4 @@
-// blank.mjs — the CLEAN-SLATE RUN (Matt, Nov 3: "a full playthrough of each level without any obstacles or enemies or anything
+// blank.mjs — the CLEAN-SLATE RUN (Chikin, Nov 3: "a full playthrough of each level without any obstacles or enemies or anything
 // (drops and stairs and tubes are fine) … full playthrough, all current cutscenes removed" + D-20261103-24: no score, combo,
 // achievements, coins / pickups). The story crew lays the album story onto these runs, so they are the bare course + the
 // level's world, with Potato running the whole song on the music.

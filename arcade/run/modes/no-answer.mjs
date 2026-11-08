@@ -1,4 +1,4 @@
-// modes/no-answer.mjs — Level 8 as a LOOKING-FOR-SOMETHING game (Matt: "a looking for something game"; "no answer should be
+// modes/no-answer.mjs — Level 8 as a LOOKING-FOR-SOMETHING game (Chikin: "a looking for something game"; "no answer should be
 // surreal"; "a light based level, where you are trying to keep light shining and the dark from consuming").
 // Each section of the song is one dark, surreal scene standing in a black sea. Potato's light is your cursor: the arrows steer
 // the beam of his lamp round the dark (held = glide), and he wanders after it on his own across the water. Somewhere out

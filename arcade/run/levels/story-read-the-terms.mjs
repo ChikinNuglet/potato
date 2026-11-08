@@ -1,4 +1,4 @@
-// The music video for Read the Terms — round 2 (Matt: "clean, one story").
+// The music video for Read the Terms — round 2 (Chikin: "clean, one story").
 // LOGLINE: everyone clicked ACCEPT without reading; Potato reads every word of the endless contract as he runs it —
 // and on the second "you skipped it" he drives a steel girder through the contract and tears it open.
 // ONE SET: one endless terms-and-conditions page (cream paper, grey fine print sliding past, a red margin, a scroll bar
@@ -21,7 +21,7 @@
 //                                       along the bottom of the page.
 //  6. I read the terms, again (102.7–125.8)  ACCEPT and the cursor again — then on "you skipped it" the girder goes
 //                                       through the contract from him and tears the page: VOID.
-//  7. still readin (125.8–)              his own checkbox, ticked green and highlighted. Button line (DRAFT for Matt).
+//  7. still readin (125.8–)              his own checkbox, ticked green and highlighted. Button line (DRAFT for Chikin).
 // ROUND 8
 //  D (crossover) — HE MARKS UP THE CONTRACT. Every word he glitches through flicks a drop of red ink off him onto the page:
 //    a red-pen line strikes through a clause of the fine print (with a tick in the margin) and scrolls away with the page.
@@ -54,7 +54,7 @@ const MONO = '"Major Mono Display", ui-monospace, monospace';
 const SKIP = 110.39, END = 136.8, C1 = 34.10, C2 = 102.81;
 const TURNS = [34.10, 57.31, 90.89, 125.91];                                     // the page turns (the level's section turns)
 const HOLE0 = 110.59, HOLE1 = 112.05, V2 = 7.8 * 1.12;                            // the skipped hole in the contract (course) and chorus 2's run speed
-const BUTTON = [129.6, 'read every word. still didn’t click accept.'];          // DRAFT (Potato's voice) for Matt
+const BUTTON = [129.6, 'read every word. still didn’t click accept.'];          // DRAFT (Potato's voice) for Chikin
 let FP = null;                                                                    // the fine print, drawn once
 // round 12: the set piece's state (landings on the books; screen px per world unit, measured off him)
 const BK0 = 107.2, SCR0 = 108.4, SIGN = 108.75, SOUL = 109.05, SCR1 = 109.05, SCR_END = 110.43, RUN_V = V2;   // (the scroll's end = the gold SKIPPED at the lip of the hole)
@@ -127,7 +127,7 @@ export function story(ctx, e) {
   // ---- 7. still readin: his own checkbox; the button ----
   if (t > 125.8) { const a = fade(t, 125.8, 140, 0.4, 1); if (t > 127.2) { ctx.fillStyle = HL; ctx.globalAlpha = 0.5 * a; ctx.fillRect(MX - 30, MY - 52, 140 * ease((t - 127.2) / 0.6), 92); ctx.globalAlpha = 1; }
     checkbox(ctx, MX + 40, MY - 6, t > 127.0, a, '#2b8a3e', 4.4 * (t > 127.0 && t < 127.35 ? 1.15 : 1)); }   // round 16: HIS box, big (it was a crumb on an empty page)
-  // (the line under his box is gone: Matt, no words on screen but the lyrics and the page's own — kept in DRAFT-LINES.md)
+  // (the line under his box is gone: Chikin, no words on screen but the lyrics and the page's own — kept in DRAFT-LINES.md)
 }
 
 // ---------- pieces ----------

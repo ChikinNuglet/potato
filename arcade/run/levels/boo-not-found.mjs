@@ -7,7 +7,7 @@
 // Purple = his glitch only. Orange, black, sick green and moon blue belong to the world.
 //
 // ALL TIMES ARE ESTIMATES (machine listen of the vocal stem, game/words/boo-not-found.json): nobody has tapped this song.
-// Every press below sits ON a sung word: when Matt taps it, rerun the word file and move these with it.
+// Every press below sits ON a sung word: when Chikin taps it, rerun the word file and move these with it.
 //
 // BEAT SHEET (press time · word · move · what's in the lane)  — ↑ hop · ↓ duck · ␣ glitch · (soft) = breaks round him, can't kill
 //   0–20.2   doorstep, x0.6, all soft   3.40 Trick ↑ pumpkin · 5.40 Who ↓ the bowl held out · 9.52 POTATO ␣ the scanner beam ·

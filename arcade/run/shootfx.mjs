@@ -1,4 +1,4 @@
-// shootfx.mjs — Confidently Incorrect's shooter feel (round 20, Matt: "Does it feel like potato is flying around and blowing
+// shootfx.mjs — Confidently Incorrect's shooter feel (round 20, Chikin: "Does it feel like potato is flying around and blowing
 // stuff up. Is the sound right? Do things actually 'feel' like they are getting hit and exploding … potatos bullets should look
 // like his glitching … can we put potato in a little spaceship for this one? In costume, in a tiny spaceship").
 //   makeSpudShip(T, pivot)       his tiny ship, drawn in the house style (thick ink, flat fills, one cel band), riding his pivot

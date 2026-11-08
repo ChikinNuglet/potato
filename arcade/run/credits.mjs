@@ -1,15 +1,15 @@
-// credits.mjs — the end credits, after Last Lights (Matt: "we need end credits there" … "it can just be thursday potato
+// credits.mjs — the end credits, after Last Lights (Chikin: "we need end credits there" … "it can just be thursday potato
 // playing, i'll fill in the credits text later, but it will all be in potato glitch text"). Thursday Potato plays from the
 // top — the album loops back to its first song — and the credits roll up the screen, every line arriving in his glitch
 // text (his glitch words scrambling through it in purple with flecks of binary green, then landing). Any key / tap skips.
-// MATT: edit the lines below (a blank string is a gap; a line starting with '#' is a heading).
+// CHIKIN: edit the lines below (a blank string is a gap; a line starting with '#' is a heading).
 export const CREDITS = [
   '#404: FILE NOT FOUND',
   '',
   'potato',
   '',
   '#CREDITS',
-  '[ credits text — Matt fills this in ]',
+  '[ credits text — Chikin fills this in ]',
   '[ credits text ]',
   '[ credits text ]',
   '',

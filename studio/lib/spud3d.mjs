@@ -90,7 +90,7 @@ export async function createSpud(container, opts = {}) {
         gl_FragColor = vec4(c, 1.0); }` });
   // the shells: same mesh pushed out along its normals, back faces only -> ink line, then the white sticker border
   // bias pushes a layer back in depth: white sticker borders sit behind EVERYTHING (they only show outside his whole
-  // silhouette), feet sit behind his body's ink line (Matt: the feet's outlines showed through when he turned)
+  // silhouette), feet sit behind his body's ink line (Chikin: the feet's outlines showed through when he turned)
   const shell = (w, color, ...r) => hideWhite(shell0(w, color, ...r), color);   // (every white sticker-border shell, his and his outfits', is hidden when there's no border)
   const shell0 = (w, color, usePuff = false, bias = String(color).toLowerCase() === '#ffffff' ? 0.12 : 0) => new T.ShaderMaterial({ side: T.BackSide,
     uniforms: { w: { value: w }, color: { value: new T.Color(color) }, bias: { value: bias }, ...GL },
@@ -153,7 +153,7 @@ export async function createSpud(container, opts = {}) {
       for (let c = 0; c < 3; c++) { const m = (N[a + c] + N[b + c]) / 2; N[a + c] = N[b + c] = m; } }
   }
 
-  // ---------- arms (Matt, Nov 1: "potato needs the arms, at least sometimes. It would help make him look like hes dancing") ----------
+  // ---------- arms (Chikin, Nov 1: "potato needs the arms, at least sometimes. It would help make him look like hes dancing") ----------
   // OFF until a caller asks (api.arms / api.dance): nothing is built and nothing runs per frame before that.
   // FREE ARMS (wave, point, dance...) are tapered tubes with a rounded tip: NO HANDS, ever. Like the drawn model's arms
   // (draw/potato-draw.js armsDraw) they always grow out of his outline on screen: each frame the shoulder slides round him to
@@ -173,7 +173,7 @@ export async function createSpud(container, opts = {}) {
   // shoulder is (height from his top, angle in from his outline: A_TH = 0.15 rad in front of it), thick, or
   // target: [x, y, z] (body units from the shoulder, picture plane: the tip reaches for it, elbow bends down).
   const A_NS = 26, A_CAP = 4, A_RS = 12, A_NR = A_NS + 2 * A_CAP, A_NV = A_NR * A_RS + 2, A_K0 = 4;   // (rings: start cap, arm, tip cap; + the two pole points)
-  const A_R0 = 0.062, A_L1 = 0.135, A_L2 = 0.1, A_V = 0.7, A_TH = 1.42, A_INK = INK * 0.75;   // (2D: arm width 8.5% of his height, upper arm 0.16; Matt Nov 1: "should be shorter", "stubbier" -> short stubby nubs)
+  const A_R0 = 0.062, A_L1 = 0.135, A_L2 = 0.1, A_V = 0.7, A_TH = 1.42, A_INK = INK * 0.75;   // (2D: arm width 8.5% of his height, upper arm 0.16; Chikin Nov 1: "should be shorter", "stubbier" -> short stubby nubs)
   const A_SKIN = new T.Vector3(223 / 255, 155 / 255, 70 / 255);   // his paint's own colour (skin.png's median), straight through like the paint
   const A_COS = new Float32Array(A_RS), A_SIN = new Float32Array(A_RS);
   for (let a = 0; a < A_RS; a++) { A_COS[a] = Math.cos(a / A_RS * Math.PI * 2); A_SIN[a] = Math.sin(a / A_RS * Math.PI * 2); }
@@ -210,7 +210,7 @@ export async function createSpud(container, opts = {}) {
   const A_DEF = { s: 0, f: 0, e: 0, ef: 0, len: 1, v: A_V, th: A_TH, thick: 1, target: null };
   const aset = (o, s, f, e, ef = 0, len = 1) => { Object.assign(o, A_DEF); o.s = s; o.f = f; o.e = e; o.ef = ef; o.len = len; return 'free'; };
   const A_KEYS = ['s', 'f', 'e', 'ef', 'len', 'v', 'th', 'thick'], alerp = (o, a, b, k) => { for (let j = 0; j < A_KEYS.length; j++) { const key = A_KEYS[j]; o[key] = a[key] + (b[key] - a[key]) * k; } o.target = null; };
-  // ARM MOTION (Nov 1, Matt: "refine the arms", "make them look like natural movement in games"). Poses and dances only say
+  // ARM MOTION (Nov 1, Chikin: "refine the arms", "make them look like natural movement in games"). Poses and dances only say
   // where the arms WANT to be; every number of a free arm (A_KEYS + out = how far grown out of him) is a damped spring chasing
   // that, so nothing ever arrives in one frame: the upper arm leads, the forearm (e, ef) follows a touch later and overshoots a
   // touch more (successive breaking), both settle with a little bounce. On top, his body drives them (secondary motion): yaw speed
@@ -383,7 +383,7 @@ export async function createSpud(container, opts = {}) {
     const kk = A.prev ? (b - A.swB) / 0.75 : 1;   // a new move eases in over 3/4 of a beat
     if (A.prev && kk < 1) { (DANCES[A.prev] || DANCES.groove)(sg, b, a.q); alerp(o, a.q, o, sstep(0, 1, kk)); }   // (o === b: each field reads its own new value first)
     if (A.amt < 1) { aset(a.q, 0.35, 0.2, 0.2, 0, 0); alerp(o, a.q, o, A.amt); }
-    // dancing: fuller so the moves read at game size (stubby, not long: Matt); in an outfit a touch longer, the root inside the shirt (a sleeve)
+    // dancing: fuller so the moves read at game size (stubby, not long: Chikin); in an outfit a touch longer, the root inside the shirt (a sleeve)
     if (outfit) { o.len *= 1.12; o.thick *= 1.2; o.v = 0.71; } else { o.thick *= 1.12; }
     return kind; }
   function armsTick(time, dt, still) {

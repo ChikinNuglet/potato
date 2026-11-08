@@ -1,6 +1,6 @@
 // engine.mjs — one level of the Potato platformer. The song is the clock: the screen scrolls one column per game beat
 // and the course is brought to him; the page behind him erases itself (the left edge). See game/STORY.md, LEVEL-1.md.
-// Controls (Matt): left/right move, up jump (on the beat = bigger), down duck, space glitch (base power, 1 per bar),
+// Controls (Chikin): left/right move, up jump (on the beat = bigger), down duck, space glitch (base power, 1 per bar),
 // V use the downloaded power. Powers work like Mario: get hit in a costume -> lose it; hit as plain Potato -> glitch out.
 import * as T from './vendor/three.module.js';
 import { block, sticker, background, THEMES, canvasTex } from './art.mjs';

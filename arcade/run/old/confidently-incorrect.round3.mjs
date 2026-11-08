@@ -1,4 +1,4 @@
-// Level 3 — Confidently Incorrect: the shaft of wrong. 248 s, 101.3 bpm (a beat = 0.59 s). Matt: "a level where he has
+// Level 3 — Confidently Incorrect: the shaft of wrong. 248 s, 101.3 bpm (a beat = 0.59 s). Chikin: "a level where he has
 // to jump from one side to the other, like falling down walls", and "he can start that level getting a powerup that makes
 // him stick to walls". So: he starts in the Orbital Astronaut suit (mag boots) and FALLS down a shaft of confident
 // nonsense, the camera on its side (the two walls are the floor and the ceiling of the course). ↑ flings him to the other

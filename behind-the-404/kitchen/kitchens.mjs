@@ -1,4 +1,4 @@
-// kitchens.mjs — Potato's kitchen, re-imagined for each of the album's ten songs (Matt: "can you make origina kitchens and
+// kitchens.mjs — Potato's kitchen, re-imagined for each of the album's ten songs (Chikin: "can you make origina kitchens and
 // icons for the different costumes"; then "for the kitchen can you take away the menu, you can narrow it to ten costumes,
 // each representing a song, with a door to the left of the screen that you walk through to start the level").
 // The kitchen IS the menu: glitching changes his costume + the room + the song; the door on the left starts that song.
@@ -192,7 +192,7 @@ S.push({ id: 'disco-legend', name: 'the disco', outfit: 'disco-legend', badge: '
     x.fillStyle = 'rgba(18,10,5,.3)'; x.beginPath(); x.arc(cx + 10, cy + 10, R, 0, TAU); x.arc(cx, cy, R + 20, 0, TAU, true); x.fill(); x.restore();
     x.beginPath(); x.arc(cx, cy, R, 0, TAU); stroke(x, { lw: 5 }); x.fillStyle = '#fff'; x.beginPath(); x.moveTo(74, 18); x.lineTo(77, 27); x.lineTo(86, 30); x.lineTo(77, 33); x.lineTo(74, 42); x.lineTo(71, 33); x.lineTo(62, 30); x.lineTo(71, 27); x.closePath(); x.fill(); x.lineWidth = 2.5; x.stroke(); } });
 
-// 9. the tin robot: Turn Me Off's room (Matt: "kitchen will need redone, think jetsons or fantastic 4") — a 1960s space-age kitchen
+// 9. the tin robot: Turn Me Off's room (Chikin: "kitchen will need redone, think jetsons or fantastic 4") — a 1960s space-age kitchen
 // of OUR OWN in that era's style (no show's characters, logos or looks): a bubble window on a sky city with flying cars, a boomerang
 // formica counter, atomic starbursts, chrome + mint / coral / cream / turquoise, push buttons and big dials, a flying-saucer lamp over
 // a tulip table, a meal-pellet dispenser fed by a whooshing glass tube, a little round TV on a stalk. And it's bedtime out there (the
@@ -900,7 +900,7 @@ S.push({ id: 'suit-tie', name: 'the break room', outfit: 'suit-tie', badge: '#2c
     x.strokeStyle = '#8c1c1a'; x.lineWidth = 4; for (let k = 0; k < 6; k++) { x.beginPath(); x.moveTo(30, 40 + k * 10); x.lineTo(70, 30 + k * 10); x.stroke(); } x.restore(); poly(x, [[45, 32], [55, 32], [64, 72], [50, 88], [36, 72]], 'rgba(0,0,0,0)', { lw: 5 });
     poly(x, [[42, 20], [58, 20], [55, 33], [45, 33]], '#a8241e', { lw: 4 }); } });
 
-// ---------- the props (Matt, Nov 1: "we need the kitchen to be interactive") ----------
+// ---------- the props (Chikin, Nov 1: "we need the kitchen to be interactive") ----------
 // Each room lists things he can use, in the room's own (unsqueezed) coordinates:
 //   { id, kind: 'switch' | 'knock' | 'hop' | 'bump', x0, x1 (where he reaches it / stands on it), y0, y1 (the tap box; or hit: [x0, y0, x1, y1]),
 //     top (a surface he can land on), seat ([x0, x1] to stand on, if narrower), standIf(s, t), bump (walking into it sets it off),
@@ -1315,11 +1315,11 @@ function poster(x, s, t) {   // knock it crooked: the one circle rolls down into
     const ma = landed(P.table || Z, t); if (ma >= 0 && ma < 0.7) { const u = ma / 0.7; for (let i = 0; i < 6; i++) { const vx = (i - 2.5) * 56, r = 9 - Math.abs(i - 2.5) * 1.4; circ(x, 837 + vx * u, 522 - 120 * u + 190 * u * u, r * (1 - 0.3 * u), '#5a3a20', { sh: 'n', lw: 3 }); } if (u < 0.5) poly(x, [[815, 520], [826, 496 - 30 * u], [837, 512], [848, 490 - 30 * u], [859, 520]], '#6a4426', { lw: 3 }); } };   // (a crown of coffee, then fat drops)   // he lands on the table: the coffee jumps out of the mug
 }
 
-// ---------- the door (Matt: "a door to the left of the screen that you walk through to start the level") ----------
+// ---------- the door (Chikin: "a door to the left of the screen that you walk through to start the level") ----------
 // Each room is squeezed into x 200..1416 (round things kept round, see squeezable); the strip left of it is a plain stretch of
 // the room's own wall (STRIP, mirrored so it meets the room without a seam), and the door stands in it, dressed for the room, with the song's sign over it (number, name, and a lamp
 // that's lit once you've finished the song). The name comes in as the videos' glitch text on every change, then settles.
-// THE WATCH DOOR (Matt: "I need a demo option for each in the kitchen, make it a door to the right, I need to watch without figuring
+// THE WATCH DOOR (Chikin: "I need a demo option for each in the kitchen, make it a door to the right, I need to watch without figuring
 // out what i am doing" + "this way I can see if you are beating it by cheesing"): the room now squeezes into x 200..1416 so the right
 // wall gets a strip of its own (plain wall again, never a copy of the fridge) with a second door in it, dressed the same, signed
 // WATCH. Through it the song's demo plays hands-off from the top, the whole song (intro.mjs: the same as the O key).
@@ -1568,7 +1568,7 @@ function plate(x, d, t, G) {   // a sign's plate, dressed for the room (strings,
 function wsign(x, st, t) {   // over the watch door: a play mark and WATCH, in the song sign's lyric green (world text)
   const G = WSIGN, cx = (G.x0 + G.x1) / 2, cy = (G.y0 + G.y1) / 2; plate(x, st.door, t, G);
   const tx = G.x0 + 36; poly(x, [[tx - 9, cy - 14], [tx - 9, cy + 14], [tx + 15, cy]], LY.color, { lw: 4 });
-  // the demo door is "machine learning" (Matt: the demo is something Potato uses — the machine plays it, you watch it learn)
+  // the demo door is "machine learning" (Chikin: the demo is something Potato uses — the machine plays it, you watch it learn)
   x.save(); x.textBaseline = 'middle'; x.textAlign = 'center'; x.lineJoin = 'round';
   const room = (G.x1 - G.x0) - 70, words = ['machine', 'learning']; let size = 26; x.font = MONO(size);
   while (size > 14 && words.some(w => x.measureText(w).width > room)) { size -= 1; x.font = MONO(size); }

@@ -1,4 +1,4 @@
-// modes/turn-me-off.mjs — Level 9, the toy room at bedtime (Matt, Nov 1: "redo this story to something else" → the toy room;
+// modes/turn-me-off.mjs — Level 9, the toy room at bedtime (Chikin, Nov 1: "redo this story to something else" → the toy room;
 // "no kid, the toy idea is cool"; "there can be a door, it can be like toy story, potatos glitch can make him look like hes
 // not moving" (our own take on toys-freeze-when-watched: no film's characters or look); "its reverse no answer"; "instead of
 // getting deleted, he cant get seen"; "and he can infect devices"; "he has to stand next to toys without being seen and

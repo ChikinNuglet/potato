@@ -1,4 +1,4 @@
-// The music video for Turn Me Off — the toy room at bedtime (Matt, Nov 1). One place, seen low like a little stage set: the
+// The music video for Turn Me Off — the toy room at bedtime (Chikin, Nov 1). One place, seen low like a little stage set: the
 // back wall is the story (the DOOR on the left with its line of hall light, the WINDOW in the middle — the clock of the whole
 // song: moon, cloud, the night racing, the blue hour, the sunrise — the DRESSER on the right with the alarm-clock radio's red
 // digits and the CAMERA with its red dot; shelves, glow stars, the fish tank with the tiny sub where No Answer ended, the
@@ -117,7 +117,7 @@ function base() {
   box(ctx, RADIO.x0, RADIO.y0, RADIO.x1 - RADIO.x0, RADIO.y1 - RADIO.y0, '#c8322c', 7, 3.5, 0.15); rr(ctx, RADIO.x0 + 8, RADIO.y0 + 8, 58, 22, 3); ctx.fillStyle = '#140808'; ctx.fill(); ink(ctx, 2);
   for (let i = 0; i < 3; i++) dot(ctx, RADIO.x0 + 76 + (i % 2) * 8, RADIO.y0 + 12 + i * 9, 2.4, '#3a1210');   // the speaker grille
   box(ctx, 880, 136, 46, 34, '#e8e6e0', 6, 3, 0.18); dot(ctx, 896, 152, 10, '#2a2a33'); ctx.beginPath(); ctx.arc(896, 152, 10, 0, 7); ink(ctx, 2.5); dot(ctx, 893, 149, 3, '#9ab'); box(ctx, 897, 170, 12, 6, '#bbb', 1, 2, 0);
-  // the cables down the dresser (radio, camera) to the rug — no plugs anywhere (Matt: "the plug can go away")
+  // the cables down the dresser (radio, camera) to the rug — no plugs anywhere (Chikin: "the plug can go away")
   ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(RADIO.x0 + 6, RADIO.y1 - 4); ctx.quadraticCurveTo(724, 230, sx(7.1) + 14, sy(2.42) - 16); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(926, 166); ctx.quadraticCurveTo(958, 240, sx(8.45) + 18, sy(2.32) - 14); ctx.stroke();
   // the bed (front left, raised on its frame; the dark gap under it) and the toy chest (front right)

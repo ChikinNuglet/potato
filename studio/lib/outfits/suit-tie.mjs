@@ -1,4 +1,4 @@
-// suit-tie (3D) — Thursday Potato's "Manager in the chair" look (Matt: "glitch him to a suit and tie and then back").
+// suit-tie (3D) — Thursday Potato's "Manager in the chair" look (Chikin: "glitch him to a suit and tie and then back").
 // A charcoal suit jacket wrapped round him from the shoulders down, a deep V at his front showing a white shirt with collar
 // points and a red tie, wide lapels, two buttons, a pocket square, a back seam. No hat: his face stays his.
 import { painter, fu, W, INKU, INK, RM, ARC, clamp, lerp } from '../outfits3d.mjs';

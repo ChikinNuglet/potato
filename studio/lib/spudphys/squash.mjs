@@ -2,7 +2,7 @@
 // with the rest of the state, so it replays and scrubs exactly.
 // Copyright (c) 2026 ChikinNuglet. MIT licence, see LICENSE.
 // Canon guard: amplitude capped (default 0.12), scale about his feet, volume kept. Squash changes how he lands,
-// never who he is (POTATO-CANON-RULES.md HARD RULE). New squash looks go to Matt as stills first.
+// never who he is (POTATO-CANON-RULES.md HARD RULE). New squash looks go to Chikin as stills first.
 
 /**
  * @param {import('../src/world.mjs').World} world

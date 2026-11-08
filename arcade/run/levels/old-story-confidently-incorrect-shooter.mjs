@@ -1,4 +1,4 @@
-// The music video behind Confidently Incorrect — space, as a CARDBOARD STAGE SET (round 20, Matt: "It would be cool if that
+// The music video behind Confidently Incorrect — space, as a CARDBOARD STAGE SET (round 20, Chikin: "It would be cool if that
 // level looked like a cardboard set with little strings holding up the planets and stars and stuff, the strings would not
 // have any effect on potato").
 // Logline: Potato blasts off into the knowledge cosmos, shooting down his own confidently incorrect facts as they fly at
@@ -7,7 +7,7 @@
 // The rocks and the alien ships are the real thing in it — hot-rimmed, inked — so what hurts never blends into the set.
 // Beats:
 //  -14–0   THE OPENER: the stage, lights down, a spot on him. Hold ←/→ to walk the boards, ↑ hop (+ spin), Space glitch. The
-//          question types itself in a box at the top centre (Matt: "the text box can be center in the middle at the top of the
+//          question types itself in a box at the top centre (Chikin: "the text box can be center in the middle at the top of the
 //          screen"), sends, pours into his head as binary; on the music he glitches into his tiny ship and the floor drops away
 //  0–22    lift-off: the cardboard Earth on its pole is lowered out of shot
 //  15–62   deep space: planets slide by on their tracks; on "quantum spaghetti" the ringed planet's ring is yellow yarn
@@ -229,7 +229,7 @@ function bossDown(e) { const { t, s } = e;
   return bossSt.down != null && bossSt.down <= t ? bossSt.down : null; }
 
 // ---- THE OPENER ----
-// (Matt, earlier: "from the youtube video, dear potato what is the capital of, then the text starts to spel out Nippl, then
+// (Chikin, earlier: "from the youtube video, dear potato what is the capital of, then the text starts to spel out Nippl, then
 // backspaces ti Ni then finishes - Niepal" … "It should say in all 'Dear Potato, what is the capital of Niepal. thanks, Kevin'")
 const PRE = 'Dear Potato, what is the capital of ';
 const MSG = PRE + 'Niepal.  thanks, Kevin';

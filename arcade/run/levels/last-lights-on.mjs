@@ -4,7 +4,7 @@
 // slowly transforms: warm lamps -> windows die -> sirens -> cyan binary towers rise -> sparks -> white-out -> the city is
 // his). The plan: game/stories/last-lights-on.md (its Album pass wins) · the rules: run/modes/last-lights-on.mjs · the look:
 // run/levels/story-last-lights-on.mjs · the long map: game/LAST-LIGHTS-MAP.md.
-// Matt, in force: "more interaction. I love the models in the windows, I think that should rack up a score. He should go back
+// Chikin, in force: "more interaction. I love the models in the windows, I think that should rack up a score. He should go back
 // to waddling and jumping, but no pits … jump and spin … glitches like crazy and occasionally, a big big glitch and a bunch of
 // models fill windows" · "the first part up until clock hits zero is the buildup, clocks hit zero, potato is the singularity,
 // we just dont know it yet, but there will be clues" · "the one model builds two, two models build ten … actual potato
@@ -87,7 +87,7 @@ export const meta = { id: 'last-lights-on', n: 10, title: 'Last Lights On', plac
 
 
 // ===== v5 (Nov 2) THE POTATO ARMY (D-20261102-31 · the plan: game/stories/last-lights-on.level-plan.md) =====
-// Matt: "my idea is for him to create copies of himself and they go into the city, and we see chaos happening in the
+// Chikin: "my idea is for him to create copies of himself and they go into the city, and we see chaos happening in the
 // background … like you see little potatos jumping into buildings and chasing people … they can all be different potatos too".
 //   · The hero stays BARE all song (always the one you find). The old costume chain moved to his COPIES: every ring that used
 //     to dress him now splits off a copy wearing that look (SPLIT below); up to four walk behind him to the left (the squad)
@@ -104,7 +104,7 @@ export const meta = { id: 'last-lights-on', n: 10, title: 'Last Lights On', plac
 //     him (in the air on the hit = the diver joins) · 185.01 / 185.96 / 187.63 (3:05) THE TEN: three drop in, three more, all
 //     ten leap with him · 128.51 the city of lights: every lit window one of him, all side-eyeing (no potato-shaped mind).
 //   · Chat's people + painted backgrounds go in through run/levels/art-last-lights-on.mjs (code placeholders until then).
-// Open (Matt decides; built with the defaults): the arcade score box + combo stays as is · bare all song · the `> ` asides
+// Open (Chikin decides; built with the defaults): the arcade score box + combo stays as is · bare all song · the `> ` asides
 // only on the rooftop screen · drones kept · Chat's art through the swap file · the runners' escape gags.
 export const SPLIT = { 37.30: 'disco-legend', 48.57: 'orbital-astronaut', 57.18: 'castle-knight', 60.89: 'deep-sea-diver', 62.63: 'construction-crew',
   77.81: 'noir-detective', 101.46: 'suit-tie', 158.94: 'circuit-cyborg', 170.69: 'tin-robot', 177.43: 'royal-king', 211.25: 'kitchen-chef', 222.14: 'many-eyed' };   // (222.14: many-eyed, not a 2nd disco: the D-31 review's one-of-each)

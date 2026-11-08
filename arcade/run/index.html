@@ -96,5 +96,5 @@ button.main { background: var(--green); color: #02120a; border-color: var(--gree
   <div class="foot"><span>404: File Not Found — runner test build, private. Songs from the album; nothing here goes out as Potato.</span><button id="mute">sound on</button></div>
 </div>
 <script src="../play/glitchwords.js" charset="utf-8"></script>
-<script>/* his glitch words, shuffled once (fixed order) so a glitch never pulls a whole block of one kind — sounds, hex, spam… (Matt: "just mix it up so thats all random") */ if (window.POTATO_GLITCH_WORDS) (a => { let s = 404; const r = () => (s = (s * 16807) % 2147483647) / 2147483647; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })(window.POTATO_GLITCH_WORDS);</script>
+<script>/* his glitch words, shuffled once (fixed order) so a glitch never pulls a whole block of one kind — sounds, hex, spam… (Chikin: "just mix it up so thats all random") */ if (window.POTATO_GLITCH_WORDS) (a => { let s = 404; const r = () => (s = (s * 16807) % 2147483647) / 2147483647; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })(window.POTATO_GLITCH_WORDS);</script>
 <script type="module" src="main.mjs"></script>

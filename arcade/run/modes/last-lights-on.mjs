@@ -1,5 +1,5 @@
 // modes/last-lights-on.mjs — Level 10, Last Lights On, v4 (Nov 1): back on the street, the music video you play.
-// Matt: "has the right energy but I think it does need more interaction. I love the models in the windows, I think that
+// Chikin: "has the right energy but I think it does need more interaction. I love the models in the windows, I think that
 // should rack up a score. He should go back to waddling and jumping, but no pits to fall in … when you jump and spin in
 // this one he glitches like crazy and occasionally, a big big glitch and a bunch of models fill windows" · "i want it more
 // like the last lights you tube video version 2" · "no more v key, just space bar".
@@ -11,7 +11,7 @@
 //   · ↑ JUMP (his forward flip): every jump throws ONE copy of him (in whatever he's wearing) into a free window on the
 //     skyline. No double jump.
 //   · ← / → IN THE AIR = SPIN (a sideways twirl in a purple storm), one per jump: 1 more copy off the beat, 3 on it.
-//     THE SPIN LIFTS HIM INTO A GLITCH-FLIGHT (Matt, Nov 1: "he walks and jumps and flies and stuff right, like when he spins
+//     THE SPIN LIFTS HIM INTO A GLITCH-FLIGHT (Chikin, Nov 1: "he walks and jumps and flies and stuff right, like when he spins
 //     around"): he rises up along the buildings, wrapped in purple (nothing can hit him on the way up), throwing his copies into
 //     the HIGHER windows as he goes, then floats back down to waddle. On the beat he goes higher (3.0 up, its top lands on the
 //     next beat and throws one more copy up there, and he touches down ON the beat two beats later); off the beat it's a short
@@ -348,7 +348,7 @@ export const mode = {
     }
     // ---- SPACE: the ring, the network bars, or a small glitch ----
     // (the lock: a press that isn't on a ring or a bar line is a small glitch and Space is dead for 0.35 s; pressing again while
-    //  it's dead keeps it dead. Mashing never lands a ring: Matt: "I can see if you are beating it by cheesing")
+    //  it's dead keeps it dead. Mashing never lands a ring: Chikin: "I can see if you are beating it by cheesing")
     if (inp.G) {
       if (t < s.lock) s.lock = t + PH_.LOCK;
       else {
@@ -400,7 +400,7 @@ export function finalScore(C, s) {
 }
 
 // ---------- browser only: the real model baked into little copies ----------
-// Matt: "the one model builds two, two models build ten, that needs to be actual potato models … preset animations".
+// Chikin: "the one model builds two, two models build ten, that needs to be actual potato models … preset animations".
 // One small offscreen copy of the 3D model is dressed in each look and played through four short moves (a waddle, a spin,
 // a hop, a glance); every frame goes into a strip. Every copy in the level (windows, the network, the ending) is one of these.
 export const CELL = { w: 120, h: 150, feet: 137, body: 95 };

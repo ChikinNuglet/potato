@@ -1,4 +1,4 @@
-// The music video for Confidently Incorrect — round 2 (Matt: "clean, one story").
+// The music video for Confidently Incorrect — round 2 (Chikin: "clean, one story").
 // LOGLINE: Potato free-falls down a shaft of confident nonsense, sure he's climbing; every word he glitches through
 // becomes one of his "sources", the pile of them jams into one gold word, he blasts through it — and only gets surer.
 // ONE SET: the shaft — two dark walls of endless wiki text scrolling up past him (he's falling; the course runs down
@@ -18,14 +18,14 @@
 //                                 stacks up as a sandwich.
 //  7. for one second (202–206.2)   the walls go dark; one warm light under him. Quiet.
 //  8. wrong with authority, again (206.2–241.5)  ✓ stamps again; three little bots nod along; a reactor glows below.
-//  9. potato out (241.5–)          the altimeter stops; the button line (DRAFT for Matt).
+//  9. potato out (241.5–)          the altimeter stops; the button line (DRAFT for Chikin).
 // No lyrics drawn here (the overlay owns the top band). No purple (only Potato glitches purple).
 import { W, H, clamp, ease, rnd, span, fade, glitchText, glow, zap } from '../story.mjs';
 
 const INK = '#d8c39a', CREAM = '#fff1d6', GREEN = '#7ef0a8', ORANGE = '#ff8a5c', CYAN = '#8fd3ff', GOLD = '#ffcf4a', RED = '#ff5a4a';
 const L0 = 0, L1 = 340, R0 = 640, R1 = W, LC = (L0 + L1) / 2, RC = (R0 + R1) / 2;   // the two side panels (the course runs between)
 const CITE = 77.85, JAM = 76.6;
-const BUTTON = [242.2, 'sources: all of them me.'];                                  // DRAFT (Potato's voice) for Matt
+const BUTTON = [242.2, 'sources: all of them me.'];                                  // DRAFT (Potato's voice) for Chikin
 let ticks = [], lastLand = null;
 
 export function story(ctx, e) {

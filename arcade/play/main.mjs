@@ -34,7 +34,7 @@ let save = { cleared: [] };
 try { save = JSON.parse(localStorage.getItem(SAVE_KEY)) || save; } catch (e) {}
 const persist = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (e) {} };
 
-// ---------- input: keyboard (Matt's keys + WASD) and touch buttons ----------
+// ---------- input: keyboard (Chikin's keys + WASD) and touch buttons ----------
 const keys = new Set(), pressedSet = new Set();
 const KEY = { ArrowLeft: 'L', KeyA: 'L', ArrowRight: 'R', KeyD: 'R', ArrowUp: 'J', KeyW: 'J', ArrowDown: 'D', KeyS: 'D', Space: 'G', KeyV: 'V' };
 const input = { has: k => keys.has(k), pressed: k => pressedSet.has(k) };

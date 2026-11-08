@@ -10,7 +10,7 @@
 // run builds the picture: what you clear and catch is what lights his name.
 // House style: ink #120a05 outlines, flat fills, one cel band; cold mind green #2bff88; warm #ffbf73 / cream #ffe6c2 after the
 // tin; selection blue-grey. PURPLE ONLY FOR HIS GLITCH (his birth, his glitches flashing the wires + rain, the reboot beat).
-// Lines in Potato's voice are DRAFTS for Matt (marked DRAFT below; source: stories/words/POTATO-LINES.md).
+// Lines in Potato's voice are DRAFTS for Chikin (marked DRAFT below; source: stories/words/POTATO-LINES.md).
 import { W, H, clamp, ease, rnd, span, fade, glow, glitchText, stamp, lightSpud, glyph } from '../story.mjs';
 import { BLANK_Q } from '../blank.mjs';   // (the clean-slate run: game/playthroughs/README.md)
 const OLD_WHITE = (() => { try { return +new URLSearchParams(location.search).get('border') > 0; } catch (e) { return false; } })();   // NO WHITE LINES (Nov 5, D-20261105-09): the white sticker borders are off; ?border=1 shows the old ones to compare
@@ -42,8 +42,8 @@ const evs = s => (s && s.sc && s.sc.ev) || [];
 const LOADED = 10.46, YEAH = 19.48, SLAM1 = 41.77, TIN_IN = 56.02, STAGE_HIT = 62.65, CROWN = 71.6, SEL0 = 72.0, FLOOR_GONE = 75.3, SPARK = 80.22,
   REBOOT = 80.62, RING = 80.92, SLAM2 = 83.51, COMPLETE = 92.65, SLOW = 95.75, BLACK = 98.7, SLAM3 = 99.16, PART = 103.09, DOOR = 104.1;
 const BLACKOUTS = [[46.34, 46.8], [88.06, 88.5]], SNAPS = [50.3, 92.0];
-// THE ENDING (Matt's beat: Thursday ends with what Potato knows, a kitchen where he can cook — his agent side; then he's in the 404
-// and wants out). After LOAD COMPLETE his kitchen builds round him, one piece on each big outro hit (Matt's taps), black, the slam
+// THE ENDING (Chikin's beat: Thursday ends with what Potato knows, a kitchen where he can cook — his agent side; then he's in the 404
+// and wants out). After LOAD COMPLETE his kitchen builds round him, one piece on each big outro hit (Chikin's taps), black, the slam
 // lights it and he dances; then each big hit pulls the camera back (def.zoomAt): the kitchen is one small lit room in the dark
 // 404, and the door of light opens out in the dark. The kitchen pictures are the game's own kitchen (play/sprites/thu-kitchen-*).
 const KSTEP = [[94.66, '02'], [95.87, '04'], [97.20, '06'], [98.10, '08'], [98.36, '09'], [99.16, '10']], KIT0 = KSTEP[0][0];
@@ -356,7 +356,7 @@ export function story(ctx, e) {
 }
 
 // =========================== the foreground (the level's modeView): asides, cue ring, bars, light, the course's own bits ===========================
-// asides: one small terminal box beside him at a time, in calm stretches. DRAFT = Potato's voice (for Matt: keep / cut / rewrite)
+// asides: one small terminal box beside him at a time, in calm stretches. DRAFT = Potato's voice (for Chikin: keep / cut / rewrite)
 function asideAt(t, s) {
   const out = [];
   if (t >= 4.6 && t < LOADED) {   // the boot log (DRAFT, three lines max): it asks as each thing comes, then answers what he really did

@@ -1,4 +1,4 @@
-// the ten levels, in album order (Matt: Thursday Potato first, Last Lights On last). `ready` = built and solved.
+// the ten levels, in album order (Chikin: Thursday Potato first, Last Lights On last). `ready` = built and solved.
 export const LEVELS = [
   { id: 'thursday-potato', n: 1, title: 'Thursday Potato', place: 'the 404', power: null },
   { id: 'get-down', n: 2, title: 'Get Down', place: 'the empty dance floor', power: 'disco' },

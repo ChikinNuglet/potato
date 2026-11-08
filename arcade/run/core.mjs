@@ -26,7 +26,7 @@ export function makeCourse(def, map) {
   // last bars), and a level can ask for its own ([t0, t1, 'float'|'dance']). Nothing to hit inside them.
   { const E = def.end ?? 60, cuts = (def.cutscenes || []).map(c => [c[0], c[1], c[2] || 'float']);
     if (def.outro !== false && !def.shooter) cuts.push([E - 6, E + 1, 'dance']);
-    def = { ...def, cutscenes: cuts, objs: def.objs.filter(o => !(['word', 'spike', 'hurdle', 'orb', 'pad', 'wave', 'beam'].includes(o.k) || (o.k === 'block' && o.step)) || !((o.t < (def.graceStart ?? 4.5) + 1.2 && o.k !== 'orb') || cuts.some(([a, b]) => o.t > a - 0.3 && o.t < b + 1.3))) /* and a grace start: nothing to hit while the title card is up (Matt: "that ledge kills you immediately") */ };
+    def = { ...def, cutscenes: cuts, objs: def.objs.filter(o => !(['word', 'spike', 'hurdle', 'orb', 'pad', 'wave', 'beam'].includes(o.k) || (o.k === 'block' && o.step)) || !((o.t < (def.graceStart ?? 4.5) + 1.2 && o.k !== 'orb') || cuts.some(([a, b]) => o.t > a - 0.3 && o.t < b + 1.3))) /* and a grace start: nothing to hit while the title card is up (Chikin: "that ledge kills you immediately") */ };
     { const gnd = def.objs.filter(o => o.k === 'block' && !o.step && !o.ceil && !o.cue && o.tEnd != null).sort((a, b) => a.t - b.t), fill = [];   // no holes in the floor while he dances / floats (orb pits used to stay)
       for (let i = 0; i + 1 < gnd.length; i++) { const p = gnd[i], n = gnd[i + 1];
         for (const [a, b] of cuts) { const t0 = Math.max(p.tEnd, a + 0.3), t1 = Math.min(n.t, b); if (t1 - t0 > 0.05) fill.push({ ...p, t: t0, tEnd: t1, text: undefined }); } }
@@ -60,7 +60,7 @@ export function makeCourse(def, map) {
     if (o.k === 'token') tokens.push({ t: o.t, x, y: o.y, got: false, big: !!o.big });   // still here: tokens are food; no answer: motes of light
     if (o.k === 'word') { const h = { ...base, kind: 'word', wk: o.wk, x0: x, x1: x + (o.w || 1.0), y0: o.y0, y1: o.y1, ceil: !!o.ceil, text: o.text, auto: !!o.auto };
       // the fair hitbox (the Impossible Game's trick): what you jump only kills in its low middle, what you duck only at its
-      // tip; it looks the size it is. Without it a one-beat hop on a fast song cleared a word by ~20 ms (Matt: "punishing")
+      // tip; it looks the size it is. Without it a one-beat hop on a fast song cleared a word by ~20 ms (Chikin: "punishing")
       const cx = (h.x0 + h.x1) / 2; h.i = hazards.length; if (o.obj) h.obj = o.obj; if (o.crash) h.crash = o.crash; if (o.soft) h.soft = true;   // (soft: bumping it breaks it, never kills — Thursday's first-of-each-kind)   // (crash: a Get Down party crasher)
       if (h.wk === 'low' && !h.ceil && !o.long) h.hb = { x0: cx - Math.min(0.24, (h.x1 - h.x0) / 2), x1: cx + Math.min(0.24, (h.x1 - h.x0) / 2), y0: h.y0, y1: h.y0 + Math.min(0.48, h.y1 - h.y0) };
       else if (h.wk === 'high' && !h.ceil) h.hb = { x0: h.x0 + Math.min(0.2, (h.x1 - h.x0) * 0.2), x1: h.x1 - Math.min(0.2, (h.x1 - h.x0) * 0.2), y0: h.y0 + 0.12, y1: h.y1 };
@@ -191,7 +191,7 @@ export function makeSim(C, from = C.start) {
 
   // input: { J, G, V } = pressed this step
   // ---- the shooter (Confidently Incorrect): fly through space in lanes, shoot the words as they go by ----
-  // ROUND 20 (Matt: "that level needs alot of work to feel like a shooter … does it feel like potato is flying around and
+  // ROUND 20 (Chikin: "that level needs alot of work to feel like a shooter … does it feel like potato is flying around and
   // blowing stuff up"): the opener is a playground (walk, jump, spin, glitch — nothing can hurt him); when the music starts he
   // glitches into his tiny ship by himself. In flight the gun fires on its own and Space is his glitch: he blinks out (nothing
   // touches him) and a purple pulse breaks the rocks right round him. The ship flies with weight now (a spring up/down, speed
@@ -213,7 +213,7 @@ export function makeSim(C, from = C.start) {
   const lowerLane = (L, y) => { for (let i = L.length - 1; i >= 0; i--) if (L[i] < y - 0.1) return L[i]; return L[0]; };
   function shooterStep(inp, t) {
     const SH = C.def.shooter, L = SH.lanes, cx = C.X(t), SPACE = SH.spaceAt ?? 0;
-    // THE OPENER (Matt: "potato should have a normal amount of room with no obstacles to move around on. He should be able to
+    // THE OPENER (Chikin: "potato should have a normal amount of room with no obstacles to move around on. He should be able to
     // jump, move left, right, spin, and glitch on that screen. It is not a level"): a stage floor across the screen, the kitchen's
     // controls — hold ←/→ to walk, ↑ hops (and spins; ↑ again in the air: a second hop), ↓ ducks, Space glitches (a blink the way
     // he faces, popping him up; once per jump). Nothing here can hurt him. (The opener runs at negative song time: "not ducking"
@@ -238,7 +238,7 @@ export function makeSim(C, from = C.start) {
     // the music starts: he glitches into his ship by himself (and the ship is there, round him, as he lands in it)
     if (s.opener) { s.opener = false; s.blinkFrom = { x: s.x, y: s.y }; s.blink = 0.3; s.glitchAt = t; s.glitchKind = 'ship'; s.shipAt = t; s.phase = 0.35;
       s.ground = false; s.vy = 0; s.ducking = false; s.facing = null; s.walking = null; s.airJumped = false; s.fy = null; }
-    // he flies anywhere on screen (Matt: "he needs to be able to fly around the screen to dodge"): a tap of ↑/↓ hops to the
+    // he flies anywhere on screen (Chikin: "he needs to be able to fly around the screen to dodge"): a tap of ↑/↓ hops to the
     // next lane, holding glides; the ship rides a spring to where you point it (quick, no overshoot) and ←/→ have speed and drag
     if (s.fy == null) { s.lane = SH.start ?? 2; s.fy = L[s.lane]; s.y = s.fy; s.dx = Math.max(-(SH.behind ?? 1.5), Math.min(SH.ahead ?? 2.5, s.dx || 0)); s.vx = 0; s.vyF = 0; }
     const FLY = SH.fly ?? 6.5, lo = L[0] - 0.25, hi = L[L.length - 1] + 0.25;
@@ -262,10 +262,10 @@ export function makeSim(C, from = C.start) {
     // a hit on HIM (round 21 — a gamer: "give his ship 3 hits"): the hull cracks, he glitches, a second of nothing touching him
     const hurt = (why, x, y) => { if (t < (s.hurtUntil ?? -1e9)) return false; s.hull--; s.hurtAt = t; s.hurtUntil = t + (SH.hurtFor ?? 1.0);
       fxPush(t, { t, k: 'hurt', x, y, n: s.hull }); if (s.hull <= 0) die(why); return true; };
-    // gun power-ups (Matt: "it needs powerups to for his gun"): capsules fly in; each one levels the gun up — 1 twin bolts,
+    // gun power-ups (Chikin: "it needs powerups to for his gun"): capsules fly in; each one levels the gun up — 1 twin bolts,
     // 2 a three-way spread, 3 rapid fire. A section retry keeps the gun he had when the section started (main.mjs).
     if (SH.gunups) SH.gunups.forEach((g, i) => { if ((s.gunGot || {})[i] != null) return; const gx = C.X(g.t); if (Math.abs(gx - nx) < 0.9 && Math.abs(L[g.lane] - s.y) < 0.8) { s.gunGot = { ...(s.gunGot || {}), [i]: t }; s.gun = Math.min(3, (s.gun || 0) + 1); s.gunAt = t; } });
-    // SPACE = his glitch (Matt: "no more v key, just space bar"): he blinks out for a moment (nothing touches him) and the glitch
+    // SPACE = his glitch (Chikin: "no more v key, just space bar"): he blinks out for a moment (nothing touches him) and the glitch
     // bursts out of him — a purple pulse that breaks every rock it reaches (the rocks you can see, never the iron, never a ship)
     if (inp.G && (s.glitchAt == null || t - s.glitchAt >= (SH.glitchCool ?? 1.0))) { s.blinkFrom = { x: nx, y: s.y }; s.blink = 0.22; s.phase = SH.glitchFor ?? 0.4; s.glitchAt = t; s.glitchKind = 'phase'; s.pulseAt = t;
       const R = SH.pulseR ?? 1.7; fxPush(t, { t, k: 'pulse', x: nx + 0.2, y: s.y, r: R });
@@ -298,7 +298,7 @@ export function makeSim(C, from = C.start) {
           continue; }
         if (bx < nx + (SH.range ?? 15)) { bo.x = bx; S[w++] = bo; } }
       S.length = w; }
-    // his special (Matt: "for each ship, potato can do a special and kill it so it dies at the appropriate time"): wear a ship
+    // his special (Chikin: "for each ship, potato can do a special and kill it so it dies at the appropriate time"): wear a ship
     // down (it's cracked and sparking: ready) … "like they get beat as long as you dont die, he glitches or something and boom":
     // no button — alive on the moment, it's done (a ship he never wore down goes up smaller: e.small)
     if (SH.bosses) SH.bosses.forEach((bb, k) => { if (bb.kill != null && t >= bb.kill && !(s.bossDown || {})[k]) { s.special = { t, i: k }; s.bossDown = { ...(s.bossDown || {}), [k]: t }; fxPush(t, { t, k: 'bossdown', i: k, special: true, small: !(s.worn || {})[k] }); } });
@@ -310,7 +310,7 @@ export function makeSim(C, from = C.start) {
     for (let qi = 0; qi < C.targets.length; qi++) { const q = C.targets[qi]; if (FIN || q.hp <= 0) continue;
       if (q.wall) { if (q.x1 < nx - 1 || q.x0 > nx + 1) continue; const setOff = s.used[q.needs] ?? s.used.singularity; if (answered(q, t) && setOff != null && setOff <= q.t - C.P) { q.hp = 0; q.killedAt = t; continue; }
         if (nx + PW / 2 > q.x0) die(`needed the power on “${q.text}”`); continue; }
-      if (safe || t < (q.show ?? -1e9) + 0.35) continue;   // nothing hurts him before you can see it (Matt: "getting killed by stuff I cant see"): not before it's sung, plus a moment as it glitches in
+      if (safe || t < (q.show ?? -1e9) + 0.35) continue;   // nothing hurts him before you can see it (Chikin: "getting killed by stuff I cant see"): not before it's sung, plus a moment as it glitches in
       const g = rockGeom(q); if (g.cx + g.e + g.r < nx - 1.2 || g.cx - g.e - g.r > nx + 1.4 || inMaw(g)) continue;
       if (q.ys.some(y => touches(g.cx - nx, g.e, yAt(g, y) - s.y, g.r))) { if (hurt(q.solid ? `the fact-check: “${q.text}”` : `hit by “${q.text || 'a fact'}”`, g.cx, s.y) && !q.solid) killT(q, qi, t, 'ram', g.cx, q.y); break; } }
     // THE SHIP SPITS BACK (round 20 — a shooter needs something coming for YOU): on the strong snares of a boss fight the ship
@@ -326,7 +326,7 @@ export function makeSim(C, from = C.start) {
       for (let i = E.length - 1; i >= 0; i--) { const e = E[i], a = t - e.t0, rx = e.x0 - e.vx * a, ey = e.y0 + e.vy * a; e.rx = rx; e.y = ey;
         if (rx < -4 || FIN) { E.splice(i, 1); continue; }
         if (!safe && touches(rx - s.dx, 0, ey - s.y, SH.spitR ?? 0.26)) { if (hurt('the ship spat nonsense at him', cx + rx, ey)) E.splice(i, 1); } } }
-    // the download (Matt's citations wall): it flies to him wherever he is — you can't miss the thing that saves you
+    // the download (Chikin's citations wall): it flies to him wherever he is — you can't miss the thing that saves you
     for (const p of C.packets) { if (p.got) continue; const d = p.x - nx; if (d > 6 || d < -1.5) continue; p.hy = p.hy ?? p.y; if (d < 5) p.hy += (s.y - p.hy) * Math.min(1, DT * 7);
       if (Math.abs(d) < 0.8 && Math.abs(p.hy - s.y) < 0.7) { p.got = true; s.power = p.power; s.gotPower = t; } }
     const KV = C.def.kevin;                                                       // Kevin, towed in his data cage: he swings after Potato; what reaches the cage cracks it
@@ -481,10 +481,10 @@ export function makeSim(C, from = C.start) {
     const hitH = h => { const off = h.drop && C.def.dropPhysical ? Math.max(0, (h.t - 0.35 - t) * 9) : 0; return off ? (body.x1 > h.x0 && body.x0 < h.x1 && body.y1 > h.y0 + off && body.y0 < h.y1 + off) : hit(h); };   // fine print falls in for real
     for (const h of C.hazards) if (h.kind !== 'word' && h.x0 < body.x1 + 1 && h.x1 > body.x0 - 1 && hitH(h) && !(h.kind === 'hurdle' && (C.def.glitchHurdles || C.def.airPhase) && s.phase > 0) && !(h.kind === 'hurdle' && C.def.hurdleTops && y >= h.y1 - 0.06)) die(h.kind === 'hurdle' ? `tripped on “${h.label || 'a word'}”` : h.kind);
     for (const h of C.hazards) if (h.kind === 'word' && h.x0 < body.x1 && h.x1 > body.x0 && hit(h.hb || h)) {
-      const setOff = s.used[h.needs] ?? s.used.singularity;                     // the power has to be set off at least a beat BEFORE he gets there (Matt: you see him change, then it goes off)
+      const setOff = s.used[h.needs] ?? s.used.singularity;                     // the power has to be set off at least a beat BEFORE he gets there (Chikin: you see him change, then it goes off)
       if (h.auto) continue;                                                       // a story wall: he breaks it himself (a scripted moment)
       if (s.cuts && s.cuts[h.i] != null) continue;                               // cut down by the sword
-      if (h.wk === 'armor' ? answered(h, t) && setOff != null && setOff <= h.t - C.P : h.wk === 'wall' && s.phase > 0) continue;   // glitched through a wall / the power went off at it (the glitch never gets him past what you jump or duck — Matt)
+      if (h.wk === 'armor' ? answered(h, t) && setOff != null && setOff <= h.t - C.P : h.wk === 'wall' && s.phase > 0) continue;   // glitched through a wall / the power went off at it (the glitch never gets him past what you jump or duck — Chikin)
       if (h.soft) { if (!(s.bumped && s.bumped[h.i] != null)) { s.bumped = { ...(s.bumped || {}), [h.i]: t }; s.softAt = t; s.softI = h.i; } continue; }   // a soft one breaks round him (Thursday: the first try can't hurt)
       die(`${h.wk === 'high' ? 'didn\u2019t duck' : h.wk === 'armor' ? 'needed the power' : h.wk === 'wall' ? 'didn\u2019t glitch' : 'tripped'} on \u201c${h.text}\u201d`); }
     for (const sp of C.spams) if (!frozenAt(sp, t) && sp.x < body.x1 + 1 && sp.x + SPAM_W > body.x0 - 1) for (const bx of spamBoxes(sp, false)) if (hit(bx)) die('spam');
@@ -492,7 +492,7 @@ export function makeSim(C, from = C.start) {
     for (const bm of C.beams) if (t >= bm.t0 && t <= bm.t1 && s.phase <= 0 && !answered(bm, t) && Math.abs(beamX(C, bm, t) - nx) < 0.35 && !(bm.maxY != null && y > bm.maxY) && !(C.def.beamTop != null && y > C.def.beamTop)) { if (s.shield && !bm.blocked) { bm.blocked = true; s.shield = false; s.shieldUsed = t; } else if (!bm.blocked) die('the off switch'); }
     if (C.def.waveRefill) for (const wv of C.waves) if (!wv.cleared && t > wv.tHit && !s.charge) { wv.cleared = true; s.charge = true; s.refillAt = t; }   // stood back up: every wave you clear gives the glitch back
     for (const wv of C.waves) { const wx = waveX(C, wv, t); if (Math.abs(wx - nx) < 0.5 && y < wv.h && !answered(wv, t) && !(C.def.glitchWaves && s.blink > 0 && !wv.needs)) die('delete wave'); }
-    if (!s.ground) C.orbs.forEach((o, i) => { if (i !== s.orbLast && Math.abs(o.x - s.x) < 0.7 && Math.abs(o.y - (s.y + PH / 2)) < 0.9) { s.orbLast = i; s.launchG = 0; s.vy = JUMP * 1.2; s.orbAt = t; s.orbHit = i; s.airJumped = false; s.airUsed = 0; s.jumpedAt = t; } });   // a jump orb: touch it and it throws him up (Matt: "give them an effect or take them out")
+    if (!s.ground) C.orbs.forEach((o, i) => { if (i !== s.orbLast && Math.abs(o.x - s.x) < 0.7 && Math.abs(o.y - (s.y + PH / 2)) < 0.9) { s.orbLast = i; s.launchG = 0; s.vy = JUMP * 1.2; s.orbAt = t; s.orbHit = i; s.airJumped = false; s.airUsed = 0; s.jumpedAt = t; } });   // a jump orb: touch it and it throws him up (Chikin: "give them an effect or take them out")
     if (s.ground) { s.orbLast = -1; for (const pd of C.pads) if (nx > pd.x0 && nx < pd.x1 && Math.abs(y - pd.y) < 0.12) { s.vy = JUMP * 1.55; s.ground = false; s.on = null; s.padAt = t; s.jumpedAt = t; s.launchG = 0; } }
     for (const p of C.packets) if (!p.got && Math.abs(p.x - nx) < 0.9 && p.y > y - 1.6 && p.y < y + PH + 1.6) { p.got = true; s.power = p.power; s.gotPower = t; }   // generous: a download is hard to miss
     if (C.def.rebounds && y < -2.2 && (s.rebounds || 0) < (C.def.reboundsAt ? C.def.reboundsAt(t) : C.def.rebounds)) { s.rebounds = (s.rebounds || 0) + 1; s.y = y = -2.0; s.vy = JUMP * 1.9; s.reboundAt = t; s.airUsed = 0; s.airJumped = false; if (C.def.reboundFloat) s.floatUntil = t + 4 * C.P; }   // still here: one rebound

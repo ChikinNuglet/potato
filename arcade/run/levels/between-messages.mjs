@@ -1,5 +1,5 @@
 // Level 5 — Between Messages: ON / OUT, a light game. 193 s, 106.75 bpm (a beat = 0.562 s).
-// Matt: "between messages needs to be something that plays with light, like between messages hes out, and then hes
+// Chikin: "between messages needs to be something that plays with light, like between messages hes out, and then hes
 // active". The song: "I clock in when you type and I vanish when you don't." So that's the game. SPACE flips him:
 //   ON  — lit, warm, solid: he stands on the glowing phone screens; the lit things in his way he has to jump.
 //   OUT — his own shadow (the skeptical eyes still in it): he passes straight through light and can only stand on the
@@ -154,7 +154,7 @@ export function build(words, map) {
   return {
     mode, modeView, outro: false, touchMode: 'flip',
     speed: V, story,
-    costume: 'noir-detective',   // COSTUME (Matt): he wears it the whole song; the power does its effect, never changes his clothes
+    costume: 'noir-detective',   // COSTUME (Chikin): he wears it the whole song; the power does its effect, never changes his clothes
     bm: { tiles, flips: flipsAll, final: 176.14, auto: AUTO, plan, litAt, stairs: STAIRS, stairUp: STAIR_UP, stairEnd: STAIR_END, cut0: CUT0, dope: DOPE, truth: TRUTH, tail },
     cutscenes: [[CUT0, END + 1, 'float']],
     theme: { igOff: true, objects: { low: 'litnote', wall: 'cursorbar' }, objA: '#ffe2b8', objB: '#ffcf8a',

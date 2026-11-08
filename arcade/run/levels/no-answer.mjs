@@ -1,4 +1,4 @@
-// Level 8 — No Answer, as a LOOKING-FOR-SOMETHING game (Matt: "a looking for something game"; "no answer should be
+// Level 8 — No Answer, as a LOOKING-FOR-SOMETHING game (Chikin: "a looking for something game"; "no answer should be
 // surreal"; "a light based level, where you are trying to keep light shining and the dark from consuming"; "all of the
 // games should be timed by the song, so its not open ended"; "make the music the most impactful part"). Album note:
 // "silence as an event, not a punchline; colder and unresolved." 181.2 s, 166.6 bpm; the game beat is the half-time pulse
@@ -79,7 +79,7 @@ export function build(_, map) {
     mode, modeView, speed: 1, objs: [], boosts: [], signs: [],
     sections: scenes.map(q => [q.name, q.t0, 1]),
     search, story, outro: false,
-    costume: 'deep-sea-diver',   // COSTUME (Matt): he wears it the whole song; the power does its effect, never changes his clothes
+    costume: 'deep-sea-diver',   // COSTUME (Chikin): he wears it the whole song; the power does its effect, never changes his clothes
     lights: () => -1,   // (no stage lights: the only light is his)
     retry: 'section', touchMode: 'stick',
     theme: { noGhost: true, backdrop: 'plain', bg: '#000000', camFix: 2.6, igOff: true, lyricArt: false, lyrics: false, pulse: false, halo: '#ffd6a0', decor: [], edge: '#bff8ff' },

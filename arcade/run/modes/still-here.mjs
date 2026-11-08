@@ -1,5 +1,5 @@
 // modes/still-here.mjs — Level 7, Still Here: the castle wall at night, a side-on PLATFORMER inside a moving screen.
-// Matt (Nov 1): "still here is a token collector level, you still have to jump with the timing, but if you dont collect tokens,
+// Chikin (Nov 1): "still here is a token collector level, you still have to jump with the timing, but if you dont collect tokens,
 // you arent 'still here'" · "Still here should have more tokens, they can be smaller. The token meter should actually have a
 // chance of running out … The token meter should be a little larger on the UI, and potato should be able to move back and forth
 // to collect the tokens. It can be more of a platformer, with the bats flying around, and the dragon stopping for a fight, you
@@ -54,7 +54,7 @@ export const G = {
   CRACKY: 1.9,                            // the eye only cracks from up the stair (his feet this high: the top slab, or a jump from slab 1)
   IMMUNE: 0.6, REST: 1.05,
   HURT: { fire: 0.12, bat: 0.08, beam: 0.10, claw: 0.12, stone: 0.05, cue: 0.15 },
-  GAIN: { small: 0.014, big: 0.07, gold: 0.08 },   // (more, smaller tokens: Matt)
+  GAIN: { small: 0.014, big: 0.07, gold: 0.08 },   // (more, smaller tokens: Chikin)
   FLOOR: 0,
 };
 G.GRAV = 8 * G.HOPH / (G.HOPT * G.HOPT); G.JUMP = 4 * G.HOPH / G.HOPT; G.VLAUNCH = Math.sqrt(2 * G.GRAV * G.LAUNCH);
