@@ -87,8 +87,17 @@ const PIECES = [
     x.strokeStyle = 'rgba(255,207,138,.05)'; x.lineWidth = 3; for (let i = 0; i < 1600; i += 46) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 640); x.stroke(); } }],
   [3.85, 'floor', x => { x.fillStyle = '#2a1f19'; x.fillRect(0, 640, 1600, 260); for (let r = 0; r < 4; r++) for (let c = 0; c < 22; c++) if ((r + c) % 2) { x.fillStyle = '#3a2b22'; x.fillRect(c * 76 - (r % 2) * 38, 640 + r * 65, 76, 65); }
     x.fillStyle = '#120c09'; x.fillRect(0, 632, 1600, 14); }],
-  [4.15, 'window', x => { x.fillStyle = '#0b1530'; x.fillRect(150, 150, 300, 230); x.fillStyle = '#f2e6c4'; x.beginPath(); x.arc(390, 200, 22, 0, 7); x.fill();
-    for (let i = 0; i < 14; i++) { const bx = 160 + i * 21, bh = 40 + rnd(i, 1) * 90; x.fillStyle = '#121a2e'; x.fillRect(bx, 380 - bh, 19, bh); x.fillStyle = WARM; if (rnd(i, 2) < 0.6) x.fillRect(bx + 6, 390 - bh + 14, 5, 6); }
+  [4.15, 'window', x => {   // the outside follows the visitor's own clock (Chikin, Nov 7: "if its night its night"): night, dawn, day, dusk
+    const hr = new Date().getHours() + new Date().getMinutes() / 60, night = hr < 5.5 || hr >= 20, dawn = !night && hr < 7.5, dusk = !night && hr >= 17.5, day = !night && !dawn && !dusk;
+    const g = x.createLinearGradient(0, 150, 0, 380);
+    if (night) { g.addColorStop(0, '#060c20'); g.addColorStop(1, '#0b1530'); } else if (day) { g.addColorStop(0, '#5aa6e6'); g.addColorStop(1, '#bfe2f5'); }
+    else if (dawn) { g.addColorStop(0, '#3b4a8a'); g.addColorStop(.6, '#e89a7a'); g.addColorStop(1, '#ffd29a'); } else { g.addColorStop(0, '#2a2468'); g.addColorStop(.55, '#c2566e'); g.addColorStop(1, '#f2a35a'); }
+    x.fillStyle = g; x.fillRect(150, 150, 300, 230);
+    if (night) { x.fillStyle = '#f2e6c4'; x.beginPath(); x.arc(390, 200, 22, 0, 7); x.fill(); x.fillStyle = 'rgba(242,230,196,.8)'; for (let i = 0; i < 18; i++) x.fillRect(158 + rnd(i, 5) * 280, 158 + rnd(i, 6) * 90, 2, 2); }
+    else if (day) { x.fillStyle = '#fff4c2'; x.beginPath(); x.arc(392, 196, 24, 0, 7); x.fill(); x.fillStyle = 'rgba(255,255,255,.85)'; [[200, 190], [260, 214], [330, 176]].forEach(([cx, cy]) => { x.beginPath(); x.ellipse(cx, cy, 26, 9, 0, 0, 7); x.fill(); }); }
+    else { x.fillStyle = dawn ? '#ffe7b0' : '#ffb26b'; x.beginPath(); x.arc(dawn ? 210 : 390, 300, 26, 0, 7); x.fill(); }
+    const bld = night ? '#121a2e' : day ? '#7d8aa3' : '#3a2f52';
+    for (let i = 0; i < 14; i++) { const bx = 160 + i * 21, bh = 40 + rnd(i, 1) * 90; x.fillStyle = bld; x.fillRect(bx, 380 - bh, 19, bh); x.fillStyle = WARM; if (!day && rnd(i, 2) < (night ? 0.6 : 0.35)) x.fillRect(bx + 6, 390 - bh + 14, 5, 6); }
     x.lineWidth = 16; x.strokeStyle = '#5a3a26'; x.strokeRect(150, 150, 300, 230); x.lineWidth = 9; x.beginPath(); x.moveTo(300, 150); x.lineTo(300, 380); x.moveTo(150, 265); x.lineTo(450, 265); x.stroke();
     x.lineWidth = 6; x.strokeStyle = INK; x.strokeRect(142, 142, 316, 246); }],
   [4.45, 'cabinets', x => { for (let i = 0; i < 4; i++) { x.fillStyle = '#6a4630'; x.fillRect(820 + i * 150, 110, 140, 170); x.lineWidth = 6; x.strokeStyle = INK; x.strokeRect(820 + i * 150, 110, 140, 170);
