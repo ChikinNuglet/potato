@@ -68,6 +68,7 @@ const KEY = { ArrowUp: 'J', KeyW: 'J', Space: 'G', KeyV: 'V', ArrowDown: 'D', Ke
 const held = new Set();   // keys held down: holding ↓ keeps him ducked
 addEventListener('keyup', e => { const k = KEY[e.code]; if (k) held.delete(k); });
 addEventListener('keydown', e => { const k = KEY[e.code]; if (k && mode === 'run') { e.preventDefault(); if (!e.repeat) { pressed.add(k); stamp(k, e); } held.add(k); }
+  if (e.code === 'Escape' && PLAY_ONLY && window.parent !== window) { window.parent.postMessage({ potato: 'exit' }, '*'); return; }   // (?play inside the house: Esc = back to the house, Chikin Nov 8)
   if (e.code === 'Escape' && mode === 'run') quit(); if (e.code === 'KeyM') toggleMute(); });
 for (const b of document.querySelectorAll('[data-key]')) b.addEventListener('pointerdown', e => { e.preventDefault(); if (mode === 'run') { pressed.add(b.dataset.key); held.add(b.dataset.key); } b.classList.add('on'); setTimeout(() => b.classList.remove('on'), 120); });
 for (const b of document.querySelectorAll('[data-key]')) for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(ev, () => held.delete(b.dataset.key));
@@ -178,7 +179,7 @@ async function nextDemo(fromId) { const i = LEVELS.findIndex(L => L.id === fromI
 const simSkin = { b: null, on: false, want: null, wear: spud.wear, run: 0, lvl: null, tag: null };
 loadOutfit('simulation').then(b => { simSkin.b = b; }).catch(e => console.warn('simulation skin', e));
 // Chikin, Nov 8: in Ghost in the Group Chat's demo he's just a GHOST (sheet-ghost), not the binary one; the only change there
-const DEMO_SKIN = { 'ghost-in-the-group-chat': 'sheet-ghost', 'ghost-stairs': 'sheet-ghost' }, demoSkins = {};
+const DEMO_SKIN = {}, demoSkins = {};   // (Chikin, Nov 8 later: "the demo he needs to be binary": every demo is the binary Potato again; the ghost is only for playing Ghost)
 for (const [id, slug] of Object.entries(DEMO_SKIN)) loadOutfit(slug).then(b => { demoSkins[id] = b; }).catch(e => console.warn('demo skin', e));
 spud.wear = b => { simSkin.want = b; if (!simSkin.on) simSkin.wear(b); };
 let wornNow = null; if (NOPOTATO) { const w0 = simSkin.wear; simSkin.wear = b => { wornNow = b; return w0(b); }; }   // (?nopotato: which outfit the demo has him in, for the data)
