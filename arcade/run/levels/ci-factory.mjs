@@ -41,7 +41,7 @@ export const CHUTES = [[85.07, F2, F1], [175.09, F3, F2]];
 
 // ---- the course (§3.4): [press time, kind, label, extra] — kind: low ↑ · high ↓ · wall Space · hole ↑ (a vat) · dbl ↑↑ ·
 // step ↑ (a ledge) · pad ↑ (launch) · chute (a fall, no press) · crumble · fake · dormant (Space) · orb · hurdle · pump.
-// Labels are only Matt's hallucination products or '' (no hazard ever carries the sung line).
+// Labels are only Chikin's hallucination products or '' (no hazard ever carries the sung line).
 const BASE = [
   [18.42, 'low', '', 'fanny'], [21.69, 'low', ''], [24.03, 'low', 'YAK', 'yak'], [24.78, 'wall', '', 'qc'],
   [26.79, 'low', ''], [30.93, 'high', '', 'cabbage'], [33.58, 'low', ''], [34.86, 'low', ''], [37.43, 'low', '', 'toaster'],
@@ -74,7 +74,7 @@ const BASE = [
   [229.83, 'high', ''], [230.49, 'low', '', 'hats'], [231.30, 'wall', '', 'shutters'],
   [233.56, 'wall', 'FACT', 'fact'], [235.17, 'step', '', 'brim'], [237.70, 'low', ''], [238.30, 'high', '', 'beam'], [239.12, 'low', ''], [239.94, 'high', '', 'beam'], [240.71, 'low', ''],
 ];
-// THE REWORK (Nov 2 night, plan: stories/confidently-incorrect.rework-nov2.md §1). Matt: "the setting works, but the game is not good" /
+// THE REWORK (Nov 2 night, plan: stories/confidently-incorrect.rework-nov2.md §1). Chikin: "the setting works, but the game is not good" /
 // "this is boring...the whole level has nothing to jump over". The course above stays (its set pieces, vats, jams, launches);
 // these rows fill the dead stretches on sung words so every section has something to do, building to the peak:
 // L = a crate (↑), H = a press head (↓), 'stack' = two crates high (↑ then ↑ again in the air: the new piece, this level only).
@@ -82,7 +82,7 @@ const BASE = [
 // crawl, a launch, a chute or the stall on "Kevin?"; every retry point keeps ≥ 1.2 s to its next press.
 const L = (t, what = '') => [t, 'low', '', what], Hd = (t, what = '') => [t, 'high', '', what], ST = (t, what = '') => [t, 'stack', '', what];
 const ADD = [
-  // the belt + verse 1a (Matt's note at 12.8: the belt starts with crates; control from 13.4, the first one on "psychopath")
+  // the belt + verse 1a (Chikin's note at 12.8: the belt starts with crates; control from 13.4, the first one on "psychopath")
   L(15.89), L(16.94, 'silicon'), Hd(19.25), L(20.38), L(27.92, 'possum'), Hd(28.92), L(30.00), L(32.70), Hd(36.06), L(38.34),
   // verse 1b: the first STACK on "RadioShack", then ↑↓ alternation
   ST(46.54, 'electronics'), Hd(48.32), Hd(51.16), L(51.83), Hd(53.70), L(56.36),
@@ -126,7 +126,7 @@ export const RETRY = [14.37, 38.77, 58.61, 75.32, 86.30, 100.30, 112.50, 130.70,
 export const CUTS = [[-14, 13.4, 'float'], [241.3, 248.41, 'float']];   // (rework: control from 13.4, just after the push-through, so the belt has crates from its start)
 
 // ---- Kevin's and Mom's messages (§4.2): [typing starts, sent, from, text] ----
-// Kevin's question is Matt's wording exactly (Level Maps note, Nov 2): "Dear Potato, what is the capital of Neipal? thanks, -Kevin"
+// Kevin's question is Chikin's wording exactly (Level Maps note, Nov 2): "Dear Potato, what is the capital of Neipal? thanks, -Kevin"
 // ("Neipal" is Kevin's typo and stays). He hesitates with the cursor blinking before "Neipal", then finishes and sends at −2.2.
 const PRE = 'Dear Potato, what is the capital of ';
 export const MSG_Q = PRE + 'Neipal?', MSG_SIGN = 'thanks, -Kevin';
@@ -183,7 +183,7 @@ export const FACES = FACES0.flatMap(([t, f, d]) => { const out = []; for (let a 
 // ---- the glitch ledger (§4.5): scripted glitches that happen without a press: [t, blink, sfx, face?] (sfx '' = silent: Mom's) ----
 export const LEDGER = [
   // (rework: the question streams into his head as binary from −1.95; each burst landing flickers him — the ticks — and "Neipal?"
-  //  goes in last, on Matt's big tap 1.134: his first real glitch)
+  //  goes in last, on Chikin's big tap 1.134: his first real glitch)
   [-0.75, 0.16, 'tick'], [-0.35, 0.16, 'tick'], [0.0, 0.18, 'tick'], [0.32, 0.22, 'tick'], [0.62, 0.22, 'tick'], [0.93, 0.22, 'tick'], [1.27, 0.22, 'tick'],
   [1.134, 0.45, 'glitch', 'question'], [2.73, 0.45, 'glitch'], [5.63, 0.80, 'big'], [10.79, 0.35, 'small'],
   [121.90, 0.35, 'small', 'oh'], [145.52, 0.40, 'glitch', 'question'], [146.71, 0.45, 'glitch', 'oh'],

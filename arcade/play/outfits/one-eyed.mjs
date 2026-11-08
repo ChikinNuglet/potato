@@ -1,4 +1,4 @@
-// ONE-EYED (Chat's 052-one-eyed-potato). Matt: "the one eye is fine": as Chat drew it, front face only. One big cyclops eye
+// ONE-EYED (Chat's 052-one-eyed-potato). Chikin: "the one eye is fine": as Chat drew it, front face only. One big cyclops eye
 // (its own darts and blinks, the same live eye as many-eyed), an arched brow over it, a small frown. Built by many-eyed's maker.
 import { make } from './many-eyed.mjs';
 export default make({

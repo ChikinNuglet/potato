@@ -1,4 +1,4 @@
-// obstacles.mjs — what the things in his way look like (Matt: "none of the objects make sense visually").
+// obstacles.mjs — what the things in his way look like (Chikin: "none of the objects make sense visually").
 // One shape language across the game, dressed per world:
 //   low   = something standing on the floor  -> jump it
 //   high  = something hanging from above     -> duck under it
@@ -43,7 +43,7 @@ export const PAINT = {
   dialog(x, w, h, c) { rr(x, 6, h * 0.42, w - 12, h * 0.52, 6); x.fillStyle = '#eef0f4'; x.fill(); outline(x, 4); x.fillStyle = c.a; x.fillRect(8, h * 0.42 + 2, w - 16, 18);
     rr(x, w - 64, h * 0.8, 48, 20, 4); x.fillStyle = '#ff3b3b'; x.fill(); rr(x, w - 124, h * 0.8, 48, 20, 4); x.fillStyle = '#c9ced8'; x.fill(); },
   bat(x, w, h, c) {             // Still Here: a mine bat, wings out, right at his height — swing the sword at it
-    // (Matt: "the bats in still here are too dark against the background" -> a lighter body, lit wing ribs, a pale glow behind)
+    // (Chikin: "the bats in still here are too dark against the background" -> a lighter body, lit wing ribs, a pale glow behind)
     const cx = w / 2, cy = h * 0.5, s = Math.min(w, h * 1.6) * 0.5;
     const glow = x.createRadialGradient(cx, cy, s * 0.1, cx, cy, s * 1.05); glow.addColorStop(0, 'rgba(255,236,200,.55)'); glow.addColorStop(1, 'rgba(255,236,200,0)');
     x.fillStyle = glow; x.fillRect(0, 0, w, h);
@@ -79,7 +79,7 @@ export const PAINT = {
 };
 export const DEFAULT_OBJECTS = { low: 'sock', high: 'sign', wall: 'firewall' };
 
-// ---------- the Impossible Game set (Matt: "the gameplay being like the impossible game") ----------
+// ---------- the Impossible Game set (Chikin: "the gameplay being like the impossible game") ----------
 // black shapes with one bright outline in the level's colour: you read them in a blink, in any world.
 function tri(x, ax, ay, bx, by, cx, cy) { x.beginPath(); x.moveTo(ax, ay); x.lineTo(bx, by); x.lineTo(cx, cy); x.closePath(); }
 Object.assign(PAINT, {
@@ -103,7 +103,7 @@ export function tileTexture(T, color) {
   const t = new T.CanvasTexture(c); t.wrapS = t.wrapT = T.RepeatWrapping; t.colorSpace = T.NoColorSpace; return t;
 }
 
-// ---------- Read the Terms: books and papers instead of spikes and blocks (Matt) ----------
+// ---------- Read the Terms: books and papers instead of spikes and blocks (Chikin) ----------
 const BOOKC = ['#7a1f1f', '#1f3f7a', '#2f5e2a', '#6b4a1d', '#4a2a5e'];
 Object.assign(PAINT, {
   bookstack(x, w, h, c) {      // a small tottering stack of books on the floor: jump it
@@ -130,7 +130,7 @@ Object.assign(PAINT, {
     x.fillStyle = '#0b0b0b'; x.fillRect(2, h * 0.42, w - 4, h * 0.12); },
 });
 
-// ---------- series 2: every level's own things in the way (Matt: "Replace all spikes and cubes with assets unique to each level") ----------
+// ---------- series 2: every level's own things in the way (Chikin: "Replace all spikes and cubes with assets unique to each level") ----------
 // Same reading as before: something on the floor = jump it; something hanging = duck it; a tall flickering thing = glitch it.
 Object.assign(PAINT, {
   // Thursday Potato — the 404
@@ -147,7 +147,7 @@ Object.assign(PAINT, {
     x.fillStyle = '#021208'; x.fillRect(4, 0, w - 8, h); x.fillStyle = c.a; x.font = `400 ${w * 0.32}px "Major Mono Display", monospace`; x.textAlign = 'center';
     for (let y = 20, i = 0; y < h; y += w * 0.34, i++) { x.globalAlpha = 0.35 + 0.6 * ((i * 7) % 5) / 5; x.fillText((i * 13) % 3 ? '1' : '0', w / 2, y); } x.globalAlpha = 1;
     x.setLineDash([10, 7]); x.lineWidth = 4; x.strokeStyle = c.a; x.strokeRect(4, 0, w - 8, h); x.setLineDash([]); },
-  binrain(x, w, h, c, label, t = 0) {   // the binary firewall, FALLING (Matt, Thursday: "can the walls be falling binary"): a solid wall of
+  binrain(x, w, h, c, label, t = 0) {   // the binary firewall, FALLING (Chikin, Thursday: "can the walls be falling binary"): a solid wall of
     // 1s and 0s — a dim grid of bits in every cell, and Matrix streams falling cell by cell over it (white-hot head, bright neck,
     // long green tail); two streams per column so it never goes thin; a crawling, flickering dashed edge = glitch through it
     const X0 = 4, IW = w - 8, cols = Math.max(4, Math.round(IW / 12)), cw = IW / cols, fs = Math.round(cw * 1.3), rh = Math.round(fs * 0.92), rows = Math.ceil(h / rh) + 1;
@@ -407,7 +407,7 @@ Object.assign(PAINT, {
     x.save(); x.shadowColor = '#fff4e2'; x.shadowBlur = 22; x.fillStyle = '#fffaf0'; x.fillRect(cx - cw / 2, 6, cw, h - 10); x.restore();
     x.fillStyle = '#fffaf0'; x.fillRect(cx - cw * 1.6, 6, cw * 3.2, cw * 0.7); x.fillRect(cx - cw * 1.6, h - 4 - cw * 0.7, cw * 3.2, cw * 0.7); },
 });
-// Get Down — the party crashers (Matt: "he collects energy by defeating enemies by jumping over them and spinning"): little
+// Get Down — the party crashers (Chikin: "he collects energy by defeating enemies by jumping over them and spinning"): little
 // buzzkills that roll onto his dance floor, one per set. Grumpy, never mean; no hands. Jump over one or spin as you pass it.
 { const eyes = (x, cx, cy, s, col = '#fff6e6') => {   // two grumpy half-lidded eyes (the side-eye is his; theirs just look put out)
     for (const d of [-1, 1]) { x.beginPath(); x.ellipse(cx + d * s, cy, s * 0.55, s * 0.62, 0, 0, 7); x.fillStyle = col; x.fill(); x.lineWidth = 2.5; x.strokeStyle = INK; x.stroke();

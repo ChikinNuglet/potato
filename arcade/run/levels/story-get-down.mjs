@@ -2,7 +2,7 @@
 // WHO HE IS HERE: they keep asking if a potato can rap. Wrong question — can YOU keep up? He doesn't join the party, he
 // sets the beat and the room has to catch up with him. Swagger with the side-eye; the warmth is that he dances alone in a
 // living room until it becomes a party, and ends alone again, still here, switching the light off himself.
-// THE VIDEO'S ARC (Matt's Get Down video, Oct 17), one set per section, cut on the music:
+// THE VIDEO'S ARC (Chikin's Get Down video, Oct 17), one set per section, cut on the music:
 //   0–30     the living room on a camcorder (REC, 4% battery): couch, two speakers, a window, string lights — dead
 //   30–49    the kitchen 404 PARTY (neon sign, red cups, the résumé on "name myself potato")
 //   49–74    the disco: tubes, truss, beams; the LAUGHED AT ME | ME scoreboard on "I keep score"
@@ -11,7 +11,7 @@
 //   97–103   the drained disco: a mirrorball and his one spot; a charged GET DOWN still steps the party up
 //   103–122  the stage: the drop, a crowd of silhouettes, confetti
 //   122–end  back to the camcorder living room: "potato. still here." and on "for now." the lights go off but his.
-// THE PARTY (Matt, Nov 1): the room starts DIM and only his charged GET DOWN blasts light it, one party level at a time
+// THE PARTY (Chikin, Nov 1): the room starts DIM and only his charged GET DOWN blasts light it, one party level at a time
 // (s.party, from core.mjs: crashers fill his bar, full bar + glitch on a chorus "get down" = a step). Each level switches
 // more of the rig on, in every set: 1 the tubes, washes and string lights · 2 the moving heads + the first
 // of the crowd · 3 more crowd · 4 lasers + the mirrorball · 5 the strobes · 6 HUGE (laser fans, blinders, confetti that never stops) — and
@@ -66,7 +66,7 @@ const flashOK = (t, calm) => { if (calm || t - GV.lastFlash < 0.34) return false
 // ---------- the story ----------
 let upu = 60;                                                                     // screen px per world unit (measured off him standing)
 // what each party level switches on (0 dim … 6 HUGE)
-const BEAMS = [0, 0, 0.55, 0.75, 0.9, 1, 1.25], LASER = [0, 0, 0, 0, 0.5, 0.75, 1], SIL = [0, 0, 5, 8, 11, 15, 22];   // (no 'copies of him in light': they read as hollow rings, the look Matt turned down)
+const BEAMS = [0, 0, 0.55, 0.75, 0.9, 1, 1.25], LASER = [0, 0, 0, 0, 0.5, 0.75, 1], SIL = [0, 0, 5, 8, 11, 15, 22];   // (no 'copies of him in light': they read as hollow rings, the look Chikin turned down)
 export function story(ctx, e) {
   const { t, b, kick, px, py } = e, fy = clamp(e.floorY ?? py + 70, 220, H - 60), s = e.s, P = e.P;
   const G = track(s, t, P, b), h = G.heat, L = G.level, calm = !!e.calm, home = sceneAt(t) === 'home', maxed = G.maxed;
@@ -416,7 +416,7 @@ function confetti(ctx, t, t0, fy, h) {
 // ---------- danceView: the floor's lights, his dance blast, the crashers popping, his charge bar (a modeView without a mode) ----------
 // The dance floor is the course itself. A dark veil sits over every block (never over its bright top edge, so the course
 // still reads first): his spot lights the floor round him and the party level lifts the veil. THE DANCE BLAST — what Space
-// always does here (Matt: "his glitching always needs to do that dance blast"): a swirl round him, a ring of lit tiles out
+// always does here (Chikin: "his glitching always needs to do that dance blast"): a swirl round him, a ring of lit tiles out
 // from his feet, strokes of light off him; charged on a GET DOWN it's the big one (three rings the width of the room, the
 // swirl twice the size). A beaten crasher pops in a little burst of light (gold when he spun over it in the air). Hops and
 // drops leave their small strokes. The bar: bottom centre, no words. (Cyan/pink/gold: the purple is his glitch's own.)

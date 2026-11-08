@@ -1,4 +1,4 @@
-// dev.mjs — DEV MODE (Matt, Nov 2: "next studio publish I need to be able to choose where I am in the song, we need a dev mode").
+// dev.mjs — DEV MODE (Chikin, Nov 2: "next studio publish I need to be able to choose where I am in the song, we need a dev mode").
 // Turn it on with ` (backtick) or by opening the page with #dev. A small panel on the stage: pick a level (Boo too), play / watch
 // (the demo) / video, a time bar for the whole song with the sections marked, section buttons, and [ ] = 5 s back / on
 // (shift: 15 s). While a level runs the bar follows the song; drag it and let go to jump there. Everything goes through window.RUN

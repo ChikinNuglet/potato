@@ -1,4 +1,4 @@
-// Level 3 — Confidently Incorrect, as a SPACE SHOOTER (Matt, Oct 31: "confidently incorrect should be a shooter where you
+// Level 3 — Confidently Incorrect, as a SPACE SHOOTER (Chikin, Oct 31: "confidently incorrect should be a shooter where you
 // shoot the words as they go by, change it back to horizontal gameplay, space theme. You can use some of the stickers as
 // objects to shoot based on the lyrics").
 // Potato flies through space in the astronaut suit, five lanes: ↑/↓ change lane, space shoots down his lane, V = the
@@ -6,7 +6,7 @@
 // belong to (quantum spaghetti, Everest the sandwich, twelve papers, "I'm on fire today"…) and take two hits. The polite
 // fact-checks ("actually…") can't be shot: dodge them. "Seventeen citations" is a gold wall across every lane: only the
 // mag pulse, set off a beat early, breaks it.
-// MATT, Oct 31 night: "the laser isnt working, it needs to be like dots or missiles, and it needs to be asteroids, the lyrics can
+// CHIKIN, Oct 31 night: "the laser isnt working, it needs to be like dots or missiles, and it needs to be asteroids, the lyrics can
 // show like the rest of the levels … no stickers" -> every target is an asteroid (sized by its word; iron ones can't be
 // broken, dodge them; the boss is a huge rock; the citations wall is gold-veined rock), Space fires bolts you can see fly
 // (hold to keep firing), the lyrics play up top. (The `sticker`/`text` fields below now only size and time the rocks.)
@@ -23,18 +23,18 @@ export function parseWords(text) {
   return kitParse(JSON.stringify({ timings: rows }));
 }
 // lyric -> the sticker that flies in on it: the song's own sticker set from the Studio library (play/stickers-ci2/, timed on
-// the exact tapped word by tools/cistickers.py). Matt: "they can be what he is shooting at, and they can enter the screen
+// the exact tapped word by tools/cistickers.py). Chikin: "they can be what he is shooting at, and they can enter the screen
 // as the lyric is said (like Jeff Bezos)".
 import { CI_STICKERS as STICKERS } from './ci-stickers.mjs';
 const CHECKS = [[72.2, 'actually…'], [188.2, 'fact-check'], [211.4, 'hold on…'], [100.7, 'source?']]   // (Kevin isn't a fact-check: he's a friend — see KEVIN);   // the polite fact-checks: can't be shot
 const BOOT = ['boot', 'loading', 'confidence 200%', 'accuracy: optional', 'citations: pending', 'ready'];
 const LANES = [0.7, 1.6, 2.5, 3.4, 4.3], LEAD = 1.5;
-// THE CAMPAIGN (Matt: "confidently incorrect needs multiple enemies, not just one, it needs to feel like you are progressing.
+// THE CAMPAIGN (Chikin: "confidently incorrect needs multiple enemies, not just one, it needs to feel like you are progressing.
 // They should look like they are getting hit (flash red). It can just be a cycle of bosses and the last part of the song should
 // be a cutscene with potato winning with a big ass laser" … "it needs powerups to for his gun"): a ship per section, each a
 // different crazy alien race; bolts that get past the nonsense hit it; beat it and it blows apart, the next one comes with
 // the next section. Gun capsules early in each fight. From "Potato out" it's a cutscene: the big laser.
-export const BOSSES = [   // [from, to, hits to wear it down, the moment his special finishes it (Matt's taps)]
+export const BOSSES = [   // [from, to, hits to wear it down, the moment his special finishes it (Chikin's taps)]
   { from: 15.4, to: 63.3, hp: 330, kill: 62.65, variant: 0 },      // "PO-TA-TO!"
   { from: 63.4, to: 98.0, hp: 280, kill: 97.37, variant: 1 },      // "…agrees with me TOO!"
   { from: 98.1, to: 141.0, hp: 510, kill: 140.29, variant: 2 },    // "damn I sound polished"
@@ -43,7 +43,7 @@ export const BOSSES = [   // [from, to, hits to wear it down, the moment his spe
 export const GUNUPS = [{ t: 24.0, lane: 2 }, { t: 68.0, lane: 3 }, { t: 103.0, lane: 1 }, { t: 147.0, lane: 2 }, { t: 211.0, lane: 3 }];
 export const FINALE = 238.4;
 export const INTRO = 0, PREROLL = 14;   // the typing scene runs BEFORE the song (t -14 .. 0), then into his head: the music starts in there (story-confidently-incorrect.mjs)
-// KEVIN (Matt: "Kevin gets his moment … he should get loaded into a data cage at the lyrics and towed along and protected by
+// KEVIN (Chikin: "Kevin gets his moment … he should get loaded into a data cage at the lyrics and towed along and protected by
 // potato"): "actually, Kevin." -> "Kevin?" (145.52) he tumbles in from the right; "HE'S IN THE DATA NOW" (148.55) a cage of
 // light snaps shut round him and a tether hooks him to Potato; "LEAVE HIM ALONE" (149.05) — from then on he's towed behind
 // him to the end, swinging after him. Anything that reaches the cage cracks it: three cracks and Kevin's lost.
@@ -60,7 +60,7 @@ export function build(words, map) {
   BOOT.forEach((text, i) => { const t = 4 + i * 2 * P * 1.5; objs.push({ k: 'target', t: t + LEAD, show: t, lane: laneFor(t + LEAD, 100 + i), text }); });   // the boot sequence: a warm-up, in space
   groups.forEach((g, i) => { const at = g.t + LEAD; if (Math.abs(at - CITE) < 1.2 || STICKERS.some(([st]) => Math.abs(st - g.t) < 0.5) || (g.t > KEVIN.appear - 0.3 && g.t < KEVIN.cage + 0.6)) return;   /* (a phrase with a sticker of its own is that sticker; Kevin's lines are his) */ objs.push({ k: 'target', t: at, show: g.t, lane: laneFor(at, i), text: g.text.toLowerCase(), hp: g.text.length > 9 ? 2 : 1 }); });   // round 6: long claims take two shots
   STICKERS.forEach(([t, sticker], i) => { const at = t + LEAD; if (Math.abs(at - CITE) < 1.4) return; objs.push({ k: 'target', t: at, show: t, lane: laneFor(at, 300 + i), sticker, hp: 2 }); });
-  // ROUND 20 — FEWER ROCKS (Matt: "there are too many asteroids"): ~340 sung phrases and stickers was one every 0.7 s, a
+  // ROUND 20 — FEWER ROCKS (Chikin: "there are too many asteroids"): ~340 sung phrases and stickers was one every 0.7 s, a
   // wall of grey. Now only the strongest moments of the song throw one: each candidate is scored on the music map at the
   // moment it's sung (a kick or snare right on it, how loud the band is, a drop just landed, a sticker of its own, a long
   // claim) and the best are kept at least MINGAP apart — about 4 in 10 survive, so the song still drives what flies at him
@@ -117,8 +117,8 @@ export function build(words, map) {
       // round 21: his ship flies at shipScale round his middle (view: shipScale, shipY); the bolts leave its nose (muzzle, muzzleY);
       // `hurt` is what of him can be hit — the hull and his helmet, a touch inside the drawing (relative to his middle)
       shipScale: 0.68, shipY: -0.36, muzzle: 0.95, muzzleY: -0.3, hurt: [[-0.62, 0.86, -0.48, -0.06], [-0.36, 0.36, -0.06, 0.5]],
-      bolt: 16, sub: 8, subRapid: 12, dmg: 0.5 }   /* Matt: "potato against an alien spaceship spouting nonsense at him" */, costume: 'orbital-astronaut' /* COSTUME (Matt): the astronaut from the first frame, typing scene too, to the end */, intro: INTRO, preroll: PREROLL, keyTicks: KEYTICKS, story,
-    theme: { noGhost: true /* (no best-run outline: Matt, "theres also this circle that follows potato, it needs to go away") */, backdrop: 'plain' /* (the story paints the cardboard set) */, bg: '#0b0e1c', digit: '#8fd3ff', digit2: '#ffcf8a', edge: '#8fd3ff', word: '#fff2dc', camFix: 2.9, viewH: 7.6,   /* pulled back (Matt: "the perspective needs to be further back") */ pulse: false, lyricColor: '#ffe9a8', lyricSide: 'center',   // the lyrics play up top like every other level (Matt)
+      bolt: 16, sub: 8, subRapid: 12, dmg: 0.5 }   /* Chikin: "potato against an alien spaceship spouting nonsense at him" */, costume: 'orbital-astronaut' /* COSTUME (Chikin): the astronaut from the first frame, typing scene too, to the end */, intro: INTRO, preroll: PREROLL, keyTicks: KEYTICKS, story,
+    theme: { noGhost: true /* (no best-run outline: Chikin, "theres also this circle that follows potato, it needs to go away") */, backdrop: 'plain' /* (the story paints the cardboard set) */, bg: '#0b0e1c', digit: '#8fd3ff', digit2: '#ffcf8a', edge: '#8fd3ff', word: '#fff2dc', camFix: 2.9, viewH: 7.6,   /* pulled back (Chikin: "the perspective needs to be further back") */ pulse: false, lyricColor: '#ffe9a8', lyricSide: 'center',   // the lyrics play up top like every other level (Chikin)
       shotColor: '#8fd3ff', targetColor: '#ffe9a8', checkColor: '#7fb0ff', decor: [] },
     sections: [['boot sequence', 0, 1], ['yappin’ back', 15.4, 1], ['wrong with authority', 62.6, 1.1], ['weirdly applaudable', 97.8, 1],
       ['he’s in the data now', 140.8, 1.05], ['for one second', 193, 1], ['wrong with authority (again)', 206.2, 1.1], ['the institute', 233.8, 0.3], ['potato out', 238.4, 1]],   // round 11: everything slows as the boss drifts in

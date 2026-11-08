@@ -1,7 +1,7 @@
 // TIN ROBOT (3D port of draw/outfits/tin-robot.js, Chat's 013): a grey steel dome over his head with a riveted rim band
 // sitting ON it, a thin antenna with a red ball on top; a riveted tin body round his lower half with a rolled top rim, a
 // plate seam and a blue chest panel (a little lit screen); his face shows between the dome's rim and the tin body.
-// NEW (Matt: "put the key on him, make sure the key turns"): a wind-up key on his back — a short steel shaft out of a
+// NEW (Chikin: "put the key on him, make sure the key turns"): a wind-up key on his back — a short steel shaft out of a
 // little collar and a flat two-lobed brass bow — a real 3D part riding his body, ticking round the shaft in quick quarter
 // turns like a tin toy (~3 a second, faster while he waddles or is in the air). Turn Me Off is a toy room at bedtime and
 // the key is his on/off switch. Front-on it's hidden behind him; side-on it sticks out his back.

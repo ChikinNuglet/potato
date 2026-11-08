@@ -3,7 +3,7 @@ export function shipArt() {
     const INK = '#0b0d12', ACID = '#9dff3a', CW = 1280, CH = 720, W = 6.4, H = W * CH / CW;
     const mk = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.lineJoin = 'round'; x.lineCap = 'round'; draw(x); return c; };
     const PORTS = [[520, 330], [660, 300], [800, 300], [940, 320], [1080, 350]];
-    // the five ships of the campaign (one crazy alien race per section — Matt: "it needs to feel like you are progressing"):
+    // the five ships of the campaign (one crazy alien race per section — Chikin: "it needs to feel like you are progressing"):
     // the acid manta · the crimson crab · the abyss squid · the gold wasp · the bone mothership
     const PAL = [
       { hull: ['#3a4430', '#1c2218', '#0c0f0a'], spike: '#1b2016', rib: '#0a0d08', glow: 'rgba(157,255,58,.55)', port: '#2d3524', acid: '#9dff3a', jaw: '#20271b', tent: '#1f2719', fang: '#e9f0d8', eye: '#ff2a2a', throat: '#ff5a1f', crew: ['#7cff4a', '#4affc9', '#d6ff4a', '#ff8a3d', '#ff4a7a'] },

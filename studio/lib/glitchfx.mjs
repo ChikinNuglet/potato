@@ -1,4 +1,4 @@
-// glitchfx.mjs — Potato's glitch, the real kind (Matt: "needs to look like real glitching, not that weird wavy thing").
+// glitchfx.mjs — Potato's glitch, the real kind (Chikin: "needs to look like real glitching, not that weird wavy thing").
 // Potato is rendered into his own layer, then composited over the world through a digital-corruption shader:
 //   hard horizontal slices that jump sideways · purple / magenta channel split at his edges · blocks that pixelate ·
 //   slices that drop out · all stepped at 12 fps with freeze-holds, like a corrupted video frame.
@@ -21,7 +21,7 @@ export function createGlitchFX(renderer) {
         if (amount <= 0.001) { gl_FragColor = texture2D(tex, uv); return; }
         // work in Potato-sized units: box = his screen rect (x0, y0, w, h in uv)
         float ly = (uv.y - box.y) / box.w;
-        // (Matt: "his glitch … needs to be tighter and glitchier": thinner slices that cling to him, smaller jumps, faster
+        // (Chikin: "his glitch … needs to be tighter and glitchier": thinner slices that cling to him, smaller jumps, faster
         // and harder stepping, blocks jumping inside him, a bright tear line, posterized slices)
         // slices of uneven height: three layers of hashed cuts, thin
         float band = floor(ly * 22.0 + h(floor(ly * 5.0) + seed) * 3.0 + h(floor(ly * 2.0) + seed * 1.7) * 2.0);
@@ -47,7 +47,7 @@ export function createGlitchFX(renderer) {
         // inside a hit slice the colour itself corrupts toward his purples (and some slices posterize hard)
         col = mix(col, vec3(0.482, 0.235, 0.949) * (0.6 + 0.6 * c.r), hit * 0.45 * amount);
         if (hit > 0.5 && r4 < 0.3) col = floor(col * 3.0 + 0.5) / 3.0;
-        // a little binary green (Matt: "his glitching should be purple with a little bit of binary green"): inside the hit
+        // a little binary green (Chikin: "his glitching should be purple with a little bit of binary green"): inside the hit
         // slices, a few small cells flicker a green 1 or 0
         { vec2 gc = (uv - box.xy) / (box.zw / vec2(16.0, 11.0)), gi = floor(gc), gf = fract(gc); float gr = h(gi.x * 17.3 + gi.y * 41.9 + seed * 2.7);
           if (hit > 0.5 && gr < 0.09 * amount && c.a > 0.1) {

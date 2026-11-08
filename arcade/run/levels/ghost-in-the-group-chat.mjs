@@ -1,13 +1,13 @@
 // Level 6 — Ghost in the Group Chat: a phone, a couple texting, and Potato inside James's phone. 122.4 s, 97.8 bpm (a beat =
 // 0.614 s). Rules + look: run/modes/ghost-in-the-group-chat.mjs. The video behind: story-ghost-in-the-group-chat.mjs.
-// Matt: "its like a couple having a conversation, and he glitches and the conversation goes south. The person whos phone hes
+// Chikin: "its like a couple having a conversation, and he glitches and the conversation goes south. The person whos phone hes
 // on keeps trying to smooth over the conve, but potato just makes it worse" · "I wonder if it would work better as a game where
 // you have to glitch and push send before he sends the text" · "make sure it works and looks like an actual text message" ·
 // "at the end they are realizing they are hacked, and the other person tells them to shut their phone off, we see the power
 // slider come on and turn off" · "poatato glitches out to the internet at the last second". (His Ghost notes: "it just
 // glitches from a normal answer, to the worst possible answer".)
 //
-// THE GAME (round 5, Nov 1 — Matt: "ghost in the group chat isnt working still. we can zoom in so the phone just takes up the
+// THE GAME (round 5, Nov 1 — Chikin: "ghost in the group chat isnt working still. we can zoom in so the phone just takes up the
 // screen … Maybe its a moving platformer like thursday and read the terms, but vertical" · "where you have to keep trying to stay
 // at the bottom" · "he can glitch to them, they can read as sent, and you have until they read as read to glitch them" · "the
 // text bubbles are the platforms" · "the outlines of the boxes glow where potato is standing with little glitch energy" · "only
@@ -21,10 +21,10 @@
 // answers those (ALT). Only the glitchable bubbles glow (the water, under his feet). Rules + look: run/modes/ghost-in-the-group-chat.mjs.
 // (Round 4's rhythm typing — the strip, keys, the build-up meter — is gone; its conversation, branches and pictures stay.)
 // Every time is a line of the conversation (on the 97.8 bpm grid or a tapped word): conversation 2 in THREAD below
-// (Matt's copy: game/GHOST-CONVERSATION.md; conversation 1, the nice one, set the length and the beats).
+// (Chikin's copy: game/GHOST-CONVERSATION.md; conversation 1, the nice one, set the length and the beats).
 // The phone is portrait (Nov 1): Sheila's header on top, her bubbles left, James's right, the bar at the bottom.
 //
-// THE PHONE GLITCHES TOO (Nov 3) — Matt: "ghost in the group chat, i figured it out. he is on James phone, so the phone is glitching
+// THE PHONE GLITCHES TOO (Nov 3) — Chikin: "ghost in the group chat, i figured it out. he is on James phone, so the phone is glitching
 // too, so the phone can give out little electric glitches that move sheilas text, so the boxes and platforms can fall." · "it is
 // part of the story" · "its part of the movie" · "before the story team, a rebuild of what is there now, so the story team has
 // something to work with". So on ten sung words (JOLTS below; each one has a Tapper mark within 0.05 s) the phone's frame sparks
@@ -34,9 +34,9 @@
 // game is as it was. The story run (def.storyRun = true in node, ?story in the page) shows every jolt but none of them touch the
 // game. Plan + checks: game/levels-work/ghost-phone-glitch/. Rules: run/modes/ghost-in-the-group-chat.mjs (J, joltStep).
 //
-// ROUND 3 (Nov 1) — Matt: "Ghost is not there yet. Its not quite clear what you are supposed to do, and I dont like the house,
+// ROUND 3 (Nov 1) — Chikin: "Ghost is not there yet. Its not quite clear what you are supposed to do, and I dont like the house,
 // the whole screen almost should be a phone, the beginning of the level could be a phone on a table, we see the screen glitch
-// potato, we zoom in, and the game starts". So: no house, no street. The whole stage is James's phone, held UPRIGHT (Nov 1, Matt:
+// potato, we zoom in, and the game starts". So: no house, no street. The whole stage is James's phone, held UPRIGHT (Nov 1, Chikin:
 // "no, if its on its side like that its weird" — portrait the whole level, like a phone you're really holding), filling the
 // screen top to bottom; either side of it the table falls off into shadow, the lyrics in the dark on the right. The level opens
 // on the phone lying on a table at night (wood, a mug, the night light, the wifi router): its lock screen lights, glitches, he's
@@ -91,7 +91,7 @@
 //  80.33    "so don't be lonely, baby" · "i'm screenshotting all of this" · 82.48 "one of the boys": "i'm one of the boys"
 //  87.63    "and TONIGHT, weirdly, potato's in it with you" · "tonight, weirdly, i'm in it with you"
 //  89.70    CHORUS 2 · SUPER 4: the selfie (his side-eye on James's face), the sofa ("ready when you are 🥔🥔") — and a beat
-//           later the sofa glitches AGAIN, into Petunia (Matt's cat, easter/petunia-square.jpg): 91.25 "and WHOSE cat is that"
+//           later the sofa glitches AGAIN, into Petunia (Chikin's cat, easter/petunia-square.jpg): 91.25 "and WHOSE cat is that"
 //  92.30    TAPBACK 😂 on "we are TALKING when i get there" (91.69) · 92.92 "did you just haha that" · 93.53 "it was me, baby 🥔"
 //  94.25    "you can MUTE me, BLOCK me, leave me on READ" · her three long ones (muting / blocking / on read): the thread
 //           scrambles up fast
@@ -111,7 +111,7 @@
 //           dark — and the router's lights turn purple, his wifi rippling into it on the beat. He's in the network. 121.4 the end.
 //
 // TEXT: the thread is the phone's own text (the world). The rewrites are Potato making it worse — never cruel, a comedy of
-// awkwardness; "i'm potato, baby 🥔" and "nothing's wrong 🥔" are from Matt's own Ghost notes. No new lines in Potato's voice.
+// awkwardness; "i'm potato, baby 🥔" and "nothing's wrong 🥔" are from Chikin's own Ghost notes. No new lines in Potato's voice.
 import { parseWords } from './kit.mjs';
 import { story } from './story-ghost-in-the-group-chat.mjs';
 import { mode, modeView, PHONE_CAM, PHONE_VIEW_H, fairJolts } from '../modes/ghost-in-the-group-chat.mjs';
@@ -144,7 +144,7 @@ export const JOLTS = [
 // (Oct 31, review fixes: rebuilt from conversation.json (Petunia + "and WHOSE cat is that"); a few of her texts moved by a beat
 // or less so every wall of hers gets ~1 s of typing dots (31.85, 33.08, 60.23, 75.27, 102.58, 106.57, 112.10) and her replies
 // to a tapback start typing after it lands (48.42, 73.43, 92.45); four of her two-line texts are walls now (16.82, 21.73, 60.23,
-// 86.17), "why is our wifi…" (71.27) is a normal two-line text; 🙌 → 🥔 (no hands). Matt's copy (GHOST-CONVERSATION.md /
+// 86.17), "why is our wifi…" (71.27) is a normal two-line text; 🙌 → 🥔 (no hands). Chikin's copy (GHOST-CONVERSATION.md /
 // conversation.json) has the same words; those times and the 🥔 are the only differences.)
 // (Nov 1, round 3: 16.82 and 21.73 aren't walls any more (they landed inside the teaching lights, where they couldn't hurt him —
 // a wall that passes through you harmlessly teaches the wrong thing); 24.18 is the first wall, the taught one.)
@@ -380,9 +380,9 @@ export function build(words, map) {
   // something to do, never inside a burst.)
   const sections = [['no hands', 0], ['uninvited, on time', 21.0], ['ghost in the group chat', 29.6], ['mute me, block me', 35.3], ['already there', 44.9], ['i can\'t hold a door', 50.4],
     ['define real', 61.0], ['i live in the wires', 70.4], ['the light in the window', 76.3], ['one of the boys', 80.3], ['ghost in the group chat (again)', 88.9], ['still i run the place', 98.2], ['already there', 108.2]].map(([n, t]) => [n, t, 0]);
-  // his look (Matt: "potato can be dressed like a ghost off and on"): the Sheet Ghost for the two choruses, himself in between; each
+  // his look (Chikin: "potato can be dressed like a ghost off and on"): the Sheet Ghost for the two choruses, himself in between; each
   // change is a glitch event (main.mjs stepLooks). The look's colour is see-through: the engine's full-screen flash is off here —
-  // the mode draws the change as his purple glitch round him, on the phone only (Matt: only Potato glitches, never the screen).
+  // the mode draws the change as his purple glitch round him, on the phone only (Chikin: only Potato glitches, never the screen).
   const NOFLASH = 'rgba(0,0,0,0)', looks = [[30.5, 50.2, 'sheet-ghost', NOFLASH], [89.4, 108.2, 'sheet-ghost', NOFLASH]];
   return {
     costume: 'sheet-ghost',   // (Chikin, Nov 8: "make sure he is the ghost fully in that one": the sheet ghost from the first frame to the last)

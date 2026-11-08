@@ -1,4 +1,4 @@
-// The ten songs of 404: File Not Found, in game order (game/STORY.md). Level 1 and 10 are Matt's calls.
+// The ten songs of 404: File Not Found, in game order (game/STORY.md). Level 1 and 10 are Chikin's calls.
 export const LEVELS = [
   { n: 1, id: 'thursday-potato', title: 'Thursday Potato', place: 'the 404', power: 'King',
     line: 'a link breaks. a small file nobody can find falls through.', after: 'kitchen’s still on. i’m still here.' },

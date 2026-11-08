@@ -1,4 +1,4 @@
-// powerfx.mjs — what each power LOOKS like when it goes off (Matt: "the glitch get activated, potato change costume, the
+// powerfx.mjs — what each power LOOKS like when it goes off (Chikin: "the glitch get activated, potato change costume, the
 // power goes off, and potato changes back"). Drawn on the foreground overlay in screen pixels (960 x 540).
 // A = Potato on screen, B = the thing it's for. k = 0..1 over the effect. Only Potato glitches purple; the powers have
 // their own colours.
@@ -39,7 +39,7 @@ const FX = {
   ghost(ctx, k, A, B) {                                        // boo: it goes see-through and he floats through
     for (let i = 0; i < 6; i++) { const a = rnd(i, 7) * 6.28; ctx.save(); ctx.globalAlpha = (1 - k) * 0.8; ctx.fillStyle = '#e9e6ff';
       ctx.beginPath(); ctx.ellipse(A.x + Math.cos(a) * 80 * k, A.y + Math.sin(a) * 50 * k - 30 * k, 14, 20, 0, 0, 7); ctx.fill(); ctx.restore(); }
-    },   // (the word "boo" is gone: Matt, "only text should be either part of the background or the lyrics")
+    },   // (the word "boo" is gone: Chikin, "only text should be either part of the background or the lyrics")
   knight(ctx, k, A, B) {                                       // shield up: the thing breaks on it
     ctx.save(); ctx.translate(A.x + 50, A.y - 10); ctx.globalAlpha = 1 - Math.max(0, k - 0.7) * 3; ctx.fillStyle = '#c9d3e0'; ctx.strokeStyle = '#5a6578'; ctx.lineWidth = 5;
     ctx.beginPath(); ctx.moveTo(0, -55); ctx.lineTo(36, -42); ctx.lineTo(30, 20); ctx.lineTo(0, 55); ctx.lineTo(-30, 20); ctx.lineTo(-36, -42); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();

@@ -1,5 +1,5 @@
 // ghost-water.mjs — Ghost in the Group Chat: the glow on a text bubble Potato can still glitch.
-// Matt (Nov 1): "the outlines of the boxes glow where potato is standing with little glitch energy" · "only the boxes he can
+// Chikin (Nov 1): "the outlines of the boxes glow where potato is standing with little glitch energy" · "only the boxes he can
 // glitch" · "like digital glitching water". So: his glitch energy runs along the bubble's outline like water — liquid ripples
 // of light flowing out from under his feet, both ways round, PIXEL-STEPPED (square pixels, quantised brightness, a stepped
 // wobble), his purples with flecks of binary green; a dark pool of it soaking into the bubble under him, a crest of pixels standing

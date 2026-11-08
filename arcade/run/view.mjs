@@ -1,6 +1,6 @@
 // view.mjs — what the runner looks like (three.js). Each level has a theme (backdrop, colours); the course hangs in the
 // dark; the sung words are the course's edges and obstacles; the lyric line floats in the dead space as glitching art
-// (Matt's text rule: art, never a sing-along); light beams sweep on the beat; Potato is the only tan + purple thing and
+// (Chikin's text rule: art, never a sing-along); light beams sweep on the beat; Potato is the only tan + purple thing and
 // the only thing that glitches purple. Vertical levels turn the camera on its side.
 import * as T from '../play/vendor/three.module.js';
 import { letterShake, spamBoxes, beamX, waveX, PW, PH, POWERS, shipPose, shipMouth, rockSize } from './core.mjs';
@@ -8,7 +8,7 @@ import { createDecor } from './decor.mjs';
 import { createStory, createOverlay } from './story.mjs';
 import { drawPower, drawActivate, FX_DUR } from './powerfx.mjs';
 import { PAINT, DEFAULT_OBJECTS, IG_OBJECTS, tileTexture } from './obstacles.mjs';
-import { armsDriver } from './armsfx.mjs';   // his arms: out on jumps + spins, gone when he stands or waddles (Matt, Nov 1)
+import { armsDriver } from './armsfx.mjs';   // his arms: out on jumps + spins, gone when he stands or waddles (Chikin, Nov 1)
 import { makeSpudShip, glitchBoltTex, drawFx, drawSpit, fxShake, hitStop, lastFx } from './shootfx.mjs';   // (Confidently Incorrect's shooter feel: his ship, glitch bolts, hits + booms)
 
 const MONO = '"Major Mono Display", ui-monospace, monospace';
@@ -112,7 +112,7 @@ const additive = (color, k = 0.5) => new T.ShaderMaterial({ transparent: true, d
   fragmentShader: `uniform vec3 color; uniform float k; varying vec2 vUv;
     void main(){ float edge = 1.0 - abs(vUv.x - 0.5) * 2.0; float a = pow(edge, 1.6) * (0.25 + 0.75 * vUv.y) * k; gl_FragColor = vec4(color * a, a); }` });
 
-// Read the Terms (Matt: "the platforms should all be books and manuscripts that fall into place"): stacked books and
+// Read the Terms (Chikin: "the platforms should all be books and manuscripts that fall into place"): stacked books and
 // piles of manuscript pages, one texture each (a few rows per world unit), drawn once
 // every level's platforms in its own world (round 13): one tileable texture per style
 function platTexture(kind) {
@@ -212,7 +212,7 @@ export function createView(C, opts) {
     let lab = new T.Mesh(new T.PlaneGeometry(Math.min(w * 0.92, 0.26 * aspect), 0.26), new T.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.35, depthWrite: false }));
     lab.position.set(w / 2, -h * 0.62, 0.47); g.add(lab);
     let alt = null; const extras = []; let B_chunks = null;
-    // ground you can SEE (Matt: "the platforms are not obvious"): a solid mass down to the bottom of the screen (up to the
+    // ground you can SEE (Chikin: "the platforms are not obvious"): a solid mass down to the bottom of the screen (up to the
     // top on the ceiling wall), a thick bright top edge with a glow, ink sides, so steps and pits read at a glance
     if (q.style !== 'bubble' && !q.cue && q.kind === 'block' && w >= 1.2) {
       const DEEP = 9, up = q.ceil ? 1 : -1, tot = h + DEEP, gc = new T.Color(TH.ground || TH.block || '#06140c').lerp(new T.Color(TH.edge || '#2bff88'), TH.ground ? 0 : 0.16);
@@ -308,7 +308,7 @@ export function createView(C, opts) {
   // ---- the shooter (Confidently Incorrect): words + stickers flying at him, his laser, the gold wall ----
   const SHOOT = !!C.def.shooter, tgts = SHOOT ? C.targets.map(q => ({ q, built: false })) : [];
   const stickerTex = {}, sTex = n => stickerTex[n] || (stickerTex[n] = sprite((opts.base || '../play/') + `stickers-ci2/${n}.webp`));
-  // asteroids (Matt: "it needs to be asteroids … no stickers"): every target is a rock drawn in the house style — warm
+  // asteroids (Chikin: "it needs to be asteroids … no stickers"): every target is a rock drawn in the house style — warm
   // grey rocks you can break, dark iron ones you can't (dodge them), the gold-veined wall the power breaks, a huge boss rock
   function rockTex(seed, kind) {
     const S = kind === 'boss' ? 512 : 256, c = document.createElement('canvas'); c.width = c.height = S; const x = c.getContext('2d'), R = S * 0.44, n = 15, pts = [];
@@ -326,7 +326,7 @@ export function createView(C, opts) {
   function buildTarget(G) { const q = G.q, w = q.x1 - q.x0, g = new T.Group();
     if (q.wall) { const hgt = q.y1 - q.y0; for (let k = 0; k < Math.ceil(hgt / 1.1); k++) { const sz = 1.35; const m = new T.Mesh(new T.PlaneGeometry(sz, sz), new T.MeshBasicMaterial({ map: rockTex(q.t + k * 3.1, 'gold'), transparent: true, depthWrite: false }));
         m.position.set((rnd(q.t, k) - 0.5) * 0.3, -hgt / 2 + 0.55 + k * 1.05, 0); m.rotation.z = rnd(q.t, k + 9) * 6.28; g.add(m); if (!k) G.m = m; } }   // a wall of gold-veined rock: the power breaks it
-    else if (q.sticker) {                                         // a lyric sticker, made a thing in space (Matt: "dont let them just appear like stickers")
+    else if (q.sticker) {                                         // a lyric sticker, made a thing in space (Chikin: "dont let them just appear like stickers")
       const sz = rockSize(q), tex = sTex(q.sticker);
       const trail = new T.Mesh(new T.PlaneGeometry(sz * 1.7, sz * 0.42), additive('#ffd9a0', 0.5)); trail.material.uniforms.k.value = 0.6; trail.position.set(sz * 0.95, 0, -0.06); g.add(trail);   // comet tail: it's hurtling at him
       const rim = new T.Mesh(new T.CircleGeometry(sz * 0.62, 32), additive('#ffcf8a', 0.5)); rim.material.uniforms.k.value = 0.4; rim.position.set(-0.06 * sz, 0.06 * sz, -0.05); g.add(rim);   // warm rim from the Institute
@@ -341,7 +341,7 @@ export function createView(C, opts) {
       const hot = new T.Mesh(new T.PlaneGeometry(sz * 1.5, sz * 1.5), radial(q.solid ? '#7fb0ff' : '#ff6a2a', q.solid ? 0.45 : 0.55)); hot.position.z = -0.05; g.add(hot); G.hot = hot;   // a hot rim: what hurts stands out from the cardboard set (round 20)
       const m = new T.Mesh(new T.PlaneGeometry(sz, sz), new T.MeshBasicMaterial({ map: rockTex(q.t * 13.7, q.solid ? 'iron' : q.boss ? 'boss' : 'rock'), transparent: true, depthWrite: false })); g.add(m); G.m = m; }
     g.position.set((q.x0 + q.x1) / 2, q.wall || q.boss || q.lanes ? (q.y0 + q.y1) / 2 : q.y, 0.5); world.add(g); Object.assign(G, { g, built: true, lastHp: q.hp0, spin: (rnd(q.t, 3) - 0.5) * 1.6 }); }
-  // THE ALIEN WARSHIP (Matt: "potato against an alien spaceship spouting nonsense at him" … "no make it menacing like a crazy
+  // THE ALIEN WARSHIP (Chikin: "potato against an alien spaceship spouting nonsense at him" … "no make it menacing like a crazy
   // alien race" … "the perspective needs to be further back" … "give the ship random movements"). A biomechanical manta of
   // a crazy alien race looms off the right of the screen, lurching and drifting; its fanged maw opens on every sung word and
   // spits the nonsense at him (every sticker and rock comes out of it); a crew of many-eyed, grinning aliens bobs in its
@@ -350,7 +350,7 @@ export function createView(C, opts) {
     const INK = '#0b0d12', ACID = '#9dff3a', CW = 1280, CH = 720, W = 6.4, H = W * CH / CW;
     const mk = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.lineJoin = 'round'; x.lineCap = 'round'; draw(x); const t = new T.CanvasTexture(c); t.colorSpace = T.NoColorSpace; return t; };
     const PORTS = [[520, 330], [660, 300], [800, 300], [940, 320], [1080, 350]];
-    // the five ships of the campaign (one crazy alien race per section — Matt: "it needs to feel like you are progressing"):
+    // the five ships of the campaign (one crazy alien race per section — Chikin: "it needs to feel like you are progressing"):
     // the acid manta · the crimson crab · the abyss squid · the gold wasp · the bone mothership
     const PAL = [
       { hull: ['#3a4430', '#1c2218', '#0c0f0a'], spike: '#1b2016', rib: '#0a0d08', glow: 'rgba(157,255,58,.55)', port: '#2d3524', acid: '#9dff3a', jaw: '#20271b', tent: '#1f2719', fang: '#e9f0d8', eye: '#ff2a2a', throat: '#ff5a1f', crew: ['#7cff4a', '#4affc9', '#d6ff4a', '#ff8a3d', '#ff4a7a'] },
@@ -423,14 +423,14 @@ export function createView(C, opts) {
     vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: `uniform vec3 color; varying vec2 vUv; void main(){ float dy = abs(vUv.y - 0.5) * 2.0, w = mix(0.25, 1.0, vUv.x); float a = smoothstep(w, w * 0.35, dy) * pow(vUv.x, 1.3);
       vec3 c = mix(color, vec3(1.0), smoothstep(0.55, 0.95, vUv.x) * smoothstep(w * 0.6, 0.0, dy)); gl_FragColor = vec4(c * a * 1.6, a); }` });
-  // ROUND 20: his bolts look like his glitch (Matt: "potatos bullets should look like his glitching"): purple glitch-sliced
+  // ROUND 20: his bolts look like his glitch (Chikin: "potatos bullets should look like his glitching"): purple glitch-sliced
   // shards, a green binary fleck in some, re-cut on every glitch step; a purple glow behind; the gun level makes them bigger
   const GUNCOL = ['#9a52ff', '#a65cff', '#b46aff', '#e03ccf'];
   const BOLTTEX = SHOOT ? glitchBoltTex(T, 4) : [];
   const bolts = []; for (let i = 0; i < 48; i++) { const m = new T.Mesh(new T.PlaneGeometry(0.95, 0.33), SHOOT ? new T.MeshBasicMaterial({ map: BOLTTEX[i % 4], transparent: true, depthWrite: false }) : boltMat(GUNCOL[0])); m.renderOrder = 12; m.visible = false; world.add(m);
     const gl = new T.Mesh(new T.PlaneGeometry(2.1, 0.62), radial('#9a52ff', 0.85)); gl.position.set(-0.55, 0, -0.02); gl.renderOrder = 11; m.add(gl); bolts.push(m); }   // (a purple smear trailing each bolt: the stream reads as a stream)
   const muzzle = new T.Mesh(new T.PlaneGeometry(0.7, 0.7), radial('#c9a7ff', 1)); muzzle.renderOrder = 13; muzzle.visible = false; world.add(muzzle);
-  // his tiny ship (Matt: "In costume, in a tiny spaceship. Just for the level"): rides his pivot in his own scene, so he sits in it
+  // his tiny ship (Chikin: "In costume, in a tiny spaceship. Just for the level"): rides his pivot in his own scene, so he sits in it
   const SPS = SHOOT && opts.pivot ? makeSpudShip(T, opts.pivot) : null;
   // cotton-wool exhaust puffs (it's a stage set), left behind in the world as he flies
   const puffs = SHOOT ? Array.from({ length: 22 }, (_, i) => { const g = new T.Group(); const f = new T.Mesh(new T.CircleGeometry(0.11, 16), new T.MeshBasicMaterial({ color: '#fbf6ea', transparent: true, depthWrite: false }));
@@ -440,7 +440,7 @@ export function createView(C, opts) {
   const wires = SHOOT ? [0, 1].map(() => { const gq = new T.BufferGeometry(); gq.setAttribute('position', new T.BufferAttribute(new Float32Array(6), 3)); const l = new T.Line(gq, new T.LineBasicMaterial({ color: '#cfc6b0', transparent: true, opacity: 0.75 })); l.frustumCulled = false; world.add(l); return l; }) : [];
   const booms = Array.from({ length: 12 }, (_, k) => { const m = new T.Mesh(new T.PlaneGeometry(2, 2), radial(['#ff5a1f', '#ffd23d', '#ffffff', '#ff2a6a'][k % 4], 1)); m.renderOrder = 14; m.visible = false; world.add(m); return m; });   // a ship going up
   const zap = Array.from({ length: 10 }, (_, k) => { const m = new T.Mesh(new T.PlaneGeometry(1, 0.22), new T.MeshBasicMaterial({ color: k % 2 ? '#e03ccf' : '#9a52ff', transparent: true, depthWrite: false })); m.renderOrder = 13; m.visible = false; world.add(m); return m; });   // his glitch, thrown at the ship: purple, jagged
-  const big = new T.Group(); world.add(big); big.visible = false;   // the finale's big laser (Matt: "potato winning with a big ass laser")
+  const big = new T.Group(); world.add(big); big.visible = false;   // the finale's big laser (Chikin: "potato winning with a big ass laser")
   const bigGlow = new T.Mesh(new T.PlaneGeometry(1, 1), boltMat('#9a52ff')); bigGlow.rotation.z = Math.PI; big.add(bigGlow);
   const bigCore = new T.Mesh(new T.PlaneGeometry(1, 1), boltMat('#bfe8ff')); bigCore.rotation.z = Math.PI; bigCore.position.z = 0.01; big.add(bigCore);
   const bigBall = new T.Mesh(new T.PlaneGeometry(1, 1), radial('#d9b8ff', 1)); bigBall.position.z = 0.02; big.add(bigBall);
@@ -528,7 +528,7 @@ export function createView(C, opts) {
   // the power blast: from his staff point to whatever's armored ahead
   let pvTilt = 0, flipA = 0, rollA = 0, lift = 0, csZoom = 1, danceSpinBeat = -1, lastJumpSpin = null, spinOff = 0; const caught = [];
   // where he died before, this session: red markers left in the course (the Impossible Game keeps your attempts in view)
-  // Still Here: the knight's SWORD, a real one that swings (Matt: "still here he actually needs a sword that swings"). No hands,
+  // Still Here: the knight's SWORD, a real one that swings (Chikin: "still here he actually needs a sword that swings"). No hands,
   // ever: it hovers at his side, ready, and on V it cuts through an arc in front of him and settles back
   const SWD = C.def.sword ? (() => { const g = new T.Group(), arm = new T.Group(); g.add(arm);
     const M = c => new T.MeshBasicMaterial({ color: c }), ink = M('#120a05');
@@ -584,7 +584,7 @@ export function createView(C, opts) {
   // ---- glitch tears: purple slices + afterimages where he blinked from (only Potato glitches purple) ----
   const ghosts3 = Array.from({ length: 4 }, (_, i) => { const m = new T.Mesh(new T.CircleGeometry(0.62, 32), new T.MeshBasicMaterial({ color: i % 2 ? '#e03ccf' : '#9a52ff', transparent: true, opacity: 0, depthWrite: false })); m.scale.set(1, 1.18, 1); m.renderOrder = 7; world.add(m); return m; });   // his afterimages when he blinks
   const msgLedge = new T.Mesh(new T.PlaneGeometry(1, 0.32), new T.MeshBasicMaterial({ color: TH.edge || '#8fd3ff', transparent: true, opacity: 0, depthWrite: false })); world.add(msgLedge);
-  const tears = Array.from({ length: 9 }, (_, i) => { const m = new T.Mesh(new T.PlaneGeometry(1, 0.12), new T.MeshBasicMaterial({ color: i === 4 ? '#4dff9a' : i % 3 === 0 ? '#e03ccf' : '#9a52ff',   /* one tear of binary green (Matt) */ transparent: true, opacity: 0, depthWrite: false })); m.renderOrder = 8; world.add(m); return m; });
+  const tears = Array.from({ length: 9 }, (_, i) => { const m = new T.Mesh(new T.PlaneGeometry(1, 0.12), new T.MeshBasicMaterial({ color: i === 4 ? '#4dff9a' : i % 3 === 0 ? '#e03ccf' : '#9a52ff',   /* one tear of binary green (Chikin) */ transparent: true, opacity: 0, depthWrite: false })); m.renderOrder = 8; world.add(m); return m; });
 
   const decors = (TH.decor || []).map(k => createDecor(k, world, C, TH));
   const story = createStory(world, C, cam, viz); if (story) scraps.visible = false;   // the song's music video, behind the course
@@ -612,7 +612,7 @@ export function createView(C, opts) {
       const vt = C.def.verticalAt ? C.def.verticalAt(t) : (vertical ? 1 : 0), dir = C.def.verticalAt ? 1 : (vertical === 'up' ? 1 : -1);
       const span = vw + (vh / 0.62 - vw) * vt;                         // how much course is on screen
       const cx = s.x - (s.dx || 0) + span * (0.5 - LEFT);   // (the shooter: he flies about the screen; the camera keeps the song's pace)
-      // the camera follows the ground he's on, not his jump (Matt: "when potato jumps it takes the background up over the floor"):
+      // the camera follows the ground he's on, not his jump (Chikin: "when potato jumps it takes the background up over the floor"):
       // in the air it holds; it moves when he lands higher/lower, or when he falls well below where he last stood
       const AIRM = TH.camAirMax ?? 3.2;   // (theme.camAirMax: how far above his floor he can fly before the camera follows — Thursday's pads)
       if (camBase == null || s.ground || s.y < camBase - 1.2 || s.y > camBase + AIRM) camBase = s.ground || camBase == null ? s.y : s.y < camBase - 1.2 ? s.y + 1.2 : s.y - AIRM;
@@ -704,7 +704,7 @@ export function createView(C, opts) {
           const ha = q.hitAt != null && t >= q.hitAt ? t - q.hitAt : 9, kb = SHOOT ? 0.2 * Math.exp(-ha / 0.06) : 0;   // knockback: every hit shoves it back a little
           let sc = inK * (1 + 0.06 * kickEnv) * (ha < 0.08 ? 0.86 + 0.14 * ha / 0.08 : 1); G.g.position.x = (q.x0 + q.x1) / 2 + kb + (age < 0.25 ? (rnd(q.t, Math.floor(t * 24)) - 0.5) * 0.4 : 0);
           if (q.hp < G.lastHp) { G.hitAt = t; G.lastHp = q.hp; } if (q.hp > G.lastHp) G.lastHp = q.hp;
-          const hit = ha < 0.1; G.m.material.color && (ha < 0.035 ? G.m.material.color.setScalar(2.4) : hit ? G.m.material.color.setRGB(1.7, 0.4, 0.4) : G.m.material.color.setScalar(1));   // hit: a white pop, then red (Matt: "flash red")
+          const hit = ha < 0.1; G.m.material.color && (ha < 0.035 ? G.m.material.color.setScalar(2.4) : hit ? G.m.material.color.setRGB(1.7, 0.4, 0.4) : G.m.material.color.setScalar(1));   // hit: a white pop, then red (Chikin: "flash red")
           if (G.hot) G.hot.material.uniforms.k.value = (q.solid ? 0.45 : 0.5 + 0.15 * kickEnv) * (q.killedAt != null && q.hp <= 0 ? 0 : 1) + (hit ? 0.5 : 0);
           if (q.killedAt != null && q.hp <= 0) { const k = SHOOT && !q.sticker && !q.wall ? Math.min(1, (t - q.killedAt) / 0.09) : (t - q.killedAt) / 0.4; sc *= 1 + k * 0.5; G.g.rotation.z = k * (rnd(q.t, 2) - 0.5) * 3; G.g.traverse(o => { if (o.material) { o.material.transparent = true; o.material.opacity = 1 - k; } }); if (k < 0.5 && G.m.material.color) G.m.material.color.setScalar(2.4); }   // (a kill: it pops white and the boom takes over)
           else { G.g.rotation.z = q.wall ? 0 : (t - q.show) * G.spin; G.g.traverse(o => { if (o.material && o.material.opacity !== undefined && o !== G.m) o.material.opacity = Math.min(o.material.opacity, 0.8); }); if (G.m.material) G.m.material.opacity = flick ? 0.3 : 1; }
@@ -728,7 +728,7 @@ export function createView(C, opts) {
             Kv.cage.material.color.set(flash ? '#ffffff' : cracked >= 2 ? '#ff6b6b' : cracked === 1 ? '#ffd166' : '#5fe6f2');
             const P2 = Kv.tether.geometry.attributes.position; P2.setXYZ(0, kx + 0.5, ky, 0.3); P2.setXYZ(1, s.x - 0.45, s.y + 0.05, 0.3); P2.needsUpdate = true; } }
         if (SHIP) { const SC = C.def.shooter.ship, anchor = s.x - (s.dx || 0), BS = C.def.shooter.bosses || [{ from: -1e9, to: 1e9, variant: 0 }];
-          // the cycle of ships (Matt: "multiple enemies … it needs to feel like you are progressing"): each flies in for its
+          // the cycle of ships (Chikin: "multiple enemies … it needs to feel like you are progressing"): each flies in for its
           // section, flashes red when hit, smokes as it wears down, and goes up on its moment in the music
           // (one at a time: a ship stays until it's blown up, and only then does the next one fly in)
           // round 21: WHERE it is comes from the rules (core.mjs shipPose) — the bolts hit the hull exactly where it's drawn
@@ -748,7 +748,7 @@ export function createView(C, opts) {
             const ax = SHIP.g.position.x + ux * c - uy * sn, ay = SHIP.g.position.y + ux * sn + uy * c, P2 = w.geometry.attributes.position; P2.setXYZ(0, ax, ay, 0.15); P2.setXYZ(1, ax, ay + 14, 0.15); P2.needsUpdate = true; });
           SHIP.g.visible = SHIP.on && !(C.def.intro != null && t < C.def.intro);
           const fadeK = dk > 0.3 ? Math.max(0, 1 - (dk - 0.3) / 0.25) : 1; SHIP.g.scale.setScalar(sz * (dk > 0.3 ? 1 + (dk - 0.3) * 0.8 : 1 + 0.012 * kickEnv));
-          const crack = lastFx(s, t, 'chunk', 0.07), rk = dying && Math.floor(t * 30) % 2 ? 1 : hitK * 0.75, tint = crack ? [2.2, 2.2, 2.2] : [1 + 0.25 * rk, 1 - 0.62 * rk, 1 - 0.62 * rk];   // (a crack: it flashes white)   // hit: it flashes red (Matt) — a flicker per bolt, solid red as it dies
+          const crack = lastFx(s, t, 'chunk', 0.07), rk = dying && Math.floor(t * 30) % 2 ? 1 : hitK * 0.75, tint = crack ? [2.2, 2.2, 2.2] : [1 + 0.25 * rk, 1 - 0.62 * rk, 1 - 0.62 * rk];   // (a crack: it flashes white)   // hit: it flashes red (Chikin) — a flicker per bolt, solid red as it dies
           for (const m of [SHIP.body, SHIP.jawM, ...SHIP.tents.map(c => c.m), ...SHIP.crew.map(c => c.m)]) { m.material.color.setRGB(...tint); m.material.opacity = fadeK; }
           const worn = BB && BB.hp ? Math.min(1, ((s.bossHits || {})[bi] || 0) / BB.hp) : 0;   // it smokes and sparks as it wears down
           const panic = s.worn && s.worn[bi] != null ? t - s.worn[bi] : -1, small = dk >= 0 && !(s.worn && s.worn[bi] != null);   // (round 21: worn right down it PANICS; never worn down, it goes up smaller)
@@ -785,7 +785,7 @@ export function createView(C, opts) {
         GU.forEach(G => { const got = s.gunGot && s.gunGot[GU.indexOf(G)] != null, gk = got ? (t - s.gunGot[GU.indexOf(G)]) / 0.35 : -1;
           G.g.visible = !got || gk < 1; if (!G.g.visible) return; G.g.position.y = C.def.shooter.lanes[G.gu.lane] + Math.sin(t * 3 + G.gu.t) * 0.1; G.g.rotation.z = Math.sin(t * 2.2) * 0.15;
           G.g.scale.setScalar(got ? 1 + gk * 1.6 : 1 + 0.12 * kickEnv); G.glo.material.uniforms.k.value = got ? 1 - gk : 0.45 + 0.3 * Math.sin(t * 6); G.g.children[0].material.opacity = got ? 1 - gk : 1; });
-        // his special (Matt: "they get beat as long as you dont die, he glitches or something and boom"): he glitches, and
+        // his special (Chikin: "they get beat as long as you dont die, he glitches or something and boom"): he glitches, and
         // the glitch leaps out of him across the gap in a jagged purple bolt and into the ship
         { const sp = s.special, zk = sp ? (t - sp.t) / 0.32 : 2; zap.forEach((m, k) => { m.visible = zk >= 0 && zk < 1 && SHIP; if (!m.visible) return;
             const x0 = s.x + 0.5, y0 = s.y + 0.1, x1 = SHIP.g.position.x - 0.6, y1 = SHIP.g.position.y, f0 = k / zap.length, f1 = (k + 1) / zap.length, j = n => n === 0 || n === zap.length ? 0 : (rnd(n * 7 + Math.floor(t * 30), 5) - 0.5) * 1.1;
@@ -813,7 +813,7 @@ export function createView(C, opts) {
         const d = h.x0 - s.x, inView = h.x1 > cx - span * 0.6 && h.x0 < cx + span * 0.75;
         if (!inView) { if (W.built && h.x1 < cx - span * 0.6) dropWord(W); continue; }
         if (!W.built) buildWord(W);
-        const ahead = span * (1 - LEFT) + 0.6, m = Math.max(0, Math.min(1, (ahead - d) / (span * 0.08)));   // whole by the time it's on screen (it used to finish forming ~0.45 s before you reached it — Matt: "punishing immediately")
+        const ahead = span * (1 - LEFT) + 0.6, m = Math.max(0, Math.min(1, (ahead - d) / (span * 0.08)));   // whole by the time it's on screen (it used to finish forming ~0.45 s before you reached it — Chikin: "punishing immediately")
         const q = Math.round(m * 12) / 12; if (q !== W.m || (m < 1 && rnd(t, h.t) < 0.5) || (h.wk === 'wall' && !h.auto && (h.obj || OBJ.wall) === 'binrain') || (PAINT[h.obj] && PAINT[h.obj].anim)) { W.m = q; paintWord(W, m); }   // (falling binary repaints every frame)
         const sung = t >= h.t - 0.08 && t < h.t + 0.3, pulse = 1 + 0.12 * kickEnv;
         const passed = s.x - h.x1, cutAt = s.cuts ? s.cuts[h.i] : null, armorDone = (cutAt != null && t >= cutAt) || (h.soft && s.bumped && s.bumped[h.i] != null && t >= s.bumped[h.i]) || (h.wk === 'armor' && (h.auto ? (W.broken != null || passed > 0) : sim.answered(h, t)));
@@ -858,7 +858,7 @@ export function createView(C, opts) {
         m.material.uniforms.k.value = (i === 0 ? 0.5 : 0.22) * (info.calm ? 0.6 : 1) * (0.75 + 0.25 * kickEnv);
       });
       const glow = C.def.glow ? C.def.glow(t) : 0;                     // the end of the last level: he becomes the light
-      // (no circle tagging along behind him — Matt: "theres also this circle that follows potato, it needs to go away"; it only
+      // (no circle tagging along behind him — Chikin: "theres also this circle that follows potato, it needs to go away"; it only
       // comes on when it means something: the singularity, or the end of the last level when he becomes the light)
       halo.position.set(s.x, s.y + 0.7, -0.5); halo.scale.setScalar(1 + glow * 14); halo.material.uniforms.k.value = (s.used.singularity != null ? 0.8 : 0) + glow * 1.5; halo.visible = halo.material.uniforms.k.value > 0.01;
       // ---- the dark ----
@@ -884,7 +884,7 @@ export function createView(C, opts) {
       // ---- Potato ----
       // he dances: a squash-bounce on every beat on the ground, a sway side to side, a spin on the big downbeats; a flip on a double jump
       const upside = C.def.flip && (s.gdir || -1) > 0; flipA += ((upside ? Math.PI : 0) - flipA) * Math.min(1, dt * 16);
-      // he spins when he jumps (Matt): a forward flip per beat in the air, settling upright when he lands
+      // he spins when he jumps (Chikin): a forward flip per beat in the air, settling upright when he lands
       if (!SHOOT && !s.ground && !C.def.flip && !s.fly) rollA -= dt * Math.PI * 2 / C.P * (s.airJumped ? 1.4 : 1);
       else { const home = Math.round(rollA / (Math.PI * 2)) * Math.PI * 2; rollA += (home - rollA) * Math.min(1, dt * 18); }
       const pv = opts.pivot; if (pv) { const f = flipA / Math.PI;
@@ -900,7 +900,7 @@ export function createView(C, opts) {
       else spud.place(s.x, s.y);
       spud.waddle(s.walking != null ? !!s.walking : !SHOOT && s.ground && !s.ducking); spud.duck(!!s.ducking);   // (a mode can say when he's walking)
       const sway = Math.sin(b * Math.PI) * (s.ground ? 0.38 : 0.12) * (s.facing != null ? 0.3 : 1);   // (a level that turns him keeps the beat sway small, so his facing reads)
-      const FACE = s.facing != null ? s.facing : SHOOT ? (t >= (C.def.shooter.spaceAt ?? 0) ? 0.62 : 0) : 0.32;   // (Matt: "we want to see the front of his face") mostly facing us, a little toward where he runs; a mode can turn him (s.facing, radians: + = screen right, ~±1 shows his side-eye)
+      const FACE = s.facing != null ? s.facing : SHOOT ? (t >= (C.def.shooter.spaceAt ?? 0) ? 0.62 : 0) : 0.32;   // (Chikin: "we want to see the front of his face") mostly facing us, a little toward where he runs; a mode can turn him (s.facing, radians: + = screen right, ~±1 shows his side-eye)
       spud.turnTo((upside ? Math.PI - (FACE + sway * 0.6) : FACE + sway * 0.6) + spinOff);
       if (bi !== danceBeat) { danceBeat = bi; if (s.ground) { spud.land(1.4 + 2.2 * (au.bass || 0)); if (!TH.noBeatSpin && bi % 8 === 0 && (au.bass || 0) > 0.55 && t - lastSpin > 4 * P) { spinOff += Math.PI * 2; lastSpin = t; armBeatSp = spinOff; }   /* (a level can turn off the beat spin: Turn Me Off, where he faces where he goes) */ } }
       if (s.jumpedAt != null && s.jumpedAt !== lastJumpSpin && (!SHOOT || t < (C.def.shooter.spaceAt ?? 0))) {   /* (the shooter's opener too: ↑ hops and spins, like the kitchen) */ lastJumpSpin = s.jumpedAt; spinOff += Math.PI * 2; }
@@ -912,7 +912,7 @@ export function createView(C, opts) {
       // ---- foreground: the lyrics the way his videos play them, then the power ----
       if (this.videoMode) for (const X of [...orbs.map(o => o.g), ...pads.map(p => p.g), ...portals.map(p => p.g), ...packets.map(p => p.g), ...tokens.map(k => k.g), ...tgts.filter(G => G.built).map(G => G.g)]) X.visible = false;   // (video mode: last word on visibility)
       if (MV && MV.draw) MV.draw({ s, t, b, kick: kickEnv, span, cx, sim, info, calm: info.calm, videoMode: !!this.videoMode });
-      overlay.begin(); overlay.lyrics(t, b, kickEnv);   // (no title card: during the game the only text is the lyrics and the world — Matt)
+      overlay.begin(); overlay.lyrics(t, b, kickEnv);   // (no title card: during the game the only text is the lyrics and the world — Chikin)
       const GP = TH.noGhost ? null : this.ghostPath; if (GP && GP.length > 1 && t > GP[0][0] && t < GP[GP.length - 1][0]) { let i = 1; while (i < GP.length - 1 && GP[i][0] < t) i++; const [t0, x0, y0] = GP[i - 1], [t1, x1, y1] = GP[i], k = (t - t0) / Math.max(1e-3, t1 - t0); overlay.ghost(x0 + (x1 - x0) * k - 1.0, y0 + (y1 - y0) * k, t); }   // a step behind you, so you can see it
       if (s.orbAt != null && t - s.orbAt >= 0 && t - s.orbAt < 0.4 && C.orbs[s.orbHit]) { const o = C.orbs[s.orbHit], k = (t - s.orbAt) / 0.4, A = overlay.project(o.x, o.y), x = overlay.ctx;   // the orb throws him: a gold burst
         x.save(); x.globalCompositeOperation = 'lighter'; x.strokeStyle = '#ffd84a'; x.globalAlpha = 1 - k; x.lineWidth = 6 * (1 - k) + 1; x.beginPath(); x.arc(A.x, A.y, 18 + 90 * k, 0, 7); x.stroke();
@@ -930,7 +930,7 @@ export function createView(C, opts) {
         x.save(); x.strokeStyle = col; x.lineWidth = 4; x.globalAlpha = 0.85 * (1 - k); for (let i = 0; i < 18; i++) { const a = i / 18 * 6.283, r0 = 50 + 200 * k, r1 = r0 + 40 + 60 * rnd(i, 7);
           x.beginPath(); x.moveTo(A0.x + Math.cos(a) * r0, A0.y + Math.sin(a) * r0); x.lineTo(A0.x + Math.cos(a) * r1, A0.y + Math.sin(a) * r1); x.stroke(); } x.restore();
         if (this._lookSpun !== this.lookAt) { this._lookSpun = this.lookAt; spinOff += Math.PI * 2; } }
-      const BE = this.breakEv;   // LAST LIGHTS: the costume breaks apart up into the singularity — bigger every time (Matt: "go biiiiig")
+      const BE = this.breakEv;   // LAST LIGHTS: the costume breaks apart up into the singularity — bigger every time (Chikin: "go biiiiig")
       if (!NP && BE && t - BE.t >= 0 && t - BE.t < 1.4) { const k = (t - BE.t) / 1.4, A0 = overlay.project(s.x, s.y + 0.65), x = overlay.ctx, SA = C.def.singAt || [0.62, 0.16], SX = SA[0] * 960, SY = SA[1] * 540;
         const big = 0.35 + 0.65 * BE.tier, n = Math.round((14 + 60 * BE.tier) * (BE.hit ? 1 : 0.4));
         x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = (0.12 + 0.45 * big) * Math.max(0, 1 - k * 4) * (BE.hit ? 1 : 0.4) * (TH.breakFlash ?? 1); x.fillStyle = BE.col; x.fillRect(0, 0, 960, 540); x.restore();   // (theme.breakFlash: a level can soften it — Last Lights)   // flash in the costume's colour
@@ -952,7 +952,7 @@ export function createView(C, opts) {
           x.beginPath(); x.moveTo(A0.x + Math.cos(a) * r0, A0.y + Math.sin(a) * r0); x.lineTo(A0.x + Math.cos(a) * r1, A0.y + Math.sin(a) * r1); x.stroke(); } x.restore();
         const name = (POWERS[PO.p] && POWERS[PO.p].name || PO.p).toLowerCase(), sc = 1 + 1.2 * Math.max(0, 1 - k * 5), jx = k < 0.15 || k > 0.85 ? (rnd(Math.floor(t * 30), 1) - 0.5) * 30 : 0;
         x.save(); x.translate(W2 / 2 + jx, H2 * 0.3); x.scale(sc, sc); x.globalAlpha = Math.min(1, (1 - k) * 3); x.font = '400 52px "Major Mono Display", monospace'; x.textAlign = 'center'; x.textBaseline = 'middle';
-        x.restore();   // (its name no longer slams in: no extra words on screen — Matt)
+        x.restore();   // (its name no longer slams in: no extra words on screen — Chikin)
         if (PO._spun !== PO.t0) { PO._spun = PO.t0; spinOff += Math.PI * 4; } }
       if (!NP && this.revertAt != null && t - this.revertAt >= 0 && t - this.revertAt < 0.5) { const k = (t - this.revertAt) / 0.5, A1 = overlay.project(s.x, s.y + 0.65), x = overlay.ctx;   // and back to himself: a smaller pop
         x.save(); x.strokeStyle = '#ffd9a0'; x.lineWidth = 5; x.globalAlpha = 1 - k; x.beginPath(); x.arc(A1.x, A1.y, 40 + 120 * k, 0, 7); x.stroke(); x.restore(); }
@@ -964,7 +964,7 @@ export function createView(C, opts) {
       if (DA != null && !NP) { const A = overlay.project(s.x, s.y + 0.6), k = Math.min(1, (performance.now() / 1000 - DA) / 0.7), x = overlay.ctx;
         for (let i = 0; i < 22; i++) { const a = rnd(i, 3) * 6.28, d = (20 + rnd(i, 4) * 120) * k, sz = 8 + rnd(i, 5) * 14;
           x.save(); x.globalAlpha = 1 - k; x.fillStyle = i % 3 ? '#9a52ff' : (i % 2 ? '#e03ccf' : '#da9643'); x.translate(A.x + Math.cos(a) * d, A.y + Math.sin(a) * d + k * k * 60); x.rotate(a + k * 4); x.fillRect(-sz / 2, -sz / 3, sz, sz * 0.66); x.restore(); } }
-      // ---- his arms (run/armsfx.mjs; Matt, Nov 1): out on every jump and every spin, back into him when he lands; none while he
+      // ---- his arms (run/armsfx.mjs; Chikin, Nov 1): out on every jump and every spin, back into him when he lands; none while he
       // stands or waddles; a dance cutscene (a song's last bars, Get Down's dances) dances them on the beat; a wave as a cutscene
       // starts, a point when a power fires (sparingly). Not in his ship, not while he's gone. A flight (s.fly: Last Lights' spin)
       // twirls him once more on the beat and floats him upright, arms out.

@@ -1,5 +1,5 @@
 // modes/ghost-in-the-group-chat.mjs — Level 6: James's phone, a real text thread with Sheila, and Potato inside it.
-// ROUND 5 (Nov 1, Matt, after the rhythm typing): "ghost in the group chat isnt working still. we can zoom in so the phone just
+// ROUND 5 (Nov 1, Chikin, after the rhythm typing): "ghost in the group chat isnt working still. we can zoom in so the phone just
 // takes up the screen, its just an illusion, then there is more room to work with to develop the game. Maybe its a moving
 // platformer like thursday and read the terms, but vertical" · "where you have to keep trying to stay at the bottom" · "yeah,
 // and he can glitch to them, they can read as sent, and you have until they read as read to glitch them" · "the text bubbles are
@@ -27,7 +27,7 @@
 //     back from it) — the fourth kick in a row throws him up into the old history.
 //   · SPACE = his GLITCH. Standing on one of James's texts he can still glitch: it becomes POTATO'S version (conversation 2) — and
 //     the bubble changes: a wider ledge (a bridge across, for the long ones); "You added Carol…" ones melt into grey lines (no
-//     floor). Anywhere else: he glitch-TELEPORTS TO the nearest text he can still glitch below him (Matt: "he can glitch to them"),
+//     floor). Anywhere else: he glitch-TELEPORTS TO the nearest text he can still glitch below him (Chikin: "he can glitch to them"),
 //     else the nearest bubble below (or ahead in the direction held: ← / → / ↓) — landing on one of James's glitchable texts
 //     glitches it too. One glitch, then it comes back when he LANDS on a bubble (walking/dropping/hopping, not glitching) or after
 //     two beats (the + in the input bar shows it). Nowhere to go = nothing happens.
@@ -104,7 +104,7 @@ export const SC = [OX + K * (G.X0 + G.X1) / 2, OY + K * (G.Y0 + G.Y1) / 2];   //
 // GLY: how far below him a text he can glitch pulls his glitch to it)
 export const F = { WALK: 7.2, ACCG: 70, ACCA: 42, GRAV: 44, HOP: 2.15, FALL: 20, DROP: 0.24, COY: 0.09, FOOT: 0.26, PHASE: 0.45, RECH: 2, TPX: 20, TPY: 9,
   BOUNCE: [3.3, 4.6, 6.0, 99], LOSE: 0.3, WARN: 3.2, X: 9.65, MISS: 1.6, BACK: 1.1, SUPER: 2.0, MAXH: 9.0, CREEP: 1.2, GLY: 6.5 };
-// THE PHONE'S JOLTS (Nov 3, Matt: "he is on James phone, so the phone is glitching too, so the phone can give out little electric
+// THE PHONE'S JOLTS (Nov 3, Chikin: "he is on James phone, so the phone is glitching too, so the phone can give out little electric
 // glitches that move sheilas text, so the boxes and platforms can fall" · "it is part of the story"). On a sung word (def.phone.jolts,
 // on the real grid) the phone's frame builds a spark (warn: a beat or more early), it jumps to one of SHEILA's bubbles (picked at the
 // warning, then frozen), the bubble shakes loose (SHAKE) and FALLS: a drop (straight down, a hole where a step was) or a throw (flung
@@ -182,7 +182,7 @@ export function prep(C) {
   const reOf = r => r.re ? { re: r.re.map(evOf) } : {}, rowOfT = T => TH.find(q => Math.abs(q.t0 - T) < 0.005);
   const reRowOf = r => r.reRow != null ? { reRow: rowOfT(r.reRow).t.toFixed(3), reRowT: rowOfT(r.reRow).t } : {};
   const firstT = Math.min(O.wake, ...TH.map(r => r.t));
-  items.push({ who: 'X', a: Math.min(O.wake + 0.05, firstT - 0.01), text: 'Thursday 9:41 PM', ...sysLine('Thursday 9:41 PM'), stamp: true });   // (a new thread starts with the phone's own time stamp — Matt: "it should be thursday")
+  items.push({ who: 'X', a: Math.min(O.wake + 0.05, firstT - 0.01), text: 'Thursday 9:41 PM', ...sysLine('Thursday 9:41 PM'), stamp: true });   // (a new thread starts with the phone's own time stamp — Chikin: "it should be thursday")
   let lastS = null;
   const sRows = [...TH.map(r => ({ r })), ...altItems.map(a => ({ r: { t: a.t, w: 'S', x: a.x }, altOf: a.ev }))].sort((a, b) => a.r.t - b.r.t);
   for (const { r, altOf } of sRows) {
@@ -360,7 +360,7 @@ export function pickTarget(P, s, plats, t, dir, down) {
   const top = histTop(s, t);
   for (const p of plats) { if (s.ground && p.id === s.onId) continue; if (p.y > ly + 0.35 || ly - p.y > F.TPY || p.y < S.BAR + 0.4 || p.y > top - 0.8) continue;
     const dx = lx < p.x0 ? p.x0 - lx : lx > p.x1 ? lx - p.x1 : 0, cx = (p.x0 + p.x1) / 2; if (dx > F.TPX) continue;
-    // (he glitches TO the texts he can still change — Matt: "he can glitch to them": with nothing held, one in reach (F.GLY below
+    // (he glitches TO the texts he can still change — Chikin: "he can glitch to them": with nothing held, one in reach (F.GLY below
     // him) beats any plain bubble; held ← / → / ↓ picks the way, a glitchable one still first among those)
     const gl = glitchEv(P, s, p.r.q, t) ? 1 : 0; let c;
     if (dir) { if ((cx - lx) * dir < 0.6 && !(dx > 0 && (dir > 0 ? p.x0 > lx : p.x1 < lx))) continue; c = Math.abs(ly - p.y) + 0.12 * dx - 3 * gl; }
@@ -581,7 +581,7 @@ export const modeView = ({ T, world, C, cam }) => {
   const fX = wx => (wx - (TB.cx - TB.w / 2)) * FS, fY = wy => (TB.cy + TB.h / 2 - wy) * FS;
   const X = wx => (wx - G.X0) * PX, Y = wy => (G.Y1 - wy) * PX;
   let fxLast = -9, fxZ = -1;
-  // Petunia (Matt's cat, the real photo): the last picture of the level glitches a second time into her
+  // Petunia (Chikin's cat, the real photo): the last picture of the level glitches a second time into her
   const petunia = { ok: false, im: null, cv: null }, petSrc = (D.thread.find(r => r.ph2) || {}).ph2;
   if (petSrc && typeof Image !== 'undefined') { const im = new Image(); im.onload = () => { petunia.ok = true; }; im.src = new URL('../' + petSrc, import.meta.url).href; petunia.im = im; }
   const petPic = (W, H) => { if (petunia.cv) return petunia.cv; const c = document.createElement('canvas'); c.width = Math.round(W); c.height = Math.round(H); const g = c.getContext('2d'), im = petunia.im;

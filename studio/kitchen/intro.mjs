@@ -1,4 +1,4 @@
-// intro.mjs — the kitchen, which IS the menu now. Matt: "for the kitchen can you take away the menu, you can narrow it to ten
+// intro.mjs — the kitchen, which IS the menu now. Chikin: "for the kitchen can you take away the menu, you can narrow it to ten
 // costumes, each representing a song, with a door to the left of the screen that you walk through to start the level";
 // "you can change the opening, we arent building a kitchen at the start"; "jsut glitching between menu"; "so you glitch to
 // select the level, the song name appears in glitch text with each costume change".
@@ -6,12 +6,12 @@
 // Each glitch (space / the glitch button / an icon) changes his costume, the room and the song; the song's name glitches in
 // on the sign over the door (kitchens.mjs). Walk him left through the door (or click / tap it) and that song starts: the door
 // opens, the song's light spills out, he waddles in, and it cuts to the level.
-// He's playable in here (Matt: "potato needs to have his left right jump duck and glitch controls for the kitchen too").
-// And the room is too (Matt, Nov 1: "we need the kitchen to be interactive"): every room lists props (kitchens.mjs) he can
+// He's playable in here (Chikin: "potato needs to have his left right jump duck and glitch controls for the kitchen too").
+// And the room is too (Chikin, Nov 1: "we need the kitchen to be interactive"): every room lists props (kitchens.mjs) he can
 // walk into (bump), hop onto and stand on (hop: ↑ is a real jump in here, and he lands on tables, chairs, counters), or use
 // when he's next to one (E, or tap / click it: he walks over and uses it). Each prop's state goes to the room's painting so
 // it reacts in that room's style; they reset with every glitch.
-// THE WATCH DOOR (Matt: "I need a demo option for each in the kitchen, make it a door to the right, I need to watch without
+// THE WATCH DOOR (Chikin: "I need a demo option for each in the kitchen, make it a door to the right, I need to watch without
 // figuring out what i am doing"): every room has a second door on the right wall, signed WATCH. Walk him right into it (or click /
 // tap it, or press O) and the song's demo plays hands-off from the top, the whole song. The left door still plays it for real.
 import { STYLES, DOOR, WDOOR, ROOM, preload } from './kitchens.mjs';
@@ -22,10 +22,10 @@ const ease = k => { k = Math.max(0, Math.min(1, k)); return k * k * (3 - 2 * k);
 const HOME_X = -1.4, SPEED = 2.4;
 const GRAV = 22, JUMP_V = 7.56, CEIL = 2.7;         // his jump in the kitchen (world units): peaks ~1.3 up (exact, whatever the frame rate): tables + stools with room to spare; table -> counter
 const REACH = 120, BUMP = 30, SIDE = 100, FACE_GAP = 3;
-// HIS ARMS (Matt, Nov 1: "potato needs the arms, at least sometimes. It would help make him look like hes dancing"): in the disco,
+// HIS ARMS (Chikin, Nov 1: "potato needs the arms, at least sometimes. It would help make him look like hes dancing"): in the disco,
 // when the mirrorball party is on, he dances with them, every move ON the beat of the kitchen's music (the song's instrumental loop,
 // main.mjs kitchenMusic: cut from a beat, so its clock / the song's game beat = beats). A new move every 2 bars. Arms go away the
-// moment the party stops, he walks through a door or the kitchen closes. Outside the party (Matt, Nov 1: "arms whenever he jumps
+// moment the party stops, he walks through a door or the kitchen closes. Outside the party (Chikin, Nov 1: "arms whenever he jumps
 // around and spins around" + "they should disappear when hes just standing still or waddling"): no arms at rest or walking, they
 // pop out on every hop (↑ hops + spins) and go back into him when he lands (run/armsfx.mjs, shared with the levels).
 const DANCE_SET = ['groove', 'disco', 'raise-the-roof', 'pump', 'wiggle'];

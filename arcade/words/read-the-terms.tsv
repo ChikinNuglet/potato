@@ -1,4 +1,4 @@
-# Read The Terms: word timings, tapped by Matt on Oct 11, 2026 (tapper, Words mode).
+# Read The Terms: word timings, tapped by Chikin on Oct 11, 2026 (tapper, Words mode).
 # columns: seconds, line, word, note. Lyrics = work/potato-songs/read-the-terms/lyrics.txt (Potato-authored working lyrics, same as transfers/2026-10-04/lyrics/09-read-the-terms.txt), section labels removed.
 # note "skipped" = not tapped. Intro lines 1-4 (0-11.4 s) have evenly spaced placeholder times, not real hits. Outro lines 46-47 (ha / still readin) have no time. Re-tap those before using them.
 # line 20 "the" (54.26) lands after "fine" (54.23); apply a running max when loading.

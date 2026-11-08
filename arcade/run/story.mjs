@@ -1,7 +1,7 @@
-// story.mjs — the song's music video, playing behind the course. Matt: "the unwritten goal of the game would be to see a
+// story.mjs — the song's music video, playing behind the course. Chikin: "the unwritten goal of the game would be to see a
 // music video without dying". One screen-sized canvas that rides with the camera (it turns with it on vertical levels);
 // each level hands in story(ctx, env) and draws its scenes in screen pixels (960 x 540), keyed to song time.
-// No Potato stickers in here (Matt: confusing): the only Potato is the one you play. The story is told in light, the
+// No Potato stickers in here (Chikin: confusing): the only Potato is the one you play. The story is told in light, the
 // world, and text-as-art (Major Mono, glitching in, never a sing-along).
 import * as T from '../play/vendor/three.module.js';
 import { BLANK_Q } from './blank.mjs';   // (the clean-slate run: no achievement toasts)
@@ -134,7 +134,7 @@ export function createOverlay(world, cam, C) {
   lines.forEach((L, i) => { L.next = lines[i + 1] ? lines[i + 1].t0 : Infinity; });
   const GW = (window.POTATO_GLITCH_WORDS || []).filter(w => !/\s/.test(w) && w.length <= 14);
   const font = s => `400 ${s}px "Major Mono Display", ui-monospace, monospace`;
-  // the videos' glitch text (Matt: "a few different text plus his glitch speech mixed before it lands on the lyrics"):
+  // the videos' glitch text (Chikin: "a few different text plus his glitch speech mixed before it lands on the lyrics"):
   // each word flickers through his glitch language, other faces and binary, then lands in the logo font
   const ALT = [s => `400 ${s * 0.82}px Bungee, Impact, sans-serif`, s => `400 ${s * 0.8}px "Rubik Mono One", Impact, sans-serif`, s => `700 ${s * 0.9}px "JetBrains Mono", ui-monospace, monospace`];
   const GCOL = TH.lyricGcol || ['#eafff1', '#ff2bd6', '#4dff9a', '#00e5ff'], LSPLIT = TH.lyricSplit || SPLIT;   // (theme.lyricGcol / lyricSplit: a level whose purple is only his glitch — Thursday)

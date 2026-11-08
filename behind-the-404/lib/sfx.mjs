@@ -21,7 +21,7 @@ const SB = fn => (...a) => { if (!ac) return; if (!sbus) { sbus = ac.createGain(
 export const SFX = {
   orb: () => { tone(660, 1320, 0.12, 'triangle', 0.28); tone(990, 1980, 0.1, 'sine', 0.14, 0.04); },        // a fresh jump: a bright chime up
   pad: () => { tone(180, 720, 0.22, 'square', 0.28); tone(90, 360, 0.25, 'sine', 0.25); },                 // boing
-  shot: () => { tone(1500, 260, 0.08, 'sawtooth', 0.2); tone(2600, 900, 0.035, 'square', 0.1); tone(170, 60, 0.07, 'sine', 0.3); noise(0.03, 0.14, 4200, 3); },   // PEW: a bright zap down, a click on top, a little thump under it (Matt: "punchier pew pew")
+  shot: () => { tone(1500, 260, 0.08, 'sawtooth', 0.2); tone(2600, 900, 0.035, 'square', 0.1); tone(170, 60, 0.07, 'sine', 0.3); noise(0.03, 0.14, 4200, 3); },   // PEW: a bright zap down, a click on top, a little thump under it (Chikin: "punchier pew pew")
   pop: () => { tone(500, 1400, 0.07, 'triangle', 0.2); noise(0.08, 0.25, 1500, 4); },                     // a word blown apart
   // ---- Confidently Incorrect's shooter (round 20: "is the sound right? do things actually feel like they are getting hit and
   // exploding"): layered, short, a little random each time so a stream of them never buzzes; quiet enough to sit under the song ----

@@ -31,7 +31,7 @@ renderer.outputColorSpace = T.LinearSRGBColorSpace; renderer.setPixelRatio(Math.
 stage.prepend(renderer.domElement);
 const VIEW_H = 5.6, cam = new T.OrthographicCamera(-1, 1, 1, -1, -30, 30);
 let viewW = 10;
-let curVH = VIEW_H;   // a level can pull the camera back (theme.viewH: Confidently Incorrect, Matt: "the perspective needs to be further back")
+let curVH = VIEW_H;   // a level can pull the camera back (theme.viewH: Confidently Incorrect, Chikin: "the perspective needs to be further back")
 function fit() { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h); viewW = curVH * w / h;
   cam.left = -viewW / 2; cam.right = viewW / 2; cam.top = curVH / 2; cam.bottom = -curVH / 2; cam.updateProjectionMatrix(); }
 fit(); addEventListener('resize', fit);
@@ -55,7 +55,7 @@ const persist = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save
 // the game's opening (opening.mjs): after start, before the kitchen; once seen it's skipped (save.opened), I in the kitchen replays it
 // the opening plays for every new player: keep the dating-spam / swear glitch words out (same idea as kitchens.mjs + story.mjs)
 let _openWords = null;
-function openingWords() { return window.POTATO_GLITCH_WORDS || []; }   // his whole glitch vocabulary, spam and swears too (Matt: "it could have said that stuff, its ok for potato")
+function openingWords() { return window.POTATO_GLITCH_WORDS || []; }   // his whole glitch vocabulary, spam and swears too (Chikin: "it could have said that stuff, its ok for potato")
 const credits = createCredits({ stage, play: PLAY });
 const opening = createOpening({ stage, spud, pivot, cam, fx, sfx: SFX, intro, onFace: (n, d) => intro.onFace(n, d), words: openingWords });
 function playOpening(o = {}) { if (opening.active()) return; if (intro.shown()) intro.hideKitchen(); kitchenMusic(null); mode = 'opening'; for (const id of ['title', 'hub', 'hud', 'pads']) $(id).hidden = true;
@@ -111,7 +111,7 @@ async function openLevel(id) {
   const D = BLANK_Q ? blankify(L.build(words, map, viz), id) : ED ? applyEdits(L.build(words, map, viz), ED) : L.build(words, map, viz);   // (?blank: no threats, pickups, cutscenes — run/blank.mjs)
   if (save.easy) { let n = 0; D.objs = D.objs.filter(o => { const thin = (o.k === 'word' && (o.wk === 'low' || o.wk === 'high')) || (o.k === 'target' && !o.wall && !o.boss); return !thin || (n++ % 2 === 0); }); }   // easy: every other spike / hanging bar / target is gone (the point is seeing the video)
   C = makeCourse(D, map); C.music = makeMusic(music);
-  for (const b of document.querySelectorAll('#pads [data-key]')) b.hidden = D.touchMode === 'tap' || (b.dataset.key === 'V' && (!!D.shooter || D.touchMode === 'tapdrag' || !!D.noV));   // (the shooter: Space does everything, no V — Matt: "no more v key, just space bar") · (a one-button level, Ghost: no buttons at all, the whole screen is the button)
+  for (const b of document.querySelectorAll('#pads [data-key]')) b.hidden = D.touchMode === 'tap' || (b.dataset.key === 'V' && (!!D.shooter || D.touchMode === 'tapdrag' || !!D.noV));   // (the shooter: Space does everything, no V — Chikin: "no more v key, just space bar") · (a one-button level, Ghost: no buttons at all, the whole screen is the button)
   fx.noWords = !!(C.theme && C.theme.gwords === false);   // (no floating glitch phrases on this level)
   { const bl = document.querySelector('#hud .bl'); if (bl) bl.style.visibility = C.theme && C.theme.hideCharge ? 'hidden' : ''; }   // (theme.hideCharge: the level shows his glitch itself — Ghost's + button in the input bar)
   paradeBs = null; if (D.parade) Promise.all((D.paradeLooks || ALL_OUTFITS).map(o => loadOutfit(o).catch(() => null))).then(bs => { paradeBs = bs; });   // (def.paradeLooks: a level's own list, opt-in; Last Lights leaves out the sheet-ghost)
@@ -133,7 +133,7 @@ const TAP = { on: false, paused: false };   // the tapper (tapper.mjs) — see w
 const now = () => SILENT ? fakeT : pre != null ? pre : (audio ? audio.currentTime : 0);
 function toggleMute() { muted = !muted; if (audio) audio.muted = muted; if (kmusic) kmusic.muted = muted; setSfxMuted(muted); $('mute').textContent = muted ? 'sound off' : 'sound on'; }
 function start(from = 0) {
-  // a level can open BEFORE its song (Confidently Incorrect's typing scene: Matt, "the music starts in potatos head"); the first
+  // a level can open BEFORE its song (Confidently Incorrect's typing scene: Chikin, "the music starts in potatos head"); the first
   // play and the demo get it, a retry starts at the music ("you restart at the beginning of the music")
   if (from === 0 && C.def.preroll && (demoing || attempts === 0)) from = -C.def.preroll;
   pre = !SILENT && from < 0 ? from : null;
@@ -153,7 +153,7 @@ function setPower(p) { const el = $('slot'); el.className = p ? 'full' : ''; el.
   el.style.setProperty('--pc', p ? POWER_COLOR[p] : '#ffcf4a'); el.hidden = !(meta && meta.power); }
 
 // ---------- the kitchen: the menu is the room ----------
-// Matt: "for the kitchen can you take away the menu, you can narrow it to ten costumes, each representing a song, with a door
+// Chikin: "for the kitchen can you take away the menu, you can narrow it to ten costumes, each representing a song, with a door
 // to the left of the screen that you walk through to start the level"; "so you glitch to select the level, the song name
 // appears in glitch text with each costume change". kitchens.mjs STYLES are in album order, one per song (st.level). The
 // glitch button / space / an icon change the look (= the song); the door on the left starts it; finished songs light the
@@ -172,7 +172,7 @@ async function nextDemo(fromId) { const i = LEVELS.findIndex(L => L.id === fromI
   if (!N) { hub(fromId); return; }
   try { await openLevel(N.id); } catch (e) { console.error(e); hub(fromId); return; }
   practice = false; demoing = true; view.videoMode = false; attempts = 0; flag = 0; start(0); }
-// THE DEMO IS POTATO RUNNING A SIMULATION (Matt, Nov 1: "its like potato running a simulation … a special model of potato made up
+// THE DEMO IS POTATO RUNNING A SIMULATION (Chikin, Nov 1: "its like potato running a simulation … a special model of potato made up
 // of binary"): while a demo plays (the WATCH door, and the album running on from it; not Y's plain music video) he wears the
 // 'simulation' skin over whatever the level dresses him in. Every other wear() still lands underneath (remembered) and is put
 // back the moment the demo ends (kitchen, a real run, the video). simSync() runs once a frame; a small corner tag names the run.
@@ -199,7 +199,7 @@ function potatoFrame() { const s = sim.s, W = 1920, H = 1080, r2 = v => Math.rou
     look: view.lookAt != null ? r3(view.lookAt) : null, brk: view.breakEv ? r3(view.breakEv.t) : null, power: view.powerOn ? view.powerOn.p : null, revert: view.revertAt != null ? r3(view.revertAt) : null,
     blink: s.blink > 0 ? r2(s.blink) : 0, jumped: s.jumpedAt != null ? r3(s.jumpedAt) : null, won: !!s.won }; }
 function simSync() { const demoOn = !!(simSkin.b && demoing && (mode === 'run' || mode === 'done') && view && !view.videoMode && meta && !TAP.on);
-  // a level that starts him as code (def.codeUntil, Thursday: "it starts in binary, because hes just code", Matt): the same binary
+  // a level that starts him as code (def.codeUntil, Thursday: "it starts in binary, because hes just code", Chikin): the same binary
   // skin until then, in every mode (play, practice, demo, video); his own skin floods in at codeUntil
   const code = !!(simSkin.b && sim && C && C.def.codeUntil && (mode === 'run' || mode === 'done') && sim.s.t < C.def.codeUntil), on = demoOn || code;   // (the tapper watches the demo in the song's own look)   // ('done': the won song's tail still plays in the demo, so he stays the simulation + the run count carries to the next song)
   if (demoOn && simSkin.lvl !== meta.id) { simSkin.lvl = meta.id; simSkin.run++; if (simSkin.tag) simSkin.tag.textContent = `simulation · run ${simSkin.run}`; }
@@ -210,7 +210,7 @@ function simSync() { const demoOn = !!(simSkin.b && demoing && (mode === 'run' |
     e.style.cssText = 'position:absolute;left:14px;top:12px;padding:2px 7px;border-radius:6px;background:#000000a0;font:400 11px "Major Mono Display",monospace;color:#4dff9a;opacity:0.8;letter-spacing:0.04em'; $('hud').appendChild(e); }
   simSkin.tag.hidden = !demoOn; }
 const songList =() => intro.styles.map(st => { const L = LEVELS.find(l => l.id === st.level || l.was === st.level); return { n: L.n, title: L.title, cleared: save.cleared.includes(L.id) }; });
-// the kitchen plays the picked song without its lyrics (Matt: "have the music without lyrics playing for each level selection"):
+// the kitchen plays the picked song without its lyrics (Chikin: "have the music without lyrics playing for each level selection"):
 // a ~32 s instrumental loop per song (play/songs/<id>.inst.mp3, made by game/inst/cut.py), crossfading on every glitch
 let kmusic = null, kmusicId = null;
 function fadeAudio(a, to, ms, done) { const from = a.volume, t0 = performance.now(); const step = () => { const k = Math.min(1, (performance.now() - t0) / ms); a.volume = from + (to - from) * k; if (k < 1) requestAnimationFrame(step); else if (done) done(); }; step(); }
@@ -235,7 +235,7 @@ function kitchenRow() {
 function pickKitchen(i) { if (intro.busy()) return; initSfx(); intro.setStyle(i); save.song = intro.styles[intro.style()].level; persist(); kitchenRow(); kitchenMusic(save.song);
   const g = $('kglitch'); g.classList.remove('hit'); void g.offsetWidth; g.classList.add('hit'); }
 $('kglitch').onclick = e => { pickKitchen(intro.style() + 1); if (e.detail) e.currentTarget.blur(); };
-// THE SECRET LEVEL (Matt, Nov 2: "can you just add it to the kitchen"): a little pumpkin after the song icons plays 404 Boo Not
+// THE SECRET LEVEL (Chikin, Nov 2: "can you just add it to the kitchen"): a little pumpkin after the song icons plays 404 Boo Not
 // Found right here (it isn't one of the ten songs, so it has no costume or door of its own; Esc / the end brings him back out)
 { const b = document.createElement('button'); b.id = 'kboo'; b.className = 'kicon'; b.title = b.ariaLabel = '404 Boo Not Found (secret)';
   b.innerHTML = '<svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><path d="M19 9c0-4 3-5 5-5" stroke="#3a6b1f" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="20" cy="24" rx="15" ry="12" fill="#ff8a2b" stroke="#120a05" stroke-width="2.5"/><path d="M20 12v24M12 14c-3 6-3 14 0 20M28 14c3 6 3 14 0 20" stroke="#c45a10" stroke-width="1.6" fill="none"/><path d="M12 21l4-3 2 4zM28 21l-4-3-2 4zM13 28q7 5 14 0l-3 1-1-2-2 2-2-2-2 2-1-2z" fill="#120a05"/></svg>';
@@ -288,7 +288,7 @@ function loop(ms) {
     const t = now(), s = sim.s;
     if (dying > 0) {
       dying -= dt; fx.amount = Math.min(1, 0.5 + dying);
-      if (dying <= 0) { const was = sim.s; start(practice ? flag : C.def.retryAt ? C.def.retryAt(sim.s.t) : C.def.retry === 'section' ? C.secs[C.secAt(Math.max(0, sim.s.t - 1.5))].t : 0   /* (the section he was playing — a death right on a section line used to skip him ahead: Matt) */);   // (a level can retry from the section you died in)
+      if (dying <= 0) { const was = sim.s; start(practice ? flag : C.def.retryAt ? C.def.retryAt(sim.s.t) : C.def.retry === 'section' ? C.secs[C.secAt(Math.max(0, sim.s.t - 1.5))].t : 0   /* (the section he was playing — a death right on a section line used to skip him ahead: Chikin) */);   // (a level can retry from the section you died in)
         if (C.def.shooter && was.gunGot && sim.s.t > 0) { const at = sim.s.t; let g = 0; for (const k in was.gunGot) if (was.gunGot[k] < at) g++; sim.s.gun = Math.min(3, g); } }   // (the shooter: you keep the gun you had when that section started)
     } else {
       while (sim.s.t + DT <= t && !sim.s.dead && !sim.s.won) {
@@ -321,20 +321,20 @@ function loop(ms) {
         if (s.fxEv && s.fxEv.at === s.t) { arrive = Math.max(arrive, s.fxEv.k || 0); if (s.fxEv.sfx && SFX[s.fxEv.sfx]) SFX[s.fxEv.sfx](s.fxEv.arg); }   // E5: a level's scripted glitch (s.fxEv = { at, k, sfx, arg }): his glitch fx + its sound, with no press (Confidently Incorrect's intro, Mom)
         if (C.def.faces) for (const [ft, fn, fd] of C.def.faces) if (s.t - DT < ft && s.t >= ft) react(fn, fd || 1);   // a level's faces on song moments: faces: [[t, name, dur]]   // a mode asks for a face: s.react = { name, dur, at: s.t }
         if (demoing) for (const k of Object.keys(inp)) callout(k);
-        if ((inp.L || inp.R) && !C.def.shooter && (!C.def.mode || (typeof C.def.spin === 'function' ? C.def.spin(s) : C.def.spin))) {   /* (def.spin can be a test: Last Lights spins him only when its rules counted one) */   /* (the shooter's opener walks on ←/→; ↑ hops + spins there) */   /* (a mode level can ask for the spin: def.spin) */   // (the shooter's opening too: normal rules till he's in space)   // ← / → : he spins on the spot, happy or surprised (Matt: "that would be fun")
+        if ((inp.L || inp.R) && !C.def.shooter && (!C.def.mode || (typeof C.def.spin === 'function' ? C.def.spin(s) : C.def.spin))) {   /* (def.spin can be a test: Last Lights spins him only when its rules counted one) */   /* (the shooter's opener walks on ←/→; ↑ hops + spins there) */   /* (a mode level can ask for the spin: def.spin) */   // (the shooter's opening too: normal rules till he's in space)   // ← / → : he spins on the spot, happy or surprised (Chikin: "that would be fun")
           view.spinReq = (view.spinReq || 0) + (inp.L ? -1 : 1); react(['laugh', 'smirk', 'wide', 'shock', 'startled'][Math.floor(Math.random() * 5)], 0.7); }
         if (C.def.hints) for (const h of C.def.hints) if (!h.shown && s.t >= h.t) { h.shown = true; flash(h.text); }   // the first time each move shows up
         if (practice) { const si = C.secAt(s.t); if (C.secs[si].t > flag) { flag = C.secs[si].t; flash('flag: ' + C.secs[si].name); } }
       }
-      if (s.dead) { dying = 0.75; SFX.die(); react('shock', 1.2); view.deadAt = performance.now() / 1000; if (!demoing) { /* no death X anywhere (Matt: "you can take out the death x, i dont like them") */ if (s.t > bestRunT) { bestRunT = s.t; view.ghostPath = runPath.slice(); } } if (!SILENT && audio) audio.pause(); deathCard(s); }
-      if (s.won) { mode = 'done'; show('done'); SFX.win(); react('smirk', 99);   // (the song plays on to its last note — Matt: "it cuts off before the song ends")
+      if (s.dead) { dying = 0.75; SFX.die(); react('shock', 1.2); view.deadAt = performance.now() / 1000; if (!demoing) { /* no death X anywhere (Chikin: "you can take out the death x, i dont like them") */ if (s.t > bestRunT) { bestRunT = s.t; view.ghostPath = runPath.slice(); } } if (!SILENT && audio) audio.pause(); deathCard(s); }
+      if (s.won) { mode = 'done'; show('done'); SFX.win(); react('smirk', 99);   // (the song plays on to its last note — Chikin: "it cuts off before the song ends")
         if (!demoing && !practice && !save.cleared.includes(meta.id)) { save.cleared.push(meta.id); persist(); }
         if (!demoing && !practice && save.easy) { save.easyOnly = save.easyOnly || {}; if (!(save.hard || {})[meta.id]) save.easyOnly[meta.id] = true; persist(); }
         if (!demoing && !practice && !save.easy) { save.hard = save.hard || {}; save.hard[meta.id] = true; persist(); }
         const wonId = meta.id, left = audio && isFinite(audio.duration) ? Math.max(0, audio.duration - audio.currentTime) : 0;
         setTimeout(() => { if (mode !== 'done' || meta.id !== wonId || TAP.on) return;   // (the tapper: the song plays to its end and the tapper takes him back to its list, no credits, no next song)
           if (wonId === 'last-lights-on' && !practice && !view.videoMode) { mode = 'credits'; if (audio) audio.pause(); credits.play({ muted, onDone: () => hub(wonId) }); }   // the end credits, over Thursday Potato (after a watched demo too)
-          else if (demoing && !view.videoMode) { if (audio) audio.pause(); nextDemo(wonId); }   // WATCH runs the album on from here (Matt: "from whichever song you start … till the end of last lights")
+          else if (demoing && !view.videoMode) { if (audio) audio.pause(); nextDemo(wonId); }   // WATCH runs the album on from here (Chikin: "from whichever song you start … till the end of last lights")
           else { if (audio) audio.pause(); hub(wonId); } }, Math.max(2600, left * 1000 + 400)); }   // the song to its end, then out of its door (its lamp lit)
       if (!demoing && (!runPath.length || s.t - runPath[runPath.length - 1][0] > 0.05)) runPath.push([s.t, s.x, s.y + (C.def.shooter ? 0 : 0.62)]);   // record this attempt (the ghost of your best run)
       arrive = Math.max(0, arrive - dt);
@@ -374,7 +374,7 @@ function deathCard(s) {             // what got him, and how far he got
   const why = s.why === 'fell' ? 'fell into the dark' : s.why; $("deathwhy").textContent = C.def.deathText ? C.def.deathText(s) : `the video stopped at ${Math.floor(s.t / 60)}:${String(Math.floor(s.t % 60)).padStart(2, "0")} · ${why} · you saw ${Math.floor(pct * 100)}%`;
   const el = $('death'); el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
 }
-// a download puts the costume on (we built them in 3D); he keeps it on a good while after the power fires (Matt: "he needs to
+// a download puts the costume on (we built them in 3D); he keeps it on a good while after the power fires (Chikin: "he needs to
 // stay in costume longer"), then it comes off — or the next costume / story wall takes over
 const OUTFIT = { king: 'royal-king', disco: 'disco-legend', detective: 'noir-detective', construction: 'construction-crew', astronaut: 'orbital-astronaut',
   ghost: 'sheet-ghost', knight: 'castle-knight', diver: 'deep-sea-diver', cyborg: 'circuit-cyborg', singularity: 'royal-king' };
@@ -382,7 +382,7 @@ let costumeOff = Infinity;
 const ALL_OUTFITS = [...new Set(Object.values(OUTFIT)), 'kitchen-chef', 'suit-tie'];
 let cycle = null, powerOn = null, autoDone = new Set();
 ALL_OUTFITS.forEach(o => loadOutfit(o).catch(() => {}));   // (warm the cache: the kitchen and the powers flick through them)
-// the power, Matt's way: V = the glitch goes off -> he glitches into the costume -> the power fires at the thing it's for
+// the power, Chikin's way: V = the glitch goes off -> he glitches into the costume -> the power fires at the thing it's for
 // (the gold obstacle ahead) -> it breaks -> he glitches back to himself
 function powerUp(p, s) {
   const tgt = [...C.hazards, ...(C.targets || [])].find(h => (h.wk === 'armor' || h.wall) && h.x1 > s.x && (h.needs === p || p === 'singularity') && h.gateT <= s.t + 0.01 && s.t <= h.gateEnd + C.P);
@@ -399,10 +399,10 @@ function stepPower(s) {
   if (!powerOn) return;
   const P = powerOn, t = s.t;
   if (!P.fired && (P.tgt ? s.x >= P.tgt.x0 - 2.4 : t > P.t0 + 2 * C.P)) { P.fired = t; SFX.power(); }   // the power goes off at the obstacle
-  if (P.fired && t > P.fired + 2 * C.P && (!P.tgt || s.x > P.tgt.x1 + 0.5)) {                           // ...and it's done. He KEEPS the costume (Matt: "once he gets a costume he keeps it") until the next one
+  if (P.fired && t > P.fired + 2 * C.P && (!P.tgt || s.x > P.tgt.x1 + 0.5)) {                           // ...and it's done. He KEEPS the costume (Chikin: "once he gets a costume he keeps it") until the next one
     react('smirk', 0.8); powerOn = null; view.powerOn = null; }
 }
-// THE LEVEL'S COSTUME (Matt, Nov 1: "he needs to be in the costume the level represents for the full video, except in last
+// THE LEVEL'S COSTUME (Chikin, Nov 1: "he needs to be in the costume the level represents for the full video, except in last
 // lights when hes already glitching out"): a level def `costume: '<outfit>' | null` pins his outfit for the whole level, from
 // the first frame (the demo, retries, section / practice / mid-song starts) to the end — null = bare Potato. Powers still do
 // their EFFECT (the flash, the blast, the hijack, the boo) but never change his clothes; looks and auto costume swaps are
@@ -422,7 +422,7 @@ function wearPower(p) { costumeOff = Infinity; if (pinned() || !OUTFIT[p]) retur
   const t0 = sim.s.t, n = 3, picks = [];
   for (let i = 0; picks.length < n && i < 20; i++) { const o = ALL_OUTFITS[(Math.floor(t0 * 7919) + i * 3) % ALL_OUTFITS.length]; if (o !== OUTFIT[p] && !picks.includes(o)) picks.push(o); }
   Promise.all([...picks, OUTFIT[p]].map(o => loadOutfit(o).catch(() => null))).then(bs => { if (sim && powerOn && powerOn.p === p) cycle = { t0: sim.s.t, bs, k: -1, p }; }); }
-// LOOKS (Matt, Thursday: "can you have him glitch to costumes that make sense? like fully formed fully dressed can you glitch
+// LOOKS (Chikin, Thursday: "can you have him glitch to costumes that make sense? like fully formed fully dressed can you glitch
 // him to a suit and tie and then back, make it visually fun with the song?"): a level lists [t0, t1, outfit] on its lyrics;
 // on t0 he glitch-flicks through two outfits and lands on the one the line is about (the change is an event), on t1 he pops
 // back to himself (or to the level's start costume)
@@ -437,7 +437,7 @@ function stepLooks(t) {
     view.lookAt = t; view.lookCol = cur[3] || '#ffd9a0'; react(['laugh', 'smirk', 'wide'][Math.floor(a * 13) % 3], 0.8); SFX.transform(); }
   else { baseOutfit(); arrive = Math.max(arrive, 0.45); view.revertAt = t; SFX.revert(); }
   lookOn = cur; }
-// LAST LIGHTS CUES (Matt: "he can change to the costume, and then the player presses the power button, potato does glitch,
+// LAST LIGHTS CUES (Chikin: "he can change to the costume, and then the player presses the power button, potato does glitch,
 // and the costume breaks apart and into the singularity causing the effect, every time he does a power, the glitch is bigger
 // and crazier … it escalates … go biiiiig"): def.cues = [{ on, t, costume, colour }]. On `on` he glitches into the costume
 // (an event); V on the word `t` (the sim scores it, s.cues) or a miss breaks it: he glitches (bigger every cue), the costume
@@ -456,7 +456,7 @@ function stepCues(t) {
       arrive = Math.max(arrive, (0.5 + 1.3 * tier) * (hit ? 0.75 + 0.5 * q : 0.45));
       view.breakEv = { t, i, n: Q.length, tier, q, hit: !!hit, col: c.colour || '#ffcf4a', costume: c.costume }; react(hit ? 'laugh' : 'shock', 0.8); SFX.power(); }
   }); }
-// Last Lights' ending (Matt): the singularity — in the last cutscene he glitches through his whole costume library, faster
+// Last Lights' ending (Chikin): the singularity — in the last cutscene he glitches through his whole costume library, faster
 // and faster, and lands back as himself
 let paradeBs = null, paradeK = -1;
 function stepParade(t) {
@@ -471,9 +471,9 @@ function stepCycle(t) {          // flick through the costumes (a glitch on ever
   if (i === cycle.bs.length - 1) cycle = null; }
 // the demo shows which button it pressed, so you can follow it
 const CALL = { J: '↑ jump', G: 'space · glitch', V: 'v · power', D: '↓ duck' };
-function callout(k) { return;   // (no on-screen instructions during the game — Matt: "its distracting")
+function callout(k) { return;   // (no on-screen instructions during the game — Chikin: "its distracting")
   const el = $('callout'); el.textContent = CALL[k] || k; el.className = 'k' + k; void el.offsetWidth; el.classList.add('show'); }
-function flash(text) { return;   // (no extra words during the game: only the lyrics and the world's own text — Matt)
+function flash(text) { return;   // (no extra words during the game: only the lyrics and the world's own text — Chikin)
   const m = $('msg'); m.textContent = text; m.classList.remove('show'); void m.offsetWidth; m.classList.add('show'); }
 window.RUN = { get sim() { return sim; }, get C() { return C; }, open: openLevel, LEVELS,
   start: async (id, from = 0) => { await openLevel(id); demoing = false; practice = false; start(from); },
@@ -481,7 +481,7 @@ window.RUN = { get sim() { return sim; }, get C() { return C; }, open: openLevel
   blank: async (id, from = 0) => { if (!BLANK_Q) throw new Error('RUN.blank needs ?blank in the page URL'); if (!C || meta.id !== id) await openLevel(id); demoing = true; view.videoMode = true; start(from); $('hud').hidden = true; $('pads').hidden = true; },   // the clean-slate run: the demo, video mode, no HUD
   video: async (id, from = 0) => { if (!C || meta.id !== id) await openLevel(id); demoing = true; view.videoMode = true; start(from); $('hud').hidden = true; }, now,
   get kitchen() { return intro; }, opening, playOpening, get mode() { return mode; }, get meta() { return meta; }, hub,
-  // THE TAPPER (tapper.mjs, Matt Nov 1: watch a demo, tap where the glitches / story moments go): TAP.on = the demo in the song's
+  // THE TAPPER (tapper.mjs, Chikin Nov 1: watch a demo, tap where the glitches / story moments go): TAP.on = the demo in the song's
   // own look, no game input, no run-on; TAP.paused holds the clock. tapIdle = the song stops behind the tapper's list; tapTitle = back to the title.
   tap: TAP, get audio() { return audio; }, silent: SILENT,
   tapIdle: () => { if (audio) audio.pause(); kitchenMusic(null); if (intro.shown()) intro.hideKitchen(); if (view && view.leave) view.leave(); mode = 'tapper'; world = null; curVH = VIEW_H; fit(); show('tapper'); },   // (world = null: the level stops rendering behind the list)
@@ -502,4 +502,4 @@ $('boot').hidden = true; show('title');
 if (PLAY_ONLY) window.RUN.start(PLAY_ONLY, 0).catch(e => console.error('play', e));
 if (PLAY_ONLY) { const on = () => initSfx(); for (const ev of ['keydown', 'pointerdown', 'touchstart']) addEventListener(ev, on, { capture: true, once: true }); }   // (?play: no kitchen to start the sound effects, so the first touch does; Chikin Nov 8: deaths + glitches were silent)
 if (Q.has('studio')) import('./studio.mjs').catch(e => console.error('studio', e));   // the LEVEL STUDIO (?studio): Chikin builds on the levels (studio.mjs)
-import './dev.mjs';   // DEV MODE (` or #dev): pick a level and where in the song (Matt, Nov 2)
+import './dev.mjs';   // DEV MODE (` or #dev): pick a level and where in the song (Chikin, Nov 2)

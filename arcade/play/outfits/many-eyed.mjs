@@ -1,4 +1,4 @@
-// MANY-EYED (Chat's 051-many-eyed-potato, made 3D and alive). Matt: "if you can make the multiple eyed sticker a skin" ·
+// MANY-EYED (Chat's 051-many-eyed-potato, made 3D and alive). Chikin: "if you can make the multiple eyed sticker a skin" ·
 // "i think he needs eyes all around though" · "and they should all move independently".
 // His face is Chat's front design: two big eyes, eight small ones, one brow, a tiny closed mouth. Then more small eyes in
 // the same style all the way round his sides and back (Chat's back views are empty: we draw those). EVERY eye is its own

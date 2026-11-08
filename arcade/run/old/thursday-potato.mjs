@@ -1,5 +1,5 @@
 // Level 1 — Thursday Potato: he comes to in the 404. Dark, green binary. Song 106 s, 183.6 bpm (a beat = 0.327 s).
-// No power (Matt: "the first level can be without powers"). It teaches, in order: hop on a word → a firewall word
+// No power (Chikin: "the first level can be without powers"). It teaches, in order: hop on a word → a firewall word
 // (glitch) → a held word (jump + double jump + glitch) → a launch pad ("that's the naaame") → chorus chains → the
 // bridge, where "vanish" and "quit" are firewalls. The words that stand in the way are the ones being sung.
 import { pickCues, layout, parseWords } from './kit.mjs';

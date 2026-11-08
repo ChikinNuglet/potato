@@ -1,4 +1,4 @@
-// music.mjs — the song's music map, read off its stems (tools/musicmap.py -> play/songs/<id>.music.json). Matt: "can you
+// music.mjs — the song's music map, read off its stems (tools/musicmap.py -> play/songs/<id>.music.json). Chikin: "can you
 // read the music to get better matching with visual beats". Every level gets it as map.music (at build time, for set-up
 // events) and C.music (for the view and the story layer). Everything is a pure function of the song time t.
 //   const M = makeMusic(json)

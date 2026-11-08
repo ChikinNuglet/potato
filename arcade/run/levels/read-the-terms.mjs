@@ -1,5 +1,5 @@
 // Level 4 — Read the Terms: the book runner, reworked (Oct 31, late). 139 s, 167.7 bpm (a beat = 0.358 s, a bar = 1.43 s).
-// Matt: "read the terms … needs to be harder than thursday potato, but it also needs to be a different layout with different
+// Chikin: "read the terms … needs to be harder than thursday potato, but it also needs to be a different layout with different
 // things happening" · "the platforms should all be books and manuscripts that fall into place instead of already being set" ·
 // "instead of spikes and blocks, its books and papers" · "make the music the most impactful part".
 // THE IDEA: Thursday is a street. This is a DOCUMENT you climb. Every verse he climbs a page (book stairs that slam into
@@ -10,7 +10,7 @@
 // slamming down on the beat. The hard hat comes on "relax, i'm just playing"; on the second "you SKIPPED it" the skipped
 // pages are a hole in the contract, and the girder (V) slams across it and the contract pages stack onto it on the beat:
 // he builds his own bridge, and runs it on "i signed mine to a rhyme and it cooks".
-// Every obstacle sits on Matt's tapped word (game/words/read-the-terms.tsv; no beat snap), offset so the PRESS lands on the
+// Every obstacle sits on Chikin's tapped word (game/words/read-the-terms.tsv; no beat snap), offset so the PRESS lands on the
 // word. The intro's taps are placeholders: the intro is laid on the beat.
 //
 // BEAT SHEET (time · lyric / music · what happens)
@@ -176,7 +176,7 @@ export function build(words, map, viz) {
 
   return {
     speed: 7.8, coyote: 0.08, jumpBuffer: 0.1, readRefill: true,
-    costume: 'suit-tie',   // COSTUME (Matt): he wears it the whole song; the power does its effect, never changes his clothes (construction keeps its bridge)
+    costume: 'suit-tie',   // COSTUME (Chikin): he wears it the whole song; the power does its effect, never changes his clothes (construction keeps its bridge)
     story, modeView: bookView,                                                     // the level's own 3D: books slam into place, stamps, the search bar, the bridge
     cutscenes: [[CUT[0], CUT[1], 'float']],                                         // "i read the terms (again)": he rises over the page
     theme: { igOff: true, platStyle: 'books', objects: { low: 'bookstack', high: 'papers', wall: 'paperwall' },
@@ -191,7 +191,7 @@ export function build(words, map, viz) {
 }
 
 // ---------- the level's own 3D (view.mjs's modeView hook; it runs for runner levels too) ----------
-// 1. The books FALL INTO PLACE (Matt): every pile of books / manuscript slams down into its spot ON A BEAT, 1.5–2.5 beats
+// 1. The books FALL INTO PLACE (Chikin): every pile of books / manuscript slams down into its spot ON A BEAT, 1.5–2.5 beats
 //    (0.55–0.9 s) before he gets there, on screen. Until it lands, its spot shows as a faint ghost of the pile — the exact
 //    shape, from the moment it's on screen (S3: you see it coming ~1 s ahead). (The engine's own drop finished off screen,
 //    where nobody saw it; this re-times it on the course's own piles.)

@@ -1,4 +1,4 @@
-// kit.mjs — builds a level's course from its song: cue words (Matt: "the words are the timing of the jumps"), the
+// kit.mjs — builds a level's course from its song: cue words (Chikin: "the words are the timing of the jumps"), the
 // visualizer's analysis for the stretches without words, and a level's own set pieces. Every level file uses this.
 //   cue kinds: hop (jump on the word, land on the next block a beat later) · wall (a firewall: glitch, don't jump) ·
 //   hurdle (the word stands in the way: hop it, land on the same block) · held (a long gap: jump + double jump + glitch) ·
@@ -18,7 +18,7 @@ export function parseWords(text) {
     for (let i = 0; i < out.length; i++) out[i].t1 = Math.min(out[i].t0 + 1.2, i + 1 < out.length ? out[i + 1].t0 : out[i].t0 + 0.4);
     return out;
   }
-  // tsv: either "start end line word note" (machine listen) or "seconds line word note" (Matt's tapper)
+  // tsv: either "start end line word note" (machine listen) or "seconds line word note" (Chikin's tapper)
   const rows = text.split('\n').filter(l => l && !l.startsWith('#')).map(l => l.split('\t')).filter(c => c[0] !== '' && !isNaN(+c[0]));
   const five = rows.length && rows[0].length >= 5 && !isNaN(+rows[0][1]) && rows[0][1] !== '';
   let out = rows.filter(c => (five ? c[4] : c[3]) !== 'untapped' && (five ? c[4] : c[3]) !== 'missing')
@@ -110,7 +110,7 @@ export function beatCues(viz, map, t0, t1, o = {}) {
   return cues;
 }
 
-// ---------- v2c: every sung word is an obstacle (Matt: "the lyrics … should be the obstacles") ----------
+// ---------- v2c: every sung word is an obstacle (Chikin: "the lyrics … should be the obstacles") ----------
 // Words are grouped into obstacles spaced so each is physically possible (a jump lasts a beat); every word appears in
 // exactly one obstacle. Kinds: low (jump it) · high (duck under it) · wall (glitch through) · armor (the level's power
 // blasts it) · launch (a held word: a pad throws him over it). The ground is the level's own terrain, never words.

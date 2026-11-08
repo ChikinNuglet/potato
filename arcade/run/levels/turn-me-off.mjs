@@ -1,4 +1,4 @@
-// Level 9 — Turn Me Off: the toy room at bedtime (Matt, Nov 1). 3:07, 130 bpm (a beat = 0.461 s, the grid from 0.3205).
+// Level 9 — Turn Me Off: the toy room at bedtime (Chikin, Nov 1). 3:07, 130 bpm (a beat = 0.461 s, the grid from 0.3205).
 // The plan: game/stories/turn-me-off.md (its "Album pass" wins). The rules + the look's plumbing: run/modes/turn-me-off.mjs.
 // The room (the music video, and the in-front painter): story-turn-me-off.mjs.
 // It's "reverse No Answer": there the dark is the enemy and nobody answers; here the LIGHT sees him, the dark hides him, and
@@ -103,10 +103,10 @@ export function build(words, map) {
     lights: () => 0,                                      // (no stage lights from above: the room's own light is the story; theme.beamsOut)                                // (CS1: he isn't in the room till his glitch drops out of the tank)
     blankPresses: (t, k) => !/G/.test(k),   // (?blank, run/blank.mjs: he never freezes — nothing's looking; the bot's walk stays)
     noV: true,                                            // (Space is the only button: no V pad on a phone)
-    // arms (Matt, Nov 1: "he should have arms whenever he jumps around and spins around … give him some dance moves"): none
+    // arms (Chikin, Nov 1: "he should have arms whenever he jumps around and spins around … give him some dance moves"): none
     // while he walks, stands or is frozen as a plain toy (view.mjs keeps them in when s.frozen / s.seenAnim / s.air is false);
     // out on his morning hops and in the outro's dance (room.dance)
-    costume: 'tin-robot',                                 // the wind-up tin robot all song (Matt: "put the key on him, make sure the key turns")
+    costume: 'tin-robot',                                 // the wind-up tin robot all song (Chikin: "put the key on him, make sure the key turns")
     room: {
       start: [3.55, 1.4], tank: [0.95, 5.05], arrive: 2.25, firstT: 5.6, teachEnd: 28.4, morning: 163.1, sunrise: 165.74, tally: 182.8,
       bow: [3.3, 0.3], dance: [178.45, 182.8],                                   // (CS7: he waddles to the front, under the card)

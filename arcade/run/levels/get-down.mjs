@@ -1,9 +1,9 @@
-// Level 2 — Get Down: a RHYTHM DANCER on the Impossible Game (Matt, Oct 31: "get down should be a rythm based dancer, but
+// Level 2 — Get Down: a RHYTHM DANCER on the Impossible Game (Chikin, Oct 31: "get down should be a rythm based dancer, but
 // also kind of like the impossible game"; "he should change to the funky dancer and stay that way, and he gets a couple of
 // dance moments, there should be lights flashing in the background strobe like, make it exciting"; "all of the games
 // should be timed by the song"; "make the music the most impactful part").
 //
-// THE PARTY (Matt, Nov 1: "In get down his glitching always needs to do that dance blast, it should be a charge bar. With
+// THE PARTY (Chikin, Nov 1: "In get down his glitching always needs to do that dance blast, it should be a charge bar. With
 // that one, the lights just dim, and he collects energy by defeating enemies by jumping over them and spinning. When his bar
 // is charged, he can use his glitch on the GET DOWN during the chorus, which makes the atmosphere more of a party,
 // escalating throughout the video, ending with huge party lighting effects"). So, on top of the course below:
@@ -30,7 +30,7 @@
 // switches it on (the mirrorball comes down). The gold DOWN at the drop is what the disco blows apart. Two dance breaks
 // (the first "get down", the drop) + the last bars.
 // No arrows, no prompts, no words but the lyrics and the world's own (the neon 404 PARTY, the scoreboard, the radio dial,
-// the camcorder's REC); the charge bar has no words. Story + party: story-get-down.mjs, which follows Matt's Get Down
+// the camcorder's REC); the charge bar has no words. Story + party: story-get-down.mjs, which follows Chikin's Get Down
 // video set by set: the camcorder living room -> the kitchen 404 party -> the disco -> the backyard at night -> the radio
 // -> the drained disco under the mirrorball -> the stage -> back to the living room, where on "for now." he switches the
 // light off himself (the video's ending) — unless the party's maxed.
@@ -156,7 +156,7 @@ export function build(words, map) {
   return {
     speed: 8.4, beatJumpK: 1.15, coyote: 0.08, jumpBuffer: 0.1, streakRefill: 8,
     party: PARTY, chargeBeats: 1,   // THE PARTY (engine: core.mjs, gated on def.party): crashers, the bar, the GET DOWN steps; the glitch is back a beat later
-    costume: 'disco-legend',   // COSTUME (Matt): he wears it the whole song; the power does its effect, never changes his clothes
+    costume: 'disco-legend',   // COSTUME (Chikin): he wears it the whole song; the power does its effect, never changes his clothes
     story, modeView: danceView,                                       // (modeView without a mode: the floor's lights + his dance moves, drawn over the course)
     cutscenes: DANCE.map(([a, z]) => [a, z, 'dance']),
     // his attitude on the song's moments (Vega's expressions). NEEDS AN ENGINE HOOK: main.mjs should call

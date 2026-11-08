@@ -1,7 +1,7 @@
 // Level 7 — Still Here: the castle wall at night, the antivirus dragon, and a small knight eating his way to sunrise.
 // 2:39, ~181.8 bpm (a beat = 0.33 s, a bar = 1.32 s). The plan: game/stories/still-here.md (its "Album pass" wins). The rules:
 // run/modes/still-here.mjs (a platformer inside the moving screen). The castle and everything drawn: story-still-here.mjs.
-// Matt (Nov 1): "still here is a token collector level, you still have to jump with the timing, but if you dont collect tokens,
+// Chikin (Nov 1): "still here is a token collector level, you still have to jump with the timing, but if you dont collect tokens,
 // you arent 'still here'" · more, smaller tokens, a meter that can really run out, a bigger meter, move back and forth, bats
 // flying around, the dragon crashing in through the roof, the debris as platforms, die in the cutscene if you're short, the
 // dragon's gold refreshes the bar · castle knight all song · "the whole castle should be on fire, its potato getting through
@@ -9,7 +9,7 @@
 //
 // TIMES: snapped to the song's own beat tracker (QT(q), story-still-here.mjs) and checked against the onsets — never the
 // music map's `drops` (up to 0.5 s off here). WORDS: no written lyric sheet exists; the machine listen (HEARD) is shown on
-// screen per Matt ("just do the best you can with the machine ones for now"): SURE + LIKELY lines only, SKIP lines never
+// screen per Chikin ("just do the best you can with the machine ones for now"): SURE + LIKELY lines only, SKIP lines never
 // (game/words/still-here.clean.md). Potato's asides are the ★ lines of stories/words/POTATO-LINES.md, all DRAFT.
 //
 // BEAT SHEET (time · the music / the words · what happens)        CUT = control taken (letterbox) · BEAT = the world does one thing
@@ -122,7 +122,7 @@ export function build(_, map) {
   const P = map.period, T = q => +QT(q).toFixed(3);
   const stones = [], grates = [], beams = [], bats = [], cages = [], sweeps = [], claws = [], tokens = [], spawns = [], embers = [], hops = [];
   // every token carries how you get it (cat): 'floor' = on his path (running eats it) · 'hop' = an arc that needs a jump ON the beat
-  // · 'stone' = the arc over a stone (the hop you make anyway) · 'grate' / 'beam' · 'high' = off the path. (Matt: "you still have to
+  // · 'stone' = the arc over a stone (the hop you make anyway) · 'grate' / 'beam' · 'high' = off the path. (Chikin: "you still have to
   // jump with the timing, but if you dont collect tokens, you arent 'still here'": about half the food needs a timed jump or a turn back)
   const tok = (t, y, big = false, ox = 0, cat = 'floor') => tokens.push({ t: +t.toFixed(3), y, big, ox, cat });
   const row = (q0, q1, step = 2, y = 0.55, big = false) => { for (let q = q0; q <= q1 + 1e-6; q += step) tok(T(q), y, big); };
@@ -242,7 +242,7 @@ export function build(_, map) {
     touchMode: 'tapdrag', noV: true,   // (a phone: drag = run / jump / duck, a quick tap or a second finger = Space; no V anywhere)
     retryAt: t => { let r = castle.retry[0]; for (const v of castle.retry) if (t >= v - 0.01) r = v; return r; },
     lights: () => 0,
-    costume: 'castle-knight',                       // the knight from the first frame to the last (Matt: "he needs to stay in costume")
+    costume: 'castle-knight',                       // the knight from the first frame to the last (Chikin: "he needs to stay in costume")
     castle,
     deathText: s => s.why === 'deep rest' ? '> low balance. deep rest. not gone.' : s.why,   // (DRAFT, POTATO-LINES 7 fail card)
     cutscenes: castle.cuts.map(([a, b, n]) => [a, b, n === 'end' ? 'dance' : n === 'cold' ? 'float' : 'watch']),   // (the end dances its last bars; 'watch' = no wave: he never waves at the antivirus — arms only on jumps / spins)

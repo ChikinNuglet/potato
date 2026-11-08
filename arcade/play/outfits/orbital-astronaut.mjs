@@ -1,7 +1,7 @@
 // ORBITAL ASTRONAUT (3D port of draw/outfits/orbital-astronaut.js): a white retro helmet round his head and shoulders
 // with a big OPEN face window (no glass: his own face shows, a soft dark lining just inside the edge for depth), a grey
 // raised rim round the window, a grey neck ring where helmet meets suit; a short white suit with orange piping, a chest
-// control box and an orange hose port. No ear knobs (Matt took them off).
+// control box and an orange hose port. No ear knobs (Chikin took them off).
 import { painter, W, INKU, INK, ARC, RM, clamp } from '../outfits3d.mjs';
 
 const WHITE = '#f4f1ea', GREY = '#bcc2ca', GDEEP = '#878e98', ORANGE = '#f0731c', ODEEP = '#b9500e', SLOT = '#3a3f4a';

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Confidently Incorrect, the music video (Matt, Nov 1: "tell a story" — Potato fights the aliens). Every picture is the game's:
+<!-- Confidently Incorrect, the music video (Chikin, Nov 1: "tell a story" — Potato fights the aliens). Every picture is the game's:
      the level's cardboard-space painter, its alien ships (_ciship.mjs, copied from view.mjs), the 3D Potato in the level's
      astronaut suit, Vega's CI stickers (the fake experts, Kevin). Frames are drawn here and posted to a local receiver at 24 fps;
      ffmpeg puts the song under them. Scratch tool (play/_* is not published). Story: potato-home/work/ci-video/STORY.md -->
@@ -28,7 +28,7 @@ const BEAT = 60 / 101.3;
 await document.fonts.load('400 20px "Major Mono Display"'); await document.fonts.load('400 40px "Rubik Mono One"');
 const img = async src => { const i = new Image(); i.src = src; await i.decode(); return i; };
 
-// ---------- Matt's taps (the feel: every glitch tap is a shot, every big one lands hard) and the words ----------
+// ---------- Chikin's taps (the feel: every glitch tap is a shot, every big one lands hard) and the words ----------
 const TAPS = (await fetch('http://localhost:8790/../potato-home-taps.json').then(r => r.ok ? r.json() : null).catch(() => null)) || window.__TAPS || [];
 const WJ = await fetch('../words/confidently-incorrect.json').then(r => r.json());
 const LINES = []; for (const r of WJ.timings) { if (r[0] == null) continue; let L = LINES[LINES.length - 1]; if (!L || L.id !== r[1]) LINES.push(L = { id: r[1], t0: r[0], words: [] }); L.words.push({ t: r[0], w: String(r[2]).replace(/\/$/, '') }); }
@@ -100,7 +100,7 @@ function drawShip(g, B, t, P) {
     g.fillStyle = INK; g.font = '400 30px "Rubik Mono One"'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(B.name, 0, 2, 470); g.restore(); }
   g.restore();
 }
-// his shots: one per Matt tap during a fight
+// his shots: one per Chikin tap during a fight
 const SHOTS = []; function buildShots() { for (const m of TAPS) { const B = BOSSES.find(b => m.t > b.paint + 0.5 && m.t < (b.laser || b.kill)); if (B) SHOTS.push({ t: m.t, big: m.kind === 'big', B, i: SHOTS.length }); } }
 const lastShot = t => { let l = null; for (const s of SHOTS) { if (s.t > t) break; l = s; } return l; };
 function drawShots(g, t, P0) {
@@ -260,7 +260,7 @@ function frame(t) {
 }
 
 
-// =============== v2 (Matt: "show me what you mean"): the show lives on Kevin's laptop; everything Potato builds is taken out of Kevin's room ===============
+// =============== v2 (Chikin: "show me what you mean"): the show lives on Kevin's laptop; everything Potato builds is taken out of Kevin's room ===============
 const SHOW = document.createElement('canvas'); SHOW.width = W; SHOW.height = H; const shw = SHOW.getContext('2d');
 const SCR = { x: 470, y: 228, w: 400, h: 225 };   // the laptop screen in the room shot
 // what leaves the room, and when (the moment it turns up in the show)

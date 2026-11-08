@@ -9,8 +9,8 @@
 //
 // BEAT SHEET (short; the full one is §2 of the plan and MOMENTS in ci-factory.mjs)
 //   -14 → 0     Kevin's room, night. The router blinks purple (him arriving). Kevin types "Dear Potato, what is the capital of Neipal?
-//               thanks, -Kevin" (Matt's words); the letters stream into his head as binary, "Neipal?" last on 1.134.
-//   0 → 10.17   He has nothing: thinking dots, a glitch on each of Matt's taps (1.13, 2.73, 5.63 violent: the laptop's boot text
+//               thanks, -Kevin" (Chikin's words); the letters stream into his head as binary, "Neipal?" last on 1.134.
+//   0 → 10.17   He has nothing: thinking dots, a glitch on each of Chikin's taps (1.13, 2.73, 5.63 violent: the laptop's boot text
 //               fails behind him, green), "answering???" one "?" a beat. 10.17 (the drop): he glitches into the construction-crew.
 //   10.8 → 14.4 The laptop screen tears into green binary, belts show through; the camera pushes through on the 13.18 hit; the
 //               taskbar is belt #1; the hopper swallows the question.
@@ -45,7 +45,7 @@ export { VIDEO };
 export const meta = { id: 'confidently-incorrect', n: 3, title: 'Confidently Incorrect', place: 'the fact factory', song: 'songs/confidently-incorrect.mp3',
   map: 'songs/confidently-incorrect.map.json', words: 'words/confidently-incorrect.json', viz: 'songs/confidently-incorrect.viz.json', power: null };
 
-// the timings file marks a few words "untapped": the intro (an estimate, spaced evenly — it plays, the story hangs on Matt's taps)
+// the timings file marks a few words "untapped": the intro (an estimate, spaced evenly — it plays, the story hangs on Chikin's taps)
 // and "for one second it sounded neat" / "POTATO OUT." (kept untimed)
 export function parseWords(text) {
   const d = JSON.parse(text), rows = (Array.isArray(d) ? d : d.timings).map(r => r[3] === 'untapped' && r[0] != null && r[0] > 100 ? [r[0], r[1], r[2], ''] : r);

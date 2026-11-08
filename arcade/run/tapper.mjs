@@ -1,4 +1,4 @@
-// tapper.mjs — THE TAPPER (Matt, Nov 1: "could you do something that gives me the tapper with the demos, so I can mark where
+// tapper.mjs — THE TAPPER (Chikin, Nov 1: "could you do something that gives me the tapper with the demos, so I can mark where
 // important glitches are to help advance the story?"). Pick a song: its demo plays from the top (the bot, the song's own
 // look — not the simulation skin — with sound) and stops at the song's end. He taps along:
 //   space / TAP = glitch · b = BIG glitch · s = story moment · c = scene change (cut) · z / backspace = undo the last mark
@@ -103,7 +103,7 @@ const CSS = `
 #tp-copybox > div { width: min(640px, 100%); display: grid; gap: 10px; background: #12062e; border: 3px solid #120a05; border-radius: 14px; padding: 14px; box-shadow: 0 0 0 2px #9a52ff, 4px 4px 0 #120a05; color: #f3eaff; }
 #tp-copybox textarea { width: 100%; height: 50vh; font: 600 12px "JetBrains Mono", monospace; color: #f3eaff; background: #06020f; border: 2px solid #9a52ff; border-radius: 8px; }
 #tp-copybox button { justify-self: end; font: 400 13px Bungee, sans-serif; color: #f3eaff; background: #2a0f63; border: 3px solid #120a05; border-radius: 12px; padding: 8px 14px; }
-/* everywhere: the panel sits UNDER the video, never over it (Matt watches the story while he taps) */
+/* everywhere: the panel sits UNDER the video, never over it (Chikin watches the story while he taps) */
 #stage:has(#tpanel:not([hidden])) { overflow: visible; margin: 0 auto 170px; width: min(100%, calc((100vh - 250px) * 16 / 9)); }   /* (shrinks to leave room for the panel, stays 16:9) */
 #tpanel { left: 0; right: 0; bottom: auto; top: calc(100% + 8px); }
 @media (max-width: 760px), (pointer: coarse) and (max-height: 520px) {

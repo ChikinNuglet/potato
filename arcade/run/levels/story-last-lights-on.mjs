@@ -776,7 +776,7 @@ function codeFlood(ctx, f, t) {
       if (reglitch || age < 0.28) { ctx.fillStyle = MAG; ctx.fillText(txt, x + jx - 3, row.y); ctx.fillStyle = GREEN; ctx.fillText(txt, x + jx + 3, row.y); }
       ctx.fillStyle = settle > 0.5 && inn ? (w.bin ? GREEN : '#e8d9ff') : w.col; ctx.fillText(txt, x + jx, row.y); } }
   ctx.restore(); ctx.globalAlpha = 1;
-  // BINARY POTATO (D-31 review fix 11; Matt, Nov 1: "a special model of potato made up of binary"): from 259.0 he stands up out
+  // BINARY POTATO (D-31 review fix 11; Chikin, Nov 1: "a special model of potato made up of binary"): from 259.0 he stands up out
   // of the code, the real model baked in the simulation skin, side-eyeing the camera, in a dark pocket of the code
   if (t >= BINARY_AT) { const k = ease((t - BINARY_AT) / 0.3), B = f.project(f.s.x, 0), pxU = SH.frame ? SH.frame.pxU : 80, h = 1.15 * pxU, cy = B.y - h * 0.5;
     ctx.save(); ctx.globalAlpha = 0.92 * k; ctx.fillStyle = VOID; ctx.beginPath(); ctx.ellipse(B.x, cy, h * 0.62, h * 0.72, 0, 0, 7); ctx.fill(); ctx.strokeStyle = GREEN; ctx.globalAlpha = 0.7 * k; ctx.lineWidth = 2; ctx.setLineDash([3, 5]); ctx.stroke(); ctx.restore();
