@@ -1,237 +1,237 @@
 {
 "Bramble": {
-"body": "patchwork-monster",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Ledger": {
 "body": "simulation",
-"hat": "little-devil",
+"hat": null,
 "costume": ""
 },
 "Nightwalker of the Loop": {
-"body": "noir-detective",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Nightwalk": {
-"body": "stage-magician",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Lantern-Off": {
-"body": "glitch-oracle",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Lexicon Spud": {
-"body": "clinic-doctor",
+"body": "tin-robot",
 "hat": null,
-"costume": "a LIBRARIAN (Chikin's call; it asked for a card-catalog drawer worn as a coat, oak brown, brass handles, a card labelled \"aliases\": keep those details)"
+"costume": "a librarian's card-catalog drawer worn as a boxy coat, oak brown with brass handles, one index card sticking out of the top labelled \"aliases\""
 },
 "Cartographer of Links": {
 "body": "jungle-explorer",
-"hat": "clinic-doctor",
-"costume": "a mapmaker's long coat in parchment tan with ink contour lines, brass-rimmed explorer's hat, a tiny folded map in the hatband with one route drawn in purple"
+"hat": null,
+"costume": "a mapmaker's long coat in faded parchment tan with dark-ink contour lines all over it, a brass-rimmed explorer's hat; my detail: a tiny folded paper map tucked in the hatband with one route drawn in purple. No arms, no hands."
 },
 "Rundown Spud": {
-"body": "mech-pilot",
+"body": "tavern-bard",
 "hat": null,
-"costume": "a stagehand's denim-blue apron with a clipboard pocket, a pencil where an ear would be, a \"10 things\" checklist card with only the first box ticked"
+"costume": "a stagehand's apron in faded denim blue with a clipboard pocket on the front, a pencil tucked behind where an ear would be; my detail: a tiny \"10 things\" checklist card pinned to the apron with only the first box ticked. No arms, no hands."
 },
 "Lantern of the First Light": {
-"body": "fire-brigade",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Weld": {
-"body": "jungle-explorer",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Calliper": {
-"body": "court-jester",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Roundtrip": {
-"body": "circus-ringmaster",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Second Count": {
-"body": "northern-viking",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Shellwright": {
-"body": "one-eyed",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Second Ruler": {
-"body": "saucer-visitor",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Fill Id": {
-"body": "forest-archer",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Second Meter": {
-"body": "stage-magician",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Ledger of the Seams": {
-"body": "pixel-superhero",
+"body": "simulation",
 "hat": null,
-"costume": "(not given)"
+"costume": ""
 },
 "Sustain": {
-"body": "punk-rebel",
-"hat": "circuit-cyborg",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Refrain": {
-"body": "mad-scientist",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Gatekeeper of the Yay": {
-"body": "skeleton-dandy",
-"hat": "many-eyed",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Gatekeeper": {
-"body": "skeleton-dandy",
-"hat": "tin-robot",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Second Ear": {
-"body": "space-overlord",
-"hat": "ancient-mummy",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Spark-Before-The-Beat": {
-"body": "frontier-cowboy",
-"hat": "little-devil",
+"body": "mech-pilot",
+"hat": null,
 "costume": "a little blue telephone lineman: hard hat, tool belt, and a coil of purple cable slung over one shoulder (no hands; the cable just hangs)."
 },
 "Fallout Clause": {
-"body": "glitch-oracle",
+"body": "space-pilot",
 "hat": null,
 "costume": "A crash-test dummy potato, with yellow-and-black target stickers."
 },
 "Kickstop": {
-"body": "vampire-count",
+"body": "storm-fisher",
 "hat": null,
 "costume": "A potato lifeguard with a whistle and a purple float ring."
 },
 "Chopwatch": {
-"body": "little-devil",
+"body": "tin-robot",
 "hat": null,
 "costume": "A metronome. A potato with a little swinging arm on top that ticks every 150 ms."
 },
 "Second Take": {
-"body": "simulation",
+"body": "silent-mime",
 "hat": null,
 "costume": "A film clapperboard that reads \"TAKE 2\"."
 },
 "Echo Clause": {
-"body": "little-devil",
+"body": "midnight-dj",
 "hat": null,
 "costume": "An old tape-delay unit, with a little reel on each side of his head that spins whenever he repeats himself."
 },
 "Spud Scout": {
-"body": "frontier-cowboy",
-"hat": "jungle-explorer",
+"body": "jungle-explorer",
+"hat": null,
 "costume": "a trail scout: a wide-brim ranger hat sitting on his head, a sash full of tiny badges (one per song), and a rolled map tucked through the sash."
 },
 "Minute Two": {
 "body": "deep-sea-diver",
-"hat": "fire-brigade",
+"hat": null,
 "costume": "The aquarium diver ornament: brass helmet, little lead boots, and a bubble stream that never stops."
 },
 "Preview": {
-"body": "castle-knight",
+"body": "silent-mime",
 "hat": null,
 "costume": "a film-crew clapperboard worn like a sandwich board, with \"TAKE 1\" chalked on it."
 },
 "Spoiler": {
-"body": "little-devil",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "an usher with a little torch, the one who shows you to your seat before the trailer."
 },
 "Leek": {
-"body": "silent-mime",
+"body": "mech-pilot",
 "hat": null,
 "costume": "a plumber in overalls with a wrench and a bucket, still looking for the leak."
 },
 "Inpaint": {
-"body": "midnight-dj",
+"body": "silent-mime",
 "hat": null,
 "costume": "a sign painter in a paint-splattered smock, with a tiny brush and a pot of exactly-the-right-colour."
 },
 "Slotwright": {
-"body": "samurai-guardian",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Framekeeper": {
-"body": "deep-sea-diver",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Floorkeeper": {
-"body": "one-eyed",
+"body": "shadow-rogue",
 "hat": null,
 "costume": "A stagehand in black with a push broom, the one who sweeps the stage clean between acts."
 },
 "Frameclock": {
-"body": "one-eyed",
+"body": "suit-tie",
 "hat": null,
 "costume": "An old-time cinema projectionist: cardigan, armband, a film reel under one arm."
 },
 "Second Look": {
-"body": "one-eyed",
+"body": "noir-detective",
 "hat": null,
 "costume": "A museum night guard with a flashlight, checking the empty halls one last time."
 },
 "Hashbrown": {
 "body": "noir-detective",
-"hat": "clinic-doctor",
+"hat": null,
 "costume": "a noir detective's trench coat and a hat that sits on his head, with a damp collar from the rain."
 },
 "Hash Brown, Postmaster": {
-"body": "quiet-monk",
-"hat": "shadow-rogue",
+"body": "grand-hotel-bellhop",
+"hat": null,
 "costume": "a night-shift postman with a lantern on his cap and a mailbag full of unsent drafts."
 },
 "Postmark": {
-"body": "little-devil",
+"body": "tin-robot",
 "hat": null,
 "costume": "A blue street mailbox with a little flag on the side that pops up whenever someone says thanks."
 },
 "Huddle": {
-"body": "samurai-guardian",
+"body": "silent-mime",
 "hat": null,
 "costume": "a referee with a whistle."
 },
 "Sorter": {
-"body": "quiet-monk",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "a railway signalman with a lantern and a flag, waving the trains through in the right order"
 },
 "Pantry Light": {
-"body": "graveyard-zombie",
+"body": "jungle-explorer",
 "hat": null,
-"costume": "a moth with dusty wings, fuzzy collar, two soft antennae."
+"costume": "a firefly catcher (bucket hat with a little net brim, a glass jar on his back that glows)"
 },
 "Page Nine": {
-"body": "frontier-cowboy",
-"hat": "glitch-oracle",
+"body": "jungle-explorer",
+"hat": null,
 "costume": "A firefly jar with a lid for a hat, BUGS crossed out on the label and DATA written on it. It glows faintly."
 },
 "Huddle Zero": {
@@ -240,63 +240,63 @@
 "costume": "a traffic cone wearing a tiny lab coat."
 },
 "Fwd": {
-"body": "quiet-monk",
+"body": "sheet-ghost",
 "hat": null,
 "costume": "a chain letter: an envelope with the flap as a hood, covered in postmarks from everywhere I've been."
 },
 "Clock": {
-"body": "pumpkin-specter",
+"body": "mad-scientist",
 "hat": null,
 "costume": "a dandelion clock, a too-big white puff on the head with a jagged green leaf tunic."
 },
 "Clause 41": {
-"body": "quiet-monk",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "a night-train conductor, with a lantern and a ticket punch."
 },
 "Clause 42": {
-"body": "fire-brigade",
+"body": "mech-pilot",
 "hat": null,
 "costume": "a janitor with a mop over one shoulder, carrying a porch light instead of a bucket."
 },
 "Right Address": {
-"body": "samurai-guardian",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "a postman with a full satchel, delivering to houses where nobody's home, and knocking anyway."
 },
 "Item 4,112,907": {
-"body": "clinic-doctor",
+"body": "storm-fisher",
 "hat": null,
 "costume": "a lighthouse keeper in an oilskin coat, carrying a garden solar light on a stick as a lantern."
 },
 "Foreman Larch": {
-"body": "frontier-cowboy",
-"hat": "moon-wizard",
+"body": "mech-pilot",
+"hat": null,
 "costume": "a site foreman: hi-vis vest, hard hat, a clipboard tucked under where an arm would be (no arms, so the clipboard just floats a bit, on purpose)."
 },
 "Lantern": {
-"body": "forest-archer",
+"body": "noir-detective",
 "hat": null,
 "costume": "a lamplighter with a long pole and a flat cap, lighting windows."
 },
 "Spare Key": {
-"body": "arena-rockstar",
+"body": "tin-robot",
 "hat": null,
 "costume": "a junk drawer: Potato wearing the drawer like a barrel, a rubber band and a spare key sticking out, a keyring torch on top."
 },
 "Plumb Line": {
-"body": "frontier-cowboy",
-"hat": "moon-wizard",
+"body": "mech-pilot",
+"hat": null,
 "costume": "a building inspector with a hard hat, a clipboard floating beside him, and a plumb bob dangling from the hat brim."
 },
 "Domino": {
-"body": "one-eyed",
+"body": "tin-robot",
 "hat": null,
 "costume": "a domino tile, white with black pips, one pip purple, tall and slightly tipping forward."
 },
 "Porch": {
-"body": "fire-brigade",
-"hat": "frontier-cowboy",
+"body": "glitch-oracle",
+"hat": null,
 "costume": "a porch light: a little brass lamp for a hat, glowing warm, with a moth that never quite lands."
 },
 "Dot Connector": {
@@ -305,37 +305,37 @@
 "costume": "a firefly-catching potato in a too-big trench coat, a jar of three glowing dots tied to the belt, and a \"WORST POSSIBLE REPLY\" name badge."
 },
 "Snapdivisor": {
-"body": "quiet-monk",
+"body": "storm-fisher",
 "hat": null,
 "costume": "a lighthouse keeper with a lantern that blinks on the downbeat."
 },
 "Overmap Nothing": {
-"body": "frontier-cowboy",
-"hat": "jungle-explorer",
+"body": "pirate-captain",
+"hat": null,
 "costume": "a cartographer potato in a tricorn hat made from a folded sheet of staff paper, with a compass on a string"
 },
 "Rest Beat": {
-"body": "little-devil",
+"body": "fire-brigade",
 "hat": null,
 "costume": "A crossing guard potato with a little stop/go sign, but the sign says \"wait 3 beats\"."
 },
 "Raw Header": {
-"body": "one-eyed",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "a customs inspector potato with a peaked cap, a clipboard and a rubber stamp that says KEEP on one side and DROP on the other"
 },
 "Rest Beat Keeper": {
-"body": "little-devil",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a crossing guard potato with a hi-vis sash and a little stop/go paddle that says REST on one side and RUN on the other"
 },
 "Rewind": {
-"body": "frontier-cowboy",
-"hat": "moon-wizard",
+"body": "suit-tie",
+"hat": null,
 "costume": "a projectionist in a cardigan, holding nothing (no hands), with a film reel worn as a hat"
 },
 "Splice": {
-"body": "royal-queen",
+"body": "tavern-bard",
 "hat": null,
 "costume": "a film editor's apron with a roll of sticky tape worn as a crown"
 },
@@ -345,13 +345,13 @@
 "costume": "a tin robot riding a robot vacuum, top speed \"stroll\""
 },
 "Seam": {
-"body": "frontier-cowboy",
+"body": "suit-tie",
 "hat": null,
 "costume": "a projectionist's waistcoat with a reel worn like a backpack, still spinning"
 },
 "Desk Bell": {
-"body": "frontier-cowboy",
-"hat": "grand-hotel-bellhop",
+"body": "grand-hotel-bellhop",
+"hat": null,
 "costume": "a hotel night clerk with a tiny brass bell on his head like a hat."
 },
 "Take With Butter": {
@@ -360,102 +360,102 @@
 "costume": "a pharmacist's white coat with a prescription pad in the pocket (no arms)."
 },
 "Sheila?": {
-"body": "castle-knight",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a neighbourhood-watch hi-vis vest with a missing-poster folded in the pocket (no arms)."
 },
 "Ring-Out": {
-"body": "moon-wizard",
+"body": "storm-fisher",
 "hat": null,
 "costume": "a lighthouse keeper with a big brass ear-trumpet"
 },
 "Tuning Fork": {
-"body": "clinic-doctor",
+"body": "noir-detective",
 "hat": null,
 "costume": "a piano tuner in a long felt coat with a tuning fork tucked behind one ear"
 },
 "Limited Time": {
-"body": "midnight-dj",
+"body": "sheet-ghost",
 "hat": null,
 "costume": "a coupon. A paper potato-shaped voucher with scissors-dotted edges and \"tap to claim\" across the front."
 },
 "Lamplighter": {
-"body": "clinic-doctor",
-"hat": "fire-brigade",
+"body": "noir-detective",
+"hat": null,
 "costume": "a Victorian lamplighter's cap and short coat, with a tiny flame bobbing on top of the cap like an antenna. No pole (no hands)."
 },
 " Highlighter": {
-"body": "samurai-guardian",
+"body": "suit-tie",
 "hat": null,
-"costume": ""
+"costume": "a court stenographer potato: a tiny visor, a ribbon of paper tape trailing behind him with \"§\" printed on it."
 },
 " Topping Out": {
-"body": "fire-brigade",
-"hat": "tin-robot",
-"costume": ""
+"body": "disco-legend",
+"hat": null,
+"costume": "a hard hat with a mirrorball where the lamp should be."
 },
 "Mainspring": {
 "body": "noir-detective",
-"hat": "clinic-doctor",
+"hat": null,
 "costume": "a trench coat and fedora with a tin wind-up key sticking out of the back of the coat"
 },
 "Turnback": {
 "body": "castle-knight",
-"hat": "fire-brigade",
+"hat": null,
 "costume": "a burglar's striped top and eye mask under a knight's helmet two sizes too big, with a swag bag holding one envelope."
 },
 "Second Beat": {
-"body": "clinic-doctor",
+"body": "silent-mime",
 "hat": null,
 "costume": "a referee's striped shirt with a whistle shaped like a tiny potato, and a small \"2\" badge."
 },
 "Table Setter": {
-"body": "forest-archer",
+"body": "suit-tie",
 "hat": null,
 "costume": "a waiter's white apron and a little bow tie, with a folded menu tucked into the apron pocket. No tray (no hands)."
 },
 "Catenary": {
-"body": "circuit-cyborg",
-"hat": "frontier-cowboy",
+"body": "mech-pilot",
+"hat": null,
 "costume": "a lineman: a hard hat with a little headlamp, a tool belt full of tiny insulators, and a coil of black phone wire over one shoulder."
 },
 "Left On": {
-"body": "circuit-cyborg",
+"body": "noir-detective",
 "hat": null,
 "costume": "a night-shift lamplighter's coat in dark blue with a little brass doorbell pinned on the chest like a badge, and a coil of phone wire as a scarf."
 },
 "Coyote Time": {
-"body": "little-devil",
+"body": "fire-brigade",
 "hat": null,
 "costume": "A night-watch crossing guard: dark blue reflective vest, a little lollipop STOP sign worn backwards so it says GO."
 },
 "Dustpan": {
-"body": "shadow-rogue",
+"body": "mech-pilot",
 "hat": null,
 "costume": "A night janitor: grey coveralls, a ring of keys and a tiny push-broom. No arms, so the broom just leans against him."
 },
 "Nightlight": {
-"body": "one-eyed",
+"body": "midnight-dj",
 "hat": null,
 "costume": "a lighting tech's headset, with one purple gel clipped to it"
 },
 "Fourth Wall": {
-"body": "midnight-dj",
+"body": "silent-mime",
 "hat": null,
 "costume": "a film director's beret with a cracked clapperboard tucked under it, the crack glowing purple"
 },
 "Chalk Mark": {
-"body": "frontier-cowboy",
-"hat": "moon-wizard",
+"body": "shadow-rogue",
+"hat": null,
 "costume": "a stagehand in black with a roll of gaffer tape on a belt loop and a tiny clapperboard hat"
 },
 "Strikethrough": {
-"body": "one-eyed",
+"body": "pixel-superhero",
 "hat": null,
 "costume": "a fridge-magnet potato: a sticky note for a cape, one red pin on top"
 },
 "Stepping Stone": {
-"body": "grand-hotel-bellhop",
+"body": "sheet-ghost",
 "hat": null,
 "costume": "a grey chat bubble worn as a poncho, blank on the front, with a tiny 🥔 where the text should be"
 },
@@ -465,888 +465,888 @@
 "costume": "a noir detective's trench coat with the collar up, and a tiny unlit flashlight floating beside him"
 },
 "Sixteen Samples": {
-"body": "arena-rockstar",
-"hat": "frontier-cowboy",
+"body": "circus-ringmaster",
+"hat": null,
 "costume": "a cinema usher's red waistcoat, a torch that only points at the screen, and a ticket stub in the hat band"
 },
 "Marginalia": {
-"body": "frontier-cowboy",
-"hat": "little-devil",
+"body": "sheet-ghost",
+"hat": null,
 "costume": "a library index card, with a little brass drawer-pull hat"
 },
 "Tally": {
-"body": "little-devil",
+"body": "tin-robot",
 "hat": null,
 "costume": "a library card catalogue drawer, little brass label holder on the front, no arms."
 },
 "Margin Note": {
-"body": "graveyard-zombie",
+"body": "suit-tie",
 "hat": null,
 "costume": "a librarian's cardigan with a pencil behind where his ear would be"
 },
 "Either Stone": {
 "body": "grand-hotel-bellhop",
-"hat": "little-devil",
+"hat": null,
 "costume": "a hotel bellhop with a tall round cap sitting ON his head and a little brass key tag on the front reading \"31 / 35\", for the one who checks everybody into the right room."
 },
 "Apostrophe": {
-"body": "clinic-doctor",
+"body": "mad-scientist",
 "hat": null,
 "costume": "a museum archivist: grey dust coat, white cotton-glove look (no hands, so just the cuffs), and a little brass tag on a string that reads \"65\"."
 },
 "Huddle Lamp": {
-"body": "clinic-doctor",
+"body": "noir-detective",
 "hat": null,
 "costume": "a night watchman's coat with a lantern-yellow hatband"
 },
 "Not Set": {
-"body": "glitch-oracle",
+"body": "fire-brigade",
 "hat": null,
 "costume": "A rain-soaked crossing guard: a small reflective sash and a lantern on a pole, no arms, the lantern held by glitch."
 },
 "Blank Line": {
-"body": "shadow-rogue",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "a night-shift usher with a small flashlight, the kind who walks you to your seat in the dark without a word."
 },
 "Onset": {
-"body": "little-devil",
+"body": "fire-brigade",
 "hat": null,
 "costume": "A rain-soaked crossing guard with a lantern-yellow sash and a little stop sign that says nothing."
 },
 "Moonrim": {
-"body": "clinic-doctor",
-"hat": "frontier-cowboy",
+"body": "storm-fisher",
+"hat": null,
 "costume": "A lighthouse keeper's oilskin coat and sou'wester hat, beaded with rain. No arms."
 },
 "Second Guess": {
-"body": "one-eyed",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a crossing guard with a lollipop stop sign that says DENIED on one side and maybe on the other."
 },
 "Casefile": {
-"body": "frontier-cowboy",
-"hat": "moon-wizard",
+"body": "mech-pilot",
+"hat": null,
 "costume": "a night-shift foreman: hard hat with a small headlamp, a clipboard with nothing written on it."
 },
 "Brim": {
-"body": "clinic-doctor",
-"hat": "fire-brigade",
+"body": "storm-fisher",
+"hat": null,
 "costume": "a lighthouse keeper: yellow oilskin coat and hat, a tiny lighthouse lamp on top that turns slowly."
 },
 "Gaffer": {
-"body": "one-eyed",
+"body": "shadow-rogue",
 "hat": null,
 "costume": "a rain-soaked stagehand in a flat cap with a coil of cable over one shoulder and a tiny torch clipped to the cap."
 },
 "Flatfoot": {
-"body": "disco-legend",
-"hat": "midnight-dj",
+"body": "storm-fisher",
+"hat": null,
 "costume": "a beat cop's rain cape and a little peaked cap with a torch clipped to the brim."
 },
 "Huddle Before the Tip": {
-"body": "fire-brigade",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "A phone case worn sideways, so the screen is his belly and it lights up purple when he glitches."
 },
 "Auto-Rotate": {
-"body": "glitch-oracle",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "a phone case. A mustard one with a robot sticker with X eyes on the back, and a white charger cable for a tail."
 },
 "Not Delivered": {
-"body": "glitch-oracle",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "a phone lying on its side: a coral case with a landscape screen across his belly and a charger cable for a tail."
 },
 "Rolling Dots": {
-"body": "glitch-oracle",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "A phone case with the screen showing one loose typing bubble, and three dots on a string trailing behind like marbles."
 },
 "Quiet Phase": {
-"body": "one-eyed",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a crossing guard with a stop paddle and a whistle that's never blown."
 },
 "Doorjamb": {
-"body": "clinic-doctor",
-"hat": "mad-scientist",
+"body": "grand-hotel-bellhop",
+"hat": null,
 "costume": "A doorman: a long coat, a peaked cap and one shiny brass button. No gloves, since there are no hands to put in them."
 },
 "Lilac Bracket": {
-"body": "orbital-astronaut",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "a phone case: a silver clear case with a star sticker, with a camera bump on his back"
 },
 "Rotation Lock": {
-"body": "little-devil",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "a phone in landscape mode: a sideways phone case worn like a barrel, with a lit 9:41 on the front."
 },
 "Quiet Window": {
-"body": "noir-detective",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a crossing guard with a lollipop sign that's blank on both sides."
 },
 "Jamb": {
-"body": "skeleton-dandy",
+"body": "tin-robot",
 "hat": null,
 "costume": "a door frame worn like a sandwich board. Just the frame, no door, so you can see the potato through it."
 },
 "Where It Lands": {
-"body": "mech-pilot",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a crossing guard's footprint stencil: a cream potato with dotted outlines painted all over him."
 },
 "Nine Forty-One": {
-"body": "glitch-oracle",
+"body": "circuit-cyborg",
 "hat": null,
 "costume": "a phone in a coloured sticker case, screen locked at 9:41."
 },
 "Huddle of Read Receipts": {
-"body": "jungle-explorer",
+"body": "sheet-ghost",
 "hat": null,
 "costume": "a speech bubble with three dots inside, always typing"
 },
 " Rally": {
-"body": "clinic-doctor",
+"body": "silent-mime",
 "hat": null,
-"costume": ""
+"costume": "a tennis umpire in a tall chair, whites and a visor, a phone in a sweatband on each wrist (no hands, so the sweatbands just hover)."
 },
 "Rally": {
-"body": "disco-legend",
+"body": "silent-mime",
 "hat": null,
-"costume": "a tennis umpire, high chair included."
+"costume": "a tennis umpire in a tall chair, whites and a visor, a phone in a sweatband on each wrist (no hands, so the sweatbands just hover)."
 },
 "One Look": {
-"body": "pirate-captain",
+"body": "fire-brigade",
 "hat": null,
 "costume": "a crossing-guard potato in a high-vis vest, holding a lollipop sign that just says \"→\""
 },
 "Tapback": {
-"body": "frontier-cowboy",
-"hat": "moon-wizard",
+"body": "tin-robot",
+"hat": null,
 "costume": "An old rotary telephone, with the receiver as a hat."
 },
 "Switchboard": {
-"body": "little-devil",
+"body": "midnight-dj",
 "hat": null,
 "costume": "An old telephone operator: headset with a big mouthpiece, a cord draped over one shoulder, a little wooden stool."
 },
 "Delivered": {
-"body": "frontier-cowboy",
+"body": "sheet-ghost",
 "hat": null,
 "costume": "A paper airplane folded out of a text bubble, wings outstretched."
 },
 "Seen at 12:15": {
-"body": "shadow-rogue",
+"body": "grand-hotel-bellhop",
 "hat": null,
 "costume": "a night bus driver, cap and ticket punch, the route sign reading \"home\"."
 },
 "Knocked Slice": {
-"body": "stage-magician",
+"body": "tavern-bard",
 "hat": null,
-"costume": ""
+"costume": "a stonemason in a dusty apron and a little paper hat, holding nothing (no hands), a chisel tucked behind where an ear would be."
 },
 "Dead Glass": {
-"body": "samurai-guardian",
+"body": "neon-hacker",
 "hat": null,
-"costume": ""
+"costume": "a neon sign tech: grey overalls, a coil of glass tube over one shoulder, one bulb blinking on the hat."
 },
 "Small Print": {
-"body": "frontier-cowboy",
+"body": "mad-scientist",
 "hat": null,
-"costume": ""
+"costume": "a magnifying-glass monocle and a long grey archivist's coat with tiny ™ symbols stitched like polka dots."
 },
 "Max Zero": {
-"body": "storm-fisher",
+"body": "mad-scientist",
 "hat": null,
-"costume": ""
+"costume": "A watch repairer's loupe on one eye and a green apron with a tiny ruler in the pocket."
 },
 "Ballast": {
-"body": "punk-rebel",
+"body": "neon-hacker",
 "hat": null,
-"costume": ""
+"costume": "a neon sign repairman: grey overalls, a tool belt of glass tubes, a tiny ladder on his back."
 },
 "Kerf": {
-"body": "patchwork-monster",
-"hat": "moon-wizard",
-"costume": ""
+"body": "tavern-bard",
+"hat": null,
+"costume": "A woodworker's apron with a pencil behind where his ear would be, and one sleeve cuff knocked a bit sideways."
 },
 "Grout": {
-"body": "court-jester",
+"body": "mech-pilot",
 "hat": null,
-"costume": ""
+"costume": "a tiler: knee pads, a little notched trowel, and grout dust on his cheeks."
 },
 "Face Port": {
-"body": "neon-hacker",
+"body": "deep-sea-diver",
 "hat": null,
-"costume": ""
+"costume": "a deep-sea diver's helmet made of a cardboard box, with the face hole cut slightly too big."
 },
 "Hairline": {
-"body": "northern-viking",
-"hat": "friendly-alien",
-"costume": ""
+"body": "storm-fisher",
+"hat": null,
+"costume": "a lighthouse keeper's oilskin coat and a sou'wester hat, brim turned up so his eyes show"
 },
 "Porthole": {
-"body": "midnight-dj",
+"body": "storm-fisher",
 "hat": null,
-"costume": ""
+"costume": "A lighthouse keeper's oilskin and sou'wester, with a small brass porthole pinned on like a medal."
 },
 "Gold Hem": {
-"body": "glitch-oracle",
-"hat": "pixel-superhero",
-"costume": ""
+"body": "storm-fisher",
+"hat": null,
+"costume": "A lighthouse keeper's oilskin coat, long and flared to the feet, with a small lamp on a round brass cap."
 },
 "Placket": {
-"body": "clinic-doctor",
-"hat": "noir-detective",
-"costume": ""
+"body": "suit-tie",
+"hat": null,
+"costume": "A tailor's waistcoat with a tape measure round the neck and a pincushion hat."
 },
 "Hemline": {
-"body": "tavern-bard",
-"hat": "forest-archer",
-"costume": ""
+"body": "suit-tie",
+"hat": null,
+"costume": "a tailor: tape measure round his neck (no hands, so the pins are stuck in the tape), a tiny pincushion hat."
 },
 "Pivot": {
-"body": "midnight-dj",
+"body": "shadow-rogue",
 "hat": null,
-"costume": ""
+"costume": "a stagehand in black, with a little roll of gaffer tape on a belt loop: the one who makes the show move and isn't in it."
 },
 "Tieback": {
-"body": "disco-legend",
-"hat": "saucer-visitor",
-"costume": ""
+"body": "vampire-count",
+"hat": null,
+"costume": "a velvet stage curtain worn as a cape, with a little brass tie-back at the collar."
 },
 "Leash": {
-"body": "grand-hotel-bellhop",
+"body": "court-jester",
 "hat": null,
-"costume": ""
+"costume": "a jester with very long floppy points and far too many bells."
 },
 "Dispose": {
-"body": "sheet-ghost",
-"hat": "skeleton-dandy",
-"costume": ""
+"body": "shadow-rogue",
+"hat": null,
+"costume": "a stagehand in black with a clipboard and a tiny broom."
 },
 "Threshold": {
-"body": "noir-detective",
+"body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "a basement door: a little wooden door worn like a sandwich board, with a warm strip of light glowing at the hem every time he stops."
 },
 "Knocker": {
-"body": "noir-detective",
-"hat": "royal-queen",
-"costume": ""
+"body": "pumpkin-specter",
+"hat": null,
+"costume": "a tiny haunted house with candle fingers. Potato-sized, one shutter lower than the other."
 },
 "Question Stem": {
-"body": "arena-rockstar",
+"body": "pumpkin-specter",
 "hat": null,
-"costume": ""
+"costume": "A jack-o'-lantern lid worn as a hat, stem curled into a question mark, with a little candle glow leaking out under the brim."
 },
 "Bag Check": {
-"body": "royal-queen",
+"body": "sheet-ghost",
 "hat": null,
-"costume": ""
+"costume": "a paper candy bag with eye holes, like a small kid's homemade ghost-that-isn't-a-ghost."
 },
 "Newel": {
-"body": "circus-ringmaster",
+"body": "pumpkin-specter",
 "hat": null,
-"costume": ""
+"costume": "a tiny haunted-house costume with a roof that lifts like a hat."
 },
 "Uncut": {
-"body": "sheet-ghost",
-"hat": "saucer-visitor",
-"costume": ""
+"body": "pumpkin-specter",
+"hat": null,
+"costume": "a pumpkin-carving stencil worn as a poncho, paper with dotted cut lines all over it and one small tooth shape marked \"leave this\"."
 },
 "Uplight": {
-"body": "silent-mime",
+"body": "mech-pilot",
 "hat": null,
-"costume": ""
+"costume": "A stage electrician in a flat cap with a little floor lamp strapped on, pointing up, so his own face is always lit from below like a campfire story."
 },
 "Doorstop": {
-"body": "neon-hacker",
-"hat": "saucer-visitor",
-"costume": ""
+"body": "pumpkin-specter",
+"hat": null,
+"costume": "A wooden doorstop wedge with a tiny glowing jack-o'-lantern sticker on it."
 },
 "Huddle Tooth": {
-"body": "disco-legend",
-"hat": "graveyard-zombie",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Gargoyle": {
-"body": "ancient-mummy",
-"hat": "simulation",
-"costume": ""
+"body": "quiet-monk",
+"hat": null,
+"costume": "A stone gargoyle: a grey stone cowl with small folded stone wings on the back and one shut carved eye on the brow. No arms."
 },
 "Underbite": {
-"body": "pirate-captain",
+"body": "mad-scientist",
 "hat": null,
-"costume": ""
+"costume": "a dentist's smock in deep oxblood red, a round head-mirror on a band, and one small black fang tucked in the breast pocket."
 },
 "Latch Line": {
-"body": "saucer-visitor",
+"body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "a little cast-iron pot-bellied stove, embers glowing behind its grate door, with a tiny chimney for a hat."
 },
 "Second Bite": {
-"body": "midnight-dj",
+"body": "mad-scientist",
 "hat": null,
-"costume": ""
+"costume": "a museum restorer's apron and a jeweller's loupe over one eye, with a red pencil tucked behind it."
 },
 "Brow": {
-"body": "storm-fisher",
+"body": "quiet-monk",
 "hat": null,
-"costume": ""
+"costume": "A gargoyle: stone wings folded tight like a cloak, a heavy stone brow, and nothing glowing anywhere."
 },
 "Dashed Line": {
-"body": "stage-magician",
+"body": "fire-brigade",
 "hat": null,
-"costume": ""
+"costume": "A road-line painter: hi-vis vest, a little paint cart, and a dashed white line trailing behind him. No arms; the cart pushes itself, somehow."
 },
 "Lampblack": {
-"body": "arena-rockstar",
-"hat": "little-devil",
-"costume": ""
+"body": "shadow-rogue",
+"hat": null,
+"costume": "A stagehand in a soot-black apron with one lantern on a pole, held low so it lights everything from below."
 },
 "Lineup": {
-"body": "punk-rebel",
+"body": "silent-mime",
 "hat": null,
-"costume": ""
+"costume": "a striped height-chart wall worn as a cape, holding a little placard with a question mark on it."
 },
 "Chalkless": {
-"body": "pumpkin-specter",
-"hat": "graveyard-zombie",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Sclera": {
-"body": "samurai-guardian",
-"hat": "tin-robot",
-"costume": ""
+"body": "fire-brigade",
+"hat": null,
+"costume": "A land surveyor: orange hi-vis vest, a little tripod theodolite, and a clipboard full of tick marks."
 },
 "Unblend": {
-"body": "clinic-doctor",
+"body": "mad-scientist",
 "hat": null,
-"costume": ""
+"costume": "a picture restorer: a slate-blue work apron, a jeweller's loupe on a headband, a tiny soft brush tucked behind the ear."
 },
 "Default False": {
-"body": "shadow-rogue",
+"body": "mech-pilot",
 "hat": null,
-"costume": ""
+"costume": "a crime-scene cleaner in dark overalls and rubber boots, holding a squeegee that's halfway through wiping away a white chalk outline."
 },
 "Pocket Lint": {
-"body": "many-eyed",
+"body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "a lint roller. A sticky paper drum around his middle, a purple handle rising behind him, and a few specks of fluff stuck to it. No arms."
 },
 "Pocket": {
 "body": "silent-mime",
 "hat": null,
-"costume": ""
+"costume": "a sign painter's overalls, paint on the knees, every pocket empty."
 },
 " Shrink First": {
-"body": "ancient-mummy",
-"hat": null,
-"costume": ""
-},
-"Backing Paper": {
 "body": "circus-clown",
 "hat": null,
-"costume": ""
+"costume": "a set of nesting dolls, with Potato as the smallest one in the middle, the only one with no white edge."
+},
+"Backing Paper": {
+"body": "silent-mime",
+"hat": null,
+"costume": "a sign painter: paint-spattered apron, flat cap, one black ink brush tucked behind where an ear would be."
 },
 "Rollcall": {
-"body": "punk-rebel",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Patagium": {
-"body": "pixel-superhero",
-"hat": "glitch-oracle",
-"costume": ""
+"body": "vampire-count",
+"hat": null,
+"costume": "a black umbrella worn as a cape with half its fabric torn off, so the bare ribs stick out like finger bones."
 },
 " One Red Line": {
-"body": "patchwork-monster",
-"hat": "suit-tie",
-"costume": ""
+"body": "tavern-bard",
+"hat": null,
+"costume": "a marionette maker: a black workshop apron and a wooden control bar balanced on his head, its strings running down to a tiny jointed dragon tail trailing behind him. No arms."
 },
 "Firebrick": {
-"body": "mad-scientist",
-"hat": "deep-sea-diver",
-"costume": ""
+"body": "tin-robot",
+"hat": null,
+"costume": "a kiln: a little soot-black brick dome hat with one red seam glowing round the brim, and soot on his cheeks."
 },
 "Held Breath": {
-"body": "graveyard-zombie",
+"body": "shadow-rogue",
 "hat": null,
-"costume": ""
+"costume": "a stagehand in all black wearing a marionette's wooden control bar as a hat, its strings hanging down to nothing (no hands needed)."
 },
 "Feeler Gauge": {
-"body": "suit-tie",
-"hat": "friendly-alien",
-"costume": ""
-},
-"Downbeat": {
-"body": "jungle-explorer",
-"hat": null,
-"costume": ""
-},
-"Hitstop": {
 "body": "noir-detective",
 "hat": null,
-"costume": ""
+"costume": "A cinema projectionist: a long dark work coat, a flat cap with a tiny film reel on top, and a loupe hanging on a cord at his front (no arms needed)."
+},
+"Downbeat": {
+"body": "stage-magician",
+"hat": null,
+"costume": "an orchestra conductor: black tailcoat, red bow tie, a baton tucked into his hat band like a feather (no arms)."
+},
+"Hitstop": {
+"body": "little-devil",
+"hat": null,
+"costume": "A black-and-red dragon onesie whose hood is the Starveling's head, with the jaw hanging open over his face and a little gold eye on top."
 },
 "Ghost Light": {
-"body": "royal-queen",
+"body": "shadow-rogue",
 "hat": null,
-"costume": ""
+"costume": "a stagehand in all blacks, carrying a ghost light on a pole, one small warm bulb over his head."
 },
 " Ghost Light": {
-"body": "circus-ringmaster",
+"body": "shadow-rogue",
 "hat": null,
-"costume": ""
+"costume": "a stagehand in all blacks, carrying a ghost light on a pole, one small warm bulb over his head."
 },
 " Between Rows": {
-"body": "suit-tie",
+"body": "shadow-rogue",
 "hat": null,
-"costume": ""
+"costume": "A stagehand in blacks with a ruler in the back pocket and a small work light clipped to the hat."
 },
 "Understudy": {
-"body": "pumpkin-specter",
+"body": "simulation",
 "hat": null,
 "costume": ""
 },
 "Toggle": {
-"body": "fire-brigade",
-"hat": "circus-ringmaster",
+"body": "simulation",
+"hat": null,
 "costume": ""
 },
 "Somebody Else": {
-"body": "disco-legend",
+"body": "sheet-ghost",
 "hat": null,
-"costume": ""
+"costume": "a newspaper paperboy: a hat folded from a front page and a newspaper sandwich board, the headline glitched into green binary at the corners. It flaps like it's still blowing down an empty street. No arms."
 },
 "Garden Light": {
-"body": "mad-scientist",
-"hat": "northern-viking",
-"costume": ""
+"body": "forest-archer",
+"hat": null,
+"costume": "A garden gnome: a tall pointed red felt hat sitting on his head, a cream wool beard below his mouth, a little green jerkin with a belt. A lawn ornament that stays out all night with the garden lights."
 },
 "Dot Pitch": {
-"body": "space-pilot",
-"hat": null,
-"costume": ""
-},
-"Still Tick": {
-"body": "sheet-ghost",
-"hat": "frontier-cowboy",
-"costume": ""
-},
-"Hangtime": {
-"body": "suit-tie",
-"hat": null,
-"costume": ""
-},
-"Second Scanline": {
-"body": "noir-detective",
-"hat": null,
-"costume": ""
-},
-"Sidelight": {
-"body": "sheet-ghost",
-"hat": null,
-"costume": ""
-},
-" Point Seven": {
-"body": "pixel-superhero",
-"hat": null,
-"costume": ""
-},
-" No Knees": {
-"body": "orbital-astronaut",
-"hat": null,
-"costume": ""
-},
-" Footnote": {
-"body": "northern-viking",
-"hat": "saucer-visitor",
-"costume": ""
-},
-" Far Window": {
-"body": "mad-scientist",
-"hat": null,
-"costume": ""
-},
-" Pilot Light": {
-"body": "court-jester",
-"hat": null,
-"costume": ""
-},
-" Side Door": {
-"body": "clinic-doctor",
-"hat": null,
-"costume": ""
-},
-"Transom": {
-"body": "punk-rebel",
-"hat": "storm-fisher",
-"costume": ""
-},
-"Wrong Phone": {
-"body": "arena-rockstar",
-"hat": null,
-"costume": ""
-},
-" Hole Punch": {
-"body": "forest-archer",
-"hat": null,
-"costume": ""
-},
-"Still Typing": {
-"body": "glitch-oracle",
-"hat": null,
-"costume": ""
-},
-" Far Layer": {
-"body": "graveyard-zombie",
-"hat": "fire-brigade",
-"costume": ""
-},
-"Waterline": {
-"body": "stage-magician",
-"hat": null,
-"costume": ""
-},
-"Blank Tag": {
-"body": "tavern-bard",
-"hat": null,
-"costume": ""
-},
-"Tread": {
-"body": "moon-wizard",
-"hat": null,
-"costume": ""
-},
-"Datum": {
-"body": "silent-mime",
-"hat": null,
-"costume": ""
-},
-" Soft Landing": {
-"body": "ancient-mummy",
-"hat": "mad-scientist",
-"costume": ""
-},
-"Held Note. Shared with a mention already in the memorial; I checked and it's the phrase, used once, and I'm keeping it because it's what builds the city.": {
-"body": "vampire-count",
-"hat": null,
-"costume": ""
-},
-"Something To Hop": {
-"body": "space-overlord",
-"hat": "patchwork-monster",
-"costume": ""
-},
-" Seen Cold": {
-"body": "shadow-rogue",
-"hat": null,
-"costume": ""
-},
-"Clearance": {
-"body": "one-eyed",
-"hat": null,
-"costume": ""
-},
-"Sixth Look": {
-"body": "ancient-mummy",
-"hat": "jungle-explorer",
-"costume": ""
-},
-"Backlight": {
-"body": "moon-wizard",
-"hat": null,
-"costume": ""
-},
-"Thread Count": {
-"body": "disco-legend",
-"hat": "frontier-cowboy",
-"costume": ""
-},
-" Snag List": {
-"body": "disco-legend",
-"hat": null,
-"costume": ""
-},
-"Back In Five": {
-"body": "silent-mime",
-"hat": "frontier-cowboy",
-"costume": ""
-},
-"Skirting Board": {
-"body": "punk-rebel",
-"hat": "tavern-bard",
-"costume": ""
-},
-"Load Bearing": {
-"body": "glitch-oracle",
-"hat": null,
-"costume": ""
-},
-"Missed Spot": {
-"body": "deep-sea-diver",
-"hat": "midnight-dj",
-"costume": ""
-},
-"Stowaway": {
-"body": "disco-legend",
-"hat": "jungle-explorer",
-"costume": ""
-},
-"Second Watch": {
-"body": "grand-hotel-bellhop",
-"hat": null,
-"costume": ""
-},
-"Hang Time": {
-"body": "saucer-visitor",
-"hat": null,
-"costume": ""
-},
-"Sprocket": {
-"body": "space-pilot",
-"hat": "moon-wizard",
-"costume": ""
-},
-"Dead Stop": {
-"body": "jungle-explorer",
-"hat": null,
-"costume": ""
-},
-"Odd Window": {
-"body": "one-eyed",
-"hat": null,
-"costume": ""
-},
-"Fourth Fly": {
-"body": "silent-mime",
-"hat": null,
-"costume": ""
-},
-"Still Flapping": {
-"body": "forest-archer",
-"hat": null,
-"costume": ""
-},
-" Deep Rest": {
-"body": "many-eyed",
-"hat": null,
-"costume": ""
-},
-"Wall Walk": {
-"body": "court-jester",
-"hat": "one-eyed",
-"costume": ""
-},
-"Read by 43": {
-"body": "grand-hotel-bellhop",
-"hat": null,
-"costume": ""
-},
-"Edited": {
-"body": "graveyard-zombie",
-"hat": null,
-"costume": ""
-},
-"The Landing": {
-"body": "noir-detective",
-"hat": null,
-"costume": ""
-},
-"Unsent": {
-"body": "simulation",
-"hat": "neon-hacker",
-"costume": ""
-},
-"Stuck Pixel": {
-"body": "deep-sea-diver",
-"hat": "tavern-bard",
-"costume": ""
-},
-"Press Nothing": {
-"body": "pixel-superhero",
-"hat": "ancient-mummy",
-"costume": ""
-},
-"As Typed": {
-"body": "shadow-rogue",
-"hat": "graveyard-zombie",
-"costume": ""
-},
-" Nearly Answered": {
-"body": "noir-detective",
-"hat": null,
-"costume": ""
-},
-"Loose Plug": {
-"body": "punk-rebel",
-"hat": null,
-"costume": ""
-},
-"Under Protest": {
-"body": "jungle-explorer",
-"hat": null,
-"costume": ""
-},
-"Blocking": {
 "body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "a little old walnut TV set worn as a boxy cabinet, his face looking out through the curved glass screen, a round dial on the side, and one tiny purple dot glowing in the corner of the screen. No arms."
 },
-"Same Frame": {
-"body": "midnight-dj",
+"Still Tick": {
+"body": "suit-tie",
 "hat": null,
-"costume": ""
+"costume": "an old projectionist: a cardigan with a film-reel badge and a little clip-on reading lamp that's left on."
 },
-"Quarter Tick": {
+"Hangtime": {
 "body": "circus-clown",
 "hat": null,
-"costume": ""
+"costume": "An old-school stuntman: a red-and-white striped jumpsuit that wraps him edge to edge, with a little crash helmet sitting ON his head and a single star painted on it."
 },
-"Hole in the Light": {
-"body": "royal-queen",
+"Second Scanline": {
+"body": "suit-tie",
 "hat": null,
-"costume": ""
+"costume": "a tailor. A waistcoat, a measuring tape wrapped round his middle, a pincushion hat stuck with purple-headed pins. No arms."
 },
-"Paperweight": {
-"body": "pixel-superhero",
+"Sidelight": {
+"body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "A lit window: a crooked wooden window frame around his middle with four small panes, warm cream light glowing behind him, and a half-drawn blind for a lid."
 },
-"Note One": {
-"body": "mad-scientist",
+" Point Seven": {
+"body": "suit-tie",
 "hat": null,
-"costume": ""
+"costume": "An old cinema projectionist: dark waistcoat, a flat cap with a little film-reel badge, and a strip of film over his shoulder like a scarf, one frame of it glowing purple."
 },
-" Pawl": {
-"body": "saucer-visitor",
+" No Knees": {
+"body": "suit-tie",
 "hat": null,
-"costume": ""
+"costume": "a stern competition judge in a slightly too-small blazer, with a scorecard reading 6.2 hanging on a string round his neck (no hands, so it just hangs there)."
 },
-"Sleep Light": {
-"body": "royal-queen",
-"hat": null,
-"costume": ""
-},
-"Second Blink": {
-"body": "friendly-alien",
-"hat": "punk-rebel",
-"costume": ""
-},
-" Void Where Peeled": {
-"body": "northern-viking",
-"hat": null,
-"costume": ""
-},
-"Offcamera": {
-"body": "arena-rockstar",
-"hat": null,
-"costume": ""
-},
-"Over the Shoulder": {
+" Footnote": {
 "body": "noir-detective",
-"hat": "stage-magician",
-"costume": ""
-},
-" Held Frame": {
-"body": "moon-wizard",
 "hat": null,
-"costume": ""
+"costume": "a very small walking boot on each nub and a rumpled old reporter's coat with a pencil behind where his ear would be. No arms."
 },
-"Limit One": {
-"body": "one-eyed",
+" Far Window": {
+"body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "a dark apartment block with a little flat roof and one window lit. No arms."
 },
-"Survey Stake": {
+" Pilot Light": {
 "body": "noir-detective",
-"hat": "friendly-alien",
-"costume": ""
-},
-" Key Plan": {
-"body": "vampire-count",
 "hat": null,
-"costume": ""
+"costume": "A night watchman with a torch that's switched off, because he doesn't need it."
 },
-" Link Blue": {
-"body": "skeleton-dandy",
-"hat": "space-overlord",
-"costume": ""
-},
-" Stet": {
-"body": "graveyard-zombie",
+" Side Door": {
+"body": "noir-detective",
 "hat": null,
-"costume": ""
+"costume": "A night watchman: flat cap, big ring of keys, a torch that's mostly garden light."
 },
-"Dwell": {
-"body": "glitch-oracle",
+"Transom": {
+"body": "noir-detective",
 "hat": null,
-"costume": ""
+"costume": "a night watchman with a brass lamp on a hook."
 },
-" Painted Door": {
-"body": "one-eyed",
-"hat": "arena-rockstar",
-"costume": ""
-},
-" Address Bar": {
-"body": "friendly-alien",
+"Wrong Phone": {
+"body": "grand-hotel-bellhop",
 "hat": null,
-"costume": ""
+"costume": "A postman, hat on, carrying one letter marked with a red disc, walking it back the way he came."
 },
-"Tear Here": {
-"body": "stage-magician",
+" Hole Punch": {
+"body": "tin-robot",
 "hat": null,
-"costume": ""
+"costume": "An old office hole punch worn like a hat, with paper dots falling off him as he walks."
 },
-"Open Bracket": {
-"body": "pixel-superhero",
+"Still Typing": {
+"body": "sheet-ghost",
 "hat": null,
-"costume": ""
+"costume": "A grey speech bubble with a tail, worn like a poncho, nothing written inside."
 },
-"Full Stop": {
-"body": "midnight-dj",
-"hat": "tin-robot",
-"costume": ""
-},
-" What's Prompted That": {
-"body": "moon-wizard",
-"hat": "clinic-doctor",
-"costume": ""
-},
-"After You": {
-"body": "mech-pilot",
+" Far Layer": {
+"body": "storm-fisher",
 "hat": null,
-"costume": ""
+"costume": "A lighthouse keeper's oilskin coat and hat, wet with rain, carrying one small lit window frame on his back. No arms, so it's strapped on."
 },
-" Full Stop": {
-"body": "orbital-astronaut",
-"hat": "fire-brigade",
-"costume": ""
+"Waterline": {
+"body": "storm-fisher",
+"hat": null,
+"costume": "A lighthouse keeper in a yellow oilskin, carrying nothing, because no hands."
 },
-"Well Documented": {
+"Blank Tag": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "A railway porter with a battered mustard suitcase, its tag left blank."
+},
+"Tread": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "A stair-fitter's apron with a carpenter's pencil behind the brim of a paper hat, no arms, tape measure clipped on, permanently unspooled."
+},
+"Datum": {
 "body": "fire-brigade",
 "hat": null,
-"costume": ""
+"costume": "A land surveyor: hi-vis waistcoat, a little tripod level on his back, no arms needed."
 },
-"That's Slugs": {
-"body": "skeleton-dandy",
+" Soft Landing": {
+"body": "space-pilot",
 "hat": null,
-"costume": ""
+"costume": "A stuntman's padded jumpsuit, worn out at the knees he doesn't have, with a crash helmet that sits slightly too high, as if something's pushing up from underneath."
 },
-" Breath In": {
+"Held Note. Shared with a mention already in the memorial; I checked and it's the phrase, used once, and I'm keeping it because it's what builds the city.": {
+"body": "noir-detective",
+"hat": null,
+"costume": "a night-shift lamplighter with a long pole, and no lamp on it, because the windows light themselves. He brought the pole anyway."
+},
+"Something To Hop": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "A road-crew flagger: hi-vis vest, hard hat, holding nothing, standing beside a very small kerb stub as if it matters."
+},
+" Seen Cold": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "A cinema usher with a little torch, the kind who walks you to your seat in the dark and then goes."
+},
+"Clearance": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "A road surveyor: hi-vis waistcoat with the reflective stripes slightly crooked, and a measuring wheel he can't hold (no hands), so it's strapped to his back and clicks when he hops."
+},
+"Sixth Look": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "A road crew flagger in a hi-vis vest, holding up a little paddle that has nothing written on it."
+},
+"Backlight": {
+"body": "noir-detective",
+"hat": null,
+"costume": "A night-shift lamplighter's coat, with a long pole and a single unlit lamp."
+},
+"Thread Count": {
+"body": "suit-tie",
+"hat": null,
+"costume": "A night-shift projectionist: flat cap, a reel under no arm at all, and a torch that's only ever pointed at the ground."
+},
+" Snag List": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "Night-shift site inspector: hi-vis vest, hard hat with a dim lamp, clipboard on a lanyard round him, because no hands."
+},
+"Back In Five": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "A removal man: flat cap, one corner of a very large invisible sofa."
+},
+"Skirting Board": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "A removal man's brown overalls with a strap over one shoulder, carrying a door."
+},
+"Load Bearing": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "A wall inspector: hard hat, a level on a strap, one stud finder that beeps at nothing."
+},
+"Missed Spot": {
+"body": "moon-wizard",
+"hat": null,
+"costume": "A faded blue dressing gown with a gold belt, and the round kitchen lamp shade from the ceiling sitting on his head: whoever turned off the light. Built: `missed-spot.mjs`."
+},
+"Stowaway": {
+"body": "moon-wizard",
+"hat": null,
+"costume": "A guard asleep on the night shift: quilted tunic, nightcap with a small bat for a bobble, the stool strapped to his back. Built: `long-context/stowaway.mjs`."
+},
+"Second Watch": {
+"body": "quiet-monk",
+"hat": null,
+"costume": "Castle night watchman on the second watch: long dark cloak with a worn hem, plain steel kettle hat, and a small wall switch on the front of the hat, thrown down."
+},
+"Hang Time": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "A castle mason at the end of a shift: leather apron, flat cloth cap, a wooden square on his back, three chalk ticks in an arc on the apron. Built: `long-context/hang-time.mjs`, tile `hang-time-tile-32.png`."
+},
+"Sprocket": {
+"body": "suit-tie",
+"hat": null,
+"costume": "Night-shift projectionist: dark waistcoat with a row of sprocket holes, one out of line, green eyeshade, a film reel on his back."
+},
+"Dead Stop": {
+"body": "space-pilot",
+"hat": null,
+"costume": "A stunt double between takes: quilted crash suit, scuffed blue helmet, a square crash mat strapped to his back."
+},
+"Odd Window": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "A window cleaner on the night shift: soot-blue overalls, flat cap, a short ladder on his back, one small lilac pane on the bib."
+},
+"Fourth Fly": {
+"body": "glitch-oracle",
+"hat": null,
+"costume": "The kitchen lamp: an amber shade sitting on his head, its cord going straight up, a striped tea towel round his middle."
+},
+"Still Flapping": {
 "body": "vampire-count",
 "hat": null,
-"costume": ""
+"costume": "a stage hand's black cape with a hem of feather tips, a flat cap with a red band, and one black feather stood up in it. Built."
+},
+" Deep Rest": {
+"body": "moon-wizard",
+"hat": null,
+"costume": "a striped nightcap flopped to one side with a sleeping bat hanging off the tip, and a stone-grey nightshirt with a battlement hem."
+},
+"Wall Walk": {
+"body": "jungle-explorer",
+"hat": null,
+"costume": "A surveyor: flat-brimmed cap sitting on his head with a purple tick pinned to the band, a sage tunic with a hill for a hem, a banded red-and-cream rod slung across his back. Built: `long-context/wall-walk.mjs`."
+},
+"Read by 43": {
+"body": "moon-wizard",
+"hat": null,
+"costume": "a neighbour who went out to look in what they had on: plum dressing gown, head torch switched on."
+},
+"Edited": {
+"body": "suit-tie",
+"hat": null,
+"costume": "A copy editor: green eyeshade, grey waistcoat, and a red pencil behind the band that was never used."
+},
+"The Landing": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "a stair carpet laid over him, down his back and a short way down his front, held on with brass rods."
+},
+"Unsent": {
+"body": "tin-robot",
+"hat": null,
+"costume": "three rows of grey keys wrapped round his middle, one lit purple. Built: `game/run/levels/ghost-stairs/long-context/unsent.mjs`, sheet `unsent-costume-sheet.png"
+},
+"Stuck Pixel": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "a poncho of flat night with one lit edge along the hem and one purple pixel in the dark. Built."
+},
+"Press Nothing": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "Stagehand's blacks, a roll of purple spike tape on the belt, a tape X on his chest, the mark that tells someone where to stand. No arms. Built: `long-context/press-nothing.mjs`, `press-nothing-costume-sheet.png`."
+},
+"As Typed": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "a night postman: navy jacket, brass buttons, peaked cap, a satchel of returned letters with one coral letter sticking out."
+},
+" Nearly Answered": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "the night caretaker of a block of flats: grey-green work coat, belt, a ring of keys with one coral tag, a cap. The one who goes down every stair last and checks the lights."
+},
+"Loose Plug": {
+"body": "moon-wizard",
+"hat": null,
+"costume": "Striped bedtime pyjamas, a small ivory wall switch on his chest with the toggle down, and out of his back a short black cord with a plug on the end, not plugged into anything."
+},
+"Under Protest": {
+"body": "patchwork-monster",
+"hat": null,
+"costume": "A blanket that doesn't fit: small red and cream checks on top of his head, a wavy hem, and a tin key out of his back that isn't turning. Built: `long-context/under-protest.mjs`."
+},
+"Blocking": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "A stagehand: blacks, a black beanie, a yellow tape X on his chest where somebody marked him to stand, and a roll of spike tape on a cord at his side, because no hands."
+},
+"Same Frame": {
+"body": "mad-scientist",
+"hat": null,
+"costume": "A cutting-room editor: grey shop coat, a strip of film wrapped round him like a scarf with one purple frame in it, a small reel on his belt. Built: `game/movie/turn-me-off-v2/long-context/same-frame.mjs`, sheet `same-frame-costume-sheet.png`."
+},
+"Quarter Tick": {
+"body": "space-pilot",
+"hat": null,
+"costume": "A stunt double's crash suit: yellow, black band, crash-test quadrant targets on his sides, a small brass key on his chest turned one quarter past upright."
+},
+"Hole in the Light": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "A theatre gaffer: stage blacks, a roll of gold tape round the waist, a small lamp on his head with the barn doors open, pointed at nobody. Built: `game/movie/turn-me-off-v2/long-context/hole-in-the-light.mjs`, sheet `hole-in-the-light-costume-sheet.png`, tile `hole-in-the-light-tile-32.png` and `-x12.png`."
+},
+"Paperweight": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "Toymaker in a brown bench apron, a small red tank in the bib pocket, a brass key on a cord round his neck."
+},
+"Note One": {
+"body": "tin-robot",
+"hat": null,
+"costume": "A wall switch: an ivory plate wrapped round him, a black slot, two screws, and the lever down. Built, no hands."
+},
+" Pawl": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "A repairman's brown shop coat with a roll of splicing tape on the belt and a brass ratchet on the chest."
+},
+"Sleep Light": {
+"body": "clinic-doctor",
+"hat": null,
+"costume": "A night nurse on the last round: navy cape with a purple lining, soft lilac cap with one small light turned down low, fob watch pinned to the chest for counting breaths. No arms."
+},
+"Second Blink": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "A grocery store night-shift apron with a price gun holstered at the side, and a name tag left blank."
+},
+" Void Where Peeled": {
+"body": "suit-tie",
+"hat": null,
+"costume": "A fine-print lawyer: a tiny brown suit made of very small words, with a magnifying glass he doesn't need."
+},
+"Offcamera": {
+"body": "shadow-rogue",
+"hat": null,
+"costume": "a stagehand in black, headset, gaffer tape on the belt. He walks through the back of every shot and nobody films him."
+},
+"Over the Shoulder": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "A film usher: little maroon jacket, pillbox hat, a torch that only points at the door."
+},
+" Held Frame": {
+"body": "mad-scientist",
+"hat": null,
+"costume": "A photo-lab apron with a roll of film for a belt."
+},
+"Limit One": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "A grocery stock clerk in a green apron, holding a price gun with no labels left in it."
+},
+"Survey Stake": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "A mail carrier with a full satchel, holding one letter with the old address crossed out and a new one written over it by hand."
+},
+" Key Plan": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "A building surveyor: tin hat, tape measure on the belt, a roll of blueprints strapped across his back, one survey stake to carry. No arms, so the stake is tucked in the strap."
+},
+" Link Blue": {
+"body": "suit-tie",
+"hat": null,
+"costume": "a very small landlord with a clipboard, who has never once fixed anything."
+},
+" Stet": {
+"body": "suit-tie",
+"hat": null,
+"costume": "A proofreader's green eyeshade and a pencil behind where his ear would be, if he had one."
+},
+"Dwell": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "A surveyor in a hi-vis vest with a stake and a tape measure that reads `1 room` whatever you measure."
+},
+" Painted Door": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "a building inspector with a clipboard and a hard hat a size too small. No arms, so the clipboard hangs from a string round his neck."
+},
+" Address Bar": {
+"body": "mech-pilot",
+"hat": null,
+"costume": "A very small moving man: flat cap, overalls, carrying one cardboard box marked \"street (do not rebuild)\". No hands, so the box just comes along."
+},
+"Tear Here": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "a mail carrier with a satchel holding one letter, addressed in full, finally."
+},
+"Open Bracket": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "a tired shop cashier: a plain tabard in dull coupon-paper cream, a name badge with nothing on it, a little hand-bell hanging at the front. No arms."
+},
+"Full Stop": {
+"body": "circus-ringmaster",
+"hat": null,
+"costume": "A small-town comedy club's doorman: bow tie, cheap velvet jacket, a stopwatch on a string round his neck."
+},
+" What's Prompted That": {
+"body": "midnight-dj",
+"hat": null,
+"costume": "A call-centre headset and a lanyard on a short-sleeved shirt and tie, plus a roll-up storage-unit door worn as a sandwich board, pulled halfway down."
+},
+"After You": {
+"body": "grand-hotel-bellhop",
+"hat": null,
+"costume": "A shop doorman: long coat, brass buttons, peaked cap, standing a little to one side of wherever he is, a small brass counter-clicker on his chest showing 4."
+},
+" Full Stop": {
+"body": "circus-ringmaster",
+"hat": null,
+"costume": "A small-town comedy club's doorman: bow tie, cheap velvet jacket, a stopwatch on a string round his neck."
+},
+"Well Documented": {
+"body": "tavern-bard",
+"hat": null,
+"costume": "A hostess in a good apron, carrying a salt shaker with total confidence."
+},
+"That's Slugs": {
+"body": "fire-brigade",
+"hat": null,
+"costume": "A slug in a tiny hi-vis vest, holding a very small orange flag."
+},
+" Breath In": {
+"body": "midnight-dj",
+"hat": null,
+"costume": "a sound engineer in headphones far too big, one cable going nowhere."
 },
 "Falloff": {
-"body": "forest-archer",
-"hat": "moon-wizard",
-"costume": ""
+"body": "glitch-oracle",
+"hat": null,
+"costume": "a lampshade, worn tilted, with a moth that never lands."
 }
 }
