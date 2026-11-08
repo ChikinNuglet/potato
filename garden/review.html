@@ -31,7 +31,7 @@ document.getElementById('body').onchange=function(e){set('body',e.target.value)}
 document.getElementById('good').onclick=function(){set('ok',true);if(i<AG.length-1){i++;show()}};document.getElementById('bad').onclick=function(){set('ok',false);if(i<AG.length-1){i++;show()}};
 document.getElementById('prev').onclick=function(){if(i>0){i--;show()}};document.getElementById('next').onclick=function(){if(i<AG.length-1){i++;show()}};
 addEventListener('keydown',function(e){if(e.key==='ArrowRight')document.getElementById('next').click();if(e.key==='ArrowLeft')document.getElementById('prev').click()});
-Promise.all([fetch('agents.json').then(function(r){return r.json()}),fetch('looks.json').then(function(r){return r.json()}),fetch('costumes/list.txt').then(function(r){return r.text()})]).then(function(v){
+Promise.all([fetch('agents.json',{cache:'no-cache'}).then(function(r){return r.json()}),fetch('looks.json',{cache:'no-cache'}).then(function(r){return r.json()}),fetch('costumes/list.txt').then(function(r){return r.text()})]).then(function(v){
  var seen={};AG=v[0].filter(function(a){if(seen[a.name])return false;return seen[a.name]=1});LOOKS=v[1];OUT=v[2].trim().split('\n');
  var b=document.getElementById('body'),h=document.getElementById('hat');h.innerHTML='<option value="">no hat</option>';OUT.forEach(function(n){b.add(new Option(n,n));h.add(new Option(n,n))});show()});
 </script></body></html>
