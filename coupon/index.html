@@ -14,7 +14,7 @@ h1{font-weight:400;font-size:44px;margin:0;color:#f2fff6;text-shadow:3px 0 #e03c
 <div class="acts" id="acts"><button class="go" id="send" type="button">send it</button><a id="sms">text the code</a><a id="mail">email the code</a></div></main>
 <script>
 (function(){
-var MAIL='https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc2_C2WtiRDMUvQRiVNhsLavhw_8Hs34dahfItgug/exec',LINK='https://thursdaypotato.com';
+var MAIL='https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec',LINK='https://thursdaypotato.com';
 var K='potato-coupon-key',key='';try{key=localStorage.getItem(K)||''}catch(e){}
 var m=location.hash.match(/^#k=(.+)$/);if(m){key=decodeURIComponent(m[1]);try{localStorage.setItem(K,key)}catch(e){}}
 var spud=document.getElementById('spud'),say=document.getElementById('say'),c=document.getElementById('c'),acts=document.getElementById('acts'),x=c.getContext('2d'),base=new Image(),file=null,text='';base.src='base.png';
