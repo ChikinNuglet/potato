@@ -115,14 +115,14 @@ var f=document.getElementById('door'),c=document.getElementById('code'),say=docu
 try{if(localStorage.getItem('potato-room-unlocked')==='1'){say.textContent='you already have a key. come in.';}}catch(e){}
 f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().toUpperCase();
  // CLOSED (Chikin, Nov 8): "right now, i will unlock later". The kitchen is shut to everyone; Taticat's own room (/behind-the-404/) stays open. To reopen: CLOSED=false.
- var CLOSED=true;if(CLOSED){say.textContent='the kitchen\'s closed for a bit. ok ok. come back soon.';return}
+ var CLOSED=true;if(CLOSED){var pz=(v||'').toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(!v||pz==='impotatobaby'){say.textContent='the kitchen\'s closed for a bit. ok ok. come back soon.';return}}   // closed: only a one-time coupon code opens it, once, nothing remembered
  try{if(!v&&localStorage.getItem('potato-room-unlocked')==='1'){goIn();return}}catch(e){}
  if(!v){say.textContent='krrzzt— type your password.';return}
  // the password is i'm potato baby (any caps, with or without the apostrophe, the triangle, the TM or the potato). it sits right here in the page's code on purpose: a curtain, not a lock
  var ph=v.toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(ph==='impotatobaby'){try{localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';goIn();return}
  b.disabled=true;say.textContent='checking…';
  fetch(MAIL,{method:'POST',body:JSON.stringify({action:'redeem',code:v})}).then(function(r){return r.json()}).then(function(j){
-  if(j&&j.ok){try{localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';goIn()}
+  if(j&&j.ok){try{if(CLOSED)sessionStorage.setItem('potato-key-pass',String(Date.now()));else localStorage.setItem('potato-room-unlocked','1')}catch(e){}say.textContent='0pen.';goIn()}
   else{b.disabled=false;say.textContent=(j&&j.why==='used')?'that one’s been used. join below for a fresh one.':'n0t f0und. check it and try again.'}
  }).catch(function(){b.disabled=false;say.textContent='the door stuck. try again in a sec.'});});})();
 </script>
