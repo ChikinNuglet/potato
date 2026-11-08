@@ -1,8 +1,9 @@
 // portal.mjs: the terminal in the kitchen opens the 404 and asks for his password. The right one opens the door on the right; walk through it to the
 // Read The Terms demo. Nothing says any of this.
-const PASSWORD = "ghost";   // THE ONE SETTING (Chikin, Nov 8: "the password on the laptop can change to ghost"). Forgiving: capitals and marks don't matter.
+const PASSWORD = "niepal";   // (Chikin, Nov 8 later: "make the password Niepal"; was "ghost")   // THE ONE SETTING (Chikin, Nov 8: "the password on the laptop can change to ghost"). Forgiving: capitals and marks don't matter.
 // the right password plays Ghost in the Group Chat's demo (he's the ghost potato in it): Chikin's logo, then Potato's, with a COMING SOON banner, then the demo
-const GHOST = { video: 'demo/ghost-in-the-group-chat.mp4', logos: ['../logo/chikin-logo.webp', '../logo/potato-logo.png'] };
+const GHOST = { video: 'demo/confidently-incorrect.mp4',   // (Nov 8 later: the laptop plays Confidently Incorrect's demo now; Ghost's lives in Machine Learning)
+  logos: ['../logo/chikin-logo.webp', '../logo/potato-logo.png'] };
 const MAIL_ROOM = 'https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec';   // Potato's mail room: checks a buyer's one-time code
 export const PHONE_NOTE = "Best on a computer. Phones and tablets work, but it's rough for now.";
 const plain = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
