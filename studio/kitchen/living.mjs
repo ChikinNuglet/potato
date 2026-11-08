@@ -113,7 +113,11 @@ export function livingRoom(K) {
     box(x, 664, 620, 80, 70, '#1a120d', { r: 4, sh: 'n', lw: 4 });   // the cubby, door off
     box(x, 672, 652, 64, 30, '#2a2d36', { r: 6, lw: 4, sh: 'b', f: 0.2 }); seg(x, [[680, 667], [700, 667]], 3, '#4a4f5c');
     circ(x, 724, 667, 4, rnd(Math.floor(t * 2), 9) > 0.3 ? '#4dff9a' : '#1f6b44', { sh: 'n', lw: 2 });   // the power light, breathing
-    if (!inLap) { box(x, 676, 632, 44, 16, '#3a3f4c', { r: 8, lw: 3, sh: 'b' }); circ(x, 688, 640, 3, '#e85aa8', { sh: 'n', lw: 1.5 }); circ(x, 708, 640, 3, '#4dd2ff', { sh: 'n', lw: 1.5 }); } }
+    // the controller lies on the couch, right cushion, where you can see it (Chikin, Nov 8: "put the controller on the couch and make it
+    // trigger once he is seated"); a cable runs down to the console
+    if (!inLap) { seg(x, [[476, 566], [560, 600], [640, 640], [672, 664]], 3, '#2a2d36');
+      box(x, 432, 548, 50, 20, '#3a3f4c', { r: 10, lw: 4, sh: 'b' }); circ(x, 446, 558, 4, '#e85aa8', { sh: 'n', lw: 2 }); circ(x, 468, 558, 4, '#4dd2ff', { sh: 'n', lw: 2 });
+      if (rnd(Math.floor(t * 1.5), 7) > 0.5) circ(x, 457, 552, 2.5, '#4dff9a', { sh: 'n', lw: 0 }); } }
   function tv(x, t, P) { const s = P.tv || Z, on = s.on, k = on ? Math.min(1, since(s, t) / 0.25) : 1 - Math.min(1, since(s, t) / 0.18);
     seg(x, [[752, 470], [716, 412]], 5); seg(x, [[758, 470], [796, 404]], 5); circ(x, 716, 410, 5, '#c9ced6', { sh: 'n', lw: 3 }); circ(x, 796, 402, 5, '#c9ced6', { sh: 'n', lw: 3 });
     box(x, 676, 466, 158, 132, '#5a4a3a', { r: 16, lw: 6, sh: 'r', f: 0.16 }); box(x, 690, 480, 106, 104, '#1b211e', { r: 14, sh: 'n', lw: 4 });
