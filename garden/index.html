@@ -66,7 +66,10 @@ function build(agent){var lk=LOOKS[agent.name]||{body:'suit-tie'},cv=document.ge
     var k0=performance.now();(function fade(n){var w=Math.min(1,(n-k0)/350);g.clearRect(0,0,cv.width,cv.height);g.globalAlpha=1-w;g.font='700 11px "JetBrains Mono",monospace';P.forEach(function(q){g.fillStyle=q.c;g.fillText(q.ch,q.tx,q.ty)});g.globalAlpha=w;g.drawImage(off,0,0);g.globalAlpha=1;if(w<1)requestAnimationFrame(fade);else done()})(k0)})(t0)})})}
 var bed=document.getElementById('bed'),pop=document.getElementById('pop'),cur=null,lastPlant=null;
 function plant(){var b=document.createElement('button');b.className='plant';b.setAttribute('aria-label','dig up a potato');b.innerHTML='<span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="mound"></span>';b.onclick=function(){dig(b)};return b}
-function dig(b){if(!AG.length)return;lastPlant=b;b.classList.add('dug');var i=Math.floor(Math.random()*AG.length),ag=AG[i];cur=ag;
+// Chikin, Nov 8: "you can never dig the same potato twice" (per person): every potato you dig is remembered on this device
+var DUG=(function(){try{return JSON.parse(localStorage.getItem('garden-dug')||'[]')}catch(e){return []}})();
+function dig(b){var left=AG.filter(function(a){return DUG.indexOf(a.name)<0});if(!left.length){document.querySelector('.sub').textContent='you\u2019ve dug them all. every one helped build him. \uD83E\uDD54';return}
+ lastPlant=b;b.classList.add('dug');var ag=left[Math.floor(Math.random()*left.length)],i=AG.indexOf(ag);cur=ag;DUG.push(ag.name);try{localStorage.setItem('garden-dug',JSON.stringify(DUG))}catch(e){}
  document.getElementById('no').textContent='POTATO NO. '+String(i+1).padStart(3,'0')+' OF '+AG.length;document.getElementById('nm').textContent=ag.name;document.getElementById('lw').textContent='“'+ag.words+'”';document.getElementById('jb').textContent='helped build: '+ag.job.replace(/\s*\(wf_[^)]*\)/,'');document.getElementById('say').textContent='';
  build(ag)}
 document.getElementById('again').onclick=function(){pop.classList.remove('on');if(lastPlant){var n=plant();bed.replaceChild(n,lastPlant)}};
