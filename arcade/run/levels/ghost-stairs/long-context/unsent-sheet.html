@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8"><style>body{margin:0;background:#c9b48f;display:flex}div.c{width:416px;height:420px}</style><body><script type="module">
+import { createSpud } from '../../../../play/spud3d.mjs';
+const src = await (await fetch('unsent.mjs')).text();
+const url = URL.createObjectURL(new Blob([src.replace("'../outfits3d.mjs'", "'"+new URL('../../../../play/outfits3d.mjs', location.href).href+"'")],{type:'text/javascript'}));
+const build = (await import(url)).default;
+for (const yaw of [0, 0.75, 1.57, 3.14, -0.75]) {
+  const box = document.createElement('div'); box.className='c'; document.body.append(box);
+  const api = await createSpud(box, { base: new URL('../../../../play/', location.href).href });
+  api.wear(build); const S = api.state; S.yaw.x = S.yaw.to = yaw;
+  for (let i=0;i<4;i++) api.frame(i*0.016);
+}
+window.__ok = true;
+</script>

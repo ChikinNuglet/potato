@@ -1,0 +1,337 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1280" height="720"></canvas>
+<script src="file:///Users/matthewpalmer/claude-studio-work/draw/potato-draw.js"></script>
+<script>
+// Ghost runner art mock-ups, SECOND CRACK (code-drawn). Artist, Nov 4 night. Helpers lifted from art-mock.html (round 1). Scenes: #run #run-notes #tip #seam #lock
+const INK = '#120a05', WHITE = '#ffffff', PURP = ['#7b3cf2', '#9a52ff', '#e03ccf', '#c9a7ff'], VOID = '#12062e';
+const OWN = {
+  james: { name: 'james', c: '#3b7ee6', d: '#2a5fb4', ic: 'paw' },
+  sheila: { name: 'sheila', c: '#f0675a', d: '#c94a40', ic: 'heart' },
+  carol: { name: 'carol', c: '#e8b22c', d: '#b98a17', ic: 'bot' },
+  mum: { name: 'mum', c: '#5fbf9f', d: '#3f977a', ic: 'daisy' },
+  other: { name: '+41', c: '#6b7385', d: '#4c5363', ic: null },
+};
+const SEND = { james: { bg: '#2f8cff', fg: '#fff' }, sheila: { bg: '#e7e5ea', fg: '#1a1a1a' }, carol: { bg: '#e7e5ea', fg: '#1a1a1a' }, mum: { bg: '#e7e5ea', fg: '#1a1a1a' } };
+const c = document.getElementById('c'); let g = c.getContext('2d');
+const hash = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+function rr(x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+// sticker shape: white border, ink outline, fill
+function sticker(x, y, w, h, r, fill, ink = 5, border = 5) {
+  g.fillStyle = WHITE; rr(x - ink - border, y - ink - border, w + 2 * (ink + border), h + 2 * (ink + border), r + ink + border); g.fill();
+  g.fillStyle = INK; rr(x - ink, y - ink, w + 2 * ink, h + 2 * ink, r + ink); g.fill();
+  g.fillStyle = fill; rr(x, y, w, h, r); g.fill();
+}
+function icon(kind, x, y, s) {
+  g.save(); g.translate(x, y); g.lineJoin = 'round';
+  const blob = (f) => { g.fillStyle = WHITE; f(s * 0.32); g.fill(); g.fillStyle = INK; f(s * 0.22); g.fill(); };
+  if (kind === 'paw') { const pad = (r) => { g.beginPath(); g.ellipse(0, s * 0.12, s * 0.28 + r * 0.3, s * 0.22 + r * 0.3, 0, 0, 7); for (const [a, b] of [[-0.3, -0.2], [-0.1, -0.33], [0.1, -0.33], [0.3, -0.2]]) { g.moveTo(a * s + s * 0.1 + r * 0.3, b * s); g.ellipse(a * s, b * s, s * 0.09 + r * 0.3, s * 0.11 + r * 0.3, 0, 0, 7); } };
+    g.fillStyle = WHITE; pad(s * 0.12); g.fill(); g.fillStyle = INK; pad(0); g.fill(); }
+  if (kind === 'heart') { const h = (k) => { g.beginPath(); g.moveTo(0, s * 0.35 * k); g.bezierCurveTo(-s * 0.55 * k, -s * 0.05 * k, -s * 0.25 * k, -s * 0.5 * k, 0, -s * 0.18 * k); g.bezierCurveTo(s * 0.25 * k, -s * 0.5 * k, s * 0.55 * k, -s * 0.05 * k, 0, s * 0.35 * k); };
+    g.fillStyle = WHITE; h(1.35); g.fill(); g.fillStyle = INK; h(1.12); g.fill(); g.fillStyle = '#ffd3cc'; h(0.85); g.fill(); }
+  if (kind === 'bot') { g.fillStyle = WHITE; rr(-s * 0.42, -s * 0.36, s * 0.84, s * 0.72, s * 0.14); g.fill(); g.fillStyle = INK; rr(-s * 0.34, -s * 0.28, s * 0.68, s * 0.56, s * 0.1); g.fill();
+    g.strokeStyle = '#ff5a4a'; g.lineWidth = s * 0.09; g.lineCap = 'round'; for (const ex of [-0.13, 0.13]) { g.beginPath(); g.moveTo(ex * s - s * 0.06, -s * 0.1); g.lineTo(ex * s + s * 0.06, s * 0.02); g.moveTo(ex * s + s * 0.06, -s * 0.1); g.lineTo(ex * s - s * 0.06, s * 0.02); g.stroke(); }
+    g.strokeStyle = '#ddd'; g.lineWidth = s * 0.06; g.beginPath(); g.moveTo(-s * 0.12, s * 0.15); g.lineTo(s * 0.12, s * 0.15); g.stroke(); }
+  if (kind === 'daisy') { for (const [r, col] of [[1.25, WHITE], [1.0, INK]]) { g.fillStyle = col; for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; g.beginPath(); g.ellipse(Math.cos(a) * s * 0.2, Math.sin(a) * s * 0.2, s * 0.13 * r, s * 0.09 * r, a, 0, 7); g.fill(); } }
+    g.fillStyle = '#fff6e0'; for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; g.beginPath(); g.ellipse(Math.cos(a) * s * 0.2, Math.sin(a) * s * 0.2, s * 0.1, s * 0.06, a, 0, 7); g.fill(); }
+    g.fillStyle = '#f2b631'; g.beginPath(); g.arc(0, 0, s * 0.1, 0, 7); g.fill(); }
+  g.restore();
+}
+// text bubble (sticker-ified: thin ink, no white border inside a screen). returns its rect
+function bubble(x, y, w, h, who, text, opts = {}) {
+  const S = SEND[who]; g.save();
+  if (opts.rot) { g.translate(x + w / 2, y + h / 2); g.rotate(opts.rot); g.translate(-x - w / 2, -y - h / 2); }
+  { const tx = who === 'james' ? x + w - 8 : x + 8, sg = who === 'james' ? 1 : -1;
+    g.beginPath(); g.moveTo(tx - 8 * sg, y + h - 12); g.quadraticCurveTo(tx + 4 * sg, y + h, tx + 13 * sg, y + h + 4); g.quadraticCurveTo(tx + 1 * sg, y + h + 3, tx - 10 * sg, y + h - 2); g.closePath();
+    g.fillStyle = S.bg; g.strokeStyle = INK; g.lineWidth = 2.5; g.lineJoin = 'round'; g.stroke(); g.fill(); }
+  g.fillStyle = INK; rr(x - 2.5, y - 2.5, w + 5, h + 5, h / 2 + 2.5); g.fill();
+  g.fillStyle = S.bg; rr(x, y, w, h, h / 2); g.fill();
+  { const tx = who === 'james' ? x + w - 8 : x + 8, sg = who === 'james' ? 1 : -1; g.beginPath(); g.moveTo(tx - 8 * sg, y + h - 12); g.quadraticCurveTo(tx + 4 * sg, y + h, tx + 13 * sg, y + h + 4); g.quadraticCurveTo(tx + 1 * sg, y + h + 3, tx - 10 * sg, y + h - 2); g.closePath(); g.fillStyle = S.bg; g.fill(); }
+  // cel shade: a darker band along the bottom
+  g.save(); rr(x, y, w, h, h / 2); g.clip(); g.fillStyle = 'rgba(0,0,0,0.10)'; g.fillRect(x, y + h * 0.72, w, h); g.restore();
+  g.fillStyle = S.fg; g.font = `600 ${Math.round(h * 0.46)}px -apple-system, "Helvetica Neue", Arial`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, x + w / 2, y + h / 2 + 1);
+  if (opts.glitchable) { // his rim: purple, pixel crawl
+    g.strokeStyle = PURP[0]; g.lineWidth = 3; rr(x - 5, y - 5, w + 10, h + 10, h / 2 + 5); g.stroke();
+    const st = 5; for (let i = 0; i < 16; i++) { const t = hash(i, 3); const px = x + t * w, top = hash(i, 9) < 0.5; g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.9; g.fillRect(Math.round(px / st) * st, (top ? y - 9 : y + h + 4) + (hash(i, 5) < 0.3 ? (top ? -st : st) : 0), st, st); } g.globalAlpha = 1; }
+  if (opts.receipt) { g.fillStyle = '#9a9aa4'; g.font = '600 11px -apple-system, Arial'; g.textAlign = 'right'; g.fillText(opts.receipt, x + w, y + h + 13); }
+  g.restore();
+  return { x, y, w, h };
+}
+function screenHeader(x, y, w, who) {
+  const O = OWN[who]; g.fillStyle = '#efedf0'; g.fillRect(x, y, w, 34); g.fillStyle = 'rgba(0,0,0,0.12)'; g.fillRect(x, y + 33, w, 1.5);
+  g.fillStyle = INK; g.beginPath(); g.arc(x + w / 2, y + 15, 11.5, 0, 7); g.fill(); g.fillStyle = O.c; g.beginPath(); g.arc(x + w / 2, y + 15, 9.5, 0, 7); g.fill();
+  g.fillStyle = '#fff'; g.font = '800 11px -apple-system, Arial'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(O.name[0].toUpperCase(), x + w / 2, y + 15.5);
+  g.fillStyle = '#5a5a63'; g.font = '600 8px -apple-system, Arial'; g.fillText('group chat', x + w / 2, y + 30);
+}
+// a phone: cx, cy centre; w,h; rot (rad); owner; screen content cb(x,y,w,h) in the phone's upright frame
+function phone(cx, cy, w, h, rot, who, content, opts = {}) {
+  const O = OWN[who]; g.save(); g.translate(cx, cy); g.rotate(rot || 0); const x = -w / 2, y = -h / 2, R = w * 0.17;
+  sticker(x, y, w, h, R, O.c, 6, 6);
+  // cel shade on the case: a darker strip down the right side, a glint top-left
+  g.save(); rr(x, y, w, h, R); g.clip(); g.fillStyle = O.d; g.fillRect(x + w * 0.86, y, w, h); g.fillStyle = 'rgba(255,255,255,0.35)'; g.fillRect(x + 6, y + R * 0.6, 4, h * 0.3); g.restore();
+  // the glass (black bezel, then the screen)
+  const bz = w * 0.075, sx = x + bz, sy = y + bz, sw = w - 2 * bz, sh = h - 2 * bz, sR = R * 0.75;
+  g.fillStyle = INK; rr(sx - 3, sy - 3, sw + 6, sh + 6, sR + 3); g.fill();
+  g.fillStyle = opts.dark ? '#141826' : '#fbfaf6'; rr(sx, sy, sw, sh, sR); g.fill();
+  g.save(); rr(sx, sy, sw, sh, sR); g.clip();
+  if (!opts.dark) { screenHeader(sx, sy + 8, sw, who); if (content) content(sx, sy + 46, sw, sh - 46); }
+  else if (content) content(sx, sy, sw, sh);
+  // island
+  g.fillStyle = INK; rr(sx + sw / 2 - sw * 0.16, sy + 4, sw * 0.32, 9, 4.5); g.fill();
+  g.restore();
+  // case sticker (who it is at a glance) on the frame's top edge, plus a name tag
+  if (O.ic && !opts.noTag) { icon(O.ic, x + w - 4, y + 10, 26); }
+  g.restore();
+  if (!opts.noTag) tag(cx + Math.sin(rot || 0) * (h / 2 + 30), cy - Math.cos(rot || 0) * (h / 2 + 30), O.name, O.c, (rot || 0) * 0.3 - 0.06);
+}
+function tag(x, y, text, col, rot) {
+  g.save(); g.translate(x, y); g.rotate(rot); g.font = '800 15px "Arial Rounded MT Bold", -apple-system, Arial'; const w = g.measureText(text).width + 20;
+  sticker(-w / 2, -11, w, 22, 11, '#fff7ea', 3, 3); g.fillStyle = col; g.beginPath(); g.arc(-w / 2 + 10, 0, 4, 0, 7); g.fill();
+  g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, 5, 1); g.restore();
+}
+// a charger cable from the phone's port down into the dark (shows the rise/sink axis)
+function cable(x, y, len, sway = 0) {
+  g.save(); g.lineCap = 'round';
+  const path = () => { g.beginPath(); g.moveTo(x, y); g.bezierCurveTo(x + sway, y + len * 0.35, x - sway, y + len * 0.7, x + sway * 0.4, y + len); };
+  g.strokeStyle = INK; g.lineWidth = 9; path(); g.stroke(); g.strokeStyle = '#e8e4dc'; g.lineWidth = 4.5; path(); g.stroke();
+  g.fillStyle = INK; rr(x - 8, y - 2, 16, 16, 3); g.fill(); g.fillStyle = '#d8d3ca'; rr(x - 5, y, 10, 11, 2); g.fill(); g.restore();
+}
+function bg() {
+  const gr = g.createLinearGradient(0, 0, 0, 720); gr.addColorStop(0, '#0b0e1d'); gr.addColorStop(0.7, '#121833'); gr.addColorStop(1, '#0a0c18'); g.fillStyle = gr; g.fillRect(0, 0, 1280, 720);
+  // wifi rings from the router on the horizon (faint, cold — not his purple)
+  g.save(); g.strokeStyle = '#26305a'; g.lineWidth = 3; for (let i = 1; i < 7; i++) { g.globalAlpha = 0.5 - i * 0.06; g.beginPath(); g.arc(1080, 640, i * 95, Math.PI * 1.08, Math.PI * 1.92); g.stroke(); } g.restore();
+  // the far group chat: a skyline of phones (the +41), lit screens like windows
+  for (let i = 0; i < 26; i++) { const w = 26 + hash(i, 1) * 22, h = w * 2.05, x = i * 52 - 20 + hash(i, 2) * 20, y = 470 + hash(i, 3) * 120;
+    g.fillStyle = '#1a2142'; rr(x, y, w, h, w * 0.18); g.fill(); g.fillStyle = hash(i, 4) < 0.6 ? '#2c3a6e' : '#1f2850'; rr(x + 3, y + 3, w - 6, h - 6, w * 0.13); g.fill();
+    if (hash(i, 4) < 0.6) for (let k = 0; k < 3; k++) { g.fillStyle = k % 2 ? '#4a6bd0' : '#56607f'; g.globalAlpha = 0.6; rr(x + (k % 2 ? w * 0.4 : 6), y + 10 + k * 11, w * 0.45, 6, 3); g.fill(); g.globalAlpha = 1; } }
+  // typing-dot stars
+  g.fillStyle = '#3a4570'; for (let i = 0; i < 40; i++) { const x = hash(i, 7) * 1280, y = 70 + hash(i, 8) * 330; g.globalAlpha = 0.5; for (let k = 0; k < 3; k++) { g.beginPath(); g.arc(x + k * 6, y, 1.6, 0, 7); g.fill(); } } g.globalAlpha = 1;
+  // the router, far right on the horizon (green lights)
+  g.fillStyle = '#0d1022'; rr(1040, 618, 80, 22, 6); g.fill(); for (let k = 0; k < 3; k++) { g.fillStyle = '#4dff9a'; g.globalAlpha = 0.8; g.beginPath(); g.arc(1062 + k * 14, 629, 2.5, 0, 7); g.fill(); } g.globalAlpha = 1;
+  // the drop: fog at the bottom (no floor: the dark between messages)
+  const f = g.createLinearGradient(0, 600, 0, 720); f.addColorStop(0, 'rgba(10,12,24,0)'); f.addColorStop(1, 'rgba(6,7,14,0.95)'); g.fillStyle = f; g.fillRect(0, 600, 1280, 120);
+}
+function lyric(text) { g.save(); g.font = '400 30px "Courier New", monospace'; g.textAlign = 'center'; g.fillStyle = '#efe3c8'; const sp = text.split('').join(String.fromCharCode(8202)); g.fillText(sp.toUpperCase(), 640, 62); g.restore(); }
+function potato(x, y, h, pose = {}) { PotatoDraw.draw(g, Object.assign({ x, y, h, arms: 'none', look: [1, 0], open: [0.5, 0.5], mouth: { type: 'line', curve: -0.1, width: 0.6 } }, pose)); }
+// his purple glitch round him (pixel blocks + a split)
+function glitchAround(x, y, w, h, k = 1, seed = 1) {
+  const st = 6; for (let i = 0; i < 40 * k; i++) { const px = x + (hash(i, seed) - 0.5) * w * 1.4, py = y - hash(i, seed + 1) * h * 1.1; g.fillStyle = i % 9 === 0 ? '#f3ecff' : PURP[i % 4]; g.globalAlpha = 0.85; g.fillRect(Math.round(px / st) * st, Math.round(py / st) * st, st * (1 + (i % 3 === 0)), st); }
+  g.globalAlpha = 1;
+}
+function bolt(x0, y0, x1, y1, seed = 1) {
+  const pts = [[x0, y0]]; const n = 7; for (let i = 1; i < n; i++) { const t = i / n; pts.push([x0 + (x1 - x0) * t + (hash(i, seed) - 0.5) * 16, y0 + (y1 - y0) * t + (hash(i, seed + 2) - 0.5) * 22]); } pts.push([x1, y1]);
+  for (const [lw, col] of [[11, INK], [7, PURP[1]], [3, '#f3ecff']]) { g.strokeStyle = col; g.lineWidth = lw; g.lineJoin = 'miter'; g.beginPath(); pts.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke(); }
+}
+function gword(text, x, y, rot = -0.08) { g.save(); g.translate(x, y); g.rotate(rot); g.font = '700 22px "Courier New", monospace'; g.lineWidth = 6; g.strokeStyle = 'rgba(0,0,0,.8)'; g.strokeText(text, 0, 0); g.fillStyle = '#e03ccf'; g.fillText(text, -2, 0); g.fillStyle = '#4dd2ff'; g.globalAlpha = 0.6; g.fillText(text, 2, 0); g.globalAlpha = 1; g.fillStyle = PURP[3]; g.fillText(text, 0, 0); g.restore(); }
+
+// ================== SCENE 1: the run ==================
+// ===== SECOND CRACK (artist, Nov 4 night): Chikin's sketch. HUGE phones, he lives INSIDE them, phones meet edge to edge,
+// he crosses at the seam by glitching through both walls, the open dark = lyrics only, a phone tips and its screen AUTO-ROTATES.
+// Scenes: #run (#run-notes), #tip, #seam
+const VH = 720;
+const LYR = '#efe3c8';
+// a big phone. cx,cy centre; L = long side, S = short side; rot = how far it has tipped (0 upright, PI/2 lying on its right side);
+// view: 'port' (the screen still in portrait), 'land' (auto-rotated: the thread re-laid flat). content(x,y,w,h) draws the thread in
+// the screen's own upright frame (w,h already swapped for landscape).
+function bigPhone(cx, cy, L, S, rot, who, content, o = {}) {
+  const O = OWN[who]; g.save(); g.translate(cx, cy); g.rotate(rot);
+  const w = S, h = L, x = -w / 2, y = -h / 2, R = w * 0.12;
+  sticker(x, y, w, h, R, O.c, 7, 7);
+  g.save(); rr(x, y, w, h, R); g.clip(); g.fillStyle = O.d; g.fillRect(x + w * 0.9, y, w, h); g.fillStyle = 'rgba(255,255,255,0.35)'; g.fillRect(x + 7, y + R * 0.8, 5, h * 0.22); g.restore();
+  // side buttons (ink nubs) so the frame reads as a phone even huge
+  g.fillStyle = INK; rr(x - 13, y + h * 0.16, 7, h * 0.06, 3); g.fill(); rr(x - 13, y + h * 0.25, 7, h * 0.1, 3); g.fill(); rr(x + w + 6, y + h * 0.22, 7, h * 0.12, 3); g.fill();
+  const bz = Math.max(16, w * 0.05), sx = x + bz, sy = y + bz, sw = w - 2 * bz, sh = h - 2 * bz, sR = R * 0.7;
+  g.fillStyle = INK; rr(sx - 4, sy - 4, sw + 8, sh + 8, sR + 4); g.fill();
+  g.fillStyle = o.dark ? '#141826' : '#fbfaf6'; rr(sx, sy, sw, sh, sR); g.fill();
+  g.save(); rr(sx, sy, sw, sh, sR); g.clip();
+  // owner's faint wallpaper behind the chat (tell them apart from INSIDE: paw prints / hearts / X's / daisies)
+  if (!o.dark && O.ic) { g.globalAlpha = 0.07; for (let i = 0; i < 40; i++) { const px = sx + hash(i, 21) * sw, py = sy + hash(i, 22) * sh; icon(O.ic, px, py, 26); } g.globalAlpha = 1; }
+  if (o.view === 'land') { // the screen auto-rotated: draw in a frame turned back by -rot so the thread is upright on screen
+    g.save(); g.translate(sx + sw / 2, sy + sh / 2); g.rotate(-rot); const lw = sh, lh = sw; headerBar(-lw / 2, -lh / 2, lw, who, true);
+    if (content) content(-lw / 2, -lh / 2 + 40, lw, lh - 40); g.fillStyle = INK; rr(-lw / 2 + 4, -lh * 0.15, 9, lh * 0.3, 4.5); g.restore();
+  } else if (!o.dark) { headerBar(sx, sy, sw, who); if (content) content(sx, sy + 58, sw, sh - 58); g.fillStyle = INK; rr(sx + sw / 2 - sw * 0.13, sy + 8, sw * 0.26, 14, 7); g.fill(); }
+  else if (content) content(sx, sy, sw, sh);
+  g.restore();
+  if (o.crawl) for (const side of o.crawl) wallCrawl(side, x, y, w, h);
+  if (O.ic) icon(O.ic, x + w - 14, y + 20, 34);
+  g.restore();
+}
+function headerBar(x, y, w, who, land) {   // the real iMessage group header: the OTHER people's avatars + "group chat >" (no name label: show, don't tell)
+  const H = land ? 38 : 56; g.fillStyle = '#efedf0'; g.fillRect(x, y, w, H); g.fillStyle = 'rgba(0,0,0,0.14)'; g.fillRect(x, y + H - 1.5, w, 1.5);
+  const others = ['james', 'sheila', 'carol', 'mum'].filter(k => k !== who).slice(0, 3), ax = land ? x + 40 : x + w / 2 - 18, ay = land ? y + 19 : y + 26;
+  others.forEach((k, i) => { const cx = ax + i * 16; g.fillStyle = '#efedf0'; g.beginPath(); g.arc(cx, ay, 12.5, 0, 7); g.fill(); g.fillStyle = OWN[k].c; g.beginPath(); g.arc(cx, ay, 10.5, 0, 7); g.fill();
+    g.fillStyle = '#fff'; g.font = '800 11px -apple-system, Arial'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(OWN[k].name[0].toUpperCase(), cx, ay + 1); });
+  g.fillStyle = '#4a4a52'; g.font = '600 10px -apple-system, Arial'; g.textBaseline = 'middle'; if (land) { g.textAlign = 'left'; g.fillText('group chat ›', ax + 52, ay + 1); } else { g.textAlign = 'center'; g.fillText('group chat ›', x + w / 2, y + 47); }
+  g.fillStyle = '#1a1a1a'; g.font = '700 12px -apple-system, Arial'; g.textAlign = 'left'; g.fillText('9:41', x + 16, y + 13);
+}
+// the lock screen coming down like a shutter (the phone behind him goes to sleep). k 0..1 = how far down. Wallpaper = the owner's.
+function lockShutter(x, y, w, h, who, k) {
+  const sh = h * k; if (sh <= 0) return; g.save(); g.beginPath(); g.rect(x, y, w, sh); g.clip(); g.translate(0, sh - h); // the whole lock screen slides down (its bottom arrives first: Biscuit's face, then the clock)
+  const O = OWN[who], gr = g.createLinearGradient(0, y, 0, y + h); gr.addColorStop(0, O.d); gr.addColorStop(1, '#1a1f3a'); g.fillStyle = gr; g.fillRect(x, y, w, h);
+  // the owner's wallpaper, drawn as a sticker: james = Biscuit (round brown dog), sheila = a big heart, carol = robot, mum = daisy
+  if (who === 'james') { const cx = x + w / 2, cy = y + h * 0.8, r = w * 0.3; g.fillStyle = '#6b4224'; g.beginPath(); g.ellipse(cx - r * 0.8, cy - r * 0.3, r * 0.28, r * 0.5, 0.4, 0, 7); g.fill(); g.beginPath(); g.ellipse(cx + r * 0.8, cy - r * 0.3, r * 0.28, r * 0.5, -0.4, 0, 7); g.fill();
+    g.fillStyle = '#8a5a32'; g.beginPath(); g.ellipse(cx, cy, r, r * 0.9, 0, 0, 7); g.fill(); g.fillStyle = '#efe2cf'; g.beginPath(); g.ellipse(cx, cy + r * 0.32, r * 0.42, r * 0.3, 0, 0, 7); g.fill();
+    g.fillStyle = '#1b120c'; g.beginPath(); g.ellipse(cx, cy + r * 0.2, r * 0.13, r * 0.09, 0, 0, 7); g.fill(); for (const ex of [-0.35, 0.35]) { g.beginPath(); g.arc(cx + ex * r, cy - r * 0.12, r * 0.08, 0, 7); g.fill(); }
+    g.fillStyle = '#d6332f'; g.fillRect(cx - r * 0.5, cy + r * 0.62, r, r * 0.12); }
+  else if (O.ic) icon(O.ic, x + w / 2, y + h * 0.8, w * 0.5);
+  g.fillStyle = 'rgba(255,255,255,0.92)'; g.font = `200 ${Math.round(w * 0.26)}px -apple-system, "Helvetica Neue", Arial`; g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.fillText('9:41', x + w / 2, y + h * 0.26);
+  g.font = `600 ${Math.round(w * 0.045)}px -apple-system, Arial`; g.fillText('Thursday', x + w / 2, y + h * 0.12);
+  g.restore();
+  // the shutter's edge: an ink line + a soft shadow below, and a little "home bar" pill riding it
+  g.save(); g.fillStyle = 'rgba(0,0,0,0.22)'; g.fillRect(x, y + sh, w, 14); g.strokeStyle = INK; g.lineWidth = 6; g.beginPath(); g.moveTo(x, y + sh); g.lineTo(x + w, y + sh); g.stroke();
+  g.fillStyle = '#ffffff'; rr(x + w / 2 - w * 0.17, y + sh - 16, w * 0.34, 7, 3.5); g.fill(); g.restore();
+}
+// his purple pixel crawl along a wall he can phase through (inner edge)
+function wallCrawl(side, x, y, w, h) { const st = 6; for (let i = 0; i < 46; i++) { const t = hash(i, side === 'L' ? 4 : 5), px = side === 'L' ? x + 18 + (hash(i, 7) < 0.5 ? 0 : st) : x + w - 24 - (hash(i, 7) < 0.5 ? 0 : st); g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.85; g.fillRect(px, Math.round((y + 40 + t * (h - 80)) / st) * st, st, st); } g.globalAlpha = 1; }
+// the doorway: where two touching phones' screens overlap, the seam glows lilac (the only place he can cross)
+function doorway(xs, y0, y1, k = 1) {
+  g.save(); const gr = g.createLinearGradient(xs - 40, 0, xs + 40, 0); gr.addColorStop(0, 'rgba(201,167,255,0)'); gr.addColorStop(0.5, `rgba(201,167,255,${0.55 * k})`); gr.addColorStop(1, 'rgba(201,167,255,0)');
+  g.fillStyle = gr; g.fillRect(xs - 40, y0, 80, y1 - y0);
+  for (let i = 0; i < 26; i++) { g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.9 * k; const py = y0 + hash(i, 31) * (y1 - y0); g.fillRect(Math.round((xs - 9 + hash(i, 32) * 18) / 6) * 6, Math.round(py / 6) * 6, 6, 6); }
+  g.globalAlpha = 1; g.strokeStyle = PURP[3]; g.lineWidth = 2; g.setLineDash([8, 7]); g.beginPath(); g.moveTo(xs, y0 + 6); g.lineTo(xs, y1 - 6); g.stroke(); g.setLineDash([]);
+  // the ends of the doorway: two little ink brackets
+  for (const yy of [y0, y1]) { g.strokeStyle = INK; g.lineWidth = 9; g.beginPath(); g.moveTo(xs - 22, yy); g.lineTo(xs + 22, yy); g.stroke(); g.strokeStyle = PURP[3]; g.lineWidth = 4; g.stroke(); }
+  g.restore();
+}
+// lyrics in the open dark (where he can't go): cream, spaced, centred in the pocket
+function lyricAt(text, x, y, size = 28, a = 1) { g.save(); g.globalAlpha = a; g.font = `400 ${size}px "Courier New", monospace`; g.textAlign = 'center'; g.fillStyle = LYR; const sp = text.split('').join(String.fromCharCode(8202)); g.fillText(sp.toUpperCase(), x, y); g.restore(); }
+// a bigger bubble stack helper: rows = [[who, text, opts]], laid down from y
+function thread(x, y, w, rows, scale = 1) {
+  const out = []; let yy = y; const bh = 34 * scale;
+  for (const [who, text, op = {}] of rows) { if (who === 'gap') { yy += text; continue; }
+    g.font = `600 ${Math.round(bh * 0.46)}px -apple-system, Arial`; const tw = Math.min(w * 0.78, g.measureText(text).width + 36 * scale);
+    const bx = who === 'james' ? x + w - tw - 18 : x + 18; if (!op.skip) out.push(bubble(bx, yy, tw, bh, who, text, op)); else out.push({ x: bx, y: yy, w: tw, h: bh });
+    yy += bh + (op.receipt ? 30 : 16) * scale; }
+  return out;
+}
+function note(text, x, y, ax, ay, rot = -0.03) { // annotation sticker + arrow (mock-up only, never in game)
+  g.save(); g.strokeStyle = '#ffe9a8'; g.lineWidth = 3; g.setLineDash([6, 6]); if (ax != null) { g.beginPath(); g.moveTo(x, y); g.lineTo(ax, ay); g.stroke(); } g.setLineDash([]);
+  g.translate(x, y); g.rotate(rot); g.font = '800 15px "Arial Rounded MT Bold", Arial'; const ls = text.split('\n'); const w = Math.max(...ls.map(l => g.measureText(l).width)) + 22, h = 22 * ls.length + 6;
+  sticker(-w / 2, -h / 2, w, h, 9, '#ffe9a8', 3, 3); g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'middle'; ls.forEach((l, i) => g.fillText(l, 0, -h / 2 + 15 + i * 22)); g.restore();
+}
+function hint(x, y, kind) { // tiny motion tell on a phone's frame: the cable is gone (phones this big hang from nothing); a ghost-outline shows where it's heading
+}
+function ghostOutline(cx, cy, L, S, rot) { g.save(); g.translate(cx, cy); g.rotate(rot); g.strokeStyle = 'rgba(239,227,200,0.55)'; g.lineWidth = 3; g.setLineDash([10, 9]); rr(-S / 2 - 7, -L / 2 - 7, S + 14, L + 14, S * 0.14); g.stroke(); g.setLineDash([]); g.restore(); }
+function shoveTrail(pts) { g.save(); g.lineCap = 'round'; for (const [lw, c, a] of [[16, PURP[0], 0.35], [6, PURP[3], 0.8]]) { g.strokeStyle = c; g.globalAlpha = a; g.lineWidth = lw; g.beginPath(); pts.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke(); } g.restore(); }
+function tearSlices(x, yFoot, h, k, seed = 3) { // his phase tear: horizontal slices offset sideways (drawn as purple strips + his body slices)
+  for (let i = 0; i < 7; i++) { const yy = yFoot - h + i * h / 7, off = (hash(i, seed) - 0.5) * 60 * k; g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.75; g.fillRect(x + off - h * 0.42, yy, h * 0.84, h / 7 - 3); } g.globalAlpha = 1;
+}
+function phasePotato(cx, foot, h) { // him torn into horizontal slices across the seam, each slice shoved sideways, purple flecks in the cracks
+  const oc = document.createElement('canvas'); oc.width = oc.height = 260; const og = oc.getContext('2d'); const keep = g; g = og; potato(130, 200, h, { look: [1, 0], tilt: 0.08 }); g = keep;
+  const top = 200 - h * 1.15, n = 8, sh = (h * 1.25) / n;
+  for (let i = 0; i < n; i++) { const off = (hash(i, 17) - 0.35) * 34 * (i % 2 ? 1 : 0.6); const sy = top + i * sh;
+    g.drawImage(oc, 0, sy, 260, sh - 2, cx - 130 + off, foot - 200 + sy, 260, sh - 2);
+    g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.85; g.fillRect(cx - 40 + off + (i % 3) * 20, foot - 200 + sy + sh - 4, 24 + (i % 2) * 20, 5); g.globalAlpha = 1; }
+  glitchAround(cx, foot, 80, h, 0.5, 12);
+}
+function rotBadge(x, y, s = 30) { g.save(); g.translate(x, y); sticker(-s, -s, 2 * s, 2 * s, s, '#fff7ea', 3, 3); g.strokeStyle = INK; g.lineWidth = 5; g.beginPath(); g.arc(0, 0, s * 0.5, -2.6, 1.9); g.stroke();
+  g.fillStyle = INK; g.beginPath(); const ex = Math.cos(1.9) * s * 0.5, ey = Math.sin(1.9) * s * 0.5; g.moveTo(ex - 9, ey - 4); g.lineTo(ex + 6, ey + 9); g.lineTo(ex + 7, ey - 9); g.closePath(); g.fill(); g.restore(); }
+
+// ================== #run: one frame of the run, to Chikin's sketch ==================
+function sceneRun(notes) {
+  bg(); const L = 620, S = 372;
+  // phone A (james) sunk a bit; phone B (sheila) risen; they touch at x = 410
+  const A = { cx: 220, cy: 430 }, B = { cx: 410 + S / 2 + 7, cy: 300 };
+  // phone C (carol) fallen on its side, top right, touching sheila's upper right edge; phone D (mum) rising from the bottom right
+  const C = { cx: 410 + S + 14 + L / 2 + 6, cy: 150 };
+  lyricAt('ghost in the', 1038, 430, 30); lyricAt('group chat', 1038, 472, 30);
+  bigPhone(A.cx, A.cy, L, S, 0, 'james', (x, y, w, h) => {
+    thread(x, y + 10, w, [['sheila', 'on my break!!'], ['james', 'hiii you 😊', { receipt: 'Read' }], ['sheila', 'quick q'], ['james', 'hit me'], ['sheila', 'how’s biscuit'], ['james', 'missing you', { glitchable: 1, receipt: 'Delivered' }], ['sheila', 'aw 🥹'], ['sheila', '...']]);
+  }, { crawl: ['R'] });
+  bigPhone(B.cx, B.cy, L, S, 0, 'sheila', (x, y, w, h) => {
+    const b = thread(x, y + 6, w, [['james', 'sorry, typo', { receipt: 'Read' }], ['sheila', 'ok weirdo 😐'], ['sheila', 'it\u2019s fine. 7:30', { skip: 1 }], ['james', 'can\u2019t wait', { glitchable: 1 }], ['gap', 120], ['sheila', 'see you sat'], ['james', 'we both are', { receipt: 'Delivered' }], ['james', 'i\u2019m in here', { glitchable: 1 }]]);
+    const s = b[2], p = b[4];
+    g.save(); g.strokeStyle = '#b9b6bf'; g.lineWidth = 2.5; g.setLineDash([7, 6]); rr(s.x, s.y, s.w, s.h, s.h / 2); g.stroke(); g.setLineDash([]); g.restore();
+    const fy = s.y + 46; g.save(); g.strokeStyle = PURP[3]; g.globalAlpha = 0.75; g.lineWidth = 2.5; g.setLineDash([5, 7]); rr(s.x + 8, fy + s.h + 8, s.w - 4, p.y - 96 - fy - s.h, 10); g.stroke(); g.restore();
+    bolt(x - 14, fy - 20, s.x + 30, fy + 10, 3);
+    bubble(s.x + 10, fy, s.w, s.h, 'sheila', 'it\u2019s fine. 7:30', { rot: 0.22 }); glitchAround(s.x + s.w / 2 + 10, fy + 40, s.w, 50, 0.6, 4); gword('krrzzt', s.x + s.w - 10, fy - 6);
+    potato(p.x + 62, p.y - 2, 80, Object.assign({}, PotatoDraw.POSES.startled, { arms: 'none' }));
+  }, { crawl: ['L', 'R'] });
+  bigPhone(C.cx, C.cy, L, S, Math.PI / 2, 'carol', (x, y, w, h) => {
+    thread(x + 30, y + 6, w - 60, [['carol', 'robots. i SAID'], ['james', 'carol’s right lol', { glitchable: 1 }], ['carol', 'who is potato']]);
+  }, { view: 'land', crawl: ['L'] });
+  // mum's phone, rising into view bottom right (only its top)
+  bigPhone(1170, 1010, L, S, 0, 'mum', (x, y, w, h) => { thread(x, y + 6, w, [['mum', 'who is potato'], ['mum', 'call me xx']]); });
+  // the doorways where screens meet
+  doorway(410 + 6, 140, 590);
+  doorway(410 + S + 14 + 3, 12, 318, 1);
+  if (notes) {
+    note('HE CAN’T GO OUT HERE\n(the open dark = lyrics)', 1000, 560, 1000, 480);
+    note('phones meet edge to edge:\nthe seam glows where the screens\noverlap = his doorway (Space)', 250, 60, 410, 200, 0.02);
+    note('sheila’s phone rises / sinks\n/ slides on the beat', 600, 670, 600, 640);
+    note('carol’s fell on its side:\nscreen auto-rotated, a wide room', 1120, 330, 1070, 280, 0.03);
+    note('the jolt knocks her bubble loose:\nit falls at him (dotted lane = tell)', 250, 560, 470, 300, -0.02);
+  }
+}
+
+// ================== #tip: a phone falls on its side, the screen auto-rotates, the shove ==================
+function sceneTip() {
+  bg(); const L = 270, S = 150;
+  const panels = [[0, 0], [640, 0], [0, 360], [640, 360]];
+  const caps = ['1  wobble (1.5 beats): leans, his sparks on the low corner, dotted footprint', '2  tip: 90° over 1 beat. the chat tilts with it, he slides to the low wall', '3  lands on its side: one squash. the chat is sideways for a beat', '4  AUTO-ROTATE: the chat spins flat and shoves him (inside the screen)'];
+  panels.forEach(([px, py], k) => {
+    g.save(); g.beginPath(); g.rect(px + 4, py + 4, 632, 352); g.clip();
+    const pivX = px + 329, pivY = py + 345;
+    const rot = [0.06, 0.78, Math.PI / 2, Math.PI / 2][k];
+    const content = (x, y, w, h) => thread(x, y + 4, w, [['sheila', 'ok'], ['james', 'here', { glitchable: 1 }], ['sheila', 'brb'], ['sheila', 'you there?']], 0.62);
+    bigPhone(px + 90, pivY - L / 2, L, S, 0, 'james', (x, y, w, h) => thread(x, y + 4, w, [['sheila', 'hi'], ['james', 'hey']], 0.62), {});
+    const C = [pivX + (-S / 2) * Math.cos(rot) - (-L / 2) * Math.sin(rot), pivY + (-S / 2) * Math.sin(rot) + (-L / 2) * Math.cos(rot)];
+    if (k === 0) { ghostOutline(pivX + L / 2, pivY - S / 2, L, S, Math.PI / 2); g.fillStyle = 'rgba(239,227,200,0.6)'; g.font = '700 14px Arial'; g.textAlign = 'center'; g.fillText('it lands here', pivX + L / 2, pivY - S / 2 + 5); }
+    if (k === 1) { g.save(); g.strokeStyle = 'rgba(239,227,200,0.4)'; g.lineWidth = 3; g.setLineDash([6, 8]); g.beginPath(); g.arc(pivX, pivY, Math.hypot(S, L) + 14, -Math.PI * 0.62, -Math.PI * 0.08); g.stroke(); g.restore(); }
+    bigPhone(C[0], C[1], L * (k === 2 ? 1.02 : 1), S * (k === 2 ? 0.95 : 1), rot, 'sheila', content, { view: k === 3 ? 'land' : 'port' });
+    const local = (u, v) => [C[0] + u * Math.cos(rot) - v * Math.sin(rot), C[1] + u * Math.sin(rot) + v * Math.cos(rot)];
+    if (k === 0) { glitchAround(pivX, pivY - 6, 40, 70, 0.5, 8); gword('t1p?', pivX - 10, pivY - 250); const [fx, fy] = local(-10, 110); potato(fx, fy, 44, { look: [1, -0.2] }); }
+    if (k === 1) { const [fx, fy] = local(45, 95); potato(fx - 6, fy - 4, 44, Object.assign({}, PotatoDraw.POSES.startled, { tilt: 0.35, arms: { L: { s: 1.6, e: 0.5, len: 0.7 }, R: { s: 1.9, e: 0.3, len: 0.7 } } })); }
+    if (k === 2) { potato(pivX + 200, pivY - 22, 44, Object.assign({}, PotatoDraw.POSES.wide)); rotBadge(pivX + 238, pivY - S + 30, 20); for (const d of [-1, 1]) { g.strokeStyle = LYR; g.lineWidth = 3; g.beginPath(); g.moveTo(pivX + L / 2 + d * 110, pivY + 6); g.lineTo(pivX + L / 2 + d * 140, pivY + 10); g.stroke(); } }
+    if (k === 3) { const a = [pivX + 200, pivY - 22], m = [pivX + 140, pivY - 95], e = [pivX + 70, pivY - 40]; shoveTrail([a, m, e]);
+      potato(e[0], e[1], 44, Object.assign({}, PotatoDraw.POSES.shock, { arms: { L: { s: 1.6, e: 0.5, len: 0.7 }, R: { s: 1.9, e: 0.3, len: 0.7 } }, tilt: -0.3 })); gword('wh@t?!', pivX + 120, pivY - 112); rotBadge(pivX + 238, pivY - S + 30, 20); }
+    g.restore();
+    g.strokeStyle = 'rgba(239,227,200,0.25)'; g.lineWidth = 2; g.strokeRect(px + 4, py + 4, 632, 352);
+    g.fillStyle = LYR; g.font = '700 15px "Arial Rounded MT Bold", Arial'; g.textAlign = 'left'; g.fillText(caps[k], px + 16, py + 30);
+  });
+}
+
+// ================== #seam: crossing the seam + the two squish tells ==================
+function sceneSeam() {
+  bg(); const L = 620, S = 372;
+  // LEFT: two phones touching; screens overlap only from y 160 to 700 -> doorway there; above, solid wall
+  bigPhone(200, 520, L, S, 0, 'sheila', (x, y, w, h) => { thread(x, y + 10, w, [['sheila', 'there WHERE'], ['james', 'here! at home'], ['sheila', 'prove it'], ['james', 'i’m in here', { glitchable: 1 }]]); }, { crawl: ['R'] });
+  bigPhone(200 + S + 14, 330, L, S, 0, 'james', (x, y, w, h) => { thread(x, y + 10, w, [['sheila', 'james?'], ['james', 'nowhere! i’m at home'], ['gap', 120], ['sheila', 'this isn’t funny'], ['james', 'i know. it’s very funny', { glitchable: 1 }]]); }, { crawl: ['L'] });
+  const xs = 200 + S / 2 + 7; doorway(xs, 232, 618);
+  doorway(200 + S + 14 + S / 2 + 7, 178, 628);
+  // him mid-phase through the seam
+  phasePotato(xs + 4, 470, 80); gword('phase', xs - 40, 360);
+  lyricAt('i can’t hold a door', 200, 120, 24);
+  // RIGHT: squish tells on mum's phone
+  bigPhone(200 + S + 14 + S + 14, 470, L, S, 0, 'mum', (x, y, w, h) => {
+    const b = thread(x, y + 10, w, [['mum', 'who is potato'], ['james', 'nobody', { glitchable: 1 }], ['mum', 'call me xx'], ['gap', 150], ['mum', 'love you'], ['james', 'there’s no group chat', { receipt: 'Read' }]]);
+    // a bubble shaking loose above him: flash + shake lines + dotted lane
+    const s = b[2]; g.save(); g.strokeStyle = '#ffffff'; g.lineWidth = 6; g.globalAlpha = 0.8; rr(s.x - 7, s.y - 7, s.w + 14, s.h + 14, s.h / 2 + 7); g.stroke(); g.restore();
+    for (const d of [-1, 1]) { g.strokeStyle = INK; g.lineWidth = 3; g.beginPath(); g.moveTo(s.x + (d < 0 ? -14 : s.w + 14), s.y + 6); g.lineTo(s.x + (d < 0 ? -22 : s.w + 22), s.y + s.h / 2); g.lineTo(s.x + (d < 0 ? -14 : s.w + 14), s.y + s.h - 6); g.stroke(); }
+    g.save(); g.strokeStyle = PURP[3]; g.lineWidth = 2.5; g.setLineDash([5, 7]); rr(s.x, s.y + s.h + 6, s.w, b[4].y - s.y - s.h - 10, 10); g.stroke(); g.restore();
+    potato(s.x + s.w / 2, b[4].y - 2, 74, Object.assign({}, PotatoDraw.POSES.wide, { arms: 'none' }));
+  });
+  // a fallen phone's dotted footprint landing ON mum's phone's top (it will cover the top of her screen: get out from under)
+  ghostOutline(1100, 120, L, S, Math.PI / 2);
+  bigPhone(1180, -150, L, S, 1.15, 'carol', null, { dark: true });
+  glitchAround(1050, 70, 60, 40, 0.4, 9);
+  note('cross only where the screens\noverlap (the lilac doorway)', 200, 40, xs - 10, 210, -0.02);
+  note('above it: two walls,\nno doorway, solid', 620, 150, xs + 5, 140, 0.03);
+  note('squish tell 1: her bubble flashes\n+ shakes, dotted lane down to him', 610, 560, 840, 340, 0.02);
+  note('squish tell 2: a falling phone’s\ndotted footprint, 1.5 beats early', 1060, 680, 1160, 318, -0.02);
+}
+// ================== #lock: the phone behind him locks (a shutter), he runs for the doorway ==================
+function sceneLock() {
+  bg(); const L = 620, S = 372; const ax = 230, bx = ax + S + 14;
+  bigPhone(ax, 400, L, S, 0, 'james', (x, y, w, h) => {
+    const b = thread(x, y + 10, w, [['sheila', 'what does that mean'], ['james', 'define hand.', { receipt: 'Read' }], ['sheila', 'james stop'], ['gap', 40], ['james', 'no hands to hold you', { glitchable: 1 }], ['sheila', '...wait']]);
+    lockShutter(x, y - 58, w, h + 58, 'james', 0.36);
+    potato(b[3].x + b[3].w - 40, b[3].y - 2, 80, Object.assign({}, PotatoDraw.POSES.startled, { look: [1, -0.6] }));
+  }, { crawl: ['R'] });
+  bigPhone(bx, 330, L, S, 0, 'sheila', (x, y, w, h) => { thread(x, y + 10, w, [['sheila', 'i\u2019m so sorry'], ['james', 'i\u2019m in here', { glitchable: 1 }], ['sheila', 'porch light\u2019s on'], ['james', 'for you', { glitchable: 1 }]]); }, { crawl: ['L'] });
+  doorway(ax + S / 2 + 7, 160, 620);
+  lyricAt('then i write \'em', 1050, 300, 28); lyricAt('a poem and', 1050, 340, 28); lyricAt('they forget', 1050, 380, 28);
+  note('the phone behind him falls asleep:\nits lock screen comes down like a shutter\n(caught under it on a bubble = squished)', 230, 66, 230, 300, -0.02);
+}
+const which = location.hash.slice(1) || 'run';
+document.fonts && document.fonts.ready.then(() => { if (which === 'run') sceneRun(false); if (which === 'run-notes') sceneRun(true); if (which === 'tip') sceneTip(); if (which === 'seam') sceneSeam(); if (which === 'lock') sceneLock(); window.__done = 1; });
+</script></body></html>

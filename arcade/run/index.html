@@ -1,0 +1,100 @@
+<meta charset="utf-8">
+<title>404 Runner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Inter:wght@400;700;900&family=Bungee&family=Rubik+Mono+One&family=JetBrains+Mono:wght@700&display=swap">
+<style>
+:root { --bg: #030604; --ink: #e8f5ec; --muted: #7fa48c; --green: #2bff88; --warm: #ffd9a0; --skin: #da9643; --glitch: #9a52ff; --magenta: #e03ccf; --line: #12301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 Inter, system-ui, sans-serif; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1280px; margin: 0 auto; display: grid; gap: 10px; }
+#stage { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: calc(100vh - 70px); border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
+  background: #000; touch-action: none; user-select: none; -webkit-user-select: none; }
+#stage canvas { display: block; width: 100% !important; height: 100% !important; }
+#gwords { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#gwords span { position: absolute; font: 400 clamp(11px, 1.4vw, 16px) "Major Mono Display", monospace; color: var(--glitch); text-shadow: 2px 0 var(--magenta), -2px 0 #2a0f63; transform: translate(-50%, -50%); white-space: nowrap; }
+#hud { position: absolute; inset: 0; pointer-events: none; font: 400 13px "Major Mono Display", monospace; color: var(--green); }
+#hud .tl, #hud .tr, #hud .bl { background: #000000a0; border-radius: 8px; padding: 4px 8px; }   /* a plate, so the HUD reads on any world (the cream terms page too) */
+#hud .bar { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: #ffffff10; } #progress { height: 100%; width: 0; background: var(--green); box-shadow: 0 0 10px var(--green); }
+#hud .tl { position: absolute; left: 14px; top: 14px; display: grid; gap: 2px; } #attempt { font-size: 18px; color: var(--ink); }
+#hud .tr { position: absolute; right: 14px; top: 12px; font-size: 26px; color: var(--ink); }
+#hud .bl { position: absolute; left: 14px; bottom: 12px; display: flex; gap: 12px; align-items: center; font: 700 12px Inter, sans-serif; color: var(--muted); }
+#charge { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--glitch); } #charge.ready { background: var(--glitch); box-shadow: 0 0 0 3px #9a52ff55, 0 0 14px var(--glitch); }
+#slot { --pc: #ffcf4a; padding: 3px 9px; border: 1px dashed #ffffff30; border-radius: 6px; } #slot.full { border: 1px solid var(--pc); color: var(--pc); box-shadow: 0 0 12px color-mix(in srgb, var(--pc) 40%, transparent); }
+#meter { position: relative; width: 140px; height: 14px; border: 1px solid var(--mc, #ffcf4a); border-radius: 7px; overflow: hidden; } #meterfill { position: absolute; inset: 0 auto 0 0; background: var(--mc, #ffcf4a); box-shadow: 0 0 10px var(--mc, #ffcf4a); } #meterlab { position: relative; padding-left: 6px; font: 700 10px Inter, sans-serif; color: #000; mix-blend-mode: difference; filter: invert(1); }
+#meter.low { animation: low 0.4s infinite alternate; } @keyframes low { to { opacity: 0.35; } }
+#bestmark { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--warm); box-shadow: 0 0 8px var(--warm); }
+#death { position: absolute; left: 0; right: 0; top: 44%; text-align: center; pointer-events: none; opacity: 0; }
+#death span { display: inline-block; padding: 6px 14px; border-radius: 8px; background: #000000aa; border: 1px solid #9a52ff66; font: 400 clamp(13px, 1.8vw, 18px) "Major Mono Display", monospace; color: #e9d8ff; }
+#death.show { animation: msg 1.1s ease-out; }
+#callout { position: absolute; left: 50%; bottom: 18%; transform: translateX(-50%); padding: 8px 16px; border-radius: 10px; border: 2px solid #ffffff55; background: #000000aa; color: #fff; font: 700 clamp(14px, 2vw, 20px) Inter, sans-serif; opacity: 0; pointer-events: none; }
+#callout.kJ { border-color: #ffd9a0; } #callout.kG { border-color: #9a52ff; } #callout.kV { border-color: #ffcf4a; } #callout.kD { border-color: #9fe3ff; }
+#callout.show { animation: callout 0.6s ease-out; } @keyframes callout { 0% { opacity: 1; transform: translateX(-50%) scale(1.15); } 60% { opacity: 1; } 100% { opacity: 0; transform: translateX(-50%) scale(1); } }
+#msg { position: absolute; left: 0; right: 0; top: 24%; text-align: center; font: 400 clamp(16px, 2.6vw, 28px) "Major Mono Display", monospace; color: var(--warm); opacity: 0; padding: 0 16px; pointer-events: none; }
+#msg.show { animation: msg 1.4s ease-out; } @keyframes msg { 0% { opacity: 0; transform: translateY(8px); } 12% { opacity: 1; transform: none; } 70% { opacity: 1; } 100% { opacity: 0; } }
+.screen { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 14px; padding: 20px;
+  background: radial-gradient(ellipse at 50% 60%, #03140bcc, #000000ee); overflow: auto; }
+.screen h1 { margin: 0; font: 400 clamp(26px, 5.4vw, 60px)/1 "Major Mono Display", monospace; color: var(--green); text-shadow: 0 0 18px #2bff8866; text-wrap: balance; }
+.screen h1 b { color: var(--warm); font-weight: 400; }
+.screen p { margin: 0; color: var(--muted); max-width: 52ch; justify-self: center; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+button { font: 700 14px Inter, sans-serif; color: var(--ink); background: #0c1f14; border: 1px solid #2bff8855; border-radius: 10px; padding: 10px 16px; cursor: pointer; }
+button:hover, button:focus-visible { border-color: var(--green); outline: none; box-shadow: 0 0 0 3px #2bff8833; }
+button.main { background: var(--green); color: #02120a; border-color: var(--green); }
+.keys { font: 400 12px "Major Mono Display", monospace; color: var(--muted); }
+#hub { display: flex; align-items: flex-end; justify-content: center; padding: 0 10px 10px; background: none; overflow: hidden; }   /* the kitchen is the menu: just the room, him, the door, and the costume picker */
+#kstyles { cursor: default; display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 999px; background: #000000a0; border: 1px solid #ffffff1a; max-width: 100%; }
+#kicons { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.kicon { padding: 0; width: 38px; height: 38px; border-radius: 50%; background: none; border: 2px solid transparent; display: grid; place-items: center; opacity: .72; transition: transform .12s, opacity .12s; }
+.kicon img { width: 32px; height: 32px; display: block; }
+.kicon:hover, .kicon:focus-visible { opacity: 1; transform: translateY(-2px); border-color: transparent; box-shadow: none; }
+.kicon { position: relative; } .kicon.done::after { content: ''; position: absolute; right: -1px; top: -1px; width: 9px; height: 9px; border-radius: 50%; background: #ffcf8a; border: 2px solid #120a05; box-shadow: 0 0 8px #ffcf8a; }   /* a finished song: its lamp is lit */
+.kicon.on { opacity: 1; border-color: var(--warm); box-shadow: 0 0 0 2px #00000080, 0 0 12px #ffd9a088; transform: scale(1.08); }
+#kglitch { width: 46px; height: 46px; padding: 0; border-radius: 12px; background: #12062e; border: 2px solid var(--glitch); display: grid; place-items: center; box-shadow: 3px 0 0 #e03ccf88, -3px 0 0 #2a0f63; flex: none; }
+#kglitch svg { width: 30px; height: 30px; }
+#kglitch:hover, #kglitch:focus-visible { border-color: #c9a7ff; box-shadow: 4px 0 0 #e03ccf, -4px 0 0 #2a0f63, 0 0 16px #9a52ff99; }
+#kglitch:hover svg rect:nth-child(odd) { transform: translateX(3px); } #kglitch:hover svg rect:nth-child(even) { transform: translateX(-3px); }
+#kglitch.hit { animation: khit .35s steps(4); } @keyframes khit { 25% { transform: translate(4px, -1px); } 50% { transform: translate(-5px, 1px); } 75% { transform: translate(2px, 0); } }
+@media (max-width: 560px) { .kicon { width: 26px; height: 26px; } .kicon img { width: 22px; height: 22px; } #kicons { gap: 2px; flex-wrap: nowrap; } #kglitch { width: 32px; height: 32px; } #kglitch svg { width: 22px; height: 22px; } #kstyles { gap: 5px; padding: 3px 6px; border-radius: 14px; } #hub { padding: 0 4px 4px; }
+  /* a phone: the room is small, so the picker sits just under it instead of over his floor (the floor stays tappable, the door reachable) */
+  #stage:has(#hub:not([hidden])) { overflow: visible; margin-bottom: 50px; } #stage:has(#hub:not([hidden])) canvas { border-radius: 12px; }
+  #hub { overflow: visible; } #kstyles { position: absolute; left: 50%; top: calc(100% + 8px); transform: translateX(-50%); } }
+#pads { position: absolute; inset: auto 0 0 0; display: none; justify-content: space-between; padding: 10px; pointer-events: none; }
+#pads button { pointer-events: auto; width: 76px; height: 76px; border-radius: 50%; font: 700 13px Inter, sans-serif; background: #ffffff14; border-color: #ffffff33; }
+#pads button.on { background: #ffffff40; }
+@media (pointer: coarse) { #pads { display: flex; } #hud .bl { top: 62px; bottom: auto; } }
+.foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 12px; align-items: center; }
+#boot { position: absolute; inset: 0; display: grid; place-content: center; font: 400 16px "Major Mono Display", monospace; color: var(--green); }
+</style>
+<div class="wrap">
+  <div id="stage">
+    <div id="gwords"></div>
+    <div id="hud" hidden>
+      <div class="bar"><div id="progress"></div><div id="bestmark" hidden></div></div>
+      <div class="tl" hidden><span id="attempt"></span><span id="section"></span></div>
+      <div class="tr" id="pct" hidden></div>
+      <div class="bl"><span id="charge" title="glitch"></span><span id="streak" title="eight on-beat jumps refill the glitch"></span><span id="slot" hidden></span><span id="meter" hidden><i id="meterfill"></i><b id="meterlab"></b></span></div>
+    </div>
+    <div id="msg" hidden></div>
+    <div id="callout" hidden></div>
+    <div id="death" hidden><span id="deathwhy"></span></div>
+    <div id="pads" hidden><div class="row"><button data-key="G" aria-label="glitch">⌁</button><button data-key="V" aria-label="power">◆</button></div><div class="row"><button data-key="D" aria-label="duck">↓</button><button data-key="J" aria-label="jump">↑</button></div></div>
+    <div class="screen" id="title" hidden>
+      <h1><b>404</b>: file not found</h1>
+      <p>Potato's album, as music videos you play. Ten songs, ten levels. Get through the song without a hit and you've seen the whole video; one hit and it starts over. Jump the spikes, duck what hangs, glitch through what flickers, and set the power off at the gold.</p>
+      <div class="row"><button class="main" id="start">start</button><button id="tapperbtn" title="watch a demo and tap where the glitches and story moments go">tapper</button></div>
+      <div class="keys">↑ jump · ↑ again in the air: double jump · ↓ duck (hold) · space glitch · v power · phone: tap = jump, hold the left third = duck, two fingers = glitch</div>
+      <div class="row"><button id="calm">calm lights: off</button></div>
+    </div>
+    <div class="screen" id="hub" hidden>
+      <div id="kstyles"><button id="kglitch" aria-label="glitch to the next song" title="glitch to the next song"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="8" width="22" height="6" fill="#c9a7ff"/><rect x="12" y="17" width="23" height="6" fill="#9a52ff"/><rect x="4" y="26" width="20" height="6" fill="#e03ccf"/><rect x="27" y="26" width="7" height="6" fill="#c9a7ff"/><rect x="31" y="8" width="4" height="6" fill="#e03ccf"/></svg></button><div id="kicons" role="group" aria-label="the songs"></div></div>
+    </div>
+    <div id="boot">loading the 404…</div>
+  </div>
+  <div class="foot"><span>404: File Not Found — runner test build, private. Songs from the album; nothing here goes out as Potato.</span><button id="mute">sound on</button></div>
+</div>
+<script src="../play/glitchwords.js" charset="utf-8"></script>
+<script>/* his glitch words, shuffled once (fixed order) so a glitch never pulls a whole block of one kind — sounds, hex, spam… (Matt: "just mix it up so thats all random") */ if (window.POTATO_GLITCH_WORDS) (a => { let s = 404; const r = () => (s = (s * 16807) % 2147483647) / 2147483647; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })(window.POTATO_GLITCH_WORDS);</script>
+<script type="module" src="main.mjs"></script>

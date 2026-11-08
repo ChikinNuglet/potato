@@ -342,6 +342,11 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     if (white > 0) { fx2.fillStyle = `rgba(255,250,238,${Math.min(1, white)})`; fx2.fillRect(0, 0, 960, 540); } }
   const hexA = (c, a) => `rgba(${parseInt(c.slice(1, 3), 16)},${parseInt(c.slice(3, 5), 16)},${parseInt(c.slice(5, 7), 16)},${a})`;
   S.dressOnly = slug => { fx.amount = 0.9; lastGl = now(); sfx.glitch && sfx.glitch(); if (!slug) { spud.wear(null); return Promise.resolve(); } return loadOutfit(slug).then(b => spud.wear(b)).catch(() => {}); };
+  // (arcade, Nov 8) send him to sit on a hop-on thing (the couch), and put a switch back off (the controller back on the console)
+  S.sitOn = id => { const i = idOf(id); if (i < 0 || !looping || enter) return false; const [a, b] = seatOf(props()[i]);
+    walk.door = false; walk.use = i; walk.chain = -1; walk.hopAt = 0; walk.then = null; walk.via = undefined; faceDir = 0; walk.hop = true; walk.dir = 0;
+    walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw((a + b) / 2))); return true; };
+  S.propOff = id => { const i = idOf(id); if (i >= 0 && ps[i]) ps[i].on = false; };
   S.spinBy = d => { spinOff += Math.PI * 2 * d; spud.turnBy(Math.PI * 2 * d); };
   return S;
 }

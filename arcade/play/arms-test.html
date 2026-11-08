@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><style>body{margin:0;background:#2a2f3a}#stage{width:600px;height:640px}</style>
+<!-- arms-test.html — stills of the 3D Potato's arms (spud.arms / spud.dance). ?bg=0 for a transparent background, ?wide=1.3 a wider frame, ?o=slug an outfit. -->
+<div id="stage"></div>
+<script type="module">
+import { createSpud } from './spud3d.mjs';
+import { loadOutfit } from './outfits3d.mjs';
+const q = new URLSearchParams(location.search);
+if (q.get('bg') === '0') document.body.style.background = 'transparent';
+if (q.get('big')) Object.assign(document.getElementById('stage').style, { width: '1200px', height: '1280px' });
+const spud = await createSpud(document.getElementById('stage'), { still: true });
+if (q.get('o')) spud.wear(await loadOutfit(q.get('o')));
+if (q.get('wide')) { spud.camera.zoom = 1 / +q.get('wide'); spud.camera.updateProjectionMatrix(); }   // (?wide=1.3: a wider frame, so arm tips aren't cut off)
+// shot({yaw, pose, dance, beat, t}) -> png data URL
+window.shot = ({ yaw = 0, pose = null, dance = null, beat = 0, t = 0 }) => {
+  spud.snap(yaw);
+  spud.arms('none', 0); if (dance) spud.dance(dance, beat, { blend: 0, body: false }); else spud.arms(pose || 'none', 0);
+  spud.frame(t); return spud.frame(t);
+};
+window.spud = spud; window.ready = true;
+</script>

@@ -1,6 +1,8 @@
 // portal.mjs: the terminal in the kitchen opens the 404 and asks for his password. The right one opens the door on the right; walk through it to the
 // Read The Terms demo. Nothing says any of this.
-const PASSWORD = "I'm Potato Baby! 🥔";   // THE ONE SETTING. Forgiving: capitals, the apostrophe and the emoji don't matter.
+const PASSWORD = "ghost";   // THE ONE SETTING (Chikin, Nov 8: "the password on the laptop can change to ghost"). Forgiving: capitals and marks don't matter.
+// the right password plays Ghost in the Group Chat's demo (he's the ghost potato in it): Chikin's logo, then Potato's, with a COMING SOON banner, then the demo
+const GHOST = { video: 'demo/ghost-in-the-group-chat.mp4', logos: ['../logo/chikin-logo.webp', '../logo/potato-logo.png'] };
 const MAIL_ROOM = 'https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec';   // Potato's mail room: checks a buyer's one-time code
 export const PHONE_NOTE = "Best on a computer. Phones and tablets work, but it's rough for now.";
 const plain = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -24,7 +26,16 @@ export function installPortal({ glitch, music, opened = () => {} }) {
       box.classList.add('go'); const bar = box.querySelector('.bar i'), pc = box.querySelector('.pc'); let n = 0; const id = setInterval(() => { n = Math.min(100, n + 7); bar.style.width = n + '%'; pc.textContent = n + '%'; if (n >= 100) { clearInterval(id); setTimeout(then, 260); } }, 60); }); }
   const close = (o, then) => { const v = o.querySelector('video'); if (v) v.pause(); o.remove(); music(true); glitch(); then && then(); };
   function open() { if (document.getElementById('p404')) return; const o = screen(`<div class="frame"><span class="soon">coming soon</span></div>${exe('password')}<button type="button" class="back">Back to the kitchen</button>`);
-    runExe(o, v => plain(v) === plain(PASSWORD), () => { opened(); close(o); });
+    runExe(o, v => plain(v) === plain(PASSWORD), () => { close(o); ghostDemo(); });
+    o.querySelector('.back').onclick = () => close(o); }
+  function ghostDemo() {   // logos first (Chikin's, then Potato's) under a COMING SOON banner, then the demo plays on its own
+    const o = screen(`<div class="frame gd"><img class="lg" alt="" src="${GHOST.logos[0]}"><video playsinline preload="auto" src="${GHOST.video}" style="display:none"></video><div class="cs"><span>coming soon</span></div></div><button type="button" class="back">Back to the kitchen</button>`);
+    const f = o.querySelector('.gd'), lg = f.querySelector('.lg'), v = f.querySelector('video');
+    const st = document.createElement('style'); st.textContent = '#p404 .gd{position:relative}#p404 .gd .lg{width:min(46%,320px);height:auto;object-fit:contain;transition:opacity .35s}#p404 .gd .cs{position:absolute;left:0;right:0;top:0;height:40px;display:flex;align-items:center;justify-content:center;z-index:2;background:repeating-linear-gradient(-45deg,#f2c53a 0 16px,#120a05 16px 32px)}#p404 .gd .cs span{background:#f2c53a;color:#120a05;padding:3px 16px;border:2px solid #120a05;font:700 clamp(13px,2.6vw,18px)/1.2 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}';
+    o.append(st);
+    const steps = [() => { lg.src = GHOST.logos[1]; }, () => { lg.remove(); v.style.display = ''; v.controls = true; v.play().catch(() => { v.muted = true; v.play().catch(() => {}); }); }];
+    let k = 0; const next = () => { if (!o.isConnected || k >= steps.length) return; lg.style.opacity = 0; setTimeout(() => { if (!o.isConnected) return; steps[k++](); lg.style.opacity = 1; if (k < steps.length) setTimeout(next, 2200); }, 350); };
+    setTimeout(next, 2200);
     o.querySelector('.back').onclick = () => close(o); }
   function video(back) { const o = screen(`<div class="frame"><video src="demo/read-the-terms.mp4" controls autoplay playsinline></video></div><button type="button" class="back">Back to the kitchen</button>`); o.querySelector('.back').onclick = () => close(o, back); }
   // the way in, for someone who bought it: their one-time code, once per device (a curtain, not a lock)

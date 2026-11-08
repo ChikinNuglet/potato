@@ -106,6 +106,14 @@ export function livingRoom(K) {
     box(x, 410, 606, 30, 10, '#2a2a30', { r: 3, sh: 'n', lw: 3 }); }   // the remote, down the side of the cushion
   function sideTable(x, t) { box(x, 552, 590, 80, 12, WOOD, { r: 3, lw: 5, sh: 'b' }); for (const a of [560, 616]) box(x, a, 602, 8, FLOOR - 602, WOOD2, { sh: 'n', lw: 3 });
     box(x, 576, 560, 26, 30, '#e8e0cf', { r: 4, lw: 4, sh: 'r' }); x.beginPath(); x.arc(604, 574, 8, -1.4, 1.4); x.lineWidth = 5; x.strokeStyle = INK; x.stroke(); steam(x, 589, 556, t, 2, 60, 0.28, 5); }
+  // the GAME CONSOLE (Chikin, Nov 8: "the living room needs a game console, when you glitch it, potato can sit on the couch, the controller
+  // flips into his lap and the screen does a binary transition into a level select screen"): in the TV cabinet's left cubby. Glitch it
+  // (E / tap, like every switch) and room.mjs does the rest (arcade.mjs). The controller is drawn here only while it's not in his lap.
+  function gameConsole(x, t, P) { const s = P.console || Z, inLap = s.on;
+    box(x, 664, 620, 80, 70, '#1a120d', { r: 4, sh: 'n', lw: 4 });   // the cubby, door off
+    box(x, 672, 652, 64, 30, '#2a2d36', { r: 6, lw: 4, sh: 'b', f: 0.2 }); seg(x, [[680, 667], [700, 667]], 3, '#4a4f5c');
+    circ(x, 724, 667, 4, rnd(Math.floor(t * 2), 9) > 0.3 ? '#4dff9a' : '#1f6b44', { sh: 'n', lw: 2 });   // the power light, breathing
+    if (!inLap) { box(x, 676, 632, 44, 16, '#3a3f4c', { r: 8, lw: 3, sh: 'b' }); circ(x, 688, 640, 3, '#e85aa8', { sh: 'n', lw: 1.5 }); circ(x, 708, 640, 3, '#4dd2ff', { sh: 'n', lw: 1.5 }); } }
   function tv(x, t, P) { const s = P.tv || Z, on = s.on, k = on ? Math.min(1, since(s, t) / 0.25) : 1 - Math.min(1, since(s, t) / 0.18);
     seg(x, [[752, 470], [716, 412]], 5); seg(x, [[758, 470], [796, 404]], 5); circ(x, 716, 410, 5, '#c9ced6', { sh: 'n', lw: 3 }); circ(x, 796, 402, 5, '#c9ced6', { sh: 'n', lw: 3 });
     box(x, 676, 466, 158, 132, '#5a4a3a', { r: 16, lw: 6, sh: 'r', f: 0.16 }); box(x, 690, 480, 106, 104, '#1b211e', { r: 14, sh: 'n', lw: 4 });
@@ -145,12 +153,13 @@ export function livingRoom(K) {
     props: [
       { id: 'lamp', kind: 'switch', lamp: true, startOn: true, x0: 76, x1: 156, y0: 286, y1: 700, hint: [115, 276], sfx: { on: 'lampOn', off: 'lampOff' } },
       { id: 'couch', kind: 'hop', x0: 160, x1: 540, top: 575, seat: [204, 496], y0: 436, y1: 707, sfx: { land: 'creak' }, face: { land: ['warm', 1.4] } },
+      { id: 'console', kind: 'switch', call: true, busy: 1.2, x0: 662, x1: 748, y0: 612, y1: 700, hint: [705, 604], sfx: { on: 'flick', off: 'flick' }, face: { on: ['smirk', 1.2] } },
       { id: 'tv', kind: 'switch', x0: 676, x1: 834, y0: 400, y1: 600, hint: [755, 392], sfx: { on: 'tvOn', off: 'tvOff' }, face: { on: ['awe', 1.4] } },
       { id: 'stairs', kind: 'hop', walk: true, topAt, x0: ST.x0 - 4, x1: LAND.x1, top: FLOOR - ST.rise, seat: [ST.x0 + 4, ST.x0 + 80], hit: [ST.x0 - 20, 300, LAND.x1, 610], y0: 300, y1: 707, creak: top => top === FLOOR - 3 * ST.rise || top === FLOOR - 6 * ST.rise, stepSfx: 'creak', sfx: { land: 'thunk' } },
-      { id: 'upstairs', kind: 'switch', auto: 0.9, upY: LAND.top, x0: 1340, x1: 1470, y0: 196, y1: 432, hint: [1405, 186], sfx: { on: 'rattle', done: 'thud' }, face: { on: ['question', 1.4] } },
+      { id: 'upstairs', kind: 'switch', call: true, auto: 0.9, upY: LAND.top, x0: 1340, x1: 1470, y0: 196, y1: 432, hint: [1405, 186], sfx: { on: 'rattle', done: 'thud' }, face: { on: ['question', 1.4] } },
       { id: 'cupboard', kind: 'switch', downOnly: true, x0: 1326, x1: 1450, y0: 518, y1: 707, hint: [1388, 506], sfx: { on: 'drawer', off: 'thunk' }, face: { on: ['smirk', 1.1] } } ],
     base,
-    under(x, t, lit, P, me) { lampSt(x, t, P, lit); couch(x, t, P, me); sideTable(x, t); plant(x, t); upstairs(x, t, P); cupboard(x, t, P); },
+    under(x, t, lit, P, me) { lampSt(x, t, P, lit); couch(x, t, P, me); gameConsole(x, t, P); sideTable(x, t); plant(x, t); upstairs(x, t, P); cupboard(x, t, P); },
     anim(x, t, lit, P) { lampLight(x, lit); tv(x, t, P); const s = P.tv || Z; if (s.on) glow(x, 743, 532, 300, '#9fd0ff', 0.16 + 0.06 * rnd(Math.floor(t * 8), 2)); },
     emblem(x) { box(x, 22, 40, 56, 30, '#a8452e', { r: 10, lw: 5 }); box(x, 16, 50, 14, 26, '#a8452e', { r: 6, lw: 4 }); box(x, 70, 50, 14, 26, '#a8452e', { r: 6, lw: 4 }); },
     // the wall round the front door (canvas px, unsqueezed, drawn over the doors): a hook rail over it with his hat and scarf (he never wears them out), a doormat
