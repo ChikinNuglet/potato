@@ -8,6 +8,7 @@
 // right wall the WATCH door (the song's demo, hands-off).
 // House style (Vega's stickers): thick dark ink, flat fills with one cel-shade band, warm light. Purple is his glitch only.
 // STYLES[i] (album order, one per song) = { id, level, name, outfit (slug | null), badge, door, paint(ctx, t, lit, o), icon(ctx, size) }.
+import { livingRoom } from './living.mjs';   // THE LIVING ROOM (Nov 8): its own file, painted with this kit
 const OLD_WHITE = (() => { try { return +new URLSearchParams(location.search).get('border') > 0; } catch (e) { return false; } })();   // NO WHITE LINES (Nov 5, D-20261105-09): the white sticker borders are off; ?border=1 shows the old ones to compare
 export const INK = '#120a05', WARM = '#ffcf8a';
 export const rnd = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -1361,8 +1362,26 @@ function deskCal(x, X = 866, Y = 372) {   // the joke: April 4, circled. On the 
 function terminal(x, t, P) { const on = true, X = 1296, Y = 366;   // the old terminal: use it and it asks for the password
   box(x, X - 8, Y + 72, 126, 14, '#b9b1a0', { r: 4, lw: 4, sh: 'n' }); box(x, X, Y, 110, 74, '#d9d2c0', { r: 10, lw: 5 }); box(x, X + 10, Y + 9, 90, 54, '#06140c', { r: 6, sh: 'n', lw: 3 });
   const f = Math.floor(t * 3); x.fillStyle = '#4dff9a'; for (let r = 0; r < 4; r++) { const L = 18 + rnd(r, f) * 52; x.fillRect(X + 18, Y + 18 + r * 10, r === 3 ? (f % 2 ? 8 : 0) : L, 4); } }
-bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 1286, x1: 1420, y0: 360, y1: 450, hint: [1350, 350], sfx: { on: 'flick', off: 'flick' } }];
-bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); };
+// ---- THE POTATO CAVE (Nov 7, cave crew): a trapdoor in the kitchen floor. Something's always playing down there: the light through its
+// cracks flickers like a screen. Use it (tap / E) and it flips open, the light comes up, and he drops into the cave (studio/cave.mjs).
+function trapdoor(x, t, P) { const s = P.cave || Z, a = s.n ? since(s, t) : 99, k = a < 0.25 ? ez(a / 0.25) : a < 1.3 ? 1 : a < 1.6 ? 1 - ez((a - 1.3) / 0.3) : 0;
+  const L = [252, 404], B = [232, 424], y0 = 718, y1 = 788, f = Math.floor(t * 2.3), FL = ['#6ad0ff', '#ffb04a', '#ff6a5a', '#7dff9a', '#ffd98a'], col = FL[f % FL.length], fl = 0.55 + 0.45 * rnd(Math.floor(t * 9), 3);
+  const hole = () => { x.beginPath(); x.moveTo(L[0], y0); x.lineTo(L[1], y0); x.lineTo(B[1], y1); x.lineTo(B[0], y1); x.closePath(); };
+  if (k > 0.01) {   // open: the hole, lit from below, the light coming up out of it, the lid standing up behind it
+    hole(); x.fillStyle = '#0b0705'; x.fill(); x.save(); hole(); x.clip(); glow(x, 328, y1, 120, col, 0.75 * k); x.restore();
+    x.save(); x.globalCompositeOperation = 'lighter'; const g = x.createLinearGradient(0, y1, 0, y0 - 300); g.addColorStop(0, rgba(col, 0.45 * k * fl)); g.addColorStop(1, rgba(col, 0)); x.fillStyle = g; x.beginPath(); x.moveTo(B[0], y1); x.lineTo(B[1], y1); x.lineTo(L[1] + 40, y0 - 300); x.lineTo(L[0] - 40, y0 - 300); x.closePath(); x.fill(); x.restore();
+    const ly = y0 - 92 * k; poly(x, [[L[0], y0], [L[1], y0], [L[1] + 4, ly], [L[0] - 4, ly]], '#6b4426', { lw: 6, shade: [L[1] - 24, ly, 30, y0 - ly] }); stroke(x, { lw: 6 }); hole(); stroke(x, { lw: 6 }); return; }
+  const bp = t % 5.5, bump = bp < 0.32 ? Math.sin(bp / 0.32 * Math.PI) * 7 : 0;   // (Reviewer: every few seconds the lid bumps up a little and light spills out: something's on down there)
+  if (bump > 0.5) { x.save(); x.globalCompositeOperation = 'lighter'; glow(x, 328, y0 + 4, 150, col, 0.5 * bump / 7); x.restore(); }
+  x.save(); x.translate(0, -bump);
+  poly(x, [[L[0], y0], [L[1], y0], [B[1], y1], [B[0], y1]], '#6b4426', { lw: 6, shade: [232, y1 - 14, 200, 14] });   // shut: planks, an iron ring, light through the cracks
+  for (const u of [0.33, 0.66]) { const xa = L[0] + (L[1] - L[0]) * u, xb = B[0] + (B[1] - B[0]) * u; seg(x, [[xa, y0 + 3], [xb, y1 - 3]], 7, '#0b0705'); seg(x, [[xa, y0 + 6], [xb, y1 - 6]], 4, rgba(col, 0.75 + 0.25 * fl));
+    x.save(); x.globalCompositeOperation = 'lighter'; glow(x, (xa + xb) / 2, (y0 + y1) / 2, 70, col, 0.3 * fl); x.restore(); }
+  x.save(); x.globalCompositeOperation = 'lighter'; x.lineWidth = 4; x.strokeStyle = rgba(col, 0.35 + 0.3 * fl); x.beginPath(); x.moveTo(L[0] - 3, y0 - 2); x.lineTo(L[1] + 3, y0 - 2); x.stroke(); x.restore();   // (light round its edge)
+  x.beginPath(); x.ellipse(328, y1 - 16, 15, 8, 0, 0, TAU); x.lineWidth = 6; x.strokeStyle = INK; x.stroke(); x.lineWidth = 3; x.strokeStyle = '#8a8f99'; x.stroke(); x.restore(); }
+bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 1286, x1: 1420, y0: 360, y1: 450, hint: [1350, 350], sfx: { on: 'flick', off: 'flick' } },
+  { id: 'cave', kind: 'switch', call: true, busy: 1.7, x0: 236, x1: 420, y0: 704, y1: 800, hint: [328, 690], sfx: { on: 'creak', off: 'creak' } }];   // (the cave: room.mjs opens it)
+bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); trapdoor(x, t, P); };
 const derive = (id, o) => { const st = Object.assign({}, bareSt, { props: propsBare.slice(), under: uBare, id }, o); S.push(st); return st; };
 
 // Between Messages: nobody's home, the lamp's off, and someone's flashlight is going through the kitchen
@@ -1427,6 +1446,8 @@ derive('booth', { name: 'photobooth', outfit: null, badge: '#7b3cf2', dark: 0, u
   anim(x, t, lit, P) { const g = P.gumball || Z, k = g.n ? Math.min(1, since(g, t) / 0.6) : 1; circ(x, 390, 430, 70, 'rgba(180,220,255,.28)', { sh: 'n', lw: 6 }); for (let i = 0; i < 16; i++) circ(x, 346 + rnd(i, 1) * 88, 400 + rnd(i, 2) * 80, 11, COLS[i % 4], { sh: 'n', lw: 3 }); if (k < 1) circ(x, 390 + 40 * k, 540 + 100 * k * k, 11, '#e23b2e', { sh: 'n', lw: 3 }); },
   emblem(x) { box(x, 26, 22, 48, 58, '#d42f27', { r: 6, lw: 5 }); ell(x, 62, 44, 8, 8, '#4db3ff', { lw: 3 }); } });
 for (const id of ['burglar', 'binary', 'santa', 'pumpkin', 'booth']) DOORS[id] = DOORS.bare;
+// THE LIVING ROOM (Nov 8): through the left door of Potato's own kitchen (room.mjs). Its file is living.mjs; this hands it the kitchen's kit.
+{ const LV = livingRoom({ INK, WARM, TAU, rnd, box, poly, circ, ell, seg, glow, cone, steam, city, rgba, dk, lt, topShade, PIECE, Z, since, landed, fade, wob, ez }); derive('living', LV); DOORS.living = LV.door; }
 DOORS.santa = Object.assign({}, DOORS.bare, { panel: '#7a2024', trim: '#4c1216', knob: '#f4c430', light: '#ffd98a' }); DOORS.booth = Object.assign({}, DOORS.bare, { panel: '#3a2458', trim: '#241432', knob: '#f4c430', light: '#ffd98a' }); DOORS.pumpkin = Object.assign({}, DOORS.bare, { panel: '#3a2450', trim: '#241432', knob: '#e87a1e', light: '#ff9a3c' }); DOORS.binary = Object.assign({}, DOORS.bare, { panel: '#0d2a1b', trim: '#06140c', knob: '#4dff9a', light: '#4dff9a' });
 // anything you can use gives a small glitch now and then, so you find it without being told
 function usableGlitch(x, st, t) { if (typeof x.drawImage !== 'function' || !x.canvas || x.canvas.width !== 1600) return; (st.props || []).forEach((p, i) => { if (p.kind === 'hop' || p.bump) return; const ph = (t * 0.31 + i * 0.37 + rnd(i, 7)) % 1; if (ph > 0.07) return; const f = Math.floor(t * 18), X = ROOM.ox + p.x0 * ROOM.sx, W = (p.x1 - p.x0) * ROOM.sx, H = p.y1 - p.y0; for (let q = 0; q < 3; q++) { const y = p.y0 + rnd(f, q + i) * H * 0.8, h = 6 + rnd(q, f) * 16, dx = (rnd(f, q + 30) - 0.5) * 34; x.drawImage(x.canvas, X, y, W, h, X + dx, y, W, h); } }); }
@@ -1434,7 +1455,7 @@ function usableGlitch(x, st, t) { if (typeof x.drawImage !== 'function' || !x.ca
 const ORDER = [   // the room's order: the album, then Binary, Santa, Halloween
   ['thursday-potato', 'bare'], ['get-down', 'disco-legend'], ['confidently-incorrect', 'construction-crew'], ['read-the-terms', 'suit-tie'],
   ['between-messages', 'burglar'], ['ghost-in-the-group-chat', 'sheet-ghost'], ['still-here', 'castle-knight'], ['no-answer', 'noir-detective'],
-  ['turn-me-off', 'tin-robot'], ['last-lights-on', 'circuit-cyborg'], ['binary-static', 'binary'], ['boo-not-found', 'pumpkin'], ['carol-of-the-bells', 'santa'], ['booth', 'booth']];
+  ['turn-me-off', 'tin-robot'], ['last-lights-on', 'circuit-cyborg'], ['binary-static', 'binary'], ['boo-not-found', 'pumpkin'], ['carol-of-the-bells', 'santa'], ['booth', 'booth'], ['living', 'living']];   // (the living room after the booth: not a song, no tile)
 
 function doorPath(x, d, X0, Y0, W, H) {   // the doorway's shape: square, rounded (a hatch) or arched (the castle)
   x.beginPath(); if (d.kind === 'arch') { const r = W / 2; x.moveTo(X0, Y0 + H); x.lineTo(X0, Y0 + r); x.arc(X0 + r, Y0 + r, r, Math.PI, 0); x.lineTo(X0 + W, Y0 + H); x.closePath(); }
@@ -1491,6 +1512,11 @@ function panelDeco(x, d, X0, Y0, W, H, t) {
       { const on = Math.floor(t * 1.5) % 2; circ(x, R - 24, Y0 + 158, 9, on ? '#ff9a2e' : '#6a3a14', { sh: 'n', lw: 3 }); if (on) glow(x, R - 24, Y0 + 158, 30, '#ff9a2e', 0.45); }
       stripes(x, X0 + 8, Y0 + H - 60, W - 16, 48, '#f2c230', INK, 14, { r: 3 });
       for (const [a, b] of [[X0 + 12, Y0 + 12], [R - 12, Y0 + 12], [X0 + 12, Y0 + H - 72], [R - 12, Y0 + H - 72]]) circ(x, a, b, 4, '#8a6a1a', { sh: 'n', lw: 2 }); break;
+    case 'front':     // the front door: a little window up top (the night or the day outside), the house number, a letterbox, a spyhole
+      box(x, X0 + 34, Y0 + 26, W - 68, 60, '#0b1530', { r: [30, 30, 4, 4], sh: 'n', lw: 5 }); seg(x, [[cx, Y0 + 26], [cx, Y0 + 86]], 4); glow(x, cx, Y0 + 60, 50, '#ffcf8a', 0.18);
+      box(x, cx - 34, Y0 + 104, 68, 30, '#e0b45a', { r: 5, sh: 'b', f: 0.3, lw: 4 }); x.save(); x.fillStyle = INK; x.font = '700 22px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('404', cx, Y0 + 120); x.restore();
+      circ(x, cx, Y0 + 152, 5, '#e0b45a', { sh: 'n', lw: 3 }); box(x, cx - 30, Y0 + 236, 60, 14, '#e0b45a', { r: 3, sh: 'b', f: 0.4, lw: 4 }); seg(x, [[cx - 22, Y0 + 243], [cx + 22, Y0 + 243]], 3);
+      box(x, X0 + 20, Y0 + 270, W - 40, 52, d.panel, { r: 4, sh: 'b', f: 0.25, lw: 4 }); break;
     case 'borg':      // the collective's door: traces, a seam, a green eye
       x.save(); x.strokeStyle = '#57ff7a'; x.globalAlpha = 0.55 + 0.25 * Math.sin(t * 3); x.lineWidth = 3;
       for (const [a, b] of [[[X0 + 20, Y0 + 40], [X0 + 60, Y0 + 80]], [[R - 20, Y0 + 120], [R - 70, Y0 + 170]], [[X0 + 24, Y0 + 260], [X0 + 80, Y0 + 300]]]) { x.beginPath(); x.moveTo(...a); x.lineTo(b[0], a[1]); x.lineTo(...b); x.stroke(); circ(x, b[0], b[1], 4, '#57ff7a', { sh: 'n', lw: 0 }); }
@@ -1520,7 +1546,7 @@ function doorway(x, st, t, open, G = DOOR) {   // (G: which doorway; the watch d
   x.save(); if (d.tilt) { x.translate(x0, y1); x.rotate(d.tilt); x.translate(-x0, -y1); }
   doorPath(x, d, x0, y0, W, H); x.save(); x.clip();
   const g = x.createRadialGradient(x0 + W / 2, y0 + H * 0.55, 10, x0 + W / 2, y0 + H * 0.55, H * 0.7); g.addColorStop(0, '#ffffff'); g.addColorStop(0.45, d.light); g.addColorStop(1, dk(d.light, 0.35));
-  x.fillStyle = open > 0 ? g : '#000'; x.fillRect(x0, y0, W, H); x.restore();
+  if (open > 0 && d.view) d.view(x, x0, y0, W, H, t); else { x.fillStyle = open > 0 ? g : '#000'; x.fillRect(x0, y0, W, H); } x.restore();   // (d.view: what's really out there, the living room's street)
   if (open < 0.999) {
     x.save(); doorPath(x, d, x0, y0, W, H); x.clip();
     if (d.kind === 'slide') x.translate(-W * 0.98 * open, 0);
@@ -1609,7 +1635,7 @@ const bases = new Map();
 // that has nothing on it, raw x 0..STRIP, tiled outward mirror by mirror: seamless where it meets the room on the left; on the
 // right a soft corner shadow where the room's last column meets it)
 const LIVE_STRIP = new Set(['disco-legend']);   // (rooms whose plain stretch is drawn live, not in the base)
-const STRIP = { bare: 130, 'disco-legend': 150, 'orbital-astronaut': 120, 'construction-crew': 120, 'suit-tie': 130, 'noir-detective': 120, 'sheet-ghost': 95, 'castle-knight': 64, 'deep-sea-diver': 85, 'tin-robot': 90, 'circuit-cyborg': 130 };
+const STRIP = { bare: 130, 'disco-legend': 150, 'orbital-astronaut': 120, 'construction-crew': 120, 'suit-tie': 130, 'noir-detective': 120, 'sheet-ghost': 95, 'castle-knight': 64, 'deep-sea-diver': 85, 'tin-robot': 90, 'circuit-cyborg': 130, living: 28 };
 function strip(x, room, b, X0, X1, dir) {   // fill X0..X1 with the room's raw 0..b, tiled away from the room (dir -1: leftward from X1, +1: rightward from X0)
   const { ox, sx } = ROOM, cw = b * sx;
   for (let i = 0, n = Math.ceil((X1 - X0) / cw) + 1; i < n; i++) { const mir = dir < 0 ? i % 2 === 0 : i % 2 === 1, d0 = dir < 0 ? X1 - (i + 1) * cw : X0 + i * cw;
@@ -1643,8 +1669,8 @@ for (const st of S) {
       else if (st.dark && lit < 1) { ctx.fillStyle = `rgba(6,5,12,${st.dark * (1 - lit)})`; ctx.fillRect(0, 0, ROOM.ox, 900); ctx.fillRect(E, 0, 1600 - E, 900); }
       ctx.save(); ctx.beginPath(); ctx.rect(ROOM.ox, 0, E - ROOM.ox, 900); ctx.clip(); ctx.translate(ROOM.ox, 0); ctx.scale(ROOM.sx, 1); ctx.__sq = ROOM.sx;   // the "use me" glints, over it all
       try { propMarks(ctx, st, t, P, o); } finally { ctx.__sq = 0; ctx.restore(); } }
-    doorway(ctx, st, t, o ? o.open || 0 : 0); sign(ctx, st, t, o);
-    ctx.save(); ctx.translate(WDOOR.x0 + WDOOR.x1, 0); ctx.scale(-1, 1); doorway(ctx, st, t, o ? o.open2 || 0 : 0, WDOOR); ctx.restore(); usableGlitch(ctx, st, t); ctx.restore(); };
+    doorway(ctx, st, t, o ? o.open || 0 : 0); if (!st.noSign) sign(ctx, st, t, o);
+    ctx.save(); ctx.translate(WDOOR.x0 + WDOOR.x1, 0); ctx.scale(-1, 1); doorway(ctx, st.door2 ? { door: st.door2 } : st, t, o ? o.open2 || 0 : 0, WDOOR); ctx.restore(); if (st.wallDeco) st.wallDeco(ctx, t); usableGlitch(ctx, st, t); ctx.restore(); };
   st.icon = (ctx, size = 48) => { ctx.save(); ctx.scale(size / 100, size / 100); ctx.lineJoin = 'round'; ctx.lineCap = 'round';   // a round sticker badge: ink ring, the colour, the costume's key shape (the old white border only with ?border=, D-20261105-09)
     if (OLD_WHITE) { ctx.beginPath(); ctx.arc(50, 50, 49, 0, TAU); ctx.fillStyle = '#fbf6ec'; ctx.fill(); } ctx.beginPath(); ctx.arc(50, 50, 44.5, 0, TAU); ctx.fillStyle = INK; ctx.fill();
     ctx.beginPath(); ctx.arc(50, 50, 40, 0, TAU); ctx.fillStyle = st.badge; ctx.fill(); ctx.save(); ctx.clip(); ctx.fillStyle = dk(st.badge, 0.28); ctx.beginPath(); ctx.arc(62, 62, 40, 0, TAU); ctx.arc(50, 50, 60, 0, TAU, true); ctx.fill();

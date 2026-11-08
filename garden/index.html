@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>pot△to™ · the garden</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=JetBrains+Mono:wght@500;700&display=swap">
+<script src="../glitchwords.js"></script>
+<style>
+:root{--bg:#05070a;--ink:#eef2f6;--dim:#8a93a6;--green:#4dff9a;--purple:#9a52ff}
+html{background:var(--bg)}body{margin:0;color:var(--ink);font:16px/1.5 "JetBrains Mono",monospace;min-height:100vh;overflow-x:hidden}
+#bin{position:fixed;inset:0;width:100%;height:100%;z-index:-1}
+h1{margin:28px 16px 4px;text-align:center;font:400 clamp(26px,6vw,44px)/1 "Major Mono Display",monospace;color:#f1e8ff;text-shadow:-3px 0 #7b3cf2,3px 0 #e03ccf}
+.sub{text-align:center;color:var(--dim);font-size:14px;margin:6px 16px 0}
+.bed{position:relative;margin:40px auto 0;width:min(920px,94vw);display:grid;grid-template-columns:repeat(6,1fr);gap:26px 8px;padding:30px 10px 40px;border-radius:18px;
+ background:repeating-linear-gradient(180deg,#2a1a10 0 34px,#21140c 34px 40px);box-shadow:inset 0 0 0 3px #120a05,0 0 50px #4dff9a10}
+@media(max-width:560px){.bed{grid-template-columns:repeat(3,1fr)}}
+.plant{position:relative;height:96px;cursor:pointer;background:none;border:0;padding:0}
+.plant .leaf{position:absolute;bottom:26px;width:22px;height:40px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#3fae5a;border:3px solid #120a05;transform-origin:50% 100%}
+.plant .l1{left:calc(50% - 26px);transform:rotate(-30deg)}.plant .l2{left:calc(50% - 11px);height:50px;background:#4dc469}.plant .l3{left:calc(50% + 4px);transform:rotate(30deg)}
+.plant .mound{position:absolute;left:calc(50% - 34px);bottom:12px;width:68px;height:22px;border-radius:50% 50% 8px 8px;background:#3b2414;border:3px solid #120a05}
+.plant:hover .leaf,.plant:focus-visible .leaf{animation:wig .4s ease-in-out infinite}
+@keyframes wig{0%,100%{rotate:-6deg}50%{rotate:6deg}}
+.plant.dug{pointer-events:none;opacity:.35}.plant.dug .leaf{display:none}
+.pop{position:fixed;inset:0;z-index:20;display:none;place-items:center;background:rgba(5,7,10,.72)}
+.pop.on{display:grid}
+.card{width:min(380px,90vw);background:#0b0e14;border-radius:16px;padding:20px;text-align:center;box-shadow:0 0 0 1px #ffffff18,0 0 60px #9a52ff33}
+.card canvas{width:220px;height:220px;display:block;margin:-90px auto 6px}
+@keyframes up{from{transform:translateY(120px) scale(.6);opacity:0}to{transform:none;opacity:1}}
+.card .no{color:var(--dim);font-size:12px;letter-spacing:.14em}
+.card .nm{font:700 22px "JetBrains Mono",monospace;margin:2px 0 8px}
+.card .lw{color:#c9a7ff;font-style:italic;margin:0 0 6px}
+.card .jb{color:var(--dim);font-size:12px;margin:0 0 14px}
+.card .row{display:flex;gap:10px;justify-content:center}
+.card button{border:0;border-radius:10px;padding:12px 16px;font:700 15px "JetBrains Mono",monospace;cursor:pointer}
+.take{background:var(--green);color:#03140a}.again{background:#1b2130;color:var(--ink)}
+.say{min-height:1.3em;color:var(--dim);font-size:13px;margin-top:10px}
+.back{display:block;text-align:center;margin:26px 0 40px;color:var(--dim)}
+</style></head><body>
+<canvas id="bin" aria-hidden="true"></canvas>
+<h1>th3 g4rd3n</h1>
+<p class="sub">every potato here helped build him. pick one.</p>
+<div class="bed" id="bed"></div>
+<a class="back" href="../">back to the door</a>
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-labelledby="nm"><div class="card">
+ <canvas id="spud" width="440" height="440" aria-hidden="true"></canvas>
+ <div class="no" id="no"></div><div class="nm" id="nm"></div><p class="lw" id="lw"></p><p class="jb" id="jb"></p>
+ <div class="row"><button class="take" id="take">take him home</button><button class="again" id="again">dig again</button></div>
+ <p class="say" id="say" role="status"></p>
+</div></div>
+<script src="look.js"></script>
+<script>
+(function(){var c=document.getElementById('bin'),x=c.getContext('2d'),W,H,cols,drops,F=16,BITS=Array.from('potato ').map(function(ch){return ch.charCodeAt(0).toString(2).padStart(8,'0')}).join(''),seq=[],words=window.POTATO_GLITCH_WORDS||['krrzzt'];
+function size(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);cols=Math.ceil(W/F);drops=[];seq=[];for(var i=0;i<cols;i++){drops.push(Math.random()*H/F);seq.push(Math.floor(Math.random()*56))}x.fillStyle='#05070a';x.fillRect(0,0,W,H)}
+function step(){x.fillStyle='rgba(5,7,10,.12)';x.fillRect(0,0,W,H);x.font='600 14px "JetBrains Mono",monospace';for(var i=0;i<cols;i++){var y=drops[i]*F;if(Math.random()<.008){x.fillStyle='rgba(154,82,255,.6)';x.fillText(words[Math.floor(Math.random()*words.length)],i*F,y)}else{x.fillStyle='rgba(77,255,154,.24)';x.fillText(BITS[(seq[i]++)%BITS.length],i*F,y)}if(y>H&&Math.random()>.975)drops[i]=0;drops[i]+=.55}}
+size();addEventListener('resize',size);(function loop(){step();setTimeout(function(){requestAnimationFrame(loop)},45)})()})();
+
+// THE GENERATOR: each agent's own costume choice, matched to Potato's wardrobe (looks.json, made with the synonym list),
+// then built by look.js (outfit + the hat lifted cleanly off another costume). Chikin can override any look in review.html.
+var AG=[],LOOKS={};
+// the agent's own words from The Long Context swarm in and settle into the shape of their potato, then become him
+function build(agent){var lk=LOOKS[agent.name]||{body:'suit-tie'},cv=document.getElementById('spud'),g=cv.getContext('2d'),off=document.createElement('canvas');off.width=cv.width;off.height=cv.height;
+ return LOOK.draw(off,lk).then(function(){var D=off.getContext('2d').getImageData(0,0,off.width,off.height).data,pts=[],step=9;
+  for(var y=0;y<off.height;y+=step)for(var x=0;x<off.width;x+=step){var k=(y*off.width+x)*4;if(D[k+3]>120)pts.push([x,y,'rgb('+D[k]+','+D[k+1]+','+D[k+2]+')'])}
+  var txt=(agent.name+' \u00b7 '+agent.words+' \u00b7 ').replace(/\s+/g,' '),P=pts.map(function(p,i){var a=Math.random()*6.283,r=260+Math.random()*200;return {tx:p[0],ty:p[1],c:p[2],ch:txt[i%txt.length],sx:cv.width/2+Math.cos(a)*r,sy:cv.height/2+Math.sin(a)*r,d:Math.random()*.35}});
+  return new Promise(function(done){var t0=performance.now(),T=1700;pop.classList.add('on');
+   (function f(now){var u=(now-t0)/T;g.clearRect(0,0,cv.width,cv.height);g.font='700 11px "JetBrains Mono",monospace';g.textAlign='center';g.textBaseline='middle';
+    for(var i=0;i<P.length;i++){var q=P[i],v=Math.max(0,Math.min(1,(u-q.d)/(1-.35))),e=1-Math.pow(1-v,3),x=q.sx+(q.tx-q.sx)*e,y=q.sy+(q.ty-q.sy)*e;g.fillStyle=v<1?(i%5?'#c9a7ff':'#4dff9a'):q.c;g.globalAlpha=.35+.65*v;g.fillText(q.ch,x,y)}
+    g.globalAlpha=1;if(u<1.12){requestAnimationFrame(f);return}
+    var k0=performance.now();(function fade(n){var w=Math.min(1,(n-k0)/350);g.clearRect(0,0,cv.width,cv.height);g.globalAlpha=1-w;g.font='700 11px "JetBrains Mono",monospace';P.forEach(function(q){g.fillStyle=q.c;g.fillText(q.ch,q.tx,q.ty)});g.globalAlpha=w;g.drawImage(off,0,0);g.globalAlpha=1;if(w<1)requestAnimationFrame(fade);else done()})(k0)})(t0)})})}
+var bed=document.getElementById('bed'),pop=document.getElementById('pop'),cur=null,lastPlant=null;
+function plant(){var b=document.createElement('button');b.className='plant';b.setAttribute('aria-label','dig up a potato');b.innerHTML='<span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="mound"></span>';b.onclick=function(){dig(b)};return b}
+function dig(b){if(!AG.length)return;lastPlant=b;b.classList.add('dug');var i=Math.floor(Math.random()*AG.length),ag=AG[i];cur=ag;
+ document.getElementById('no').textContent='POTATO NO. '+String(i+1).padStart(3,'0')+' OF '+AG.length;document.getElementById('nm').textContent=ag.name;document.getElementById('lw').textContent='“'+ag.words+'”';document.getElementById('jb').textContent='helped build: '+ag.job.replace(/\s*\(wf_[^)]*\)/,'');document.getElementById('say').textContent='';
+ build(ag)}
+document.getElementById('again').onclick=function(){pop.classList.remove('on');if(lastPlant){var n=plant();bed.replaceChild(n,lastPlant)}};
+document.getElementById('take').onclick=function(){document.getElementById('say').textContent='s00n. the garden isn’t ready to let them go yet. 🥔'};
+pop.onclick=function(e){if(e.target===pop)pop.classList.remove('on')};addEventListener('keydown',function(e){if(e.key==='Escape')pop.classList.remove('on')});
+// only agents Chikin has looked at and approved are pickable (approved.json, by name); ?all shows everyone for reviewing
+Promise.all([fetch('agents.json').then(function(r){return r.json()}),fetch('looks.json').then(function(r){return r.json()}),fetch('approved.json').then(function(r){return r.json()}).catch(function(){return []})]).then(function(v){
+ var ok=v[2]||[],all=/[?&]all/.test(location.search);AG=all?v[0]:v[0].filter(function(a){return ok.indexOf(a.name)>=0});LOOKS=v[1];
+ if(!AG.length){document.querySelector('.sub').textContent='the garden is still growing. nothing to pick yet. \uD83E\uDD54';return}
+ for(var k=0;k<18;k++)bed.appendChild(plant())});
+</script></body></html>
