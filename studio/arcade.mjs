@@ -89,7 +89,8 @@ export function installArcade({ intro, glitch, music }) {
     const v = f.querySelector('video'); if (v) v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
     const shut = () => { if (!o.isConnected) return; if (v) v.pause(); stop(); close(o, null); removeEventListener('keydown', esc); };
     function esc(e) { if (e.key === 'Escape') shut(); }
-    f.querySelector('.x').onclick = shut; addEventListener('keydown', esc); f.querySelector('.x').focus();
+    function msg(e) { if (e.data && e.data.potato === 'exit') { removeEventListener('message', msg); shut(); } }   // (Esc inside the game's frame)
+    f.querySelector('.x').onclick = shut; addEventListener('keydown', esc); addEventListener('message', msg); f.querySelector('.x').focus();
     return o;
   }
   const play = (id, title) => shell(title, `<iframe src="../arcade/run/?play=${id}" allow="autoplay; fullscreen" title="${title}"></iframe>`, title);
@@ -103,7 +104,7 @@ export function installArcade({ intro, glitch, music }) {
     const stop = binary(o.querySelector('canvas'));
     await wait(1300); o.classList.add('ready'); o.querySelector('[data-i="0"]').focus();
     const shut = () => { if (!o.isConnected) return; stop(); close(o, null); removeEventListener('keydown', esc); };
-    function esc(e) { if (e.key === 'Escape' && !o.querySelector('.full')) shut(); }
+    function esc(e) { if (e.key === 'Escape') shut(); }   // (Esc: out of the video and back to the house in one go)
     addEventListener('keydown', esc); o.querySelector('.back').onclick = shut;
     o.querySelectorAll('[data-i]').forEach(b => { b.onclick = () => full(o, `<video src="${list[+b.dataset.i].src}" controls playsinline></video><p class="wipbar">work in progress: the finished game may be different.</p>`); });
   }
