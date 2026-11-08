@@ -1414,11 +1414,11 @@ bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 
   { id: 'cave', kind: 'switch', call: true, busy: 1.7, x0: 236, x1: 420, y0: 704, y1: 800, hint: [328, 690], sfx: { on: 'creak', off: 'creak' } }];   // (the cave: room.mjs opens it)
 // the sticky note on the laptop (Chikin, Nov 8: "put a little sticky note that has the password on the computer"): yellow, a bit crooked,
 // stuck to the screen's corner, "niepal" in his scrawl. An easy puzzle: the password's right there if you look.
-function stickyNote(x) { x.save(); x.translate(1524, 236); x.rotate(-0.08);   // on the fridge door (Chikin: "put it on the fridge so you can read it")
-  box(x, -40, -36, 80, 72, '#f7e26a', { r: 2, lw: 4, sh: 'b' }); x.fillStyle = 'rgba(0,0,0,.07)'; x.fillRect(-40, -36, 80, 12);
-  circ(x, 0, -34, 7, '#e8463a', { lw: 3 });   // the magnet
-  x.fillStyle = '#23235e'; x.font = 'italic 700 22px "Comic Sans MS", "Marker Felt", cursive'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('niepal', 0, 6);
-  seg(x, [[-26, 22], [24, 20]], 2, '#23235e'); x.restore(); }
+function stickyNote(x) { x.save(); x.translate(1525, 250); x.rotate(-0.06);   // on the fridge door, big (Chikin: "put it on the fridge so you can read it" / "its still small")
+  box(x, -62, -58, 124, 116, '#f7e26a', { r: 3, lw: 5, sh: 'b' }); x.fillStyle = 'rgba(0,0,0,.07)'; x.fillRect(-62, -58, 124, 18);
+  circ(x, 0, -56, 10, '#e8463a', { lw: 4 });   // the magnet
+  x.fillStyle = '#23235e'; x.font = 'italic 700 36px "Comic Sans MS", "Marker Felt", cursive'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('niepal', 0, 8);
+  seg(x, [[-42, 38], [40, 35]], 3, '#23235e'); x.restore(); }
 bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); stickyNote(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); trapdoor(x, t, P); };
 const derive = (id, o) => { const st = Object.assign({}, bareSt, { props: propsBare.slice(), under: uBare, id }, o); S.push(st); return st; };
 
