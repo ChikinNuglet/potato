@@ -1006,7 +1006,7 @@ function fridgeDoor(x, k) {   // the lower door swings open (hinged on the right
 { const st = S.find(s => s.id === 'disco-legend');
   st.props = [
     { id: 'ball', kind: 'switch', x0: 690, x1: 850, y0: 330, y1: 480, hint: [850, 372], sfx: { on: 'partyOn', off: 'partyOff' }, face: { on: ['smirk', 1.2] } },
-    { id: 'juke', kind: 'switch', x0: 160, x1: 440, y0: 270, y1: 650, hint: [300, 258], sfx: { on: 'juke', off: 'flick' } },
+    { id: 'juke', kind: 'switch', call: true, x0: 160, x1: 440, y0: 270, y1: 650, hint: [300, 258], sfx: { on: 'juke', off: 'flick' } },   // (call: room.mjs plays a full song per coin, Nov 8)
     { id: 'speaker', kind: 'bump', x0: 1455, x1: 1595, y0: 200, y1: 650, hint: [1525, 188], sfx: { bump: 'boom' } },
     { id: 'stoolL', kind: 'hop', x0: 910, x1: 1010, top: 542, y0: 530, y1: 740, sfx: { land: 'squeak' } },
     { id: 'stoolR', kind: 'hop', x0: 1200, x1: 1300, top: 542, y0: 530, y1: 740, sfx: { land: 'squeak' } },
@@ -1015,6 +1015,9 @@ function fridgeDoor(x, k) {   // the lower door swings open (hinged on the right
   st.under = (x, t, lit, P) => { const pa = flip(P.ball || Z, t, 0.4); if (pa > 0) { x.fillStyle = `rgba(6,5,12,${0.26 * pa})`; x.fillRect(-2400, 0, 6400, 900); } };   // party: the room drops a little darker so the light show reads
   st.over = (x, t, lit, P, me) => {
     const jk = flip(P.juke || Z, t, 0.4);   // the jukebox playing: notes float up out of it
+    { const js = P.juke || Z, ca = since(js, t); if (js.on && ca < 0.8) {   // the coin: flipped up off him, spinning, and down into the slot (Chikin, Nov 8: "pop a coin in")
+        const k = ca / 0.8, cx = 300 + (1 - k) * 120, cy = 430 - Math.sin(Math.PI * Math.min(1, k * 1.15)) * 150 + k * 20, w = 14 * Math.abs(Math.cos(ca * 18)) + 3;
+        x.save(); x.globalAlpha = k > 0.9 ? (1 - k) * 10 : 1; ell(x, cx, cy, w, 14, '#f2c230', { lw: 3 }); x.restore(); } }
     if (jk > 0) for (let i = 0; i < 6; i++) { const ph = (t * 0.42 + i / 6) % 1, nx = 300 + (i - 2.5) * 34 + Math.sin(ph * 7 + i) * 26, ny = 300 - ph * 260; note(x, nx, ny, DISCO[i % 5], Math.sin(ph * Math.PI) * jk, 1.3 + 0.4 * rnd(i, 4)); }
     const ba = since(P.speaker || Z, t);   // the speakers: a shock ring off each cone
     if (ba >= 0 && ba < 0.7) for (const y of [350, 570]) for (let k = 0; k < 3; k++) { const r = 50 + ba * 320 - k * 40; if (r < 50) continue; x.save(); x.globalAlpha = 1 - ba / 0.7;
