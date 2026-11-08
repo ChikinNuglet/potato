@@ -500,5 +500,6 @@ requestAnimationFrame(loop);
 import('./tapper.mjs').then(m => m.createTapper(window.RUN, { initSfx })).catch(e => console.warn('tapper', e));   // (a tapper that fails never stops the game)
 $('boot').hidden = true; show('title');
 if (PLAY_ONLY) window.RUN.start(PLAY_ONLY, 0).catch(e => console.error('play', e));
+if (PLAY_ONLY) { const on = () => initSfx(); for (const ev of ['keydown', 'pointerdown', 'touchstart']) addEventListener(ev, on, { capture: true, once: true }); }   // (?play: no kitchen to start the sound effects, so the first touch does; Chikin Nov 8: deaths + glitches were silent)
 if (Q.has('studio')) import('./studio.mjs').catch(e => console.error('studio', e));   // the LEVEL STUDIO (?studio): Chikin builds on the levels (studio.mjs)
 import './dev.mjs';   // DEV MODE (` or #dev): pick a level and where in the song (Matt, Nov 2)
