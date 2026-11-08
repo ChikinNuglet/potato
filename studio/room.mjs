@@ -94,10 +94,23 @@ async function main() {
     const step = () => { const k = Math.min(1, (performance.now() - t0) / 220); pivot.position.x = x0 + (x1 - x0) * k; if (k < 1) requestAnimationFrame(step); else spud.duck(true); }; step();
     setTimeout(() => { spud.duck(false); cave.open(); }, 600); };
   const arcade = installArcade({ intro, glitch: glitchOnly, music: on => { if (!kmusic) return; on ? (jukePlaying ? 0 : kmusic.play().catch(() => {})) : kmusic.pause(); } });
-  // sit on the couch (with the controller beside him) and the game starts: after a short beat seated; once per sit (stand up to re-arm)
-  { let seatedAt = 0, armed = true; setInterval(() => { const on = inLiving && intro.props().on === 'couch'; if (!on) { seatedAt = 0; armed = true; return; }
-      if (!seatedAt) seatedAt = performance.now(); if (armed && performance.now() - seatedAt > 700) { armed = false; arcade.start(); } }, 150); }
-  intro.onProp = (id, on) => { if (id === 'console') return arcade.start(); if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
+  // THE TERMS (Chikin, Nov 8): in Read the Terms' room, walk up to the paper on the table and a question bar asks if you want to read the
+  // terms. Yes = Read the Terms' level select (Play / Machine Learning). The house is a playground: you find it by walking up to it.
+  const TERMS_ROOM = STYLES.findIndex(st => st.id === 'suit-tie');
+  { const bar = document.createElement('div'); bar.id = 'termsbar'; bar.setAttribute('role', 'dialog'); bar.setAttribute('aria-label', 'read the terms?');
+    bar.innerHTML = '<span>read the terms?</span><button type="button" data-y>yes</button><button type="button" data-n>no</button>';
+    bar.style.cssText = 'position:fixed;left:50%;bottom:110px;transform:translate(-50%,20px);z-index:7;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 18px;background:#f7f2e4;color:#120a05;border:4px solid #120a05;border-radius:10px;box-shadow:4px 4px 0 #120a05;font:700 18px/1 "Major Mono Display",monospace;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s';
+    const st2 = document.createElement('style'); st2.textContent = '#termsbar button{padding:7px 14px;border:3px solid #120a05;border-radius:8px;font:700 15px Inter,system-ui,sans-serif;cursor:pointer}#termsbar [data-y]{background:#4dff9a}#termsbar [data-n]{background:#fff}#termsbar.on{opacity:1!important;pointer-events:auto!important;transform:translate(-50%,0)!important}';
+    document.head.append(st2); document.body.append(bar);
+    let dismissed = false, shown = false;
+    const show = on => { if (on === shown) return; shown = on; bar.classList.toggle('on', on); };
+    bar.querySelector('[data-y]').onclick = () => { show(false); dismissed = true; arcade.select(); };
+    bar.querySelector('[data-n]').onclick = () => { show(false); dismissed = true; };
+    window.__termsAsk = () => { dismissed = false; show(true); };
+    setInterval(() => { const here = !inLiving && !inBooth && room === TERMS_ROOM && intro.shown() && !document.getElementById('arc'); const P = here ? intro.props() : null;
+      const near = here && P.near >= 0 && P.list[P.near] && P.list[P.near].id === 'terms';
+      if (!near) { dismissed = false; show(false); return; } if (!dismissed) show(true); }, 150); }
+  intro.onProp = (id, on) => { if (id === 'terms') { intro.propOff('terms'); return window.__termsAsk && window.__termsAsk(); } if (id === 'console') return; if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
     if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(on); if (id === 'photobooth') booth.open(); };
   const go = (i, watch) => { intro.showKitchen(i, { back: true, watch }); };
   intro.onEnter = how => {   // how: 'play' = the left door, 'demo' = the right door

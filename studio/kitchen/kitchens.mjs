@@ -1320,8 +1320,15 @@ function poster(x, s, t) {   // knock it crooked: the one circle rolls down into
     { id: 'chairL', kind: 'hop', x0: 478, x1: 562, top: 604, y0: 470, y1: 740, sfx: { land: 'squeak' } },
     { id: 'chairR', kind: 'hop', x0: 988, x1: 1072, top: 604, y0: 470, y1: 740, sfx: { land: 'squeak' } },
     { id: 'table', kind: 'hop', x0: 590, x1: 950, top: 566, y0: 548, y1: 744, sfx: { land: 'clink' } },
-    { id: 'counter', kind: 'hop', x0: 820, x1: 1110, top: 462, y0: 452, y1: 640, sfx: { land: 'thunk' } } ];
-  st.under = (x, t, lit, P) => { poster(x, P.poster || Z, t);
+    { id: 'counter', kind: 'hop', x0: 820, x1: 1110, top: 462, y0: 452, y1: 640, sfx: { land: 'thunk' } },
+    // THE TERMS (Chikin, Nov 8: "a paper on the table, you go up to it and a question bar comes up asking if you want to read the terms"):
+    // room.mjs shows the bar when he's next to it (or glitches it) and opens Read the Terms' level select
+    { id: 'terms', kind: 'switch', call: true, x0: 650, x1: 760, y0: 520, y1: 600, hint: [705, 512], sfx: { on: 'flick', off: 'flick' } } ];
+  const termsPaper = (x, t) => { x.save(); x.translate(705, 556); x.rotate(-0.06);   // the contract, lying on the table: lines of fine print, a signature line, a corner turned up
+    box(x, -48, -14, 96, 26, '#f7f2e4', { r: 2, lw: 4, sh: 'b' }); for (let k = 0; k < 4; k++) seg(x, [[-38, -8 + k * 5], [24 - (k % 2) * 14, -8 + k * 5]], 1.5, '#9a927e');
+    seg(x, [[12, 8], [40, 8]], 2, '#2a2a2a'); poly(x, [[40, -14], [48, -14], [48, -6]], '#e0d8c2', { lw: 2 });
+    const g = 0.5 + 0.5 * Math.sin(t * 3); x.globalAlpha = 0.25 * g; box(x, -52, -18, 104, 34, 'rgba(255,240,180,0.5)', { r: 4, sh: 'n', lw: 0 }); x.restore(); };
+  st.under = (x, t, lit, P) => { poster(x, P.poster || Z, t); termsPaper(x, t);
     const cf = P.coffee || Z; if (cf.on) { const u = Math.min(1, since(cf, t) / 4); circ(x, 888, 394, 4, '#5cff8a', { sh: 'n', lw: 0 }); glow(x, 888, 394, 14, '#5cff8a', 0.6);   // brewing: the light goes green, it drips, the pot fills
       x.fillStyle = '#4a2a14'; x.fillRect(838, 458 - 18 - 18 * u, 44, 18 + 18 * u); box(x, 836, 420, 48, 40, 'rgba(200,220,230,.35)', { r: 4, lw: 4 }); if (u < 1) { seg(x, [[860, 404], [860, 420]], 9); seg(x, [[860, 404], [860, 420]], 5, '#4a2a14'); for (let k = 0; k < 2; k++) { const ph = (t * 2.6 + k / 2) % 1; x.beginPath(); x.ellipse(860, 422 + ph * 26, 5 + ph * 2, 8, 0, 0, TAU); x.fillStyle = '#5a3418'; x.fill(); stroke(x, { lw: 3 }); } } steam(x, 860, 372, t, u < 1 ? 1 : 3, 60 + 40 * u, 0.3, 6); }   // (a fat drip, ink-edged; it steams once full)
     const mw = P.micro || Z; if (mw.on) { const ph = t * 2.2; box(x, 952, 410, 92, 42, '#ffcf6a', { r: 4, sh: 'n', lw: 4 }); glow(x, 998, 431, 70, '#ffd27a', 0.5); ell(x, 998, 446, 34, 4, '#e8b04a', { lw: 2 }); box(x, 998 + Math.sin(ph) * 22 - 9, 426, 18, 20, '#f2f0ea', { r: 4, lw: 3 }); }   // (a mug going round)
