@@ -101,13 +101,17 @@ async function main() {
     if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(on); if (id === 'photobooth') booth.open(); };
   const go = (i, watch) => { intro.showKitchen(i, { back: true, watch }); };
   intro.onEnter = how => {   // how: 'play' = the left door, 'demo' = the right door
-    const enter = i => { room = i; go(i); tiles(); roomMusic(songOf(i)); };
-    if (inLiving) { inLiving = false; STYLES[LIVING].outfit = null; if (how === 'demo') enter(room); else enter(BIN >= 0 ? BIN : ORDER[0]); return; }   // right = back where he came from; the front door = the simulation
+    // (Chikin, Nov 8: "you come in through the right door no matter what door you leave through": now you come in by the door that faces
+    // the one you left: out the left door = in by the next room's right door; out the right = in by its left. watch = arrive at the right door)
+    const left = how !== 'demo';
+    const enter = i => { room = i; go(i, left); tiles(); roomMusic(songOf(i)); };
+    const living = atRight => { inLiving = true; STYLES[LIVING].outfit = STYLES[room].outfit; intro.showKitchen(LIVING, { back: true, watch: atRight }); tiles(); };
+    if (inLiving) { inLiving = false; STYLES[LIVING].outfit = null; if (!left) enter(room); else enter(BIN >= 0 ? BIN : ORDER[0]); return; }   // right = back into the kitchen row; the front door = outside (the simulation)
     if (inBooth) { inBooth = false; STYLES[BOOTH].outfit = null; enter(room); return; }
-    if (room === BIN) { inLiving = true; room = ORDER[0]; STYLES[LIVING].outfit = null; intro.showKitchen(LIVING, { back: true, watch: true }); tiles(); return; }   // the simulation's lit doorway: back into the house (the living room)
+    if (room === BIN) { room = ORDER[0]; living(false); return; }   // outside: the doorway back in = the living room's front door
     const pos = ORDER.indexOf(room);
-    if (how !== 'demo') { if (pos <= 0 && LIVING >= 0) { inLiving = true; STYLES[LIVING].outfit = STYLES[room].outfit; intro.showKitchen(LIVING, { back: true, watch: true }); return; } enter(ORDER[pos - 1]); return; }
-    if (pos >= ORDER.length - 1) { inBooth = true; STYLES[BOOTH].outfit = STYLES[boothLook = room].outfit; go(BOOTH); tiles(); return; }   // the end of the line: the photo booth
+    if (left) { if (pos <= 0 && LIVING >= 0) { living(true); return; } enter(ORDER[pos - 1]); return; }
+    if (pos >= ORDER.length - 1) { inBooth = true; STYLES[BOOTH].outfit = STYLES[boothLook = room].outfit; go(BOOTH, false); tiles(); return; }   // the end of the line: the photo booth
     enter(ORDER[pos + 1]); };
   intro.setSongs(STYLES.map(st => { const k = RADIO.findIndex(r => r[0] === st.level); return { n: '',   /* (Chikin, Nov 8: no numbers on the door signs, just the song) */  title: k >= 0 ? RADIO[k][1] : '', cleared: false }; }));
 
