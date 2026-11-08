@@ -385,6 +385,7 @@ export function build(words, map) {
   // the mode draws the change as his purple glitch round him, on the phone only (Matt: only Potato glitches, never the screen).
   const NOFLASH = 'rgba(0,0,0,0)', looks = [[30.5, 50.2, 'sheet-ghost', NOFLASH], [89.4, 108.2, 'sheet-ghost', NOFLASH]];
   return {
+    costume: 'sheet-ghost',   // (Chikin, Nov 8: "make sure he is the ghost fully in that one": the sheet ghost from the first frame to the last)
     blankDef: d => ({ ...d, storyRun: true }),   // (?blank, run/blank.mjs: the clean-slate run is Ghost's story run — the jolts show, never touch him; the rest of Ghost's game stays as is)
     deathText: s => `the video stopped at ${Math.floor(s.t / 60)}:${String(Math.floor(s.t % 60)).padStart(2, '0')} · ${s.why || 'lost'} · potato rewrote ${s.glitched || 0} texts`,
     fair: { jolts: fairJolts },   // (fair.mjs: the phone's jolts — warning, reach, a knock never ends the run, they never decide it)

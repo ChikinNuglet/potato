@@ -1281,8 +1281,19 @@ function clockFace(x, s, t) {   // the stopped clock: knock and it chimes, its h
     { id: 'chair', kind: 'hop', bump: true, busy: 2.4, x0: 980, x1: 1060, top: 610, y0: 460, y1: 760, sfx: { land: 'creak', bump: 'scoot' } },
     { id: 'table', kind: 'hop', busy: 2.2, x0: 560, x1: 980, top: 556, y0: 540, y1: 770, sfx: { land: 'clatter' } },
     { id: 'stove', kind: 'hop', seat: [975, 1045], x0: 810, x1: 1060, top: 380, y0: 372, y1: 392, sfx: { land: 'clang' } },
-    { id: 'counter', kind: 'hop', x0: 1062, x1: 1448, top: 452, y0: 444, y1: 470, sfx: { land: 'thunk' } } ];
-  st.under = (x, t, lit, P) => { hauntChair(x, P.fallen || Z, t); clockFace(x, P.clock || Z, t);
+    { id: 'counter', kind: 'hop', x0: 1062, x1: 1448, top: 452, y0: 444, y1: 470, sfx: { land: 'thunk' } },
+    // THE OLD PHONE (Chikin, Nov 8: "an old timey phone that you answer when you glitch, and you get the option to join the chat"): a
+    // candlestick phone on the counter that rings now and then; glitch it and he picks up; room.mjs asks "join the chat?"
+    { id: 'phone', kind: 'switch', call: true, x0: 1150, x1: 1250, y0: 330, y1: 452, hint: [1200, 322], sfx: { on: 'flick', off: 'flick' }, face: { on: ['question', 1.2] } } ];
+  const oldPhone = (x, t, s) => { const up = s.on, ring = !up && (t % 7) < 1.3, sh = ring ? Math.sin(t * 60) * 3 : 0; x.save(); x.translate(1200 + sh, 452);
+    ell(x, 0, -6, 34, 9, '#1c1712', { lw: 4 }); box(x, -9, -92, 18, 86, '#1c1712', { r: 6, lw: 4, sh: 'r' });   // the base, the stem
+    ell(x, 0, -100, 16, 12, '#2a221a', { lw: 4 }); box(x, 12, -84, 20, 6, '#3a3026', { r: 3, lw: 2 });   // the mouthpiece, the hook
+    if (!up) { box(x, 24, -100, 12, 44, '#1c1712', { r: 6, lw: 4, sh: 'r' }); ell(x, 30, -58, 12, 8, '#2a221a', { lw: 3 }); }   // the earpiece, hanging on the hook
+    else { x.save(); x.translate(60, -150); x.rotate(-0.6); box(x, -6, -22, 12, 44, '#1c1712', { r: 6, lw: 4, sh: 'r' }); x.restore(); seg(x, [[30, -80], [52, -120], [62, -138]], 2.5, '#1c1712'); }   // picked up
+    seg(x, [[-30, -4], [-70, 6], [-110, 4]], 2.5, '#1c1712');   // the cord
+    if (ring) for (const d of [-1, 1]) for (let k = 1; k <= 2; k++) { x.beginPath(); x.arc(d * 6, -100, 22 + k * 10, d > 0 ? -0.7 : Math.PI - 0.7 + 0.0, d > 0 ? 0.7 : Math.PI + 0.7); x.lineWidth = 3; x.strokeStyle = '#f2ead6'; x.stroke(); }
+    x.restore(); };
+  st.under = (x, t, lit, P) => { hauntChair(x, P.fallen || Z, t); clockFace(x, P.clock || Z, t); oldPhone(x, t, P.phone || Z);
     const c = P.chair || Z, a = since(c, t), dx = a >= 0 && a < 2.4 ? (a < 0.35 ? ez(a / 0.35) : 1 - ez((a - 0.6) / 1.8)) * 70 : 0;   // the chair slides off on its own when he bumps it, then creeps back
     x.save(); x.translate(dx, sink(c, t)); box(x, 1000, 470, 14, 140, '#4a3a2c', { lw: 4 }); box(x, 980, 610, 80, 20, '#4a3a2c', { sh: 'b', lw: 6 }); box(x, 986, 630, 12, 120, '#3a2c20', { sh: 'n', lw: 4 }); box(x, 1042, 630, 12, 120, '#3a2c20', { sh: 'n', lw: 4 }); cobweb(x, 998, 630, 50, 0, Math.PI * 0.5, 0.4); x.restore(); };
 }
@@ -1303,6 +1314,16 @@ function clockFace(x, s, t) {   // the stopped clock: knock and it chimes, its h
     const hb = since(P.holo || Z, t); if (hb >= 0 && hb < 0.6) for (let i = 0; i < 10; i++) { const an = i / 10 * TAU, r = 30 + hb * 160; x.save(); x.globalCompositeOperation = 'lighter'; x.fillStyle = `rgba(140,255,160,${1 - hb / 0.6})`; x.fillRect(1120 + Math.cos(an) * r - 4, 380 + Math.sin(an) * r * 0.6 - 4, 8, 8); x.restore(); }
     for (const [id, sx] of CSTOOLS) { const k = fade(landed(P[id] || Z, t), 0.9); if (k > 0) { x.save(); x.globalCompositeOperation = 'lighter'; x.beginPath(); x.ellipse(sx, 616, 40, 10, 0, 0, TAU); x.lineWidth = 6; x.strokeStyle = `rgba(87,255,122,${k})`; x.stroke(); x.restore(); glow(x, sx, 616, 60, BG.green, 0.4 * k); } }
     const tk = fade(landed(P.table || Z, t), 0.8); if (tk > 0) { seg(x, [[594, 578], [946, 578]], 5, '#d8ffe0'); glow(x, 770, 578, 200, BG.green, 0.3 * tk); } };
+}
+
+// MACHINE LEARNING (Chikin, Nov 8: "cyborg room, he stands under the light, it lowers to his head"): room.mjs sets st.mlRing = the
+// performance.now() it started; the ring light comes down out of the lamp and settles round his head, humming green, then the video plays
+{ const st = S.find(s => s.id === 'circuit-cyborg'), was = st.over;
+  st.over = (x, t, lit, P, me) => { if (was) was(x, t, lit, P, me); if (!st.mlRing) return;
+    const k = Math.min(1, (performance.now() - st.mlRing) / 1400), e = 1 - Math.pow(1 - k, 3), cx = st.mlX || 770, y = 360 + (468 - 360) * e;
+    seg(x, [[cx - 30, 330], [cx - 52, y]], 2, '#2a2d36'); seg(x, [[cx + 30, 330], [cx + 52, y]], 2, '#2a2d36');   // the cables it comes down on
+    x.save(); x.globalCompositeOperation = 'lighter'; glow(x, cx, y, 90, '#57ff7a', 0.35 + 0.3 * e); x.restore();
+    x.beginPath(); x.ellipse(cx, y, 62, 14, 0, 0, TAU); x.lineWidth = 12; x.strokeStyle = '#120a05'; x.stroke(); x.lineWidth = 6; x.strokeStyle = k < 1 ? '#8fffa8' : (Math.floor(performance.now() / 90) % 2 ? '#57ff7a' : '#d8ffe0'); x.stroke(); };
 }
 
 // ---- 10. the break room: the tube light, the coffee machine, the microwave, the poster, the water cooler, both chairs, the table, the counter
