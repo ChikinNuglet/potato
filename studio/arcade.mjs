@@ -64,6 +64,8 @@ export function installArcade({ intro, glitch, music }) {
     f.querySelector('.x').onclick = () => { if (v) v.pause(); f.remove(); o.querySelector('.menu button.play').focus(); };
   }
 
+  // straight to the level select (the paper on Read the Terms' table, Nov 8): the binary wipe, then Play / Machine Learning
+  async function select() { if (busy) return; busy = true; await menu(null); }
   async function start() {
     if (busy) return; busy = true;
     if (intro.props().on !== 'couch') intro.sitOn && intro.sitOn('couch');
@@ -72,6 +74,8 @@ export function installArcade({ intro, glitch, music }) {
     intro.propOn && intro.propOn('console');   // (the couch's controller stops being drawn there: it's in his lap now)
     const pad = await flipPad();
     await wait(350);
+    await menu(pad); }
+  async function menu(pad) {
     glitch(); music(false);
     const o = document.createElement('div'); o.id = 'arc'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'level select');
     o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">select level</span><h2>read the terms</h2>
@@ -85,5 +89,5 @@ export function installArcade({ intro, glitch, music }) {
     o.querySelector('.back').onclick = () => { stop(); close(o, pad); };
     addEventListener('keydown', function esc(e) { if (e.key !== 'Escape' || !o.isConnected) return; if (o.querySelector('.full')) return; removeEventListener('keydown', esc); stop(); close(o, pad); });
   }
-  return { start };
+  return { start, select };
 }
