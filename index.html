@@ -114,6 +114,8 @@ function goIn(){document.body.classList.add('going');var o=document.createElemen
 var f=document.getElementById('door'),c=document.getElementById('code'),say=document.getElementById('doorsay'),b=f.querySelector('button');
 try{if(localStorage.getItem('potato-room-unlocked')==='1'){say.textContent='you already have a key. come in.';}}catch(e){}
 f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().toUpperCase();
+ // CLOSED (Chikin, Nov 8): "right now, i will unlock later". The kitchen is shut to everyone; Taticat's own room (/behind-the-404/) stays open. To reopen: CLOSED=false.
+ var CLOSED=true;if(CLOSED){say.textContent='the kitchen\'s closed for a bit. ok ok. come back soon.';return}
  try{if(!v&&localStorage.getItem('potato-room-unlocked')==='1'){goIn();return}}catch(e){}
  if(!v){say.textContent='krrzzt— type your password.';return}
  // the password is i'm potato baby (any caps, with or without the apostrophe, the triangle, the TM or the potato). it sits right here in the page's code on purpose: a curtain, not a lock
