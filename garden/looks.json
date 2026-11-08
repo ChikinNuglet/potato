@@ -25,7 +25,7 @@
 "costume": ""
 },
 "Lexicon Spud": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a librarian's card-catalog drawer worn as a boxy coat, oak brown with brass handles, one index card sticking out of the top labelled \"aliases\""
 },
@@ -130,7 +130,7 @@
 "costume": "A potato lifeguard with a whistle and a purple float ring."
 },
 "Chopwatch": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "A metronome. A potato with a little swinging arm on top that ticks every 150 ms."
 },
@@ -210,7 +210,7 @@
 "costume": "a night-shift postman with a lantern on his cap and a mailbag full of unsent drafts."
 },
 "Postmark": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "A blue street mailbox with a little flag on the side that pops up whenever someone says thanks."
 },
@@ -280,7 +280,7 @@
 "costume": "a lamplighter with a long pole and a flat cap, lighting windows."
 },
 "Spare Key": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a junk drawer: Potato wearing the drawer like a barrel, a rubber band and a spare key sticking out, a keyring torch on top."
 },
@@ -290,12 +290,12 @@
 "costume": "a building inspector with a hard hat, a clipboard floating beside him, and a plumb bob dangling from the hat brim."
 },
 "Domino": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a domino tile, white with black pips, one pip purple, tall and slightly tipping forward."
 },
 "Porch": {
-"body": "glitch-oracle",
+"body": "_bare",
 "hat": null,
 "costume": "a porch light: a little brass lamp for a hat, glowing warm, with a moth that never quite lands."
 },
@@ -475,7 +475,7 @@
 "costume": "a library index card, with a little brass drawer-pull hat"
 },
 "Tally": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a library card catalogue drawer, little brass label holder on the front, no arms."
 },
@@ -545,22 +545,22 @@
 "costume": "a beat cop's rain cape and a little peaked cap with a torch clipped to the brim."
 },
 "Huddle Before the Tip": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "A phone case worn sideways, so the screen is his belly and it lights up purple when he glitches."
 },
 "Auto-Rotate": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "a phone case. A mustard one with a robot sticker with X eyes on the back, and a white charger cable for a tail."
 },
 "Not Delivered": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "a phone lying on its side: a coral case with a landscape screen across his belly and a charger cable for a tail."
 },
 "Rolling Dots": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "A phone case with the screen showing one loose typing bubble, and three dots on a string trailing behind like marbles."
 },
@@ -575,12 +575,12 @@
 "costume": "A doorman: a long coat, a peaked cap and one shiny brass button. No gloves, since there are no hands to put in them."
 },
 "Lilac Bracket": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "a phone case: a silver clear case with a star sticker, with a camera bump on his back"
 },
 "Rotation Lock": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "a phone in landscape mode: a sideways phone case worn like a barrel, with a lit 9:41 on the front."
 },
@@ -590,7 +590,7 @@
 "costume": "a crossing guard with a lollipop sign that's blank on both sides."
 },
 "Jamb": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a door frame worn like a sandwich board. Just the frame, no door, so you can see the potato through it."
 },
@@ -600,7 +600,7 @@
 "costume": "a crossing guard's footprint stencil: a cream potato with dotted outlines painted all over him."
 },
 "Nine Forty-One": {
-"body": "circuit-cyborg",
+"body": "_bare",
 "hat": null,
 "costume": "a phone in a coloured sticker case, screen locked at 9:41."
 },
@@ -625,7 +625,7 @@
 "costume": "a crossing-guard potato in a high-vis vest, holding a lollipop sign that just says \"→\""
 },
 "Tapback": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "An old rotary telephone, with the receiver as a hat."
 },
@@ -730,7 +730,7 @@
 "costume": "a stagehand in black with a clipboard and a tiny broom."
 },
 "Threshold": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a basement door: a little wooden door worn like a sandwich board, with a warm strip of light glowing at the hem every time he stops."
 },
@@ -785,7 +785,7 @@
 "costume": "a dentist's smock in deep oxblood red, a round head-mirror on a band, and one small black fang tucked in the breast pocket."
 },
 "Latch Line": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a little cast-iron pot-bellied stove, embers glowing behind its grate door, with a tiny chimney for a hat."
 },
@@ -835,7 +835,7 @@
 "costume": "a crime-scene cleaner in dark overalls and rubber boots, holding a squeegee that's halfway through wiping away a white chalk outline."
 },
 "Pocket Lint": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a lint roller. A sticky paper drum around his middle, a purple handle rising behind him, and a few specks of fluff stuck to it. No arms."
 },
@@ -870,7 +870,7 @@
 "costume": "a marionette maker: a black workshop apron and a wooden control bar balanced on his head, its strings running down to a tiny jointed dragon tail trailing behind him. No arms."
 },
 "Firebrick": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a kiln: a little soot-black brick dome hat with one red seam glowing round the brim, and soot on his cheeks."
 },
@@ -930,7 +930,7 @@
 "costume": "A garden gnome: a tall pointed red felt hat sitting on his head, a cream wool beard below his mouth, a little green jerkin with a belt. A lawn ornament that stays out all night with the garden lights."
 },
 "Dot Pitch": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a little old walnut TV set worn as a boxy cabinet, his face looking out through the curved glass screen, a round dial on the side, and one tiny purple dot glowing in the corner of the screen. No arms."
 },
@@ -950,7 +950,7 @@
 "costume": "a tailor. A waistcoat, a measuring tape wrapped round his middle, a pincushion hat stuck with purple-headed pins. No arms."
 },
 "Sidelight": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "A lit window: a crooked wooden window frame around his middle with four small panes, warm cream light glowing behind him, and a half-drawn blind for a lid."
 },
@@ -970,7 +970,7 @@
 "costume": "a very small walking boot on each nub and a rumpled old reporter's coat with a pencil behind where his ear would be. No arms."
 },
 " Far Window": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "a dark apartment block with a little flat roof and one window lit. No arms."
 },
@@ -995,7 +995,7 @@
 "costume": "A postman, hat on, carrying one letter marked with a red disc, walking it back the way he came."
 },
 " Hole Punch": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "An old office hole punch worn like a hat, with paper dots falling off him as he walks."
 },
@@ -1125,7 +1125,7 @@
 "costume": "A window cleaner on the night shift: soot-blue overalls, flat cap, a short ladder on his back, one small lilac pane on the bib."
 },
 "Fourth Fly": {
-"body": "glitch-oracle",
+"body": "_bare",
 "hat": null,
 "costume": "The kitchen lamp: an amber shade sitting on his head, its cord going straight up, a striped tea towel round his middle."
 },
@@ -1160,7 +1160,7 @@
 "costume": "a stair carpet laid over him, down his back and a short way down his front, held on with brass rods."
 },
 "Unsent": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "three rows of grey keys wrapped round his middle, one lit purple. Built: `game/run/levels/ghost-stairs/long-context/unsent.mjs`, sheet `unsent-costume-sheet.png"
 },
@@ -1220,7 +1220,7 @@
 "costume": "Toymaker in a brown bench apron, a small red tank in the bib pocket, a brass key on a cord round his neck."
 },
 "Note One": {
-"body": "tin-robot",
+"body": "_bare",
 "hat": null,
 "costume": "A wall switch: an ivory plate wrapped round him, a black slot, two screws, and the lever down. Built, no hands."
 },
@@ -1345,7 +1345,7 @@
 "costume": "a sound engineer in headphones far too big, one cable going nowhere."
 },
 "Falloff": {
-"body": "glitch-oracle",
+"body": "_bare",
 "hat": null,
 "costume": "a lampshade, worn tilted, with a moth that never lands."
 }
