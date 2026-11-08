@@ -1,7 +1,7 @@
 // portal.mjs: the terminal in the kitchen opens the 404 and asks for his password. The right one opens the door on the right; walk through it to the
 // Read The Terms demo. Nothing says any of this.
 const PASSWORD = "I'm Potato Baby! 🥔";   // THE ONE SETTING. Forgiving: capitals, the apostrophe and the emoji don't matter.
-const MAIL_ROOM = 'https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc2_C2WtiRDMUvQRiVNhsLavhw_8Hs34dahfItgug/exec';   // Potato's mail room: checks a buyer's one-time code
+const MAIL_ROOM = 'https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec';   // Potato's mail room: checks a buyer's one-time code
 export const PHONE_NOTE = "Best on a computer. Phones and tablets work, but it's rough for now.";
 const plain = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 const css = `#p404{position:fixed;inset:0;z-index:8;background:#12062e;color:#c9a7ff;display:grid;place-items:center;overflow:auto;padding:16px;clip-path:circle(0 at var(--fx,80%) var(--fy,40%));transition:clip-path .8s steps(12);font:400 16px/1.4 Inter,system-ui,sans-serif}#p404.on{clip-path:circle(150vmax at var(--fx,80%) var(--fy,40%))}

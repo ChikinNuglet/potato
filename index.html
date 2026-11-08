@@ -110,7 +110,7 @@ function goIn(){document.body.classList.add('going');var o=document.createElemen
  var seq=['studio/lib/chikin-logo.png','logo/potato-logo-tm.png'],i=0;
  (function next(){if(i>=seq.length){location.href='studio/?t';return}var potLogo=(i===1);o.style.background=potLogo?'transparent':'#05070a';var im=new Image();im.src=seq[i++];im.alt='';im.style.cssText='grid-area:1/1;width:min(560px,80vw);opacity:0;transition:opacity .6s';o.appendChild(im);
   var go=function(){setTimeout(function(){im.style.opacity=1},40);setTimeout(function(){im.style.opacity=0},1700);setTimeout(function(){im.remove();next()},2350)};if(im.complete)go();else{im.onload=go;im.onerror=next}})()}
-(function(){var MAIL='https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc2_C2WtiRDMUvQRiVNhsLavhw_8Hs34dahfItgug/exec';
+(function(){var MAIL='https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec';
 var f=document.getElementById('door'),c=document.getElementById('code'),say=document.getElementById('doorsay'),b=f.querySelector('button');
 try{if(localStorage.getItem('potato-room-unlocked')==='1'){say.textContent='you already have a key. come in.';}}catch(e){}
 f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().toUpperCase();
@@ -126,7 +126,7 @@ f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().
 </script>
 <script>
 (function(){
-  var MAIL='https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc2_C2WtiRDMUvQRiVNhsLavhw_8Hs34dahfItgug/exec';
+  var MAIL='https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec';
   var f=document.getElementById('fan'),say=document.getElementById('fansay'),m=document.getElementById('fanmail'),b=f.querySelector('button');
   function jolt(){f.classList.remove('jolt');void f.offsetWidth;f.classList.add('jolt');}
   f.addEventListener('submit',function(e){
