@@ -724,7 +724,8 @@ export const modeView = ({ T, world, C, cam }) => {
   function sounds(s) {   // (the sim is pure; the sounds come from what it logged)
     if (s !== seenSim) { seenSim = s; seenJ = s.jlog ? s.jlog.length : 0; seenBoot = s.bootT; if (s.bootT != null) SFX.boot(); return; }
     const jl = s.jlog || []; for (let i = seenJ; i < jl.length; i++) { const j = jl[i], k = j.k;
-      if (k === 'rewrite') { SFX.whoosh(true); SFX.note(!!j.ob); } else if (k === 'super') { SFX.whoosh(true); SFX.download(); } else if (k === 'tp') SFX.glitch(false); else if (k === 'read') { if (j.cost) SFX.thud(); else SFX.flub(); }
+      if (k === 'hop') SFX.jump(false);   // (Chikin, Nov 8: "he needs a little jump sound too")
+      else if (k === 'rewrite') { SFX.whoosh(true); SFX.note(!!j.ob); } else if (k === 'super') { SFX.whoosh(true); SFX.download(); } else if (k === 'tp') SFX.glitch(false); else if (k === 'read') { if (j.cost) SFX.thud(); else SFX.flub(); }
       else if (k === 'bounce') SFX.pad(); else if (k === 'bump') SFX.squeak(); else if (k === 'fizzle') SFX.click(); else if (k === 'land') SFX.land(0.5); else if (k === 'thru') SFX.transform();
       else if (k === 'bonk') SFX.thunk(); else if (k === 'charge') SFX.dlTick(); else if (k === 'fail') SFX.powerDown();   /* (main.mjs plays the die when the run ends) */ else if (k === 'drop') SFX.scoot();
       else if (k === 'jwarn') SFX.click(); else if (k === 'jolt') SFX.glitch(true); else if (k === 'knock') SFX.squeak(); else if (k === 'jthru') SFX.transform(); else if (k === 'jgone') SFX.land(0.3); }   // (the phone's jolts)
