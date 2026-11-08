@@ -1,0 +1,267 @@
+<!doctype html>
+<!-- Confidently Incorrect, the music video (Matt, Nov 1: "tell a story" — Potato fights the aliens). Every picture is the game's:
+     the level's cardboard-space painter, its alien ships (_ciship.mjs, copied from view.mjs), the 3D Potato in the level's
+     astronaut suit, Vega's CI stickers (the fake experts, Kevin). Frames are drawn here and posted to a local receiver at 24 fps;
+     ffmpeg puts the song under them. Scratch tool (play/_* is not published). Story: potato-home/work/ci-video/STORY.md -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Rubik+Mono+One&display=swap">
+<style>body{margin:0;background:#111;color:#9f9;font:12px monospace} #out{width:960px;height:540px;display:block} #sp{position:absolute;left:-3000px;top:0;width:420px;height:420px}</style>
+<script src="./glitchwords.js"></script>
+</head><body><canvas id="out" width="1280" height="720"></canvas><div id="sp"></div><div id="log"></div>
+<script type="module">
+import { meta, parseWords } from '../run/levels/confidently-incorrect.mjs';
+import { story } from '../run/levels/story-confidently-incorrect.mjs';
+import { makeMusic } from './music.mjs';
+import { createSpud } from './_sbspud.mjs';
+import { loadOutfit } from './outfits3d.mjs';
+import { shipArt } from './_ciship.mjs';
+import * as T from './vendor/three.module.js';
+
+const W = 1280, H = 720, END = 248.45, FPS = 24, out = document.getElementById('out'), o = out.getContext('2d');
+const log = m => { document.getElementById('log').textContent = m; };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x)), ease = u => { u = clamp(u); return u * u * (3 - 2 * u); }, span = (t, a, b) => t >= a && t < b;
+const R = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+const INK = '#120a05', PURPLE = '#9a52ff', MAG = '#e03ccf', LILAC = '#c9a7ff';
+const music = await fetch('./songs/confidently-incorrect.music.json').then(r => r.json()); const M = makeMusic(music);
+const kick = t => M.kick(t), drop = t => M.dropHit(t, 0.3, 1.2);
+const BEAT = 60 / 101.3;
+await document.fonts.load('400 20px "Major Mono Display"'); await document.fonts.load('400 40px "Rubik Mono One"');
+const img = async src => { const i = new Image(); i.src = src; await i.decode(); return i; };
+
+// ---------- Matt's taps (the feel: every glitch tap is a shot, every big one lands hard) and the words ----------
+const TAPS = (await fetch('http://localhost:8790/../potato-home-taps.json').then(r => r.ok ? r.json() : null).catch(() => null)) || window.__TAPS || [];
+const WJ = await fetch('../words/confidently-incorrect.json').then(r => r.json());
+const LINES = []; for (const r of WJ.timings) { if (r[0] == null) continue; let L = LINES[LINES.length - 1]; if (!L || L.id !== r[1]) LINES.push(L = { id: r[1], t0: r[0], words: [] }); L.words.push({ t: r[0], w: String(r[2]).replace(/\/$/, '') }); }
+for (let i = 0; i < LINES.length; i++) LINES[i].t1 = i + 1 < LINES.length ? LINES[i + 1].t0 : LINES[i].words[LINES[i].words.length - 1].t + 2.5;
+
+// ---------- the pieces ----------
+const SA = shipArt(), SK = SA.SKINS;   // { hull, jaw, tent, crew[] } canvases per variant
+const ST = {}; for (const k of ['gary', 'station', 'stephanie', 'statistics', 'hot-pockets', 'cornelius', 'kevin']) ST[k] = await img(`./stickers-ci2/${k}.webp`);
+const host = document.getElementById('sp'), spud = await createSpud(host, { still: true }), pcv = host.querySelector('canvas');
+spud.wear(await loadOutfit('orbital-astronaut'));
+const FT = {}; for (const n of ['canon', 'smirk', 'grin', 'laugh', 'joy', 'shock', 'proud', 'skeptical', 'angry', 'sneaky', 'determined', 'oh', 'scream', 'awe', 'question', 'sad', 'focused']) {
+  try { const i = await img(n === 'canon' ? './face-canon.png' : `./faces/face-${n}.png`); const c = document.createElement('canvas'); c.width = i.naturalWidth; c.height = i.naturalHeight; c.getContext('2d').drawImage(i, 0, 0); const tx = new T.CanvasTexture(c); tx.colorSpace = T.NoColorSpace; FT[n] = tx; } catch (e) {} }
+let curFace = null, simT = 0;
+function potato(t, face, yaw = 0.4, glitch = 0) { if (face !== curFace && FT[face]) { curFace = face; spud.setFace(FT[face]); } spud.turnTo(yaw); spud.glitch(glitch); for (let k = 0; k < 3; k++) { simT += 1 / 72; spud.step(simT, 1 / 72); } return pcv; }
+
+// ---------- the story, on the song ----------
+const BOSSES = [
+  { v: 0, enter: 41.62, paint: 48.32, name: 'DR. GARY M. BARRETT', sub: 'CHAIRMAN OF SCIENCE', st: 'gary', kill: 62.95, fall: 'moon', fallAt: 63.55 },
+  { v: 1, enter: 79.54, paint: 80.2, name: 'HALLUCINATION STATION', sub: '17 CITATIONS · 0 LOADED', st: 'station', kill: 97.34, fall: 'sun', fallAt: 97.9 },
+  { v: 2, enter: 115.09, paint: 117.1, name: 'STEPHANIE GOBLIN, PhD', sub: 'DEAN OF PRETENDING', st: 'stephanie', kill: 140.57, fall: 'saturn', fallAt: 141.17 },
+  { v: 3, enter: 150.23, paint: 152.38, name: 'THE FABRICATOR', sub: 'A 2018 LONGITUDINAL SURVEY', st: 'statistics', kill: 169.17, fall: 'applause', fallAt: 170.9 },
+  { v: 1, enter: 176.12, paint: 177.27, name: 'DR. H. POCKETS', sub: 'ORTHODONTICS · DOLPHIN ECONOMICS', st: 'hot-pockets', kill: 192.83, fall: 'sky', fallAt: 193.27 },
+  { v: 4, enter: 231.05, paint: 234.72, name: 'M.I.M.S.U.', sub: 'DR. CORNELIUS BEEFWHISTLE III', st: 'cornelius', kill: 240.2, laser: 237.70, mother: true },
+];
+const bossAt = t => BOSSES.find(b => t >= b.enter && t < b.kill + 1.6);
+const KEVIN = { appear: 145.52, cage: 148.27, tether: 149.05, gone: 238.6 };
+const STILL = [203.59, 206.2];   // "for one second it sounded neat": everything holds
+// close-ups on his visor
+const CLOSE = [[42.35, 43.5, 'awe'], [47.2, 48.3, 'sneaky'], [74.29, 75.6, 'skeptical'], [75.6, 76.95, 'angry'], [145.52, 147.09, 'shock'], [157.2, 158.9, 'laugh'], [236.3, 237.7, 'determined']];
+const FACES = [[0, 'smirk'], [10.17, 'grin'], [24.4, 'laugh'], [41.62, 'determined'], [50.2, 'smirk'], [62.65, 'scream'], [63.6, 'laugh'], [72.19, 'skeptical'], [76.95, 'determined'], [86.2, 'laugh'],
+  [97.4, 'proud'], [115.09, 'determined'], [120.4, 'laugh'], [124.0, 'proud'], [140.6, 'grin'], [147.09, 'focused'], [148.3, 'determined'], [159.5, 'laugh'], [169.2, 'grin'], [176.1, 'scream'], [181.0, 'laugh'],
+  [193.0, 'proud'], [203.59, 'canon'], [206.2, 'laugh'], [216.4, 'grin'], [228.3, 'determined'], [240.2, 'awe'], [243.5, 'oh']];
+const at = (L, t) => { let v = L[0][1]; for (const [a, x] of L) if (t >= a) v = x; return v; };
+const FALLS = BOSSES.filter(b => b.fall && b.fall !== 'sky');
+
+// ---------- the world (1280x720): the level's set + what happens in it ----------
+const SET = document.createElement('canvas'); SET.width = 960; SET.height = 540; const sx = SET.getContext('2d');
+const WORLD = document.createElement('canvas'); WORLD.width = W; WORLD.height = H; const w = WORLD.getContext('2d');
+function paintSet(t) { sx.clearRect(0, 0, 960, 540); sx.fillStyle = '#000'; sx.fillRect(0, 0, 960, 540); story(sx, { t, px: 300, py: 300, music: M, kick: 0, W: 960, H: 540, s: { x: t * 7, y: 2.5, shots: [], t } }); }
+function glow(g, x, y, r, col, a) { if (a <= 0.004) return; const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.save(); g.globalAlpha = clamp(a); g.globalCompositeOperation = 'lighter'; g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r); g.restore(); }
+
+// where he is (a little flight path + dodges on the big hits) and where the ship is
+const potPos = t => { let x = W * 0.25 + 26 * Math.sin(t * 0.37), y = H * 0.54 + 34 * Math.sin(t * 0.83) + 12 * Math.sin(t * 2.1);
+  const B = bossAt(t); if (B && t > B.enter + 0.8 && t < B.kill) y += 70 * Math.sin((t - B.enter) * 1.3);
+  if (t >= KEVIN.cage) x += 40; return [x, y]; };
+const SHIPW = 600;
+function shipPos(B, t) { const k = ease((t - B.enter) / (B.mother ? 2.2 : 0.9)); let x = W * 0.72 + 24 * Math.sin(t * 0.9), y = H * 0.38 + 18 * Math.sin(t * 1.4), s = B.mother ? 1.7 : 1;
+  if (B.mother) { y = -H * 0.5 + (H * 0.36 + H * 0.5) * k; x = W * 0.66; } else s *= 0.18 + 0.82 * k; return { x, y, s }; }
+const HOLE = [W * 0.76, H * 0.26];
+function drawShip(g, B, t, P) {
+  const Q = SK[B.v], sc = SHIPW / 1280 * P.s, k = kick(t), bites = 0.12 + 0.3 * k + (span(t, B.kill - 0.4, B.kill) ? 0.3 : 0);
+  g.save(); g.translate(P.x, P.y); g.scale(sc, sc); g.translate(-640, -360);
+  // the tentacles under it, swaying
+  for (const [i, px] of [700, 880, 1040].entries()) { g.save(); g.translate(px, 600); g.rotate(0.18 * Math.sin(t * 2 + i)); g.drawImage(Q.tent, -60, 0, 120, 420); g.restore(); }
+  // the crew in the portholes (they flinch when he hits)
+  const hit = lastShot(t), flinch = hit && t - hit.t < 0.2 ? 1 - (t - hit.t) / 0.2 : 0;
+  SA.PORTS.forEach(([px, py], i) => { const bob = 6 * Math.sin(t * 3 + i) - flinch * 14 * (i % 2 ? 1 : -1); g.drawImage(Q.crew[i], px - 62, py + 6 - 62 + bob, 124, 124); });
+  // the throat glow, the hull, the jaw, the eye
+  glow(g, 230, 380, 160, Q.throat || '#ff5a1f', 0.5 + 0.5 * k);
+  g.drawImage(Q.hull, 0, 0);
+  g.save(); g.translate(470, 360); g.rotate(-bites); g.drawImage(Q.jaw, -520, -70 - 110 + 70, 520, 220); g.restore();
+  g.save(); g.translate(330, 240); g.scale(1, 0.62); glow(g, 0, 0, 120, '#ff2a2a', 0.8 + 0.4 * k); g.beginPath(); g.arc(0, 0, 84, 0, 7); g.fillStyle = Q.eye || '#ff2a2a'; g.fill(); g.restore();
+  const look = potPos(t); g.beginPath(); g.arc(330 - 14, 240 + 4, 24, 0, 7); g.fillStyle = '#000'; g.fill();
+  // the fake expert he painted on: clamped to its face
+  if (t >= B.paint + 0.45) { const st = ST[B.st], u = ease((t - B.paint - 0.45) / 0.25), sw = 300 * (1.4 - 0.4 * u), sh = sw * st.naturalHeight / st.naturalWidth;
+    g.save(); g.translate(760, 330); g.rotate(-0.06 + 0.04 * Math.sin(t * 2)); g.drawImage(st, -sw / 2, -sh / 2, sw, sh); g.restore();
+    // its nameplate (cardboard, marker)
+    g.save(); g.translate(760, 520); g.rotate(0.03); g.fillStyle = '#e9dcb8'; g.fillRect(-250, -34, 500, 68); g.lineWidth = 8; g.strokeStyle = INK; g.strokeRect(-250, -34, 500, 68);
+    g.fillStyle = INK; g.font = '400 30px "Rubik Mono One"'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(B.name, 0, 2, 470); g.restore(); }
+  g.restore();
+}
+// his shots: one per Matt tap during a fight
+const SHOTS = []; function buildShots() { for (const m of TAPS) { const B = BOSSES.find(b => m.t > b.paint + 0.5 && m.t < (b.laser || b.kill)); if (B) SHOTS.push({ t: m.t, big: m.kind === 'big', B, i: SHOTS.length }); } }
+const lastShot = t => { let l = null; for (const s of SHOTS) { if (s.t > t) break; l = s; } return l; };
+function drawShots(g, t, P0) {
+  for (const s of SHOTS) { const a = t - s.t; if (a < 0) break; if (a > 0.22) continue; const P = shipPos(s.B, s.t), tx = P.x + (R(s.i, 1) - 0.6) * 220 * P.s, ty = P.y + (R(s.i, 2) - 0.5) * 120 * P.s;
+    const u = clamp(a / 0.08), x1 = P0[0] + 70 + (tx - P0[0] - 70) * u, y1 = P0[1] + (ty - P0[1]) * u;
+    g.save(); g.globalCompositeOperation = 'lighter'; g.strokeStyle = s.big ? '#ffffff' : LILAC; g.shadowColor = PURPLE; g.shadowBlur = s.big ? 30 : 14; g.lineWidth = (s.big ? 9 : 4) * (1 - a / 0.22) + 1;
+    g.beginPath(); g.moveTo(P0[0] + 70, P0[1]); for (let k = 1; k <= 6; k++) { const v = k / 6; g.lineTo(P0[0] + 70 + (x1 - P0[0] - 70) * v, P0[1] + (y1 - P0[1]) * v + (k < 6 ? (R(s.i, k + 3) - 0.5) * 26 : 0)); } g.stroke(); g.restore();
+    if (u >= 1) glow(g, tx, ty, s.big ? 120 : 60, s.big ? '#ffffff' : PURPLE, (s.big ? 1 : 0.7) * (1 - a / 0.22)); }
+}
+// its fire: glowing paragraph-bubbles on the beat, at him (and at Kevin once he's caged)
+function drawFire(g, t, B, P0, cage) {
+  const P = shipPos(B, t); if (t < B.enter + 1 || t > B.kill - 0.5 || span(t, B.paint, B.paint + 1.2)) return;
+  for (let b = Math.floor((t - 1.2) / BEAT); b * BEAT <= t; b++) { const t0 = b * BEAT; if (t0 < B.enter + 1 || b % 2) continue; const a = (t - t0) / 1.2; if (a < 0 || a > 1) continue;
+    const tgt = cage && b % 4 === 0 ? cage : P0, sx0 = P.x - 260 * P.s, sy0 = P.y + 10 * P.s;
+    for (let k = -1; k <= 1; k++) { const x = sx0 + (tgt[0] - sx0 + 80) * a, y = sy0 + (tgt[1] - sy0 + k * 70) * a; glow(g, x, y, 34, '#ff8a3d', 0.7); g.beginPath(); g.arc(x, y, 12, 0, 7); g.fillStyle = '#fff1d6'; g.fill(); g.lineWidth = 4; g.strokeStyle = INK; g.stroke(); } }
+}
+// a kill: the ship comes apart in four pieces
+function drawWreck(g, B, t) {
+  const a = t - B.kill; if (a < 0 || a > 1.6) return; const P = shipPos(B, B.kill), Q = SK[B.v], sc = SHIPW / 1280 * P.s;
+  for (let q = 0; q < 4; q++) { const qx = q % 2, qy = q >> 1, vx = (qx ? 1 : -1) * (180 + 90 * q), vy = (qy ? 1 : -1) * 140 - 60;
+    g.save(); g.globalAlpha = clamp(1.6 - a); g.translate(P.x + vx * a, P.y + vy * a + 260 * a * a); g.rotate((qx ? 1 : -1) * a * 2.2); g.scale(sc, sc);
+    g.drawImage(Q.hull, qx * 640, qy * 360, 640, 360, -640 + qx * 640, -360 + qy * 360, 640, 360); g.restore(); }
+  glow(g, P.x, P.y, 520 * P.s, '#ffffff', clamp(1 - a * 2)); glow(g, P.x, P.y, 380 * P.s, PURPLE, clamp(1 - a));
+  for (let i = 0; i < 26; i++) { const ang = R(i, 9) * 6.28, d = (200 + 400 * R(i, 10)) * a; glow(g, P.x + Math.cos(ang) * d, P.y + Math.sin(ang) * d + 120 * a * a, 26, '#ffb02e', clamp(1 - a)); }
+}
+// the set pieces that fall (cardboard, on strings)
+function cardboard(g, kind, x, y, s, lit = 1) {
+  g.save(); g.translate(x, y); g.scale(s, s); g.lineJoin = 'round';
+  const disc = (r, fill) => { g.beginPath(); g.arc(6, 8, r, 0, 7); g.fillStyle = '#a8794a'; g.fill(); g.beginPath(); g.arc(0, 0, r, 0, 7); g.fillStyle = fill; g.fill(); g.lineWidth = 7; g.strokeStyle = INK; g.stroke(); };
+  if (kind === 'moon') { disc(110, '#efe6cf'); g.fillStyle = '#cfc4a6'; for (const [cx, cy, r] of [[-30, -20, 22], [35, 25, 16], [10, -55, 12], [-40, 45, 14]]) { g.beginPath(); g.arc(cx, cy, r, 0, 7); g.fill(); g.lineWidth = 4; g.stroke(); } }
+  if (kind === 'sun') { for (let i = 0; i < 12; i++) { g.save(); g.rotate(i * Math.PI / 6); g.beginPath(); g.moveTo(-26, -110); g.lineTo(0, -175); g.lineTo(26, -110); g.closePath(); g.fillStyle = '#ffb02e'; g.fill(); g.lineWidth = 6; g.strokeStyle = INK; g.stroke(); g.restore(); }
+    disc(115, '#ffd23d'); g.fillStyle = INK; g.beginPath(); g.arc(-35, -15, 9, 0, 7); g.arc(35, -15, 9, 0, 7); g.fill(); g.beginPath(); g.arc(0, 20, 40, 0.2, Math.PI - 0.2); g.lineWidth = 7; g.stroke(); }
+  if (kind === 'saturn') { g.save(); g.rotate(-0.3); g.beginPath(); g.ellipse(0, 0, 210, 50, 0, 0, 7); g.lineWidth = 22; g.strokeStyle = '#f0d24a'; g.stroke(); g.lineWidth = 5; g.strokeStyle = INK; g.stroke(); g.restore(); disc(100, '#e7b46a'); }
+  if (kind === 'applause') { g.fillStyle = '#2a1a0a'; g.fillRect(-200, -60, 400, 120); g.lineWidth = 8; g.strokeStyle = INK; g.strokeRect(-200, -60, 400, 120); g.font = '400 50px "Rubik Mono One"'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillStyle = lit ? '#ff4a4a' : '#4a2a20'; if (lit) { g.shadowColor = '#ff4a4a'; g.shadowBlur = 24; } g.fillText('APPLAUSE', 0, 4); }
+  g.restore();
+}
+function drawFall(g, B, t) {   // the cut-in: the piece drops through the set and lands with a cardboard thud
+  const a = t - B.fallAt; if (a < -0.15 || a > 1.15) return false;
+  g.save(); g.globalAlpha = 0.55; g.fillStyle = '#000'; g.fillRect(0, 0, W, H); g.restore();
+  const land = 0.55, y = a < land ? -200 + (H * 0.72 + 200) * (a / land) ** 2 : H * 0.72 - 40 * Math.abs(Math.sin((a - land) * 9)) * Math.exp(-(a - land) * 6);
+  g.save(); g.strokeStyle = '#ddd6c2'; g.lineWidth = 3; g.beginPath(); g.moveTo(W / 2 - 60, 0); g.lineTo(W / 2 - 60, Math.min(y - 100, 40 + 100 * a)); g.moveTo(W / 2 + 60, 0); g.lineTo(W / 2 + 70, 30 + 160 * a); g.stroke(); g.restore();   // the snapped strings
+  cardboard(g, B.fall, W / 2, y, B.fall === 'applause' ? 1 : 1.1, a < 0.4 ? 1 : 0);
+  if (a > land) for (let i = 0; i < 14; i++) { const da = a - land, ang = Math.PI + R(i, 3) * Math.PI; g.save(); g.globalAlpha = clamp(1 - da * 1.6) * 0.7; g.fillStyle = '#c9b48a'; g.beginPath(); g.arc(W / 2 + Math.cos(ang) * 260 * da * (0.5 + R(i, 4)), H * 0.72 + 110 + Math.sin(ang) * 70 * da, 16 + 20 * da, 0, 7); g.fill(); g.restore(); }
+  return true;
+}
+// Kevin and his cage
+const kev = { x: W * 0.55, y: H * 0.45, vx: 0, vy: 0 };
+function kevinPos(t, P0) { if (t < KEVIN.cage + 0.3) { kev.x = W * 0.56; kev.y = H * 0.42 + 10 * Math.sin(t * 1.3); return [kev.x, kev.y]; }
+  const tx = P0[0] - 190, ty = P0[1] + 60; kev.vx += (tx - kev.x) * 0.02; kev.vy += (ty - kev.y) * 0.02 + 0.3; kev.vx *= 0.86; kev.vy *= 0.86; kev.x += kev.vx; kev.y += kev.vy; return [kev.x, kev.y]; }
+function drawKevin(g, t, K, P0, empty = false) {
+  const st = ST.kevin, s = 200, rot = 0.12 * Math.sin(t * 1.1);
+  if (!empty) { g.save(); g.translate(K[0], K[1]); g.rotate(rot); if (t > KEVIN.gone) g.globalAlpha = clamp(1 - (t - KEVIN.gone) / 0.8); g.drawImage(st, -s / 2, -s / 2, s, s * st.naturalHeight / st.naturalWidth); g.restore(); }
+  if (t >= KEVIN.cage) { const u = ease((t - KEVIN.cage) / 0.18), k = kick(t);
+    g.save(); g.translate(K[0], K[1]); g.globalCompositeOperation = 'lighter'; g.shadowColor = PURPLE; g.shadowBlur = 22; g.strokeStyle = empty ? 'rgba(201,167,255,.55)' : LILAC; g.lineWidth = 6;
+    const cw = 230 * (2 - u), ch = 260 * (2 - u); g.beginPath(); g.roundRect(-cw / 2, -ch / 2, cw, ch, 30); g.stroke(); for (let i = 1; i < 5; i++) { g.beginPath(); g.moveTo(-cw / 2 + cw * i / 5, -ch / 2 + 6); g.lineTo(-cw / 2 + cw * i / 5, ch / 2 - 6); g.stroke(); }
+    g.restore(); glow(g, K[0], K[1], 200, PURPLE, (empty ? 0.25 : 0.35) + 0.25 * k); }
+  if (t >= KEVIN.tether && !empty && P0) { g.save(); g.strokeStyle = LILAC; g.shadowColor = PURPLE; g.shadowBlur = 16; g.lineWidth = 5; g.beginPath(); g.moveTo(P0[0] - 40, P0[1] + 20); g.quadraticCurveTo((P0[0] + K[0]) / 2, Math.max(P0[1], K[1]) + 60, K[0] + 110, K[1] - 20); g.stroke(); g.restore(); }
+}
+// the sky gives way after the fifth kill: plywood and rope behind it
+function sag(g, t) { if (t < 193.27) return 0; const u = ease((t - 193.27) / 0.5); return u * H * 0.22 + (t < 194 ? 20 * Math.sin((t - 193.27) * 18) * (1 - u) : 0); }
+const PLY = document.createElement('canvas'); PLY.width = W; PLY.height = H * 0.4; { const p = PLY.getContext('2d'); p.fillStyle = '#b08a5a'; p.fillRect(0, 0, W, PLY.height);
+  for (let i = 0; i < 9; i++) { p.fillStyle = i % 2 ? '#a07a4c' : '#b8925f'; p.fillRect(i * 150, 0, 146, PLY.height); p.strokeStyle = '#6a4a2a'; p.lineWidth = 4; p.strokeRect(i * 150, 0, 146, PLY.height); p.fillStyle = '#4a3420'; p.beginPath(); p.arc(i * 150 + 14, 20, 5, 0, 7); p.arc(i * 150 + 132, 20, 5, 0, 7); p.fill(); }
+  p.strokeStyle = '#d8c79a'; p.lineWidth = 7; for (const x of [210, 640, 1050]) { p.beginPath(); p.moveTo(x, 0); p.quadraticCurveTo(x + 40, PLY.height * 0.6, x - 20, PLY.height); p.stroke(); } }
+
+// ---------- the lyric line (the sung words, in the level's lettering) ----------
+function lyric(g, t, y = H - 46) { const L = LINES.find(l => t >= l.t0 - 0.05 && t < l.t1); if (!L) return; const said = L.words.filter(x => x.t <= t + 0.03).map(x => x.w).join(' ').replace(/ ([—-])/g, '$1');
+  if (!said) return; g.save(); g.font = '400 30px "Major Mono Display"'; g.textAlign = 'center'; g.lineJoin = 'round'; const shout = said === said.toUpperCase();
+  g.lineWidth = 8; g.strokeStyle = INK; g.strokeText(said.toLowerCase(), W / 2, y, W - 80); g.fillStyle = shout ? '#ffe14d' : '#fff4dc'; g.fillText(said.toLowerCase(), W / 2, y, W - 80); g.restore(); }
+function card(g, t, B) {   // the expert's name, big, when the stroke paints it on
+  const a = t - B.paint; if (a < 0.3 || a > 2.4) return; const k = Math.min(1, (a - 0.3) * 5), out = clamp((2.4 - a) * 3);
+  g.save(); g.globalAlpha = out; g.translate(W / 2, H * 0.17); g.rotate(-0.03); g.scale(1 + 0.6 * (1 - ease(k)), 1 + 0.6 * (1 - ease(k)));
+  g.font = '400 52px "Rubik Mono One"'; g.textAlign = 'center'; g.textBaseline = 'middle'; const tw = g.measureText(B.name).width + 60;
+  g.fillStyle = '#ffffff'; g.fillRect(-tw / 2 - 8, -48, tw + 16, 110); g.fillStyle = INK; g.fillRect(-tw / 2 - 2, -42, tw + 4, 98); g.fillStyle = '#e9dcb8'; g.fillRect(-tw / 2 + 4, -36, tw - 8, 86);
+  g.fillStyle = INK; g.fillText(B.name, 0, -6); g.font = '400 20px "Rubik Mono One"'; g.fillStyle = '#7a2a1a'; g.fillText(B.sub, 0, 34); g.restore(); }
+function stroke(g, t, B, P0) {   // the purple glitch-stroke that paints the expert onto the ship
+  const a = t - B.paint; if (a < 0 || a > 0.6) return; const P = shipPos(B, t), u = ease(a / 0.45), tx = P.x + 120 * P.s, ty = P.y - 30 * P.s;
+  g.save(); g.globalCompositeOperation = 'lighter'; g.strokeStyle = MAG; g.shadowColor = PURPLE; g.shadowBlur = 30; g.lineWidth = 16 * (1 - a / 0.6) + 2; g.lineCap = 'round';
+  g.beginPath(); g.moveTo(P0[0] + 50, P0[1] - 30); g.quadraticCurveTo((P0[0] + tx) / 2, P0[1] - 260, P0[0] + 50 + (tx - P0[0] - 50) * u, P0[1] - 30 + (ty - P0[1] + 30) * u); g.stroke(); g.restore();
+  const gw = (globalThis.POTATO_GLITCH_WORDS || ['krrzzt']).filter(x => x.length <= 9 && !/\s/.test(x)); g.save(); g.font = '400 22px "Major Mono Display"'; g.fillStyle = LILAC; for (let i = 0; i < 6; i++) g.fillText(gw[Math.floor(R(i, B.v) * gw.length)], P0[0] + 60 + (tx - P0[0]) * (u * i / 6), P0[1] - 80 - 120 * Math.sin(Math.PI * i / 6)); g.restore();
+}
+
+// ---------- one frame ----------
+const HEAD = await (async () => { const i = await img('./_cihead.png').catch(() => null); return i; })();
+function frame(t) {
+  o.setTransform(1, 0, 0, 1, 0, 0); o.globalAlpha = 1; o.filter = 'none'; o.fillStyle = '#000'; o.fillRect(0, 0, W, H);
+  // ---- 0–2.56: Kevin, late, typing his question ----
+  if (t < 2.56) {
+    o.fillStyle = '#05060c'; o.fillRect(0, 0, W, H); glow(o, W * 0.5, H * 0.32, 520, '#5f8cff', 0.35);
+    const q = 'dear potato, what is the capital of niepal? thanks, kevin', n = Math.min(q.length, Math.floor((t / 2.3) * q.length));
+    o.save(); o.translate(W * 0.5, H * 0.28); o.fillStyle = '#ffffff'; o.beginPath(); o.roundRect(-430, -42, 860, 84, 22); o.fill(); o.lineWidth = 6; o.strokeStyle = INK; o.stroke();
+    o.font = '400 24px "Major Mono Display"'; o.fillStyle = INK; o.textBaseline = 'middle'; o.fillText(q.slice(0, n) + (Math.floor(t * 4) % 2 ? '|' : ''), -400, 2); o.restore();
+    const k = ST.kevin, s = 360; o.save(); o.translate(W * 0.5, H * 0.78); o.drawImage(k, -s / 2, -s / 2, s, s * k.naturalHeight / k.naturalWidth); o.restore(); glow(o, W * 0.5, H * 0.6, 300, '#5f8cff', 0.25);
+    return; }
+  // ---- the bare stage after the show, and the next morning ----
+  if (t >= 243.5) {
+    if (t < 246.4) { paintSet(-1.0); w.clearRect(0, 0, W, H); w.drawImage(SET, 0, 0, W, H); o.drawImage(WORLD, 0, 0); o.fillStyle = 'rgba(0,0,0,.55)'; o.fillRect(0, 0, W, H);
+      glow(o, W * 0.4, H * 0.3, 520, '#fff1c8', 0.35); const P = [W * 0.38, H * 0.66]; drawKevin(o, t, [W * 0.62, H * 0.6], null, true);
+      const pc = potato(t, t < 245 ? 'oh' : 'sad', -0.5); o.drawImage(pc, P[0] - 130, P[1] - 170, 260, 260);
+      o.fillStyle = `rgba(0,0,0,${clamp((t - 245.6) / 0.8)})`; o.fillRect(0, 0, W, H); return; }
+    if (HEAD) { const a = t - 246.6, hy = a < 0 ? -H : a < 0.35 ? -H + (H * 1.5) * ease(a / 0.35) : H * 0.5, slam = t >= 247.304 ? 1 + 0.08 * Math.exp(-(t - 247.304) * 8) : 1;
+      o.save(); o.translate(W / 2, hy); o.rotate(-0.025); o.scale(0.95 * slam, 0.95 * slam); o.drawImage(HEAD, -600, -380); o.restore(); }
+    return; }
+  // ---- the set (frozen for one second of neat) ----
+  const tSet = span(t, STILL[0], STILL[1]) ? STILL[0] : t; paintSet(tSet);
+  w.clearRect(0, 0, W, H); const sg = sag(w, t);
+  if (sg > 0) { w.drawImage(PLY, 0, 0, W, sg + 20); w.drawImage(SET, 0, 0, 960, 540, 0, sg, W, H); } else w.drawImage(SET, 0, 0, W, H);
+  // the hole the first alien tore in the sky stays open
+  if (t >= 39.4) { const hk = t < 41.62 ? ease((t - 39.4) / 2.2) * 0.4 : ease((t - 41.62) / 0.3), [hx, hy] = HOLE; glow(w, hx, hy + sg * 0.6, 160, '#ff3a1f', t < 41.62 ? 0.3 + 0.3 * hk : 0.25);
+    if (t >= 41.62) { w.save(); w.translate(hx, hy + sg * 0.6); w.beginPath(); for (let i = 0; i < 20; i++) { const a = i / 20 * 6.28, r = (70 + 30 * R(i, 5)) * hk; w.lineTo(Math.cos(a) * r * 1.3, Math.sin(a) * r); } w.closePath(); w.fillStyle = '#05030a'; w.fill(); w.lineWidth = 6; w.strokeStyle = '#ff8a3d'; w.stroke(); w.restore(); } }
+  const P0 = potPos(t), B = bossAt(t), still = span(t, STILL[0], STILL[1]);
+  // the ship, its fire, his shots, the wreck
+  if (B && t < B.kill) drawShip(w, B, t, shipPos(B, t));
+  const cageOn = t >= KEVIN.cage && t < KEVIN.gone + 0.8; const K = t >= KEVIN.appear ? kevinPos(still ? STILL[0] : t, P0) : null;
+  if (B && !still) { drawFire(w, t, B, P0, cageOn ? K : null); drawShots(w, t, P0); stroke(w, t, B, P0); }
+  for (const b of BOSSES) drawWreck(w, b, t);
+  // ON FIRE: his bolts are flame for four bars
+  if (span(t, 159.53, 169.2)) glow(w, P0[0], P0[1], 220, MAG, 0.25 + 0.3 * kick(t));
+  // Kevin
+  if (K && t >= KEVIN.appear) { const u = ease((t - KEVIN.appear) / 0.6); if (t < KEVIN.cage) { w.save(); w.globalAlpha = u; drawKevin(w, t, [K[0], K[1] - (1 - u) * 300], P0); w.restore(); } else drawKevin(w, t, K, P0); }
+  // Potato
+  const face = at(FACES, t), purple = (B && span(t, B.paint, B.paint + 0.3)) || (B && span(t, B.kill - 0.05, B.kill + 0.25)) || span(t, KEVIN.cage, KEVIN.cage + 0.3) ? 1 : span(t, 159.53, 169.2) ? 0.35 + 0.3 * kick(t) : 0;
+  const pc = potato(t, face, B ? 0.55 : 0.35, purple); const ps = 300;
+  w.drawImage(pc, P0[0] - ps / 2, P0[1] - ps * 0.62, ps, ps);
+  glow(w, P0[0] + 30, P0[1] + 70, 60, '#ffb02e', 0.5 + 0.3 * kick(t));   // his little thruster
+  // the laser: the mothership cut in half, every string snaps, the show comes down
+  if (span(t, 237.70, 240.2)) { const a = t - 237.70; w.save(); w.globalCompositeOperation = 'lighter'; const Pm = shipPos(BOSSES[5], t), th = 40 + 90 * Math.min(1, a * 3);
+    const gr = w.createLinearGradient(0, P0[1] - th, 0, P0[1] + th); gr.addColorStop(0, 'rgba(154,82,255,0)'); gr.addColorStop(0.5, '#ffffff'); gr.addColorStop(1, 'rgba(154,82,255,0)'); w.fillStyle = gr;
+    w.beginPath(); w.moveTo(P0[0] + 60, P0[1] - 20); w.lineTo(W, Pm.y - th); w.lineTo(W, Pm.y + th); w.lineTo(P0[0] + 60, P0[1] + 20); w.fill(); w.restore(); glow(w, W / 2, H / 2, 900, PURPLE, 0.3 + 0.4 * Math.min(1, a)); }
+  // ---- the camera ----
+  let z = 1, cx = W / 2, cy = H / 2, shake = 0;
+  if (B) { const e = t - B.enter; if (e >= 0 && e < 0.9 && !B.mother) { z = 1.6 - 0.6 * ease(e / 0.9); cx = HOLE[0]; cy = HOLE[1] + 60; }   // it tears in: we're on the hole
+    const kk = t - B.kill; if (kk >= -0.05 && kk < 0.7) { const P = shipPos(B, B.kill); z = 1.3 - 0.3 * ease(kk / 0.7); cx = P.x; cy = P.y; shake = 18 * (1 - kk / 0.7); }
+    if (B.mother && span(t, 231.05, 233.75)) { z = 1.12; cy = H * 0.42; shake = 6; } }
+  const ls = lastShot(t); if (ls && ls.big && t - ls.t < 0.15) shake = Math.max(shake, 7);
+  if (span(t, 159.53, 169.2)) shake = Math.max(shake, 4 * kick(t));
+  if (still) { z = 1 + 0.08 * ease((t - STILL[0]) / 2.6); cx = (P0[0] + K[0]) / 2; cy = P0[1]; }
+  if (span(t, 240.2, 243.5)) { const a = t - 240.2; o.save(); o.translate(0, 300 * a * a); o.globalAlpha = clamp(1 - a / 3.2); o.drawImage(WORLD, 0, 0); o.restore(); }   // the strings go, it all drops
+  else { const sxk = (R(Math.floor(t * 60), 1) - 0.5) * shake, syk = (R(Math.floor(t * 60), 2) - 0.5) * shake;
+    o.save(); o.translate(W / 2 + sxk, H / 2 + syk); o.scale(z, z); o.translate(-(W / 2 + (cx - W / 2) * (1 - 1 / z) * 1.0) , -(H / 2 + (cy - H / 2) * (1 - 1 / z))); o.drawImage(WORLD, 0, 0); o.restore(); }
+  // a kill freezes on purple for a blink
+  for (const b of BOSSES) if (span(t, b.kill, b.kill + 0.12)) { o.save(); o.globalCompositeOperation = 'color'; o.fillStyle = PURPLE; o.fillRect(0, 0, W, H); o.restore(); }
+  if (span(t, KEVIN.cage, KEVIN.cage + 0.12)) { o.save(); o.globalCompositeOperation = 'lighter'; o.fillStyle = 'rgba(154,82,255,.5)'; o.fillRect(0, 0, W, H); o.restore(); }
+  // the set piece falling (cut-in)
+  for (const b of FALLS) if (drawFall(o, b, t)) break;
+  // close-up on his visor
+  const C = CLOSE.find(([a, b]) => span(t, a, b)); if (C) { o.save(); o.filter = 'blur(6px) brightness(.45)'; o.drawImage(WORLD, -80, -45, W + 160, H + 90); o.restore();
+    const col = C[2] === 'angry' || C[2] === 'skeptical' ? '#7fb0ff' : C[2] === 'shock' ? LILAC : C[2] === 'laugh' ? MAG : '#ffb02e'; glow(o, W * 0.5, H * 0.5, 600, col, 0.35);
+    const pc2 = potato(t, C[2], C[2] === 'shock' ? 0.1 : 0.35, C[2] === 'laugh' ? 0.4 : 0); o.drawImage(pc2, W * 0.5 - 460, H * 0.5 - 520, 920, 920);
+    if (C[2] === 'shock') { o.save(); o.translate(W / 2, 60); o.fillStyle = '#ffffff'; o.beginPath(); o.roundRect(-300, -30, 600, 60, 18); o.fill(); o.lineWidth = 5; o.strokeStyle = INK; o.stroke(); o.font = '400 22px "Major Mono Display"'; o.fillStyle = INK; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText('...thanks, kevin', 0, 2); o.restore(); } }
+  // the expert's name
+  if (B) card(o, t, B);
+  // the lights slam on at "Potato!"
+  if (span(t, 2.56, 3.0)) { o.fillStyle = `rgba(255,240,200,${0.8 * (1 - (t - 2.56) / 0.44)})`; o.fillRect(0, 0, W, H); }
+  if (span(t, 237.70, 238.6)) { o.fillStyle = `rgba(255,255,255,${0.9 * (1 - (t - 237.7) / 0.9)})`; o.fillRect(0, 0, W, H); }
+  lyric(o, t);
+}
+
+// ---------- drive ----------
+window.MV = { frame, async stills(ts) { for (const t of ts) { simT = t; frame(t); await fetch(`http://localhost:8798/save?name=cimv-${t.toFixed(2)}`, { method: 'POST', body: out.toDataURL('image/jpeg', 0.85) }); } return 'ok'; },
+  async all(from = 0, to = END) { const n0 = Math.round(from * FPS), n1 = Math.round(to * FPS); for (let i = n0; i < n1; i++) { frame(i / FPS); await fetch(`http://localhost:8792/save?name=f${String(i).padStart(5, '0')}.jpg`, { method: 'POST', body: out.toDataURL('image/jpeg', 0.84) }); if (i % 48 === 0) log(`frame ${i} / ${n1}`); } return 'done'; },
+  setTaps(m) { TAPS.length = 0; TAPS.push(...m); SHOTS.length = 0; buildShots(); return SHOTS.length; } };
+window.__ready = true; log('ready');
+</script></body></html>

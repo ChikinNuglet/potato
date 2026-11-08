@@ -9,6 +9,7 @@ import { STYLES, setBadge, setPetunia, setPetting } from './kitchen/kitchens.mjs
 import { createLiveFace } from './kitchen/face.mjs';
 import { playOpening } from './opening.mjs';
 import { installPortal, PHONE_NOTE } from './portal.mjs';
+import { installArcade } from './arcade.mjs';   // ARCADE (Nov 8): the living room's game console -> level select
 import { installBooth } from './booth.mjs';
 import { playFilm } from './film.mjs';   // FILM: The Coupon on the first visit (D-49)
 import { installCave } from './cave.mjs';   // CAVE (Nov 7): the potato cave under the kitchen floor
@@ -53,9 +54,15 @@ async function main() {
   // ---- the little circle tiles, from the game
   const row = $('looks'), addTile = i => { const st = STYLES[i], c = document.createElement('canvas'); c.width = c.height = 96; st.icon(c.getContext('2d'), 96); const b = document.createElement('button'), im = new Image(), name = (RADIO.find(r => r[0] === st.level) || [0, st.name])[1]; b.className = 'kicon'; b.setAttribute('aria-label', name); b.title = name; im.alt = ''; im.src = c.toDataURL('image/png'); b.append(im); b.dataset.i = i; b.onclick = e => { pick(i); if (e.detail) b.blur(); }; row.append(b); };
   const count = () => BOOTH; let room = 0, inBooth = false, boothLook = 0, inLiving = false;
-  for (let i = 0; i < count(); i++) addTile(i);
+  // THE LINE (Chikin, Nov 8: "move binary so it connects to the front door, so its the first button, then let the doors open all the way
+  // down the line"): the simulation is the first button; the living room's front door opens into it; every kitchen's left door = the one
+  // before it on the row, right door = the one after (the last one's right door = the photo booth). ORDER = the row, left to right.
+  const BIN = STYLES.findIndex(s => s.id === 'binary');
+  const ORDER = [...(BIN >= 0 && BIN < count() ? [BIN] : []), ...Array.from({ length: count() }, (_, i) => i).filter(i => i !== BIN)];
+  const step = (i, d) => ORDER[(ORDER.indexOf(i) + d + ORDER.length) % ORDER.length];
+  ORDER.forEach(i => addTile(i));
   const tiles = () => { [...row.children].forEach(b => { const on = +b.dataset.i === room; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }); };
-  function pick(i) { if (intro.busy()) return; initS(); i = (i + count()) % count();
+  function pick(i) { if (intro.busy()) return; initS(); i = ((i % count()) + count()) % count();
     if (inBooth) { boothLook = i; room = i; tiles(); return intro.dressOnly(STYLES[i].outfit); }
     if (inLiving) { STYLES[LIVING].outfit = STYLES[i].outfit; return intro.dressOnly(STYLES[i].outfit); }   // (in the living room a glitch changes his clothes, not the room)
     room = i; intro.setStyle(i); tiles(); roomMusic(songOf(i)); }
@@ -63,37 +70,40 @@ async function main() {
   const jukebox = () => { const k = RADIO.findIndex(r => r[0] === songOf(intro.style())), id = RADIO[(k + 1) % RADIO.length][0]; store.set('potato-room-radio', id); roomMusic(id); };
   const portal = installPortal({ glitch: glitchOnly, opened() { store.set('potato-room-door', '1'); }, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
   // the right door: locked everywhere except Potato's own (Regular), which the password opens. It leads to the demo for now
-  Object.defineProperty(intro, 'leftShut', { get() { return STYLES[intro.style()].id === 'living'; } });   // the living room's front door: it opens a crack onto the street, for now (intro.mjs peekOut)
-  Object.defineProperty(intro, 'rightOpen', { get() { const id = STYLES[intro.style()].id; return id === 'bare' || id === 'living'; }   /* Chikin Nov 8: "the photobooth can go to the door to the right of the kitchen for now" (it opens for everyone in Potato's own kitchen and leads to the photo booth; was locked Nov 7) */ });
+  Object.defineProperty(intro, 'leftShut', { get() { return false; } });   // (Nov 8: the front door opens now: into the simulation)   // the living room's front door: it opens a crack onto the street, for now (intro.mjs peekOut)
+  Object.defineProperty(intro, 'rightOpen', { get() { return true; } });   // (Nov 8: every door opens, down the line)
   const booth = installBooth({ T, renderer, scene, pivot, intro, fx, wordsHome: $('gwords'), face, faces: spud, STYLES, count, glitch: glitchOnly, walkable: on => { boothBusy = on; intro.noPaint = on; }, sfx: SFX }); let boothBusy = false;
-  window.__boothNext = () => pick(room + 1);
+  window.__boothNext = () => pick(step(room, 1));
   // CAVE (Nov 7): the trapdoor in the kitchen floor (kitchens.mjs prop 'cave') drops him into the cave (cave.mjs). The kitchen loop pauses while he's down there.
   const cave = installCave({ T, renderer, scene, pivot, intro, fx, wordsHome: $('gwords'), face, spud, sfx: SFX, glitch: glitchOnly, walkable: on => { boothBusy = on; intro.noPaint = on; },
     music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); }, muted: () => muted });
   const intoCave = () => { if (cave.isOpen()) return; const x0 = pivot.position.x, x1 = ((200 + 328 * 0.76) / 1600 - 0.5) * viewW, t0 = performance.now();   // (a beat: the hatch flips open, the light comes up, he steps over the hole, crouches, drops)
     const step = () => { const k = Math.min(1, (performance.now() - t0) / 220); pivot.position.x = x0 + (x1 - x0) * k; if (k < 1) requestAnimationFrame(step); else spud.duck(true); }; step();
     setTimeout(() => { spud.duck(false); cave.open(); }, 600); };
-  intro.onProp = id => { if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(); if (id === 'photobooth') booth.open(); };
+  const arcade = installArcade({ intro, glitch: glitchOnly, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
+  intro.onProp = (id, on) => { if (id === 'console') return arcade.start(); if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
+    if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(); if (id === 'photobooth') booth.open(); };
   const go = (i, watch) => { intro.showKitchen(i, { back: true, watch }); };
-  intro.onEnter = how => {
-    // THE LIVING ROOM (Chikin, Nov 8: "the left should lead to the living room"): Potato's own kitchen's left door goes there (the song rooms keep theirs);
-    // he comes in by its right-hand door, which goes straight back. Its front door (left) only peeks out (intro.mjs), so it never gets here.
-    if (inLiving) { if (how === 'demo') { inLiving = false; STYLES[LIVING].outfit = null; go(room); } return; }
-    if (how !== 'demo' && !inBooth && LIVING >= 0 && STYLES[room].id === 'bare') { inLiving = true; STYLES[LIVING].outfit = STYLES[room].outfit; intro.showKitchen(LIVING, { back: true, watch: true }); return; }
-    if (how === 'demo') { booth.open(); return; }   // the right door = the photo booth for now (Nov 8)
-    if (!inBooth) { inBooth = true; STYLES[BOOTH].outfit = STYLES[boothLook = room].outfit; go(BOOTH); } else { inBooth = false; STYLES[BOOTH].outfit = null; go(room); roomMusic(songOf(room)); } tiles(); };
+  intro.onEnter = how => {   // how: 'play' = the left door, 'demo' = the right door
+    const enter = i => { room = i; go(i); tiles(); roomMusic(songOf(i)); };
+    if (inLiving) { inLiving = false; STYLES[LIVING].outfit = null; if (how === 'demo') enter(room); else enter(ORDER[0]); return; }   // right = back where he came from; the front door = the simulation
+    if (inBooth) { inBooth = false; STYLES[BOOTH].outfit = null; enter(room); return; }
+    const pos = ORDER.indexOf(room);
+    if (how !== 'demo') { if (pos <= 0 && LIVING >= 0) { inLiving = true; STYLES[LIVING].outfit = STYLES[room].outfit; intro.showKitchen(LIVING, { back: true, watch: true }); return; } enter(ORDER[pos - 1]); return; }
+    if (pos >= ORDER.length - 1) { inBooth = true; STYLES[BOOTH].outfit = STYLES[boothLook = room].outfit; go(BOOTH); tiles(); return; }   // the end of the line: the photo booth
+    enter(ORDER[pos + 1]); };
   intro.setSongs(STYLES.map(st => { const k = RADIO.findIndex(r => r[0] === st.level); return { n: k >= 0 ? k + 1 : '', title: k >= 0 ? RADIO[k][1] : '', cleared: false }; }));
 
   // ---- keys: the game's, plus Esc for costumes, Space for a glitch, a double tap on an arrow for a spin
   const KEY = { ArrowUp: 'J', KeyW: 'J', ArrowDown: 'D', KeyS: 'D', ArrowLeft: 'L', KeyA: 'L', ArrowRight: 'R', KeyD: 'R' }, lastTap = { k: null, t: 0 };
   const spin = d => { initS(); intro.spinBy(d); };
   const press = (k, down) => { if (down && (k === 'L' || k === 'R')) { const now = performance.now(); if (lastTap.k === k && now - lastTap.t < 300) { spin(k === 'L' ? -1 : 1); lastTap.k = null; } else { lastTap.k = k; lastTap.t = now; } } initS(); intro.key(k, down); };
-  addEventListener('keydown', e => { if (e.metaKey || e.ctrlKey || e.altKey || document.getElementById('p404') || document.getElementById('bth') || document.getElementById('cave')) return; if (e.key === 'Escape') { e.preventDefault(); if (!e.repeat) pick(room + 1); return; } if (e.code === 'KeyT') { if (!e.repeat) speak(nextLine()); return; }
+  addEventListener('keydown', e => { if (e.metaKey || e.ctrlKey || e.altKey || document.getElementById('p404') || document.getElementById('bth') || document.getElementById('cave')) return; if (e.key === 'Escape') { e.preventDefault(); if (!e.repeat) pick(step(room, 1)); return; } if (e.code === 'KeyT') { if (!e.repeat) speak(nextLine()); return; }
     if (e.code === 'Space') { if (e.target.closest && e.target.closest('button,select')) return; e.preventDefault(); if (!e.repeat) { glitchOnly(); if (intro.props().near >= 0) intro.use(); } return; } if (e.code === 'KeyE') { e.preventDefault(); if (!e.repeat) { initS(); intro.use(); } return; }
     const k = KEY[e.code]; if (!k) return; e.preventDefault(); if (!e.repeat || k === 'D') press(k, true); });
   addEventListener('keyup', e => { const k = KEY[e.code]; if (k) intro.key(k, false); });
   document.querySelectorAll('#pads [data-k]').forEach(b => { const k = b.dataset.k; if (k === 'G') { b.onclick = () => { glitchOnly(); if (intro.props().near >= 0) intro.use(); }; return; } b.addEventListener('pointerdown', e => { e.preventDefault(); try { b.setPointerCapture(e.pointerId); } catch (x) {} press(k, true); }); for (const ev of ['pointerup', 'pointercancel']) b.addEventListener(ev, () => intro.key(k, false)); });
-  $('esc').onclick = () => pick(room + 1);
+  $('esc').onclick = () => pick(step(room, 1));
   const at = e => { const r = stage.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
   stage.addEventListener('click', e => { if (e.target.closest('button,select,label')) return; initS(); intro.walkTo(...at(e), { min: (e.pointerType === 'touch' ? 44 : 20) * 1600 / Math.max(1, stage.clientWidth) }); });
   { const first = () => { removeEventListener('pointerdown', first); removeEventListener('keydown', first); roomMusic(songOf(room)); }; addEventListener('pointerdown', first); addEventListener('keydown', first); }
@@ -141,7 +151,8 @@ async function main() {
   // phones and tablets, once per device: the honest note, right after the opening
   const phoneNote = () => { if (!LITE || store.get('potato-room-phone-note') === '1') return; store.set('potato-room-phone-note', '1'); const n = document.createElement('div'); n.id = 'phonenote'; n.style.cssText = 'position:fixed;left:50%;top:34px;translate:-50% 0;z-index:40;width:min(440px,calc(100vw - 24px));box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:8px 12px;background:#0b0710;color:#b4ffd2;border:3px solid #4dff9a;border-radius:8px;font:400 14px/1.35 Inter,system-ui,sans-serif'; n.innerHTML = `<span style="flex:1">${PHONE_NOTE}</span><button type="button" style="padding:6px 12px;background:#4dff9a;color:#0b0710;border:0;border-radius:6px;font:700 14px Inter,system-ui,sans-serif">OK</button>`; n.querySelector('button').onclick = () => n.remove(); document.body.append(n); };
   const firstVisit = Q.has('coupon') || (!TEST && store.get('potato-room-seen') !== '1');
-  if ((GATE || Q.has('gate')) && store.get('potato-room-unlocked') !== '1') { await portal.gate(); store.set('potato-room-unlocked', '1'); }
+  const LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);   // (local previews on Chikin's Mac: codes can't be checked here, so no code box)
+  if ((GATE || Q.has('gate')) && !LOCAL && store.get('potato-room-unlocked') !== '1') { await portal.gate(); store.set('potato-room-unlocked', '1'); }
   if (firstVisit) { const op = playOpening({ glitch: () => { initS(); SFX.glitch && SFX.glitch(); }, reduced: REDUCED, logos: !TEST || Q.has('logos') }); $('boot').remove(); op.then(() => {   /* (Chikin, Nov 8: no movie when the kitchen starts) */ store.set('potato-room-seen', '1'); stage.focus({ preventScroll: true }); phoneNote(); }); } else { $('boot').remove(); Promise.resolve().then(() => { stage.focus({ preventScroll: true }); phoneNote(); }); }   // FILM
   window.__ready = true;
 }

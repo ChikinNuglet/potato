@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><style>body{margin:0;background:#2a2f3a}#stage{width:900px;height:700px}</style>
+<div id="stage"></div>
+<script type="module">
+import { createSpud } from './spud3d.mjs';
+import { loadOutfit } from './outfits3d.mjs';
+const spud = await createSpud(document.getElementById('stage'));
+const b = await loadOutfit(new URLSearchParams(location.search).get('o') || 'suit-tie');
+spud.wear(b); window.ready = true; window.spud = spud;
+</script>

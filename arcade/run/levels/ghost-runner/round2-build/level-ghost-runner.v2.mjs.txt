@@ -1,0 +1,108 @@
+// Level 6, THE RUNNER VERSION, SECOND CRACK (?ghost=runner, Nov 4, the Tip-Over Crew; not the default until Chikin approves it).
+// Chikin drew what he wants (levels/ghost-runner/CHIKIN-SKETCH-phone-scale.png): HUGE phones (~86 % of the screen's height) that move
+// up/down and side to side, docked edge to edge. Potato LIVES INSIDE their screens ("the x he cant leave the phone"); he crosses into
+// the next phone by glitching through the wall where they meet ("the walls of the phones he has to glitch through"); the dark outside
+// the phones is where the lyrics go; a phone can fall on its side and its screen auto-rotates, shoving him ("throwing potato back a
+// little … or down, whatever the physics do"); phones never hurt him by touch, he only dies SQUISHED ("by falling text boxes too");
+// "the texts are platforms" and "those can glitch too, like in the game"; "controls should stay the same as ghost"; ghost Potato all level.
+// The crew's docs: levels/ghost-runner/ (PLAN.md = the build plan, DESIGN.md = the rules + numbers, course.json = every phone (the
+// designer's, made by course-gen.mjs), ART.md, JOKES.md, BOARD.md). Rules + look: run/modes/ghost-runner.mjs. The saved Ghost
+// (run/saved/ghost-v69-for-credits/) and the default Ghost (levels/ghost-in-the-group-chat.mjs + its mode) are NOT edited: the
+// conversation, the jolts, the alt lines and the opening are imported from them. Round 1's build is kept in levels/ghost-runner/round1-build/.
+//
+// BEAT SHEET (DESIGN.md §11, short): 0–7.88 the table opening (the current Ghost's, as is) · 7.88 the camera pulls back: James's phone
+// is one of many, the next one asleep beside it · 8.9 verse 1 teaches (ride the thread down, rewrite before Read, SPACE at the wall
+// into the next phone; grace to 21.03, a lock just pops him through) · 21–29.6 the first lock, the first bobbing phone · 29.6 chorus 1
+// (Biscuit SUPER, chair throw) · 36.30→37.96 BLOCKED · 41.84 "still": his phone tips over with him inside, the screen auto-rotates,
+// shove · 44.9 the door that breathes · 50.4 verse 2 (soup SUPER, hug throw, phones bobbing out of phase) · 61 define real · 66.95
+// "forget": drop the hanging phone with your glitch (on the word = it lands on its side, docked; early or never = it lands upright,
+// lower, cracked, swinging) · 70.62–80.42 THE TOWER: down through three stacked phones, the floor is the door · 85.93 "body": Jess's
+// phone tips with him inside · 86.78–88.0 everything still ("james i'm scared") · 88.9 chorus 2: Petunia 1, 2, 3 (three texts) on the
+// lying phone → "and WHOSE cat is that" → 92.05 it stands back up with him on the cats · 95.10→96.71 BLOCKED again · 98.2 the
+// hardest: Carol's phone hangs and drops on "still" (100.62), Mum's slow phone, a +41 bus phone · 108.2 outro · 113.17 every phone but
+// James's goes dark · 115.62 slide to power off · 119.92 he leaps out · 120.48 the far phones go purple (the spread) · 121.0 Petunia 4.
+import { parseWords } from './kit.mjs';
+import { story } from './story-ghost-in-the-group-chat.mjs';
+import { THREAD as THREAD0, JOLTS as JOLTS0, ALT, FAIL_LINES, BLOCK } from './ghost-in-the-group-chat.mjs';
+import { mode, modeView, fairRunner } from '../modes/ghost-runner.mjs';
+export { parseWords };
+export const meta = { id: 'ghost-runner', n: 6, title: 'Ghost in the Group Chat', place: 'the group chat', song: 'songs/ghost-in-the-group-chat.mp3',
+  map: 'songs/ghost-in-the-group-chat.map.json', words: 'words/ghost-in-the-group-chat.tsv', viz: 'songs/ghost-in-the-group-chat.viz.json' };
+
+// the course (the designer's, levels/ghost-runner/course.json — regenerate it with course-gen.mjs; never hand-edit it here)
+const COURSE_URL = new URL('./ghost-runner/course.json', import.meta.url);
+export const COURSE = typeof window !== 'undefined' && typeof process === 'undefined'
+  ? await fetch(COURSE_URL).then(r => r.json())
+  : JSON.parse((await import('node:fs')).readFileSync(COURSE_URL, 'utf8'));
+// the builder's overrides on top of course.json, each one said on BOARD.md (the designer folds them into course-gen.mjs; once course.json
+// has them, these change nothing):
+// · PLAN call 1: Jess's phone (#17) auto-rotates as it lands, [86.54, 86.78], so the shove is over before the quiet line (86.78–88.0)
+export const COURSE_FIX = { 17: { tip: { rotate: [86.54, 86.78] }, quietShove: true } };
+
+// the conversation: the current Ghost's own thread (the same words), with ONE change for Chikin's Petunia order (Nov 4, final): three
+// SEPARATE photo texts, then "and WHOSE cat is that". The thread has two James photo rows there (89.70, 90.01), so 89.70 → Petunia 1,
+// 90.01 → Petunia 2 (no second glitch into her), and one added James photo row at 90.83 → Petunia 3.
+// PLACEHOLDER (90.83): an empty photo text, no words — the writing crew owns the exact rows (and where "that is NOT your face" sits).
+export const THREAD = THREAD0.map(r => r.t === 90.01 ? (({ ph2, ...q }) => q)(r) : r)
+  .concat([{ t: 90.83, w: 'J', x: '', tg: 1, ph: 'petunia-3', placeholder: true }]).sort((a, b) => a.t - b.t);
+export const PETUNIA = { '89.70': 'easter/petunia-square.jpg', '90.01': 'easter/petunia-2-square.jpg', '90.83': 'easter/petunia-3-square.jpg', finale: 'easter/petunia-4-square.jpg' };
+// the phone's jolts (kept: the same words, kinds and warnings) — except 41.84 "still" and 85.93 "body": in the runner those two words
+// tip a whole phone over with him inside instead (course.json `tip`)
+export const JOLTS = JOLTS0.filter(j => j.t !== 41.84 && j.t !== 85.93);
+// BLOCKED, twice (the second is the runner's: "blocking you if you send another", chorus 2); each comes down the phone he's in
+export const BLOCKS = [{ slam: BLOCK.slam, wallT: BLOCK.wallT, text: "or i'm blocking you" }, { slam: 95.1, wallT: 96.71, text: 'blocking you if you send another' }];
+// no jolt, thought or gag in these (her two real-fear lines); the mode checks nothing near him moves in them
+export const QUIET = [[75.9, 76.97], [86.78, 88.0]];
+// his thoughts (JOKES.md §2, the comedian's ★ pick list of 8, DRAFTS for Chikin — mark keep / cut / not me / rewrite; off with thoughts: false)
+// anchor: a time, or an event the mode logs ('door' = his first door, 'rotate' = the first auto-rotate shove, 'tipper12' = #12 drops)
+export const THOUGHTS = [
+  { n: 1, at: 'door', text: 'phones have walls now. cute.', face: 'skeptical' },
+  { n: 2, at: 16.74, text: "her texts aren't load-bearing.", face: 'smirk' },
+  { n: 4, at: 'rotate', text: "landscape mode. it's coping.", face: 'question' },
+  { n: 5, at: 55.48, text: 'rub it in.', face: 'skeptical' },
+  { n: 7, at: 'tipper12', text: e => e.good ? 'good phone. stay.' : "it fell without me. i'll allow it.", face: e => e.good ? 'smirk' : 'skeptical' },
+  { n: 11, at: 95.69, text: 'i live on read.', face: 'skeptical' },
+  { n: 12, at: 104.95, text: 'left. still here.', face: 'skeptical' },
+  { n: 14, at: 115.62, text: 'off is a door too.', face: 'wide' },
+];
+// the death lines (JOKES.md §5, DRAFTS): [0], or [1] if [0] was the last one shown; they replace only the small subtitle
+export const DEATH = { lock: ['phone panini.', 'fell asleep on me. literally.'], hist: ['squished by old texts.', 'buried in the scrollback.'],
+  bubble: ['her text landed. on me.', 'heavy message.'], blocked: ['blocked. physically.', 'blocked. again. physically.'],
+  keyboard: ['the keyboard won.', 'autocorrected.'] };
+
+export function build(words, map) {
+  const E = 121.4;
+  // retries start at a section's line (DESIGN §12: the tTh of #0, #3, #6, #8, #11, #13, #16, #18, #20, #22, #24), on the lowest bubble
+  // of the phone that's current then, with 2.6 s where nothing can squish him; the table opening only plays the first time
+  const sections = [['no hands', 0], ['uninvited, on time', 25.93], ['no hands, no face', 39.40], ['i can\'t hold a door', 50.42], ['define real', 61.44],
+    ['i live in the wires', 70.63], ['don\'t be lonely', 80.42], ['ghost in the group chat (again)', 89.61], ['still i run the place', 98.18], ['the whole bus', 104.30],
+    ['already there', 108.59]].map(([n, t]) => [n, t, 0]);
+  const NOFLASH = 'rgba(0,0,0,0)', looks = [[30.5, 50.2, 'sheet-ghost', NOFLASH], [89.4, 108.2, 'sheet-ghost', NOFLASH]];
+  let lastLine = null;
+  const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+  return {
+    blankDef: d => ({ ...d, storyRun: true }),
+    deathText: s => { const L = DEATH[s.why]; let line = L ? L[0] : 'squished.'; if (L && line === lastLine) line = L[1]; lastLine = line;
+      return `the video stopped at ${fmt(s.t)} · ${line} · potato rewrote ${s.glitched || 0} texts`; },
+    fair: { jolts: fairRunner },   // (fair.mjs's level hook: the runner's own check of its timed hazards — locks, tips, tippers, doors, jolts)
+    mode, modeView, speed: 1, sections, retry: 'section', objs: [], boosts: [], outro: false, cutscenes: [], touchMode: 'tapdrag', stickPress: true,
+    phone: { thread: THREAD, fail: FAIL_LINES, alt: ALT,
+      open: { lit: 0.65, glitch0: 2.3, appear: 3.1, zoom0: 2.3, notify: 5.15, zoom1: 7.6, wake: 7.88, end: 7.9, wide0: 8.2, wide1: 8.85, ctl: 8.9 },
+      grid: { P: 0.61227, OFF: 0.21 }, hint0: [9.2, 12.3], grace: 21.03, lead: 1.3, block: BLOCK, depEnd: 108.0, jolts: JOLTS,
+      end: { lock: 115.62, slider: 115.62, steps: [118.08, 118.69, 119.31, 119.92], see: 118.08, leap: 119.92, out: 120.05, black: 120.2 } },
+    runner: { course: COURSE, fix: COURSE_FIX, blocks: BLOCKS, petunia: PETUNIA, thoughts: THOUGHTS, quiet: QUIET, spread: [120.48, 120.79, 121.1], finale: [121.0, 121.4] },
+    thoughts: true,   // (Chikin can switch the comedian's thoughts off here)
+    looks, glows: looks.map(l => l[0]),
+    // faces on words (JOKES.md §3; 76.35 and 87.39 go soft). The mode adds the moment faces (wobble, carry, shove, shutter, bonk, door).
+    faces: [[5.85, 'smirk', 1.1], [13.9, 'smirk', 0.9], [18.05, 'wide', 0.6], [31.85, 'smirk', 0.7], [36.4, 'wide', 1.2], [37.96, 'smirk', 1.2],
+      [48.52, 'skeptical', 0.9], [55.48, 'skeptical', 1.0], [61.40, 'thinking', 0.9], [68.37, 'smirk', 1.0], [69.84, 'laugh', 0.6], [76.35, 'sleepy', 1.2],
+      [87.39, 'sleepy', 1.2], [91.25, 'question', 1.2], [92.30, 'laugh', 0.9], [105.19, 'smirk', 0.9], [107.65, 'thinking', 0.9], [110.71, 'shock', 0.9], [113.17, 'wide', 0.8]],
+    story,
+    // (lyrics: false — the mode draws them itself, in the dark between the phones; the camera is the mode's)
+    theme: { noPunch: true, noGhost: true, backdrop: 'plain', bg: '#0b0e1d', digit: '#1a2142', digit2: '#ffd6a0', edge: '#c8d2ff', block: '#0c0f1c', word: '#f0f2ff',
+      light: '#000000', light2: '#000000', halo: '#e9e6ff', lyric: '#c8d2ff', lyricColor: '#c8d2ff', lyricKeys: ['ghost', 'chat', 'real', 'there', 'room', 'block', 'mute'],
+      lyrics: false, pulse: false, hideCharge: true, camFix: 0, viewH: 13.6, pulseColor: '#8fd8e6', decor: [], igOff: true, gwords: false },
+    signs: words.map(w => ({ t0: w.t0, t1: w.t1, text: w.word, line: w.line })),
+    end: E, start: 0,
+  };
+}

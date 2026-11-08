@@ -1,0 +1,833 @@
+// modes/ghost-runner.mjs — Level 6 as a RUNNER, SECOND CRACK (?ghost=runner, Nov 4, the Tip-Over Crew). The plan: levels/ghost-runner/
+// PLAN.md; the rules + numbers: DESIGN.md; the look: ART.md; the jokes: JOKES.md; the course: course.json (26 phones). Round 1's build
+// (small phones, a scroll, gaps) is retired: levels/ghost-runner/round1-build/.
+//
+// THE RULES (pure, 120 Hz; the bot and fair.mjs run the same code). Units: W = the current Ghost's world unit (Potato 1.25 W tall);
+// inside a phone everything is in the current Ghost's screen-local units (sl; world = phone + Z·sl, Z 0.8), so its F and J stay as they are.
+//   · HUGE phones (upright 7.06 × 11.74 W, ~86 % of the 13.6 W view) docked edge to edge in one chain. Each phone is a ROOM: the current
+//     Ghost room, its column narrowed to ±3.6 sl (a phone on its side: a wide low room, ±6.5, header 2.9, bar −3.1). He is ALWAYS inside
+//     one (s.ph); its side walls, header and bar are solid. EVERY AWAKE PHONE SHOWS THE SAME LIVE THREAD (a group chat): the same rows,
+//     receipts and rewrites in every one; a phone ahead that's still asleep shows its lock screen with one banner (the newest text).
+//   · ← → walk · ↑ hop · ↓ drop through · SPACE his glitch — Ghost's keys, nothing remapped. Space, in order: standing on one of James's
+//     texts that's not Read yet → REWRITE it (every phone) · pressed against a side wall (or the bar, in the tower) whose neighbour is
+//     docked and awake → GLITCH THROUGH the wall to a bubble in the next phone (a DOOR) · pressed against the wall under a hanging phone
+//     (#12 / #21) → snap its cable (on the word: it lands on its side, docked; early, or never: upright, lower, cracked, swinging) ·
+//     a shut wall → a bonk (his glitch kept) · anywhere else → the current in-phone glitch to a bubble.
+//   · The runner's push is THE LOCK: one beat after the next phone becomes current, the phone behind starts to lock — its lock screen
+//     comes down from the top like a shutter (4 beats, slow then fast). It pushes him down in the air; caught standing = SQUISHED.
+//   · The phones bob (a piston on the beat), breathe (pull apart: the door shuts), and fall over: #6 and #17 tip with him inside (carried
+//     rigid, nothing can hurt him), land on their side and AUTO-ROTATE their screen, which SHOVES him (wherever the content's swing throws
+//     him, capped; inside the screen, never a death). #18 arrives lying (the Petunia photos) and stands up with him in it.
+//   · Every death is a squish (Chikin): the lock screen · the old history (the rising thread pins him under the header, as now) · one of
+//     her bubbles the phone's jolt knocked loose, dropping on him while he stands · BLOCKED (twice) · the 4th bar kick in a row.
+//     A touch never kills. Grace to 21.03 and 2.6 s after a retry: a squish just pops him through the next door.
+//   · His random moves stay (Chikin loves them): the bar's kicks, where the glitch lands him, the shoves, the jolt knocks, the tapback bumpers.
+import * as G0 from './ghost-in-the-group-chat.mjs';
+import { drawWater, drawShimmer } from './ghost-water.mjs';
+const { prep, glitchEv, visible, isP, textW, wrap, S: S0, F, J, Z, SC, beatOff, joltBox, histBase } = G0;
+const ease = x => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+const ease5 = x => { x = Math.max(0, Math.min(1, x)); return x * x * x * (x * (x * 6 - 15) + 10); };
+const easeIn = x => { x = Math.max(0, Math.min(1, x)); return x * x; };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const mod = (a, n) => ((a % n) + n) % n;
+const hash = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+const rot = ([x, y], a) => [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a)];
+const keyOf = r => r.t.toFixed(3);
+
+// ======== numbers ========
+// HT his height (sl) · TOUCH how close to a wall counts as pressed against it · REACH/DOWN/UP a door's reach past the wall · CLEAR room a
+// landing needs under the header and the shutter · PIN how long pinned = squished · SAFE no-squish after a retry · FAILT the squish frame
+// · DARK every phone but James's last powers off · SHIFT a WRONG tipper pulls every phone after it this much nearer (W) · VH the view
+export const R = { WAKE: 7.88, HT: 1.5625, TOUCH: 0.16, REACH: 6.0, DOWN: 5.5, UP: 1.6, CLEAR: 1.9, PIN: 0.1, SAFE: 2.6, FAILT: 0.6, DARK: 113.17, SHIFT: -4.68,
+  VH: 13.6, FLOOR: 1.7, BONK: 0.1 };
+// the two rooms (DESIGN §3): glass gl [x0, x1, y0, y1] sl · oy: the glass centre is this far above sl 0 · hs: how much of the old history's
+// reach applies (the landscape room is 0.524 as tall) · BOUNCE the bar's kicks in a row
+export const ROOM = {
+  U: { k: 'U', w: 7.06, h: 11.74, CX: 3.6, HB: 5.0, BAR: -6.45, TH0: -6.1, oy: 0.425, gl: [-4.1, 4.1, -7.45, 6.6], hs: 1, MAXH: 9.0, BOUNCE: [3.3, 4.6, 6.0, 99], MAXF: 0.72, PHS: 1 },
+  S: { k: 'S', w: 11.74, h: 7.06, CX: 6.5, HB: 2.9, BAR: -3.1, TH0: -2.75, oy: 0, gl: [-7.025, 7.025, -4.1, 4.1], hs: 0.524, MAXH: 3.6, BOUNCE: [2.0, 2.6, 3.2, 99], MAXF: 0.5, PHS: 0.7 },
+};
+for (const r of Object.values(ROOM)) { r.TW = 2 * r.CX; r.MAXW = r.MAXF * r.TW; r.WALL = r.CX + 0.15; }
+// a point in the landscape room ↔ the portrait one (the auto-rotate's re-layout, DESIGN §6A)
+const mapUS = (x, y) => [x * ROOM.S.CX / ROOM.U.CX, ROOM.S.BAR + (y - ROOM.U.BAR) * ROOM.S.hs];
+const mapSU = (x, y) => [x * ROOM.U.CX / ROOM.S.CX, ROOM.U.BAR + (y - ROOM.S.BAR) / ROOM.S.hs];
+const mapTo = (k0, k1, x, y) => k0 === k1 ? [x, y] : k0 === 'U' ? mapUS(x, y) : mapSU(x, y);
+// the course's phone #0 sits exactly where the current Ghost's phone is, so the opening hands over without a jump: world = course + WO
+export const WO = [SC[0], SC[1] - Z * ROOM.U.oy];
+// a piston on the beat (course-gen.mjs's): [A, per, phase] → 0 … A
+const wave = (m, b) => { if (!m) return 0; const [A, per, ph] = m, c = 2 * per, x = mod(b - ph, c), h = per - 0.5;
+  const k = x < h ? 0 : x < per ? ease((x - h) / 0.5) : x < per + h ? 1 : 1 - ease((x - per - h) / 0.5); return A * k; };
+
+// ======== the course, prepared once ========
+const PREPR = new WeakMap();
+export function prepR(C) {
+  if (PREPR.has(C)) return PREPR.get(C);
+  const P = prep(C), D = C.def.runner, beat = P.R.P, OFF = P.R.OFF, fix = D.fix || {};
+  const merge = (a, b) => { for (const k in b) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && a[k] && typeof a[k] === 'object') merge(a[k], b[k]); else a[k] = b[k]; } return a; };
+  const ph = D.course.phones.map(p0 => merge(structuredClone(p0), fix[p0.id] || {}));
+  ph.forEach((p, i) => { p.i = i; p.prev = ph[i - 1] || null; p.next = ph[i + 1] || null; });
+  const byId = new Map(ph.map(p => [p.id, p])), tippers = ph.filter(p => p.tipper);
+  const blocks = (D.blocks || []).map(b => ({ slam: P.hb(b.slam), wallT: P.hb(b.wallT), row: P.items.find(q => q.who === 'S' && q.text === b.text) || null }));
+  const petKeys = new Set(Object.keys(D.petunia || {}).filter(k => k !== 'finale'));
+  const out = { P, D, beat, OFF, ph, byId, tippers, blocks, petKeys, last: ph[ph.length - 1], quiet: D.quiet || [] };
+  PREPR.set(C, out); return out;
+}
+const isPet = (RP, q) => !!(q && q.photo && q.row && RP.petKeys.has((+q.row.t0).toFixed(2)));
+const shiftOf = (RP, p, s) => { let d = 0; for (const T of RP.tippers) if (T.id < p.id && s.tp && s.tp[T.id] && s.tp[T.id].good === false) d += R.SHIFT; return d; };
+
+// ======== a phone at t: where it is, how it's turned, what's inside, is it awake (pure in (t, s.tp)) ========
+// x, y: its centre (world) · nat: the angle of the phone itself (an upright phone = 0; lying after a fall clockwise = −π/2) · body: its
+// shape now ('U' upright / 'S' on its side) · cang: the angle its content is drawn at · room (→ room1 by ck while it auto-rotates): which
+// room the content is · carry: he's carried rigid if he's in it · awake / lock (0 … 1 the shutter) / dark · hang / falling (a tipper)
+export function pose(RP, p, t, s) {
+  const B = RP.beat, b = (t - RP.OFF) / B, sh = shiftOf(RP, p, s);
+  const o = { p, present: true, x: p.cx + sh, y: p.cy, nat: 0, cang: 0, body: p.kind, room: p.kind, room1: null, ck: 0, carry: false, awake: false, lock: 0, dark: 0,
+    hang: false, falling: false, crack: false, wob: 0, off: false, dockT: p.tDock ?? 0 };
+  if (p.kind === 'S') o.nat = Math.PI / 2;
+  if (p.tipper) return tipperPose(RP, p, t, s, o, sh, b);
+  if (p.tArrive != null && t < p.tArrive) { o.present = false; return fin(RP, p, t, o); }
+  if (p.tDock != null && t < p.tDock) { const [ax, ay] = p.arriveFrom || [5, -1.5], park = p.join === 'D' ? [0, -1.6] : [1.6, 0], k1 = ease5((t - p.tArrive) / B), kd = ease((t - (p.tDock - 0.5 * B)) / (0.5 * B));
+    o.x += park[0] * (1 - kd) + (ax - park[0]) * (1 - k1); o.y += park[1] * (1 - kd) + (ay - park[1]) * (1 - k1); }
+  if (p.bob && !(p.hold && t >= p.hold[0] && t <= p.hold[1])) o.y += wave(p.bob, b) - p.bob[0] / 2;
+  if (p.breathe && b < p.Th + 1) o.x += wave(p.breathe, b);
+  const tp = p.tip || p.standUp;
+  if (tp) { const up = !!p.standUp, k0 = up ? 'S' : 'U', k1 = up ? 'U' : 'S', W0 = ROOM[k0], n0 = up ? Math.PI / 2 : 0;
+    if (t >= tp.tWarn && t < tp.t) o.wob = Math.sin(Math.PI * (t - tp.tWarn) / (0.5 * B)) * 0.07 * clamp((t - tp.tWarn) / 0.15);
+    if (t >= tp.t) { const piv = [o.x + W0.w / 2, o.y - W0.h / 2];
+      if (t < tp.tLand) { const a = Math.PI / 2 * easeIn((t - tp.t) / (tp.tLand - tp.t)), r = rot([-W0.w / 2, W0.h / 2], -a);
+        o.x = piv[0] + r[0]; o.y = piv[1] + r[1]; o.nat = n0 - a; o.cang = -a; o.body = k0; o.room = k0; o.carry = true; o.swing = a; }
+      else { o.x = tp.to[0] + sh; o.y = tp.to[1]; o.body = k1; o.nat = n0 - Math.PI / 2; o.landed = t - tp.tLand;
+        const [r0, r1] = tp.rotate;
+        if (t < r0) { o.cang = -Math.PI / 2; o.room = k0; o.carry = true; }
+        else if (t < r1) { const k = ease((t - r0) / (r1 - r0)); o.cang = -Math.PI / 2 * (1 - k); o.room = k0; o.room1 = k1; o.ck = k; o.carry = true; }
+        else o.room = k1; } } }
+  return fin(RP, p, t, o);
+}
+function tipperPose(RP, p, t, s, o, sh, b) {
+  const B = RP.beat, T = p.tipper, st = s.tp && s.tp[p.id];
+  if (t < p.tArrive) { o.present = false; return fin(RP, p, t, o); }
+  const hx = p.hangPose[0] + sh, hy = p.hangPose[1];
+  if (!st || t < st.t0) { const k1 = ease5((t - p.tArrive) / B); o.x = hx; o.y = hy + 6 * (1 - k1); o.nat = o.cang = 0.087 * Math.sin(Math.PI * b); o.hang = true; o.room = 'U'; return fin(RP, p, t, o, true); }
+  const k = clamp((t - st.t0) / (T.fallBeats * B)), tg = st.good ? T.good : T.wrong, tx = tg.c[0] + sh, ty = tg.c[1];
+  if (k < 1) { const e = easeIn(k); o.x = hx + (tx - hx) * e; o.y = hy + (ty - hy) * e; o.nat = o.cang = st.good ? -Math.PI / 2 * ease(k) : 0.087 * Math.sin(Math.PI * b) * (1 - k); o.falling = true; o.room = 'U'; return fin(RP, p, t, o, true); }
+  const tl = st.t0 + T.fallBeats * B; o.x = tx; o.y = ty; o.landT = tl; o.dockT = tl; o.landed = t - tl;
+  if (st.good) { o.body = 'S'; o.nat = -Math.PI / 2; const r0 = tl + 0.15, r1 = tl + 0.45;
+    if (t < r0) { o.cang = -Math.PI / 2; o.room = 'U'; } else if (t < r1) { const kk = ease((t - r0) / (r1 - r0)); o.cang = -Math.PI / 2 * (1 - kk); o.room = 'U'; o.room1 = 'S'; o.ck = kk; } else o.room = 'S'; }
+  else { o.body = 'U'; o.room = 'U'; o.crack = true; o.y += wave([1.6, 2, 0], (t - tl) / B) - 0.8; }
+  return fin(RP, p, t, o);
+}
+function fin(RP, p, t, o, asleep = false) {
+  const B = RP.beat;
+  o.lock = p.tSleep0 == null ? 0 : easeIn((t - p.tSleep0) / (p.tSleep1 - p.tSleep0));
+  o.awake = o.present && !asleep && t >= o.dockT && (p.tSleep1 == null || t < p.tSleep1);
+  if (p.tLeave != null && t >= p.tLeave) { const k = ease((t - p.tLeave) / (2 * B)); o.x -= 3 * k; o.y -= 6 * k; o.dark = 1; if (t > p.tLeave + 2 * B + 0.4) o.present = false; }
+  if (t >= R.DARK && p !== RP.last) { o.dark = Math.max(o.dark, clamp((t - R.DARK) / 0.2)); o.y -= 2 * ease((t - R.DARK) / (2 * B)); o.awake = false; o.off = true; o.lock = Math.min(o.lock, 0.999); }
+  o.x += WO[0]; o.y += WO[1]; return o;
+}
+// a point in a phone's content ↔ the world (kind: which room's layout the point is in)
+export const toWorld = (o, lx, ly, kind = o.room) => { const [x, y] = rot([lx, ly + ROOM[kind].oy], o.cang); return [o.x + Z * x, o.y + Z * y]; };
+export const toLocal = (o, wx, wy, kind = o.room) => { const [x, y] = rot([(wx - o.x) / Z, (wy - o.y) / Z], -o.cang); return [x, y - ROOM[kind].oy]; };
+// its neighbours in the chain: right / left (join 'R') and the floor (join 'D', the tower)
+const rightOf = p => p.next && p.next.join === 'R' ? p.next : null, leftOf = p => p.join === 'R' ? p.prev : null, below = p => p.next && p.next.join === 'D' ? p.next : null;
+// is the wall between a (his) and b (side ±1, or 0 = the floor) a door right now? → { A, B } poses, else null
+export function door(RP, a, b, t, s, side) {
+  if (!a || !b) return null; const A = pose(RP, a, t, s), Bp = pose(RP, b, t, s);
+  if (!A.present || !Bp.present || !Bp.awake || A.carry || Bp.carry || Bp.hang || Bp.falling || Math.abs(A.cang) > 1e-6 || Math.abs(Bp.cang) > 1e-6 || A.ck || Bp.ck) return null;
+  const ka = ROOM[A.body], kb = ROOM[Bp.body];
+  if (side) { if (Math.abs(A.x + side * ka.w / 2 - (Bp.x - side * kb.w / 2)) > 0.05) return null; }
+  else if (Math.abs(A.y - ka.h / 2 - (Bp.y + kb.h / 2)) > 0.05 || Math.abs(A.x - Bp.x) > 0.2) return null;
+  return { A, B: Bp };
+}
+// which phone is "current" at t (the chain's last one whose tTh has come)
+export function currentAt(RP, t) { let c = RP.ph[0]; for (const p of RP.ph) if (p.tTh <= t + 1e-6) c = p; return c; }
+
+// ======== the thread in a room (the current Ghost's stack, laid out in this room's column) ========
+function kdims(RP, q, K) {
+  const c = q._rk || (q._rk = {}); if (c[K.k]) return c[K.k];
+  const bub = (text, minW = 0) => { const maxw = Math.max(K.MAXW, minW), lines = wrap(text, maxw - 2 * S0.PADX), nat = Math.max(...lines.map(l => textW(l))) + 2 * S0.PADX;
+    return { lines, w: Math.min(maxw, Math.max(nat, 1.3, minW)), h: lines.length * S0.LH + 2 * S0.PADY }; };
+  const sys = text => ({ lines: [text], w: K.TW, h: S0.SYSH });
+  let d;
+  if (q.photo) { if (isPet(RP, q)) { const w = K.k === 'S' ? 2.6 : 3.4; d = { nice: { w, h: w, lines: [] }, gl: null }; }
+    else { const n = 1 + RP.P.items.filter(o => o.join === q.id || (q.join != null && o.join === q.join)).length, w = Math.min(S0.PHW * K.PHS, (K.TW - (n - 1) * S0.PHG) / n); d = { nice: { w, h: w * S0.PHH / S0.PHW, lines: [] }, gl: null }; } }
+  else if (q.who === 'C') d = { nice: { w: S0.DOTW, h: S0.DOTH, lines: [] }, gl: null };
+  else if (q.who === 'X') d = { nice: sys(q.text), gl: null };
+  else { const r = q.row || {}; d = { nice: bub(q.text || ''), gl: r.sys ? sys(r.sys) : r.g ? bub(r.g, (r.full ? S0.BRIDGE : S0.LEDGE) * K.TW) : null }; }
+  return (c[K.k] = d);
+}
+function dimsR(RP, q, t, s, K) { const d = kdims(RP, q, K);
+  if (d.gl && s && isP(s, q)) { const k = ease((t - s.rowP[q.row.t.toFixed(3)]) / S0.MORPH); return { w: d.nice.w + (d.gl.w - d.nice.w) * k, h: d.nice.h + (d.gl.h - d.nice.h) * k, k, mine: true, lines: k > 0.5 ? d.gl.lines : d.nice.lines }; }
+  return { w: d.nice.w, h: d.nice.h, k: 0, mine: false, lines: d.nice.lines }; }
+function slotOf(q, t, h) {
+  if (t < q.e) return [0, 0];
+  if (q.who === 'S') { if (t < q.a) { const f = S0.DOTH + q.gap; return [f * ease((t - q.e) / S0.ANIM), f]; } const f = S0.DOTH + q.gap + (h - S0.DOTH) * ease((t - q.a) / S0.ANIM); return [f, f]; }
+  if (q.who === 'C') { const f = (S0.DOTH + q.gap) * (1 - ease((t - q.a) / S0.ANIM)); return [Math.min(f, (S0.DOTH + q.gap) * ease((t - q.e) / S0.ANIM)), f]; }
+  const f = h + q.gap; return [f * ease((t - q.a) / S0.ANIM), f];
+}
+// the visible stack in room K at t: [{ q, x0, x1, y0, y1, … }] newest first (Petunia's three photos are three rows, not one)
+export function rstack(C, t, s, K) {
+  const RP = prepR(C), { items } = RP.P; let hi = -1;
+  for (let lo = 0, up = items.length - 1; lo <= up;) { const m = (lo + up) >> 1; if (items[m].a <= t) { hi = m; lo = m + 1; } else up = m - 1; }
+  let top = hi; for (let j = hi + 1; j < items.length && items[j].a < t + 2.5; j++) if (items[j].e <= t) top = j;
+  const out = [], joins = []; let acc = 0;
+  for (let j = top; j >= 0; j--) { const q = items[j]; if (s && !visible(s, q)) continue;
+    if (q.join != null && !isPet(RP, q)) { if (t >= q.a) joins.push(q); continue; }
+    const d = dimsR(RP, q, t, s, K), [c, full] = slotOf(q, t, d.h); if (c <= 0) continue;
+    const y0 = K.TH0 + acc - (full - c); acc += c; if (y0 > K.HB + 2.5) break;
+    const dots = (q.who === 'S' && t < q.a) || q.who === 'C', kk = q.who === 'S' && !dots ? ease((t - q.a) / S0.ANIM) : 1;
+    const hh = dots ? S0.DOTH * (q.who === 'C' ? clamp(1 - (t - q.a) / S0.ANIM) : 1) : q.who === 'S' ? S0.DOTH + (d.h - S0.DOTH) * kk : d.h, ww = dots ? S0.DOTW : q.who === 'S' ? S0.DOTW + (d.w - S0.DOTW) * kk : d.w;
+    const sysOn = !!(q.sys) && d.mine, grey = q.who === 'X' || sysOn;
+    const x0 = q.who === 'S' ? -K.CX : q.who === 'C' ? -K.CX + 0.5 : grey ? -ww / 2 : K.CX - ww;
+    out.push({ q, x0, x1: x0 + ww, y0, y1: y0 + hh, hh, ww, dots, mine: d.mine, k: d.k, lines: d.lines, sysOn, grey, pop: full > 0 ? c / full : 1 }); }
+  for (const q of joins) { const L = out.find(r => r.q.id === q.join); if (!L) continue; const w = L.ww;
+    const x1 = L.x0 - S0.PHG - (q.k - 1) * (w + S0.PHG); out.push({ q, x0: x1 - w, x1, y0: L.y0, y1: L.y1, hh: L.hh, ww: w, dots: false, mine: false, k: 0, grey: false, lines: [], pop: clamp((t - q.a) / S0.ANIM) }); }
+  if (s && s.knock) for (const r of out) { const kt = s.knock[r.q.id]; if (kt == null || t < kt) continue;
+    r.knockT = kt; r.shake = t < kt + J.SHAKE ? (t - kt) / J.SHAKE : 0; r.hole = t >= kt + J.SHAKE; r.solid = storyOn(C); }
+  return out;
+}
+export const rplats = (st, K) => st.filter(r => !r.grey && r.y1 > K.BAR + 0.05 && !(r.hole && !r.solid)).map(r => ({ id: r.q.id, x0: r.x0, x1: r.x1, y: r.y1, r }));
+// the old history's edge in room K (it comes down as she reads the ones he missed; the landscape room feels it at its own scale)
+export const histTopK = (s, t, K) => K.HB - Math.min((s.histK || 0) * K.hs, K.MAXH) - histBase(t) * K.hs;
+// the lock shutter's bottom edge in room K (null: not coming down)
+export const shutterY = (o, K) => o.lock > 0 && !o.off ? K.gl[3] - (K.gl[3] - K.gl[2]) * o.lock : null;
+// BLOCKED (two of them): the banner's middle in room K while it comes down, else null
+export function wallYK(RP, t, s, K) { for (const b of RP.blocks) { if (t < b.slam || t > b.wallT + 0.25) continue; if (s && b.row && !visible(s, b.row)) continue;
+  return K.HB - (K.HB - K.BAR) * ((t - b.slam) / (b.wallT - b.slam)); } return null; }
+const STORYQ = typeof location !== 'undefined' && /[?&]story(=|&|$)/.test(location.search || '');
+const storyOn = C => !!C.def.storyRun || STORYQ;
+
+// ======== the phone's jolts (kept; they play in the phone he's in) ========
+function jPick(P, s, st, t, j, K) {
+  const top = histTopK(s, t, K), taken = new Set(Object.values(s.jolt || {}).map(o => o.id).filter(v => v != null)), row = j.pick && j.pick.startsWith('row:') ? j.pick.slice(4) : null;
+  const mine = s.ground && typeof s.onId === 'number' ? s.onId : null;
+  const ok = (r, age) => r.q.who === 'S' && !r.dots && !r.grey && !r.q.photo && r.q.text && !r.q.tapped && !r.hole && !taken.has(r.q.id) && r.q.id !== mine && t - r.q.a >= age
+    && r.y1 < top - 0.3 && r.y0 > K.BAR + 0.1 && !glitchEv(P, s, r.q, t);
+  if (row) { const r = st.find(r => r.q.text === row && ok(r, J.ROWAGE)); if (r) return r; }
+  let cand = st.filter(r => ok(r, J.AGE)), best = null, bc = 1e9; if (!cand.length) cand = st.filter(r => ok(r, J.ROWAGE));
+  for (const r of cand) { const d = r.y0 - s.ly; if (d < J.ABOVE[0] || r.y1 - s.ly > J.ABOVE[1]) continue; if (d < bc) { bc = d; best = r; } }
+  if (best) return best;
+  for (const r of cand) { const dx = s.lx < r.x0 ? r.x0 - s.lx : s.lx > r.x1 ? s.lx - r.x1 : 0, d = Math.hypot(dx, (r.y0 + r.y1) / 2 - (s.ly + 0.75)); if (d < bc) { bc = d; best = r; } }
+  return best;
+}
+function jLaunch(j, box, aim, t0, warn, K) {   // (the current Ghost's joltLaunch, in room K)
+  const w = box.x1 - box.x0, h = box.y1 - box.y0, cx = (box.x0 + box.x1) / 2, cy = (box.y0 + box.y1) / 2;
+  let vx = 0, vy = J.DROP_POP, kind = 'drop';
+  if (j.kind === 'throw' && aim && aim[1] - cy < J.POP * J.POP / (2 * J.G) - 0.05) {
+    let tau = (J.POP + Math.sqrt(J.POP * J.POP - 2 * J.G * (aim[1] - cy))) / J.G; vy = J.POP;
+    const need = Math.max(J.MINWARN - (t0 - warn), Math.abs(aim[0] - cx) / J.VXMAX); if (tau < need) { tau = need; vy = (aim[1] - cy + J.G / 2 * tau * tau) / tau; }
+    const touch = (tt, v) => { const ux = (aim[0] - cx) / tt; for (let d = 0; d < tt + 0.05; d += 1 / 120) { const x = cx + ux * d, y = cy + v * d - J.G / 2 * d * d, ly = aim[1] - 0.75;
+      if (!(aim[0] + 0.6 < x - w / 2 || aim[0] - 0.6 > x + w / 2 || ly + 1.5 < y - h / 2 || ly >= y + h / 2 - 0.08)) return d; } return 1e9; };
+    for (let n = 0; n < 12 && touch(tau, vy) + (t0 - warn) < J.MINWARN; n++) { tau += 0.05; vy = (aim[1] - cy + J.G / 2 * tau * tau) / tau; }
+    vx = (aim[0] - cx) / tau; kind = 'throw'; }
+  const yEnd = K.BAR + 0.2 - h / 2, tb = (vy + Math.sqrt(vy * vy + 2 * J.G * Math.max(0, cy - yEnd))) / J.G, tx = vx ? (Math.sign(vx) * (K.WALL + w / 2) - cx) / vx : 1e9;
+  return { j: j.i, t0, w, h, cx, cy, vx, vy, kind, aim, dir: vx ? Math.sign(vx) : j.i % 2 ? 1 : -1, end: t0 + Math.min(J.LIFE, tb, tx) };
+}
+function jStep(C, RP, s, t, K, log) {
+  const P = RP.P;
+  for (const j of P.jolts) { const o = s.jolt[j.i] || (s.jolt[j.i] = { st: 'wait' });
+    if (o.st === 'wait' && t >= j.warn) { o.st = 'none'; const r = jPick(P, s, rstack(C, t, s, K), t, j, K);
+      if (r) { Object.assign(o, { st: 'warn', id: r.q.id, aim: [s.lx, s.ly + 0.75], warnT: t, ph: s.ph, room: K.k }); log('jwarn', { j: j.i, id: r.q.id }); } }
+    if (o.st === 'warn' && t >= j.hit) { o.st = 'hit'; o.hitT = t; s.knock[o.id] = t; log('jolt', { j: j.i, on: s.ground ? s.onId : null }); }
+    if (o.st === 'hit' && t >= o.hitT + J.SHAKE) { const r = rstack(C, t, s, ROOM[o.room]).find(r => r.q.id === o.id);
+      if (!r) o.st = 'gone'; else { o.L = jLaunch(j, r, o.aim, t, o.warnT, ROOM[o.room]); o.st = 'fly'; } }
+    if (o.st === 'fly' && t >= o.L.end) { o.st = 'gone'; log('jgone', { j: j.i }); } }
+}
+function jPlats(RP, s, t, C) {
+  if (!s.jolt || storyOn(C)) return []; const out = [];
+  for (const j of RP.P.jolts) { const o = s.jolt[j.i]; if (!o || o.st !== 'fly' || o.ph !== s.ph) continue; const b = joltBox(o.L, t); if (!b || b.y1 <= ROOM[o.room].BAR + 0.05) continue;
+    out.push({ id: 'j' + j.i, x0: b.x0, x1: b.x1, y: b.y1, r: { q: RP.P.items[o.id], x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, ww: o.L.w, hh: o.L.h, fly: true } }); }
+  return out;
+}
+
+// ======== where his glitch takes him ========
+// in the phone: the current Ghost's pickTarget, in this room
+function pickIn(P, s, plats, t, dir, down, K) {
+  let best = null, bc = 1e9; const lx = s.lx, ly = s.ly, top = histTopK(s, t, K);
+  for (const p of plats) { if (s.ground && p.id === s.onId) continue; if (p.y > ly + 0.35 || ly - p.y > F.TPY || p.y < K.BAR + 0.4 || p.y > top - 0.8) continue;
+    const dx = lx < p.x0 ? p.x0 - lx : lx > p.x1 ? lx - p.x1 : 0, cx = (p.x0 + p.x1) / 2; if (dx > F.TPX) continue;
+    const gl = glitchEv(P, s, p.r.q, t) ? 1 : 0; let c;
+    if (dir) { if ((cx - lx) * dir < 0.6 && !(dx > 0 && (dir > 0 ? p.x0 > lx : p.x1 < lx))) continue; c = Math.abs(ly - p.y) + 0.12 * dx - 3 * gl; }
+    else if (down) { if (p.x1 < lx - 1.2 || p.x0 > lx + 1.2 || p.y > ly - 0.2) continue; c = ly - p.y - 3 * gl; }
+    else { if (p.y > ly - 0.2) continue; c = (ly - p.y) + 0.3 * dx - (gl && ly - p.y <= F.GLY ? 12 : 0); }
+    if (c < bc) { bc = c; best = p; } }
+  return best;
+}
+// through a door: a bubble in the next phone (side ±1: in reach past the wall; 0: the floor) — his glitchable texts first; null = no bubble
+function pickDoor(C, RP, s, t, Bp, nx, ny, side) {
+  const K = ROOM[Bp.room], P = RP.P, plats = rplats(rstack(C, t, s, K), K), top = Math.min(histTopK(s, t, K), shutterY(Bp, K) ?? 1e9) - R.CLEAR;
+  let best = null, bc = 1e9;
+  for (const p of plats) { if (p.y > top || p.y < K.BAR + 0.3) continue; const gl = glitchEv(P, s, p.r.q, t) ? 1 : 0; let c;
+    if (side) { const near = side > 0 ? p.x0 + K.CX : K.CX - p.x1; if (near > R.REACH || p.y < ny - R.DOWN || p.y > ny + R.UP) continue; c = Math.abs(p.y - ny) + 0.3 * near - 6 * gl; }
+    else c = gl ? -100 - p.y : p.y;   // (the floor: the newest of his texts below, else the lowest bubble)
+    if (c < bc) { bc = c; best = p; } }
+  return best;
+}
+
+// ======== the rules ========
+export const mode = {
+  init(s, api) {
+    G0.mode.init(s, api);                 // (the current Ghost's own state: its opening on the table plays as it is)
+    s.jlog = s.jlog || []; if (s.t >= R.WAKE) startRunner(s, s.t, api);
+  },
+  step(s, inp, t, api) {
+    if (t < R.WAKE) { G0.mode.step(s, inp, t, api); return; }   // the table, the lock screen, his arrival, Sheila's text: the current Ghost's
+    if (!s.rOn) startRunner(s, t, api);
+    const C = api.C, RP = prepR(C), P = RP.P, D = P.D, O = P.O, end = D.end || {}, Rg = P.R, beat = RP.beat;
+    const log = (k, ex) => s.jlog.push({ t, k, ...ex });
+    const die = why => { if (C.def.blank) { api.die(why); return; } if (!s.dead) api.die(why); if (!s.dead) { s.dead = true; s.why = why; } };
+    // ---- squished / lost: his frame, then the run stops (retry at the section) ----
+    if (s.failT != null) { s.walking = false; s.vx = 0; if (s.why0 === 'hist' || s.why0 === 'keyboard') s.ly += 7 / 120;
+      if (t >= s.failT + R.FAILT) { s.gone = true; return die(s.why0 || 'hist'); } place(s, RP, t); return; }
+    // ---- the tippers fall by themselves at the end of their window (WRONG) ----
+    for (const T of RP.tippers) if (!s.tp[T.id] && t >= T.tipper.tAuto) { s.tp[T.id] = { t0: T.tipper.tAuto, good: false }; log('tipper' + T.id, { good: false, auto: true }); }
+    // ---- 7.88 → 8.9: the camera pulls back, he glides down onto her first text (no control yet, as now) ----
+    if (t < O.ctl) { const o = pose(RP, RP.ph[0], t, s), K = ROOM.U, pl = rplats(rstack(C, t, s, K), K), st = pl.find(p => p.r.q.who === 'S') || pl[0], k = ease5((t - R.WAKE) / (O.ctl - R.WAKE));
+      const g = s.glide || (s.glide = { lx: s.lx, ly: s.ly }), tx = st ? (st.x0 + st.x1) / 2 : 0, ty = st ? st.y : K.TH0;
+      s.lx = g.lx + (tx - g.lx) * k; s.ly = g.ly + (ty - g.ly) * k + Math.sin(k * Math.PI) * 1.2; s.facing = 0.5; s.ph = 0;
+      if (t + 1 / 120 >= O.ctl && st) { s.onId = st.id; s.ground = true; s.ly = st.y; s.landAt = t; for (const p of pl) s.pt[p.id] = p.y; }
+      s.prevLy = s.ly; place(s, RP, t); return; }
+    let ph = RP.byId.get(s.ph), o = pose(RP, ph, t, s);
+    // ---- the end: every phone but James's last goes dark; at the lock his glitch pulls him into it for free ----
+    const locked = end.lock != null && t >= end.lock;
+    if (locked && ph !== RP.last) { const L = RP.last, Lo = pose(RP, L, t, s), K = ROOM[Lo.room], pl = rplats(rstack(C, t, s, K), K); let low = null; for (const p of pl) if (!low || p.y < low.y) low = p;
+      s.ph = L.id; ph = L; o = Lo; s.lx = low ? (low.x0 + low.x1) / 2 : 0; s.ly = low ? low.y : K.BAR + 1; s.ground = !!low; s.onId = low ? low.id : null; s.vy = 0; s.glitchAt = t; s.blink = 0.22; s.blinkFrom = { x: s.x, y: s.y }; log('endpull'); }
+    // ---- carried: his phone is falling over (or standing up) with him inside — rigid, nothing touches him ----
+    if (o.carry) {
+      if (!s.carry || s.carry.ph !== ph.id) { s.carry = { ph: ph.id, lx: s.lx, ly: s.ly, k0: o.room }; s.ground = false; s.onId = null; s.vx = 0; s.vy = 0; log('carry', { ph: ph.id });
+        if (ph.id !== 17) s.react = { name: 'startled', dur: 0.6, at: t }; }
+      s.lx = s.carry.lx; s.ly = s.carry.ly; s.walking = false; s.phase = 0; s.pinT = null; place(s, RP, t); return; }
+    if (s.carry && s.carry.ph === ph.id) shove(s, RP, ph, t, log);
+    if (s.carry) s.carry = null;
+    const K = ROOM[o.room];
+    const safe = t < (D.grace ?? -9) || t < (s.safeUntil ?? -9) || locked;
+    if (s.bootT != null && t < s.bootT + 0.55) s.gone = true; else if (s.gone && s.goneAt == null) s.gone = false;
+    // ---- the jolts (in the phone he's in) ----
+    if (P.jolts.length) jStep(C, RP, s, t, K, log);
+    const plats = [...rplats(rstack(C, t, s, K), K), ...jPlats(RP, s, t, C)], byId = new Map(plats.map(p => [p.id, p]));
+    for (const e of P.events) { if (s.out[e.i] != null || t < e.A - 0.05 || t > e.R + 0.5) continue;
+      if ((e.re && !e.re.every(j => s.out[j] == null || s.out[j] === 'P')) || (e.kind === 'tap' && !visible(s, e.her))) s.out[e.i] = 'V'; }
+    if (!s.charge && t - s.useT >= F.RECH * Rg.P) { s.charge = true; log('charge'); }
+    for (const b of RP.blocks) if (t >= b.slam && t - 1 / 120 < b.slam) s.charge = true;   // (BLOCKED: he's always got one for it)
+    const rewrite = (e, how) => { s.out[e.i] = 'P'; s.hits[e.i] = t; for (const r of e.rows) s.rowP[keyOf(r)] = t; s.glitched++; s.rewT = t; s.lastRew = { t, e: e.i }; s.hist = Math.max(0, s.hist - (e.rows.length > 1 ? F.SUPER : F.BACK));
+      const ob = beatOff(Rg, t) < 0.09; if (ob) s.obAt = t; s.score += 100 + (ob ? 50 : 0) + (e.rows.length > 1 ? 100 : 0); log(e.rows.length > 1 ? 'super' : 'rewrite', { e: e.i, ob, how });
+      s.react = { name: ['smirk', 'laugh', 'smirk', 'wide'][e.i % 4], dur: 0.7, at: t }; };
+    // ---- moving: ← → walk, ↑ hop, ↓ drop through ----
+    const hx = locked ? 0 : (inp.Rh ? 1 : 0) - (inp.Lh ? 1 : 0), acc = s.ground ? F.ACCG : F.ACCA;
+    s.vx += clamp(hx * F.WALK - s.vx, -acc / 120, acc / 120);
+    if (inp.J && !locked && (s.ground || t - s.coyT < F.COY)) { s.vy = Math.sqrt(2 * F.GRAV * F.HOP); s.ground = false; s.onId = null; s.jumpedAt = t; s.coyT = -9; log('hop'); }
+    if (inp.D && !locked && s.ground && s.onId != null) { s.dropId = s.onId; s.dropUntil = t + F.DROP; s.ground = false; s.onId = null; s.vy = -2.5; s.coyT = -9; log('drop'); }
+    // ---- SPACE: his glitch ----
+    if (inp.G && !locked && !s.gone) {
+      const pass = () => { s.useT = t; s.charge = false; s.phaseUntil = t + F.PHASE; s.glitchAt = t;
+        const wy = wallYK(RP, t, s, ROOM[pose(RP, RP.byId.get(s.ph), t, s).room]); if (wy != null && wy > s.ly + 0.75 && wy - (s.ly + 0.75) < 3.2) s.wallPass = true; };
+      const on = s.ground ? byId.get(s.onId) : null, ge = on ? glitchEv(P, s, on.r.q, t) : null;
+      const side = s.lx >= K.WALL - R.TOUCH ? 1 : s.lx <= -K.WALL + R.TOUCH ? -1 : (t - (s.wallT ?? -9) < R.BONK ? s.wallD : 0);
+      const tipper = side > 0 && rightOf(ph) && rightOf(ph).tipper && !s.tp[rightOf(ph).id] && t >= rightOf(ph).tArrive ? rightOf(ph) : null;
+      const floor = below(ph) && s.ly <= K.BAR + R.FLOOR;
+      if (!s.charge) log('fizzle');
+      else if (ge) { pass(); rewrite(ge, 'on'); s.blink = 0.12; s.blinkFrom = { x: s.x, y: s.y }; }
+      else if (tipper) {   // his glitch arcs up the cable and snaps it: on the word it lands well, early it lands wrong
+        const T = tipper.tipper, good = t >= T.win[0]; s.tp[tipper.id] = { t0: t, good }; s.useT = t; s.charge = false; s.glitchAt = t; s.snapAt = t;
+        log('tipper' + tipper.id, { good }); s.react = { name: good ? 'smirk' : 'question', dur: 0.6, at: t }; }
+      else if (side || floor) { const nb = floor && !side ? below(ph) : side > 0 ? rightOf(ph) : leftOf(ph), dr = door(RP, ph, nb, t, s, floor && !side ? 0 : side);
+        if (dr && crossDoor(C, RP, s, t, dr, floor && !side ? 0 : side, log)) { pass(); s.react = { name: 'smirk', dur: 0.5, at: t }; ph = RP.byId.get(s.ph); o = dr.B;
+          const g2 = s.ground ? byId.get(s.onId) : null; const K2 = ROOM[o.room], on2 = s.ground ? rplats(rstack(C, t, s, K2), K2).find(p => p.id === s.onId) : null, ge2 = on2 ? glitchEv(P, s, on2.r.q, t) : null; if (ge2) rewrite(ge2, 'door'); }
+        else { s.bonkAt = t; log('bonk', { side }); s.react = { name: 'angry', dur: 0.4, at: t }; } }   // (a shut wall: a grey fizz, his glitch kept)
+      else { const tg = pickIn(P, s, plats, t, inp.Lh ? -1 : inp.Rh ? 1 : 0, !!inp.Dh, K);
+        if (tg) { pass(); const m = Math.min(0.45, (tg.x1 - tg.x0) / 2), from = { x: s.x, y: s.y }; s.bounceN = 0; s.lx = clamp(s.lx, tg.x0 + m, tg.x1 - m); s.ly = tg.y; s.ground = true; s.onId = tg.id; s.vy = 0; s.vx *= 0.3;
+          s.blink = 0.22; s.blinkFrom = from; s.tpAt = t; s.landAt = t; const ob = beatOff(Rg, t) < 0.09; if (ob) { s.score += 25; s.obAt = t; } log('tp', { ob });
+          const g2 = glitchEv(P, s, tg.r.q, t); if (g2) rewrite(g2, 'tp'); else s.react = { name: 'startled', dur: 0.35, at: t }; }
+        else log('fizzle'); } }
+    const K2 = ROOM[o.room], plats2 = ph.id === RP.byId.get(s.ph).id && K2 === K ? plats : [...rplats(rstack(C, t, s, K2), K2), ...jPlats(RP, s, t, C)], byId2 = plats2 === plats ? byId : new Map(plats2.map(p => [p.id, p]));
+    stepBody(C, RP, s, t, K2, plats2, byId2, locked, log);
+    // ---- her falling bubbles: a DROP that comes down on him while he stands squishes him; a throw knocks him (never the run); his glitch lets both through ----
+    if (P.jolts.length && !s.gone && !storyOn(C)) for (const j of P.jolts) { const jo = s.jolt[j.i]; if (!jo || jo.st !== 'fly' || jo.met != null || jo.ph !== s.ph || s.onId === 'j' + j.i) continue;
+      const b = joltBox(jo.L, t); if (!b || s.lx + 0.6 < b.x0 || s.lx - 0.6 > b.x1 || s.ly + 1.5 < b.y0 || s.ly >= b.y1 - 0.08) continue;
+      jo.met = t;
+      if (t < s.phaseUntil) { jo.thru = t; s.score += 50; log('jthru', { j: j.i }); }
+      else if (safe) { s.react = { name: 'startled', dur: 0.35, at: t }; log('jflinch', { j: j.i }); }
+      else if (jo.L.kind === 'drop' && s.ground) { squish(s, t, 'bubble', log); }
+      else { if (s.ground && s.onId != null) { s.dropId = s.onId; s.dropUntil = t + F.DROP; } s.ground = false; s.onId = null; s.coyT = -9; s.vy = Math.min(s.vy, J.KNOCK_VY); s.vx += jo.L.vx ? Math.sign(jo.L.vx) * 3 : 0;
+        s.knockAt = t; s.bounceN = 0; s.react = { name: 'shock', dur: 0.6, at: t }; log('knock', { j: j.i }); } }
+    // ---- BLOCKED: it passes through him only while he's glitching ----
+    { const w0 = wallYK(RP, t - 1 / 120, s, K2), w1 = wallYK(RP, t, s, K2), d0 = w0 == null ? null : w0 - (s.prevLy + 0.75), d1 = w1 == null ? null : w1 - (s.ly + 0.75);
+      if (d0 != null && d1 != null && (d0 > 0) !== (d1 > 0) && !s.gone) { if (t < s.phaseUntil || s.wallPass) { s.wallThru = t; s.wallPass = false; log('thru'); s.score += 50; }
+        else if (!(t < (D.grace ?? -9) || locked)) squish(s, t, 'blocked', log); } }
+    // ---- her tapback badges are bumpers ----
+    for (const e of P.events) { if (e.kind !== 'tap' || s.hits[e.i] == null || t - s.hits[e.i] < 0.3) continue; const r = plats2.find(p => p.id === e.her.id); if (!r) continue;
+      const bx = r.x1 - 0.15, by = r.y + 0.1; if (Math.hypot(s.lx - bx, s.ly + 0.75 - by) < S0.BADGE + 0.6 && t - s.bumpT > 0.4) { s.bumpT = t; s.vy = 9.5; s.vx = (s.lx < bx ? -1 : 1) * 7; s.ground = false; s.onId = null; s.dropId = r.id; s.dropUntil = t + 0.2; log('bump'); s.react = { name: 'angry', dur: 0.5, at: t }; } }
+    // ---- she reads it: what he didn't glitch goes out as James typed it (and the old history comes down a step) ----
+    for (const e of P.events) if (s.out[e.i] == null && t >= e.R) { s.out[e.i] = 'J'; const cost = !safe && !s.gone; if (cost) s.hist = Math.min(F.MAXH, s.hist + F.MISS);
+      s.readAt = { t, e: e.i, cost }; log('read', { e: e.i, cost }); s.react = { name: cost ? 'shock' : 'question', dur: 0.6, at: t }; }
+    s.histK += (s.hist - s.histK) * (s.hist > s.histK ? 0.06 : 0.03);
+    { let low = 1e9; for (const p of plats2) low = Math.min(low, p.y); s.low = low; }
+    // ---- THE LOCK: the shutter comes down the phone he's in; it pushes him down in the air, and pinned standing he's squished ----
+    const shY = shutterY(o, K2);
+    if (shY != null && !s.gone && s.failT == null) { const head = s.ly + R.HT;
+      if (o.lock >= 0.5 && !(s.react && s.react.name === 'wide' && t - s.react.at < 0.3)) s.react = { name: 'wide', dur: 0.35, at: t };   // (his face goes wide once it's half down: a tell)
+      if (head > shY) { if (!s.ground && shY - R.HT > K2.BAR + 0.05) { s.ly = shY - R.HT; s.vy = Math.min(s.vy, -2); s.pinT = null; }
+        else { if (s.pinT == null) s.pinT = t; if (t - s.pinT >= R.PIN) { if (safe) popThrough(C, RP, s, t, log); else squish(s, t, 'lock', log); } } }
+      else s.pinT = null; } else s.pinT = null;
+    // ---- the top: the old history ----
+    if (s.failT == null && !s.gone) { const top = histTopK(s, t, K2);
+      if (s.ly > top - F.LOSE) {
+        if (safe) { s.ly = top - F.LOSE - 0.05; s.vy = -9; s.ground = false; s.onId = null; s.dropId = 'all'; s.dropUntil = t + 0.3; s.bonkAt = t; log('hbonk'); s.react = { name: 'shock', dur: 0.5, at: t }; }
+        else { s.failT = t; s.why0 = t - (s.flung ?? -9) < 1.2 ? 'keyboard' : 'hist'; s.react = { name: 'scream', dur: 1.2, at: t }; log('fail', { why: s.why0 }); } } }
+    // ---- the ending: the slider slides, he glitches, leaps at us, and he's out of the phone ----
+    s.cutscene = end.see != null && t >= end.see && !s.gone ? 'see' : false;
+    if (end.leap != null && t >= end.leap && !s.gone) { if (!s.leapFrom) s.leapFrom = { lx: s.lx, ly: s.ly }; const k = ease5((t - end.leap) / Math.max(0.05, (end.out ?? end.leap + 0.13) - end.leap));
+      s.lx = s.leapFrom.lx * (1 - k); s.ly = s.leapFrom.ly + (-1 - s.leapFrom.ly) * k; s.ground = true; s.vx = 0; s.facing = 0; }
+    if (end.out != null && t >= end.out && !s.gone) { s.gone = true; s.goneAt = t; s.goneFrom = { x: s.x, y: s.y, lx: s.lx, ly: s.ly }; }
+    for (const p of plats2) s.pt[p.id] = p.y; s.prevLy = s.ly;
+    s.walking = s.ground && Math.abs(s.vx) > 0.6;
+    if (end.leap == null || t < end.leap) s.facing = Math.abs(s.vx) > 0.4 ? Math.sign(s.vx) * 1.0 : s.facing * 0.98 + 0.3 * 0.02;
+    place(s, RP, t);
+    s.phase = s.gone ? 0 : t < s.phaseUntil ? 0.6 : 0;
+  },
+};
+// one physics step in room K: ride the bubble, fall, land (one-way, from above), the bar's kicks, the walls
+function stepBody(C, RP, s, t, K, plats, byId, locked, log) {
+  s.vyIn = s.vy;
+  if (s.ground) { const p = byId.get(s.onId);
+    if (p && s.lx >= p.x0 - F.FOOT && s.lx <= p.x1 + F.FOOT) { s.ly = p.y; s.vy = 0; } else { s.ground = false; s.onId = null; s.coyT = t; } }
+  if (!s.ground) {
+    s.vy = Math.max(-F.FALL, s.vy - F.GRAV / 120); s.ly += s.vy / 120;
+    let land = null; for (const p of plats) { if (t < s.dropUntil && (s.dropId === 'all' || p.id === s.dropId)) continue; if (s.lx < p.x0 - F.FOOT || s.lx > p.x1 + F.FOOT) continue;
+      const pt = s.pt[p.id] ?? p.y; if (s.prevLy - pt >= -0.03 && s.ly - p.y <= 0 && (!land || p.y > land.y)) land = p; }
+    if (land) { s.ly = land.y; s.vy = 0; s.ground = true; s.onId = land.id; s.landAt = t; s.bounceN = 0; if (!s.charge) { s.charge = true; log('charge'); } log('land'); if (typeof land.id === 'string') log('jride', { j: +land.id.slice(1) }); }
+    else if (s.ly <= K.BAR) {   // the input bar kicks him back up (higher each time in a row; the last one throws him up into the old history)
+      const kn = t - (s.knockAt ?? -99) < J.KNOCKSAFE, n = locked || kn ? 0 : Math.min(K.BOUNCE.length - 1, s.bounceN), last = n === K.BOUNCE.length - 1, h = last ? K.HB - K.BAR + 1 : Math.min(K.BOUNCE[n], K.HB - 1.6 - K.BAR);
+      s.ly = K.BAR; s.vy = Math.sqrt(2 * F.GRAV * h); if (!kn) s.bounceN++; s.barAt = t; s.barN = n; if (last) s.flung = t;
+      s.react = { name: 'wide', dur: 0.4, at: t }; log('bounce', { n }); } }
+  const nx = s.lx + s.vx / 120; s.lx = clamp(nx, -K.WALL, K.WALL);
+  if (nx !== s.lx) { s.wallT = t; s.wallD = Math.sign(nx); s.vx = 0; }   // (he walked into a wall: Space in the next 0.1 s still counts as at it)
+}
+// a squish (every death): his frame, then the run stops — in the safe times it just pops him through the next door
+function squish(s, t, why, log) { if (s.failT != null) return; s.failT = t; s.why0 = why; s.squishAt = t; s.ground = false; s.vy = 0; s.react = { name: 'shock', dur: 1, at: t }; log('fail', { why }); }
+// grace / after a retry: the lock just pops him through into the next awake phone (a free glitch)
+function popThrough(C, RP, s, t, log) {
+  const ph = RP.byId.get(s.ph); let nb = null;
+  for (const [n, side] of [[rightOf(ph), 1], [below(ph), 0]]) if (n && door(RP, ph, n, t, s, side)) { nb = n; break; }
+  if (!nb) for (const p of RP.ph) { const o = pose(RP, p, t, s); if (o.awake && p.tTh > ph.tTh) { nb = p; break; } }
+  if (!nb) { s.pinT = null; return; }
+  landIn(C, RP, s, t, nb, null); log('pop', { to: nb.id }); s.safeUntil = Math.max(s.safeUntil ?? -9, t + 0.6);
+}
+// land him in phone p (at its lowest bubble with room under its header, or the given target)
+function landIn(C, RP, s, t, p, tg) {
+  const o = pose(RP, p, t, s), K = ROOM[o.room];
+  if (!tg) { const top = Math.min(histTopK(s, t, K), shutterY(o, K) ?? 1e9) - R.CLEAR; for (const q of rplats(rstack(C, t, s, K), K)) if (q.y <= top && q.y > K.BAR + 0.3 && (!tg || q.y < tg.y)) tg = q; }
+  const from = { x: s.x, y: s.y }; s.ph = p.id;
+  if (tg) { const m = Math.min(0.45, (tg.x1 - tg.x0) / 2); s.lx = clamp(s.lx, tg.x0 + m, tg.x1 - m); s.ly = tg.y; s.ground = true; s.onId = tg.id; }
+  else { s.lx = 0; s.ly = K.BAR + 2; s.ground = false; s.onId = null; }
+  s.vy = 0; s.vx *= 0.3; s.bounceN = 0; s.blink = 0.22; s.blinkFrom = from; s.glitchAt = t; s.tpAt = t; s.landAt = t; s.pinT = null; s.prevLy = s.ly;
+}
+// through the wall (or the floor) into the next phone: onto a bubble in reach, else out at his own height falling; false = the wall says no
+function crossDoor(C, RP, s, t, dr, side, log) {
+  const A = dr.A, Bp = dr.B, KA = ROOM[A.room], KB = ROOM[Bp.room], [wx, wy] = toWorld(A, s.lx, s.ly), [nx, ny] = toLocal(Bp, wx, wy);
+  const tg = pickDoor(C, RP, s, t, Bp, nx, ny, side), from = { x: s.x, y: s.y };
+  if (!tg) { if (!side) return false; const top = Math.min(histTopK(s, t, KB), shutterY(Bp, KB) ?? 1e9) - R.CLEAR; if (ny < KB.BAR + 0.2 || ny > top) return false;
+    s.ph = Bp.p.id; s.lx = -side * (KB.WALL - 0.4); s.ly = ny; s.ground = false; s.onId = null; s.vy = Math.min(s.vy, 0); }
+  else { const m = Math.min(0.45, (tg.x1 - tg.x0) / 2); s.ph = Bp.p.id; s.lx = side ? clamp(side > 0 ? tg.x0 + m : tg.x1 - m, tg.x0 + m, tg.x1 - m) : clamp(nx, tg.x0 + m, tg.x1 - m); s.ly = tg.y; s.ground = true; s.onId = tg.id; s.vy = 0; }
+  s.vx *= 0.3; s.bounceN = 0; s.blink = 0.22; s.blinkFrom = from; s.tpAt = t; s.landAt = t; s.doorAt = t; s.doorFrom = { x: wx, y: wy }; s.pinT = null; s.prevLy = s.ly;
+  for (const p of rplats(rstack(C, t, s, KB), KB)) s.pt[p.id] = p.y;
+  if (!s.doors) { s.doors = 0; log('door', { first: true }); } s.doors++; log('door', { from: A.p.id, to: Bp.p.id, side });
+  return true;
+}
+// the auto-rotate's shove (DESIGN §6A): where the content's swing was throwing him (its second half), capped; then normal physics
+function carriedWorld(RP, p, t, s, c) { const o = pose(RP, p, t, s);
+  let pt; if (o.room1) { const a = [c.lx, c.ly + ROOM[c.k0].oy], m = mapTo(c.k0, o.room1, c.lx, c.ly), b = [m[0], m[1] + ROOM[o.room1].oy]; pt = [a[0] + (b[0] - a[0]) * o.ck, a[1] + (b[1] - a[1]) * o.ck]; }
+  else if (o.room === c.k0) pt = [c.lx, c.ly + ROOM[c.k0].oy]; else { const m = mapTo(c.k0, o.room, c.lx, c.ly); pt = [m[0], m[1] + ROOM[o.room].oy]; }
+  const [x, y] = rot(pt, o.cang); return [o.x + Z * x, o.y + Z * y]; }
+function shove(s, RP, p, t, log) {
+  const c = s.carry, tp = p.tip || p.standUp, [r0, r1] = tp.rotate, tm = (r0 + r1) / 2, o = pose(RP, p, t, s), K = ROOM[o.room];
+  const w1 = carriedWorld(RP, p, r1, s, c), wm = carriedWorld(RP, p, tm, s, c);
+  const quiet = !!p.quietShove, cx = (quiet ? 3 : 6) / Z, vy0 = (quiet ? -1.5 : -3) / Z, vy1 = (quiet ? 2.5 : 5) / Z;
+  s.vx = clamp((w1[0] - wm[0]) / (r1 - tm) / Z, -cx, cx); s.vy = clamp((w1[1] - wm[1]) / (r1 - tm) / Z, vy0, vy1);
+  const m = mapTo(c.k0, o.room, c.lx, c.ly); s.lx = clamp(m[0], -K.WALL, K.WALL); s.ly = clamp(m[1], K.BAR + 0.1, histTopK(s, t, K) - R.CLEAR);
+  s.ground = false; s.onId = null; s.prevLy = s.ly; s.shoveAt = t; s.shoveFrom = { x: s.x, y: s.y }; s.bounceN = 0; s.dropId = 'all'; s.dropUntil = t + 0.12;
+  s.react = quiet ? { name: 'sleepy', dur: 1.4, at: t } : { name: 'shock', dur: 0.3, at: t };
+  if (!s.rotN) { s.rotN = 0; log('rotate', { first: true, ph: p.id }); } s.rotN++; log('shove', { ph: p.id, vx: +s.vx.toFixed(2), vy: +s.vy.toFixed(2), quiet });
+}
+// the runner takes over from the opening (7.88) or a retry's line
+function startRunner(s, t, api) {
+  const C = api.C, RP = prepR(C), P = RP.P;
+  Object.assign(s, { rOn: true, tp: {}, ph: 0, carry: null, pinT: null, safeUntil: -9, doors: 0, rotN: 0, knock: s.knock || {}, jolt: s.jolt || {} });
+  for (const T of RP.tippers) if (t > T.tipper.win[1]) s.tp[T.id] = { t0: T.tipper.tWord, good: true };   // (a retry past a tipper: it went well)
+  for (const j of P.jolts) if (j.warn < t) s.jolt[j.i] = { st: 'past' };
+  if (t <= R.WAKE + 0.05) { s.glide = { lx: s.lx, ly: s.ly }; return; }   // (from the opening: he glides onto her first text — step)
+  const p = currentAt(RP, t); s.ph = p.id; s.hist = 0; s.histK = 0; landIn(C, RP, s, t, p, null); s.safeUntil = t + R.SAFE; s.facing = 0.6;
+  s.blink = 0; place(s, RP, t);
+}
+function place(s, RP, t) {   // his content point → the world (the engine draws him at s.x, s.y)
+  const p = RP.byId.get(s.ph), o = pose(RP, p, t, s);
+  const [x, y] = s.carry && s.carry.ph === p.id ? carriedWorld(RP, p, t, s, s.carry) : toWorld(o, s.lx, s.ly);
+  s.x = x; s.y = y; s.dx = s.x; s.ducking = false; s.blink = Math.max(0, (s.blink || 0) - 1 / 120);
+}
+
+// ======== fair.mjs's look (def.fair.jolts: the level's own timed hazards on the demo's run) ========
+// locks: a phone starts to lock ≥ 3 beats after the door out of it opens · tips: wobble ≥ 1.5 beats · tippers: the GOOD window ≥ 0.9 s
+// and hanging ≥ 1.5 s before it · BLOCKED ≥ 1.5 s · jolts: a drop's warning (lead + shake) ≥ MINWARN, and standing where he was at
+// the warning, its first touch ≥ MINWARN · quiet: nothing near him moves in the quiet windows · 'decides': with the jolts off the same
+// presses must not win when they lose with them on
+export function fairRunner(C, base, replay) {
+  const RP = prepR(C), P = RP.P, out = [], B = RP.beat, s = base;
+  for (const p of RP.ph) { const n = p.next; if (!n || p.tSleep0 == null) continue; const open = n.tipper ? n.tipper.tWord + B : n.tDock; if (p.tSleep0 - open < 3 * B - 0.02) out.push({ t: p.tSleep0, kind: 'jolt', v: +(p.tSleep0 - open).toFixed(2), what: `lock #${p.id}: door to #${n.id} open only ${(p.tSleep0 - open).toFixed(2)} s before` }); }
+  for (const p of RP.ph) { const tp = p.tip || p.standUp; if (tp && tp.t - tp.tWarn < 1.5 * B - 0.02) out.push({ t: tp.t, kind: 'jolt', v: +(tp.t - tp.tWarn).toFixed(2), what: `tip #${p.id} wobble` });
+    if (p.tipper) { const T = p.tipper; if (T.win[1] - T.win[0] < 0.9) out.push({ t: T.tWord, kind: 'jolt', v: +(T.win[1] - T.win[0]).toFixed(2), what: `tipper #${p.id} window` });
+      if (T.win[0] - p.tArrive < 1.5) out.push({ t: T.tWord, kind: 'jolt', v: +(T.win[0] - p.tArrive).toFixed(2), what: `tipper #${p.id} hangs too briefly` }); } }
+  for (const b of RP.blocks) if (b.wallT - b.slam < 1.5) out.push({ t: b.wallT, kind: 'jolt', v: +(b.wallT - b.slam).toFixed(2), what: 'BLOCKED' });
+  for (const [a, z] of RP.quiet) { const cur = currentAt(RP, a), cur2 = currentAt(RP, z);   // (the phone(s) he's meant to be in then hold still — not a locking one behind)
+    for (const p of new Set([cur, cur2])) { let moved = false; for (let tt = a; tt <= z; tt += 0.05) { const o0 = pose(RP, p, a, s), o1 = pose(RP, p, tt, s); if (Math.abs(o0.x - o1.x) + Math.abs(o0.y - o1.y) + Math.abs(o0.cang - o1.cang) > 1e-3) moved = true; }
+      if (moved) out.push({ t: a, kind: 'jolt', v: 0, what: `#${p.id} moves in the quiet ${a}–${z}` }); }
+    for (const j of P.jolts) if (j.hit > a && j.hit < z) out.push({ t: j.hit, kind: 'jolt', v: 0, what: `jolt ${j.word} in the quiet ${a}–${z}` }); }
+  for (const j of P.jolts) { const o = s.jolt && s.jolt[j.i]; if (!o || o.id == null || o.warnT == null) continue; const L = o.L, q = P.items[o.id], what = `J${j.i + 1} "${j.word}" on “${q.text}”`;
+    const lead = L && L.kind === 'throw' ? null : j.hit - o.warnT + J.SHAKE;
+    let reach = null; if (L) for (let d = 0; d < 3 && reach == null; d += 1 / 120) { const b = joltBox(L, L.t0 + d); if (!b) break; const ax = o.aim[0], ay = o.aim[1] - 0.75; if (!(ax + 0.6 < b.x0 || ax - 0.6 > b.x1 || ay + 1.5 < b.y0 || ay >= b.y1 - 0.08)) reach = L.t0 + d - o.warnT; }
+    if (lead != null && lead < J.MINWARN - 1e-3) out.push({ t: j.hit, kind: 'jolt', v: +lead.toFixed(2), what: what + ' (warning)' });
+    if (reach != null && reach < J.MINWARN - 1e-3) out.push({ t: j.hit, kind: 'jolt', v: +reach.toFixed(2), what: what + ' (reach)' }); }
+  for (const k of s.jlog.filter(e => e.k === 'knock')) { const f = s.jlog.find(e => e.k === 'fail' && e.t >= k.t && e.t < k.t + J.KNOCKSAFE + 2); if (f) out.push({ t: k.t, kind: 'knock', v: +(f.t - k.t).toFixed(2), what: `J${k.j + 1} knock → lost` }); }
+  if (replay) { const keep = P.jolts; P.jolts = []; let off; try { off = replay(); } finally { P.jolts = keep; }
+    if (off.won && !s.won) out.push({ t: s.t, kind: 'decides', v: 0, what: `jolts on: ${s.won ? 'won' : 'lost'} · off: ${off.won ? 'won' : 'lost'}` }); }
+  return out;
+}
+
+// ======================================================================================================================================
+// THE LOOK (ART.md v2): HUGE sticker phones (white border, ink, a flat case colour + one cel band, a glint, side-button nubs), docked edge
+// to edge in the dark; inside each, the real iMessage thread (James blue right = his to glitch, Sheila grey left), the owner's faint
+// wallpaper, the group header (the OTHER people's avatars), the input bar. The seam where two screens overlap is his doorway (lilac glow,
+// brackets, his purple crawl). The phone behind locks: its lock screen comes down like a shutter (owner's wallpaper first, then 9:41).
+// Asleep ahead: its lock screen with one notification banner. The dark between holds the lyrics; the far +41 skyline; the purple spread
+// at the end. No labels on anything (Chikin, 9:08). Purple is only his. The opening (0–7.88) is the current Ghost's own view.
+// ======================================================================================================================================
+const INK = '#120a05', WHITE = '#ffffff', PURP = ['#7b3cf2', '#9a52ff', '#e03ccf', '#c9a7ff'], GREEN = '#4dff9a', RED = '#ff3b30', LILAC = '#c9a7ff';
+const OWN = { J: { c: '#3b7ee6', d: '#2a5fb4', ic: 'paw', ini: 'J' }, S: { c: '#f0675a', d: '#c94a40', ic: 'heart', ini: 'S' }, C: { c: '#e8b22c', d: '#b98a17', ic: 'bot', ini: 'C' },
+  M: { c: '#5fbf9f', d: '#3f977a', ic: 'daisy', ini: 'M' }, E: { c: '#cfd3da', d: '#9aa0ab', ic: 'star', ini: 'J' }, B: { c: '#6b7385', d: '#4c5363', ic: null, ini: '+' } };
+const FONT = (px, w = 600) => `${w} ${Math.max(1, px)}px -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif`;
+const QS = 40;   // (drawing units per world unit (a phone's body) or per sl (its content): canvas fonts want whole-ish pixel sizes)
+function rr(g, x, y, w, h, r) { r = Math.max(0, Math.min(r, w / 2, h / 2)); g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+const THOUGHT_SHOWN = new Set();
+export function icon(g, kind, x, y, sz, a = 1) {   // the owners' stickers (code-drawn, ink + white): paw, heart, robot (X eyes), daisy, star
+  g.save(); g.translate(x, y); g.globalAlpha *= a;
+  if (kind === 'paw') { for (const [r, col] of [[1.3, WHITE], [1, INK]]) { g.fillStyle = col; g.beginPath(); g.ellipse(0, sz * 0.14, sz * 0.26 * r, sz * 0.2 * r, 0, 0, 7); g.fill();
+      for (const [a2, b2] of [[-0.3, -0.18], [-0.11, -0.32], [0.11, -0.32], [0.3, -0.18]]) { g.beginPath(); g.ellipse(a2 * sz, b2 * sz, sz * 0.09 * r, sz * 0.11 * r, 0, 0, 7); g.fill(); } } }
+  if (kind === 'heart' || kind === 'star') { const path = k => { g.beginPath(); if (kind === 'heart') { g.moveTo(0, sz * 0.35 * k); g.bezierCurveTo(-sz * 0.55 * k, -sz * 0.05 * k, -sz * 0.25 * k, -sz * 0.5 * k, 0, -sz * 0.18 * k); g.bezierCurveTo(sz * 0.25 * k, -sz * 0.5 * k, sz * 0.55 * k, -sz * 0.05 * k, 0, sz * 0.35 * k); }
+      else for (let i = 0; i < 10; i++) { const a2 = -Math.PI / 2 + i * Math.PI / 5, r = (i % 2 ? 0.2 : 0.45) * sz * k; g.lineTo(Math.cos(a2) * r, Math.sin(a2) * r); } g.closePath(); };
+    g.fillStyle = WHITE; path(1.35); g.fill(); g.fillStyle = INK; path(1.12); g.fill(); g.fillStyle = kind === 'heart' ? '#ffd3cc' : '#fff3b0'; path(0.85); g.fill(); }
+  if (kind === 'bot') { g.fillStyle = WHITE; rr(g, -sz * 0.42, -sz * 0.36, sz * 0.84, sz * 0.72, sz * 0.14); g.fill(); g.fillStyle = INK; rr(g, -sz * 0.34, -sz * 0.28, sz * 0.68, sz * 0.56, sz * 0.1); g.fill();
+    g.strokeStyle = '#ff5a4a'; g.lineWidth = sz * 0.09; g.lineCap = 'round'; for (const ex of [-0.13, 0.13]) { g.beginPath(); g.moveTo(ex * sz - sz * 0.06, -sz * 0.1); g.lineTo(ex * sz + sz * 0.06, sz * 0.02); g.moveTo(ex * sz + sz * 0.06, -sz * 0.1); g.lineTo(ex * sz - sz * 0.06, sz * 0.02); g.stroke(); } }
+  if (kind === 'daisy') { for (const [r, col] of [[1.25, WHITE], [1.0, INK]]) { g.fillStyle = col; for (let i = 0; i < 6; i++) { const a2 = i * Math.PI / 3; g.beginPath(); g.ellipse(Math.cos(a2) * sz * 0.2, Math.sin(a2) * sz * 0.2, sz * 0.13 * r, sz * 0.09 * r, a2, 0, 7); g.fill(); } }
+    g.fillStyle = '#fff6e0'; for (let i = 0; i < 6; i++) { const a2 = i * Math.PI / 3; g.beginPath(); g.ellipse(Math.cos(a2) * sz * 0.2, Math.sin(a2) * sz * 0.2, sz * 0.1, sz * 0.06, a2, 0, 7); g.fill(); } g.fillStyle = '#f2b631'; g.beginPath(); g.arc(0, 0, sz * 0.1, 0, 7); g.fill(); }
+  if (kind === 'dog') {   // Biscuit (James's lock screen): a round brown dog, red collar
+    g.fillStyle = INK; g.beginPath(); g.arc(0, 0, sz * 0.52, 0, 7); g.fill(); g.fillStyle = '#b07a45'; g.beginPath(); g.arc(0, 0, sz * 0.47, 0, 7); g.fill();
+    g.fillStyle = '#7a4f2a'; for (const e of [-1, 1]) { g.beginPath(); g.ellipse(e * sz * 0.4, -sz * 0.25, sz * 0.14, sz * 0.26, e * 0.4, 0, 7); g.fill(); }
+    g.fillStyle = '#e8d2b0'; g.beginPath(); g.ellipse(0, sz * 0.15, sz * 0.22, sz * 0.16, 0, 0, 7); g.fill(); g.fillStyle = INK; g.beginPath(); g.arc(0, sz * 0.08, sz * 0.06, 0, 7); g.fill();
+    for (const e of [-1, 1]) { g.beginPath(); g.arc(e * sz * 0.17, -sz * 0.08, sz * 0.05, 0, 7); g.fill(); } g.fillStyle = '#d23a2a'; g.fillRect(-sz * 0.3, sz * 0.4, sz * 0.6, sz * 0.08); }
+  g.restore();
+}
+export const modeView = ({ T, world: W3, C, cam }) => {
+  const RP = prepR(C), P = RP.P, D = P.D, O = P.O, end = D.end || {}, B = RP.beat;
+  const g0 = new T.Group(); W3.add(g0); const v0 = G0.modeView({ T, world: g0, C, cam });   // (the current Ghost's view, for the opening only)
+  const cv = document.createElement('canvas'); cv.width = 1280; cv.height = 800; const g = cv.getContext('2d');
+  const tex = new T.CanvasTexture(cv); tex.colorSpace = T.NoColorSpace; tex.minFilter = T.LinearFilter;
+  const mesh = new T.Mesh(new T.PlaneGeometry(1, 1), new T.MeshBasicMaterial({ map: tex, transparent: false, depthWrite: false, depthTest: false })); mesh.renderOrder = -5; mesh.frustumCulled = false; W3.add(mesh);
+  const img = src => { if (typeof Image === 'undefined' || !src) return null; const im = new Image(); im.src = new URL('../' + src, import.meta.url).href; return im; };
+  const PET = {}; for (const k in RP.D.petunia || {}) PET[k] = img(RP.D.petunia[k]);
+  const petOf = q => isPet(RP, q) ? PET[(+q.row.t0).toFixed(2)] : null;
+  const GW = () => (typeof window !== 'undefined' && window.POTATO_GLITCH_WORDS || ['krrzzt', 'wh@t?!', 's0r—t@', 'bzzrpt']).filter(w => !/\s/.test(w) && w.length <= 10);
+  let vw = 16, vh = 10, z = 1, cx = 0, cy = 0, u = 50, left = 0, top = 0, camYs = null, camXs = 0, lastT = -9;
+  const X = wx => (wx - left) * u, Y = wy => (top - wy) * u;
+  const frameT = (wx, wy, ang, sc) => { const k = u * sc, c = Math.cos(ang), sn = Math.sin(ang); g.setTransform(k * c, -k * sn, k * sn, k * c, X(wx), Y(wy)); };
+  // ---------------- the camera: the song's keyframes (each phone's tTh), waiting for him; y on the rest line of the phone he's in ----------------
+  function camera(f) {
+    const { s, t } = f; vw = cam.right - cam.left; vh = cam.top - cam.bottom;
+    const ks = RP.ph.filter(p => !p.tipper || (s.tp && s.tp[p.id])).map(p => { const o = pose(RP, p, p.tTh, s); return [p.tTh, o.x + 0.12 * R.VH * 1.6]; });
+    let kx = ks[0][1]; for (let i = 0; i < ks.length; i++) { if (t < ks[i][0]) { if (i) { const a = ks[i - 1], b = ks[i]; kx = a[1] + (b[1] - a[1]) * ease((t - a[0]) / (b[0] - a[0])); } break; } kx = ks[i][1]; }
+    const VH = R.VH, VWd = VH * vw / vh, ph = RP.byId.get(s.ph) || RP.ph[0], po = pose(RP, ph, t, s), bb = (t - RP.OFF) / B;
+    // (his phone stays whole on screen: the song's x is clamped to it; y rides its rest line — its bob shows, the camera doesn't chase it)
+    const kb = ROOM[po.body], restY0 = po.y - (ph.bob && !(ph.hold && t >= ph.hold[0] && t <= ph.hold[1]) ? wave(ph.bob, bb) - ph.bob[0] / 2 : 0) - (o => o.crack ? wave([1.6, 2, 0], (t - o.landT) / B) - 0.8 : 0)(po);
+
+    const nx = ph.next && ph.next.tipper ? pose(RP, ph.next, t, s) : null, lift = nx && (nx.hang || nx.falling) ? 1.0 : 0;   // (a phone hangs next door: look up a little so its screen shows)
+    const half = VWd / 2 - kb.w / 2 - 0.5, kx2 = half > 0 ? Math.min(Math.max(kx, po.x - half), po.x + half) : po.x;
+    const restY = restY0 + lift;
+    if (camYs == null || Math.abs(t - lastT) > 0.3) { camYs = restY; camXs = kx2; } else { const a = 1 - Math.exp(-(t - lastT) / 0.5), a2 = 1 - Math.exp(-(t - lastT) / 0.35); camYs += (restY - camYs) * a; camXs += (kx2 - camXs) * a2; }
+    kx = camXs;
+    let x = Math.min(Math.max(kx, s.x - VWd / 2 + 1.5), s.x + VWd / 2 - 1.5), y = Math.min(Math.max(camYs, s.y - VH / 2 + 2.2), s.y + VH / 2 - 2.6), zz = vh / VH;
+    if (t < O.ctl) { const k = ease5((t - R.WAKE) / (O.ctl - R.WAKE)), z0 = vh / (S0.IH * Z); x = SC[0] + (x - SC[0]) * k; y = SC[1] + (y - SC[1]) * k; zz = Math.exp(Math.log(z0) + (Math.log(zz) - Math.log(z0)) * k); }
+    if (t >= end.lock) { const L = pose(RP, RP.last, t, s), k = ease5((t - end.lock) / 0.9), ez = vh / (11.74 * 1.08); x += (L.x - x) * k; y += (L.y - y) * k; zz = Math.exp(Math.log(zz) + (Math.log(ez) - Math.log(zz)) * k);
+      if (end.leap != null && t >= end.leap - 0.2) { const gf = s.goneFrom || { x: s.x, y: s.y }, k2 = ease(clamp((t - (end.leap - 0.2)) / 0.35)) ** 1.6; x += (gf.x - x) * k2; y += (gf.y + 0.6 - y) * k2; zz *= Math.exp(Math.log(2.6) * k2); } }
+    let sx = 0, sy = 0; const lt = [...RP.ph].map(p => pose(RP, p, t, s)).find(o => o.landed != null && o.landed < 0.2 && o.landed >= 0), sh = s.failT != null && t - s.failT < 0.4 ? 1 - (t - s.failT) / 0.4 : lt ? 0.6 * (1 - lt.landed / 0.2) : 0;
+    if (sh > 0) { sx = (hash(Math.floor(t * 60), 1) - 0.5) * 0.3 * sh; sy = (hash(Math.floor(t * 60), 2) - 0.5) * 0.3 * sh; }
+    z = zz; cx = x + sx; cy = y + sy; lastT = t;
+    cam.up.set(0, 1, 0); cam.zoom = z; cam.position.set(cx, cy, 10); cam.lookAt(cx, cy, 0); cam.updateProjectionMatrix();
+  }
+  function fitCanvas() { const W = 1600, H = Math.round(W * vh / vw); if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    u = cv.width / (vw / z); left = cx - vw / (2 * z); top = cy + vh / (2 * z); mesh.position.set(cx, cy, -2); mesh.scale.set(vw / z, vh / z, 1); }
+  // ---------------- the dark between the messages: navy, typing-dot stars, the far +41 skyline (purple at the end), wifi rings ----------------
+  function backdrop(f) {
+    const { t, s } = f, W = cv.width, H = cv.height; g.setTransform(1, 0, 0, 1, 0, 0);
+    const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#0b0e1d'); gr.addColorStop(0.62, '#121833'); gr.addColorStop(1, '#0a0c18'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    const b = (t - RP.OFF) / B, crowd = t >= 101.51 ? 1 : 0.55;
+    for (let i = 0; i < 46; i++) { const x = mod(hash(i, 7) * W * 1.6 - cx * u * 0.08 * (0.3 + hash(i, 3) * 0.4), W * 1.6) - W * 0.3, y = H * (0.08 + hash(i, 8) * 0.5);
+      if (hash(i, Math.floor(b / 4)) < 0.12) continue; g.fillStyle = '#3a4570'; g.globalAlpha = 0.55; for (let k = 0; k < 3; k++) { const bob = ((Math.floor(b * 2) + k + i) % 3 === 0) ? -1.5 : 0; g.beginPath(); g.arc(x + k * 6, y + bob, 1.6, 0, 7); g.fill(); } }
+    g.globalAlpha = 1;
+    for (const [layer, n, k, y0, sz] of [[0, 34, 0.05, 0.7, 0.03], [1, 26, 0.1, 0.78, 0.045]]) for (let i = 0; i < n; i++) {
+      if (hash(i, 30 + layer) > crowd) continue;
+      const w = H * sz * (0.8 + hash(i, 1 + layer) * 0.6), h = w * 2.05, x = mod(i * W * 1.4 / n + hash(i, 2 + layer) * 30 - cx * u * k, W * 1.4) - W * 0.2, y = H * y0 + hash(i, 3 + layer) * H * 0.1;
+      const lit = t >= 120.48 ? 1 : 0, early = t > 108 && hash(i, 9 + layer) < 0.1 && hash(i, Math.floor(t * 3)) < 0.3;
+      g.fillStyle = layer ? '#1a2142' : '#141a35'; rr(g, x, y, w, h, w * 0.18); g.fill();
+      g.fillStyle = lit ? PURP[0] : early ? '#3a2a6e' : hash(i, 4 + layer) < 0.6 ? (layer ? '#2c3a6e' : '#222c55') : '#1f2850'; rr(g, x + 2, y + 2, w - 4, h - 4, w * 0.13); g.fill(); }
+  }
+  // ---------------- a phone: the sticker body (native upright shape, turned by nat), then its screen ----------------
+  function body(o, f) {
+    const p = o.p, Ow = OWN[p.owner] || OWN.B, w = ROOM.U.w * QS, h = ROOM.U.h * QS, rad = w * 0.12, ink = 0.11 * QS, bw = 0.11 * QS;
+    frameT(o.x, o.y, o.nat + o.wob, 1 / QS); const x0 = -w / 2, y0 = -h / 2;
+    if (o.landed != null && o.landed < 0.08) g.scale(1.02, 0.95);
+    g.fillStyle = WHITE; rr(g, x0 - bw - ink, y0 - bw - ink, w + 2 * (bw + ink), h + 2 * (bw + ink), rad + bw + ink); g.fill();
+    g.fillStyle = INK; rr(g, x0 - ink, y0 - ink, w + 2 * ink, h + 2 * ink, rad + ink); g.fill();
+    g.fillStyle = INK; rr(g, x0 - ink - 0.16 * QS, y0 + h * 0.16, 0.16 * QS, h * 0.06, 3); g.fill(); rr(g, x0 - ink - 0.16 * QS, y0 + h * 0.25, 0.16 * QS, h * 0.1, 3); g.fill(); rr(g, x0 + w + ink, y0 + h * 0.22, 0.16 * QS, h * 0.12, 3); g.fill();
+    g.fillStyle = Ow.c; rr(g, x0, y0, w, h, rad); g.fill(); g.save(); rr(g, x0, y0, w, h, rad); g.clip(); g.fillStyle = Ow.d; g.fillRect(x0 + w * 0.93, y0, w, h); g.fillStyle = 'rgba(255,255,255,0.35)'; g.fillRect(x0 + 0.1 * QS, y0 + rad * 0.8, 0.08 * QS, h * 0.22); g.restore();
+    if (p.owner === 'C') { g.fillStyle = INK; g.beginPath(); g.arc(x0 + 0.5 * QS, y0 + 0.5 * QS, 0.16 * QS, 0, 7); g.fill(); g.fillStyle = '#ffd34d'; g.beginPath(); g.arc(x0 + 0.5 * QS, y0 + 0.5 * QS, 0.1 * QS, 0, 7); g.fill(); }   // (Carol's camera: a sticker over it — she was right)
+    const gw = (ROOM.U.w - 0.5) * QS, gh = (ROOM.U.h - 0.5) * QS; g.fillStyle = INK; rr(g, -gw / 2 - 0.06 * QS, -gh / 2 - 0.06 * QS, gw + 0.12 * QS, gh + 0.12 * QS, rad * 0.75); g.fill();
+    return { gw, gh, rad: rad * 0.7 };
+  }
+  function screen(o, f, G2, his) {
+    const { t, s } = f, p = o.p; frameT(o.x, o.y, o.nat + o.wob, 1 / QS); g.save(); rr(g, -G2.gw / 2, -G2.gh / 2, G2.gw, G2.gh, G2.rad); g.clip();
+    const asleepAhead = !o.awake && !o.dark && (p.tSleep0 == null || t < p.tSleep0) && !o.off, dark = o.dark >= 1 || (p.tSleep1 != null && t >= p.tSleep1) || (o.off && o.dark >= 1);
+    if (dark) { g.fillStyle = '#05060a'; g.fillRect(-G2.gw, -G2.gh, G2.gw * 2, G2.gh * 2); glint(G2); g.restore(); return; }
+    // the content, in its own frame (sl units × QS; the content centre at the glass centre; it may be turned and re-laying out)
+    const K = ROOM[o.room], K1 = o.room1 ? ROOM[o.room1] : null;
+    frameT(o.x, o.y, o.cang + o.wob, Z / QS);
+    const ly = y => -y * QS, lx = x => x * QS;
+    if (asleepAhead || o.hang || o.falling) { lockScreen(o, f, K, 1, true); g.restore(); glintAt(o, G2); return; }
+    g.fillStyle = '#fbfaf6'; g.fillRect(lx(K.gl[0]) - 40, ly(K.gl[3] + K.oy) - 40, lx(K.gl[1] - K.gl[0]) + 80, (K.gl[3] - K.gl[2]) * QS + 80);
+    const Ow = OWN[p.owner] || OWN.B; if (Ow.ic) { g.globalAlpha = 0.07; for (let i = 0; i < 26; i++) icon(g, Ow.ic, lx(K.gl[0] + hash(i, 21 + p.id) * (K.gl[1] - K.gl[0])), ly(K.gl[2] + K.oy + hash(i, 22 + p.id) * (K.gl[3] - K.gl[2])), 0.7 * QS); g.globalAlpha = 1; }
+    // the old history: the band over the thread (it comes down as she reads what he missed)
+    const htop = histTopK(s, t, K); if (htop < K.HB - 0.05) { const y0 = ly(K.HB + K.oy), y1 = ly(htop + K.oy), gr = g.createLinearGradient(0, y0, 0, y1); gr.addColorStop(0, 'rgba(60,62,80,0.55)'); gr.addColorStop(1, 'rgba(60,62,80,0.12)'); g.fillStyle = gr; g.fillRect(lx(-K.CX - 1), y0, lx(2 * K.CX + 2), y1 - y0); }
+    // the bubbles (a re-layout lerps every bubble from its slot in one room to its slot in the other)
+    const rows = rstack(C, t, s, K), rowsB = K1 ? new Map(rstack(C, t, s, K1).map(r => [r.q.id, r])) : null;
+    for (const r of rows) { let x0 = r.x0, y0 = r.y0 + K.oy, ww = r.ww, hh = r.hh; const b2 = rowsB && rowsB.get(r.q.id);
+      if (b2) { const k = o.ck; x0 += (b2.x0 - x0) * k; y0 += (b2.y0 + K1.oy - y0) * k; ww += (b2.ww - ww) * k; hh += (b2.hh - hh) * k; }
+      bubble(r, lx(x0), ly(y0 + hh), lx(ww), hh * QS, f, his && !K1, p); }
+    // the jolts' falling bubbles (in the phone he's in)
+    for (const j of P.jolts) { const jo = s.jolt && s.jolt[j.i]; if (!jo || jo.ph !== p.id) continue; const q = P.items[jo.id];
+      if (jo.st === 'warn' && jo.L == null) { const r = rows.find(r => r.q.id === jo.id); if (r) { g.save(); g.setLineDash([0.18 * QS, 0.14 * QS]); g.strokeStyle = LILAC; g.lineWidth = 0.08 * QS; g.globalAlpha = 0.5 + 0.4 * Math.sin(t * 20);
+          g.beginPath(); g.moveTo(lx((r.x0 + r.x1) / 2), ly(r.y0 + K.oy)); g.lineTo(lx((r.x0 + r.x1) / 2), ly(K.BAR + K.oy)); g.stroke(); g.restore();
+          const st = 0.12 * QS; for (let q2 = 0; q2 < 8; q2++) { g.fillStyle = PURP[q2 % 4]; g.fillRect(lx(K.CX + 0.1) - st, ly(r.y1 + K.oy) + hash(q2, Math.floor(t * 18)) * (r.y1 - r.y0) * QS, st * (1 + hash(q2, 4)), st); } } }
+      if (jo.st === 'fly') { const b2 = joltBox(jo.L, t); if (!b2) continue; g.save(); g.translate(lx(b2.cx), ly(b2.cy + K.oy)); g.rotate(-b2.rot); bubble({ q, ww: jo.L.w, hh: jo.L.h, x0: 0, lines: kdims(RP, q, K).nice.lines, fly: true }, lx(-jo.L.w / 2), -jo.L.h / 2 * QS, lx(jo.L.w), jo.L.h * QS, f, false, p); g.restore(); } }
+    // BLOCKED (her block, down the phone he's in)
+    if (his) { const wy = wallYK(RP, t, s, K); if (wy != null) { const y = ly(wy + K.oy), h = 0.7 * QS; g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(lx(K.gl[0]), y - h / 2 + 6, lx(K.gl[1] - K.gl[0]), h); g.fillStyle = RED; g.fillRect(lx(K.gl[0]), y - h / 2, lx(K.gl[1] - K.gl[0]), h);
+      g.fillStyle = WHITE; g.font = FONT(Math.round(h * 0.5), 800); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('⊘ Blocked', 0, y + 1); } }
+    header(o, f, K); inputBar(o, f, K);
+    if (o.lock > 0 && !o.off) lockScreen(o, f, K, o.lock, false);
+    if (o.crack) crack(K);
+    if (o.landed != null && o.landed < 0.9 && (p.tip || p.standUp || p.tipper)) rotBadge(K, o.landed);
+    g.restore(); glintAt(o, G2);
+  }
+  function glint(G2) { g.save(); g.globalAlpha = 0.08; g.fillStyle = WHITE; g.beginPath(); g.moveTo(-G2.gw / 2, -G2.gh * 0.1); g.lineTo(-G2.gw * 0.1, -G2.gh / 2); g.lineTo(G2.gw * 0.05, -G2.gh / 2); g.lineTo(-G2.gw / 2, G2.gh * 0.05); g.fill(); g.restore(); }
+  function glintAt(o, G2) { frameT(o.x, o.y, o.nat + o.wob, 1 / QS); glint(G2);
+    // art pass: the island on the hardware's top edge when the screen has turned away from it (a phone on its side: the pill sits on its end)
+    if (Math.abs(o.cang - o.nat) >= 1e-3 && !(o.dark >= 1)) { const iw = 2.2 * QS, ih = 0.4 * QS; g.fillStyle = '#000'; rr(g, -iw / 2, -G2.gh / 2 + 0.1 * QS, iw, ih, ih / 2); g.fill(); }
+    // art pass: the owner's sticker slapped over the case's corner (it was hidden under the glass): who owns it, no words
+    const Ow = OWN[o.p.owner] || OWN.B; if (Ow.ic) { const w = ROOM.U.w * QS, h = ROOM.U.h * QS; g.save(); g.translate(w / 2 - 0.42 * QS, -h / 2 + 0.42 * QS); g.rotate(0.22); icon(g, Ow.ic, 0, 0, 0.8 * QS); g.restore(); } }
+  function bubble(r, bx, by, bw, bh, f, his, p) {
+    const { t, s } = f, q = r.q, rad = Math.min(bh / 2, 0.42 * QS), ink = 0.05 * QS;
+    if (r.grey) { g.fillStyle = '#8e8e93'; g.font = FONT(Math.round(0.42 * QS), 500); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(q.who === 'X' ? q.text : q.row && q.row.sys || q.text, bx + bw / 2, by + bh / 2); return; }
+    if (r.hole) { if (t < r.knockT + J.SHAKE + 2 * B) { g.save(); g.setLineDash([0.12 * QS, 0.12 * QS]); g.strokeStyle = '#a7a7b0'; g.globalAlpha = 1 - (t - r.knockT - J.SHAKE) / (2 * B); g.lineWidth = ink; rr(g, bx, by, bw, bh, rad); g.stroke(); g.restore(); } return; }
+    const J0 = q.who === 'J', ge = J0 && !r.fly && glitchEv(P, s, q, t); let jx = 0; if (r.shake) jx = (hash(Math.floor(t * 60), q.id) - 0.5) * 0.25 * QS;
+    g.save(); g.translate(jx, 0); g.globalAlpha = Math.min(1, 0.3 + (r.pop ?? 1));
+    if (q.photo) { const pet = petOf(q); g.fillStyle = INK; rr(g, bx - ink, by - ink, bw + 2 * ink, bh + 2 * ink, 0.3 * QS); g.fill(); g.save(); rr(g, bx, by, bw, bh, 0.26 * QS); g.clip();
+      if (pet && pet.complete && pet.naturalWidth) { const sc = Math.max(bw / pet.naturalWidth, bh / pet.naturalHeight); g.drawImage(pet, bx + (bw - pet.naturalWidth * sc) / 2, by + (bh - pet.naturalHeight * sc) / 2, pet.naturalWidth * sc, pet.naturalHeight * sc); }
+      else { const gr = g.createLinearGradient(bx, by, bx, by + bh); gr.addColorStop(0, '#9fb6d8'); gr.addColorStop(1, '#5b6f92'); g.fillStyle = gr; g.fillRect(bx, by, bw, bh); g.fillStyle = '#d9a35f'; g.beginPath(); g.ellipse(bx + bw / 2, by + bh * 0.62, bw * 0.22, bh * 0.24, 0, 0, 7); g.fill(); }
+      if (isP(s, q)) { g.globalCompositeOperation = 'lighter'; g.globalAlpha = 0.18; g.fillStyle = PURP[1]; g.fillRect(bx, by, bw, bh); }
+      g.restore(); }
+    else if (r.dots) { g.fillStyle = '#e7e5ea'; rr(g, bx, by, bw, bh, bh / 2); g.fill(); for (let k = 0; k < 3; k++) { g.fillStyle = `rgba(110,110,118,${0.35 + 0.65 * (Math.floor(t * 6) % 3 === k ? 1 : 0)})`; g.beginPath(); g.arc(bx + bw * (0.28 + k * 0.22), by + bh / 2, bh * 0.13, 0, 7); g.fill(); } }
+    else { const mine = r.mine, bg = J0 ? (mine ? '#3a1d6e' : '#0a84ff') : '#e9e9eb', fg = J0 ? '#ffffff' : '#1a1a1a';
+      g.fillStyle = bg; rr(g, bx, by, bw, bh, rad); g.fill();
+      if (mine && t - (s.rewT ?? -9) < 0.3) { g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = 0.6 * (1 - (t - s.rewT) / 0.3); g.fillStyle = PURP[1]; rr(g, bx, by, bw, bh, rad); g.fill(); g.restore(); }
+      g.fillStyle = fg; g.font = FONT(Math.round(S0.FS * QS), 400); g.textAlign = 'left'; g.textBaseline = 'middle';
+      (r.lines || [q.text]).forEach((l, i) => g.fillText(l, bx + S0.PADX * QS, by + (S0.PADY + S0.LH * (i + 0.5)) * QS));
+      if (mine) { g.strokeStyle = PURP[1]; g.globalAlpha = 0.85; g.lineWidth = 0.05 * QS; rr(g, bx - ink, by - ink, bw + 2 * ink, bh + 2 * ink, rad + ink); g.stroke(); g.globalAlpha = 1; } }
+    if (q.tapped && s.hits && P.events[q.tap] && s.hits[q.tap] != null) { const e = P.events[q.tap]; g.fillStyle = WHITE; g.beginPath(); g.arc(bx + bw, by, S0.BADGE * QS, 0, 7); g.fill(); g.font = FONT(Math.round(0.4 * QS)); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(e.emoji || '😂', bx + bw, by + 1); }
+    g.restore();
+    if (ge) { const left2 = clamp((ge.R - t) / Math.max(0.3, ge.R - ge.A)), R0 = { x: bx, y: by, w: bw, h: bh, r: rad };
+      drawShimmer(g, R0, { t, u: 0.42 * QS, k: 1, left: left2 });
+      if (his && s.ground && s.onId === q.id) drawWater(g, R0, { fx: s.lx * QS, t, land: t - s.landAt, beats: [], u: 0.42 * QS, seed: q.id, k: 1 });
+      if (J0 && !q.photo) { const st = t >= ge.R - 0.6 ? 'Delivered' : 'Delivered'; g.fillStyle = '#8e8e93'; g.font = FONT(Math.round(0.3 * QS), 500); g.textAlign = 'right'; g.textBaseline = 'top'; g.fillText(st, bx + bw, by + bh + 0.06 * QS); } }
+  }
+  function header(o, f, K) {   // the real group header: the OTHER people (their colours, an initial), the island (lyrics fall back into it), 9:41, the charging bolt
+    const { t } = f, p = o.p, y0 = -(K.gl[3] + K.oy) * QS, y1 = -(K.HB + K.oy) * QS, x0 = K.gl[0] * QS, x1 = K.gl[1] * QS;
+    g.fillStyle = '#efedf0'; g.fillRect(x0, y0, x1 - x0, y1 - y0); g.fillStyle = 'rgba(0,0,0,0.14)'; g.fillRect(x0, y1 - 2, x1 - x0, 2);
+    // (the island is hardware: it stays on the phone's real top edge; once the screen has auto-rotated away from it, glintAt draws it there)
+    if (Math.abs(o.cang - o.nat) < 1e-3) { g.fillStyle = '#000'; const iw = 2.4 * QS, ih = 0.5 * QS; rr(g, -iw / 2, y0 + 0.18 * QS, iw, ih, ih / 2); g.fill(); }
+    g.fillStyle = '#111'; g.font = FONT(Math.round(0.34 * QS), 700); g.textBaseline = 'middle'; g.textAlign = 'left'; g.fillText('9:41', x0 + 0.5 * QS, y0 + 0.43 * QS);
+    const rising = p.bob && wave(p.bob, (t - RP.OFF) / B + 0.5) > wave(p.bob, (t - RP.OFF) / B) + 0.01; g.textAlign = 'right'; g.fillText(rising ? '⚡ ▮▮▮' : '▮▮▮', x1 - 0.5 * QS, y0 + 0.43 * QS);
+    const others = ['J', 'S', 'C', 'M'].filter(k => k !== p.owner).slice(0, 3), land = K.k === 'S', ay = land ? (y0 + y1) / 2 + 0.2 * QS : y0 + 1.05 * QS, ax = land ? x0 + 1.2 * QS : -0.4 * QS;
+    others.forEach((k, i) => { const c = ax + i * 0.42 * QS; g.fillStyle = '#efedf0'; g.beginPath(); g.arc(c, ay, 0.3 * QS, 0, 7); g.fill(); g.fillStyle = OWN[k].c; g.beginPath(); g.arc(c, ay, 0.25 * QS, 0, 7); g.fill(); });
+  }
+  function inputBar(o, f, K) { const y0 = -(K.BAR + K.oy) * QS, y1 = -(K.gl[2] + K.oy) * QS, x0 = K.gl[0] * QS, x1 = K.gl[1] * QS;
+    g.fillStyle = '#f2f1f4'; g.fillRect(x0, y0, x1 - x0, y1 - y0); g.strokeStyle = '#c9c8ce'; g.lineWidth = 0.04 * QS; rr(g, x0 + 0.6 * QS, y0 + 0.12 * QS, x1 - x0 - 1.2 * QS, Math.min(0.55 * QS, (y1 - y0) * 0.6), 0.28 * QS); g.stroke();
+    g.fillStyle = '#111'; rr(g, -1.0 * QS, y1 - 0.16 * QS, 2.0 * QS, 0.07 * QS, 0.04 * QS); g.fill(); }
+  // the lock screen: k = how far down (1 = all of it); bottom first (the owner's wallpaper), the big clock, a notification (asleep ahead)
+  function lockScreen(o, f, K, k, ahead) {
+    const { t, s } = f, p = o.p, x0 = K.gl[0] * QS, x1 = K.gl[1] * QS, yT = -(K.gl[3] + K.oy) * QS, H = (K.gl[3] - K.gl[2]) * QS, yB = yT + H * k;
+    g.save(); g.beginPath(); g.rect(x0, yT, x1 - x0, H * k); g.clip(); g.translate(0, H * (k - 1));
+    const gr = g.createLinearGradient(0, yT, 0, yT + H); gr.addColorStop(0, '#1b2350'); gr.addColorStop(1, '#0b1030'); g.fillStyle = gr; g.fillRect(x0, yT, x1 - x0, H);
+    const Ow = OWN[p.owner] || OWN.B, wp = p.owner === 'J' ? 'dog' : Ow.ic; if (wp) icon(g, wp, 0, yT + H * 0.68, Math.min(x1 - x0, H) * 0.42, 0.9);
+    g.fillStyle = 'rgba(255,255,255,0.92)'; g.font = FONT(Math.round(Math.min(H * 0.13, (x1 - x0) * 0.26)), 300); g.textAlign = 'center'; g.textBaseline = 'middle';
+    const flick = s.rewT != null && t - s.rewT < 0.035; g.fillText(flick ? '4:04' : '9:41', 0, yT + H * 0.2);
+    if (ahead && !o.hang && !o.falling) { const last = [...rstack(C, t, s, ROOM.U)].find(r => !r.dots && !r.grey && r.q.text); if (last) { const bw = (x1 - x0) * 0.86, bh = 0.95 * QS, by = yT + H * 0.33;
+      g.fillStyle = 'rgba(245,245,250,0.82)'; rr(g, -bw / 2, by, bw, bh, 0.3 * QS); g.fill(); g.fillStyle = OWN[last.q.who === 'J' ? 'J' : 'S'].c; g.beginPath(); g.arc(-bw / 2 + 0.5 * QS, by + bh / 2, 0.25 * QS, 0, 7); g.fill();
+      g.fillStyle = '#111'; g.font = FONT(Math.round(0.36 * QS), 500); g.textAlign = 'left'; const txt = (last.mine && last.q.row && last.q.row.g ? last.q.row.g : last.q.text); g.fillText(txt.length > 28 ? txt.slice(0, 27) + '…' : txt, -bw / 2 + 0.95 * QS, by + bh / 2); } }
+    if (o.hang && p.id === 12) { const w0 = p.tipper.win[0], n = clamp(Math.floor((t - (w0 - 3 * B)) / B) + 1, 0, 3); if (t >= w0 - 3 * B) for (let i = 0; i < 3; i++) { g.fillStyle = i < n ? WHITE : 'rgba(255,255,255,0.18)'; g.beginPath(); g.arc((i - 1) * 0.9 * QS, yT + H * 0.86, 0.28 * QS, 0, 7); g.fill(); } }   // (#12 teaches: a dot a beat, the third is the window)
+    if (o.hang) { const red = p.id === 21 || (s.tp && s.tp[p.id] && !s.tp[p.id].good); g.fillStyle = red ? RED : '#6dd36d'; g.fillRect(x1 - 1.0 * QS, yT + 0.3 * QS, 0.5 * QS, 0.22 * QS); }
+    g.restore();
+    if (!ahead && k < 1) { g.fillStyle = 'rgba(255,255,255,0.7)'; g.fillRect(x0, yB - 0.06 * QS, x1 - x0, 0.06 * QS); }
+  }
+  function crack(K) { g.save(); g.strokeStyle = 'rgba(255,255,255,0.8)'; g.lineWidth = 0.05 * QS; g.beginPath(); const cx0 = 1.2 * QS, cy0 = -1.5 * QS; for (let i = 0; i < 6; i++) { g.moveTo(cx0, cy0); let x = cx0, y = cy0; for (let j = 0; j < 4; j++) { x += Math.cos(i * 1.05 + j * 0.3) * 0.9 * QS; y += Math.sin(i * 1.05 + j * 0.3) * 0.9 * QS; g.lineTo(x, y); } } g.stroke(); g.restore(); }
+  function rotBadge(K, a) { const r = 0.5 * QS, x = K.gl[1] * QS - 0.9 * QS, y = -(K.HB + K.oy) * QS + 0.9 * QS; g.save(); g.globalAlpha = clamp(1 - (a - 0.6) / 0.3); g.fillStyle = WHITE; g.beginPath(); g.arc(x, y, r + 4, 0, 7); g.fill(); g.fillStyle = INK; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill();
+    g.strokeStyle = WHITE; g.lineWidth = 0.07 * QS; g.beginPath(); g.arc(x, y, r * 0.55, 0.3, 5.6); g.stroke(); g.restore(); }
+  // ---------------- the seams: where two screens overlap it's his doorway (lilac glow, dotted line, brackets, his crawl) ----------------
+  function seams(f, poses) {
+    const { t, s } = f; g.setTransform(1, 0, 0, 1, 0, 0);
+    for (const p of RP.ph) { const n = p.next; if (!n || !poses.has(p.id) || !poses.has(n.id)) continue; const A = poses.get(p.id), Bp = poses.get(n.id); if (!A.present || !Bp.present) continue;
+      const side = n.join === 'R' ? 1 : 0, dr = door(RP, p, n, t, s, side); if (!dr) continue; const ka = ROOM[A.body], kb = ROOM[Bp.body], mine = s.ph === p.id || s.ph === n.id;
+      let x0, x1, y0, y1; if (side) { x0 = x1 = A.x + ka.w / 2; y0 = Math.max(A.y - ka.h / 2 + 0.3, Bp.y - kb.h / 2 + 0.3); y1 = Math.min(A.y + ka.h / 2 - 0.3, Bp.y + kb.h / 2 - 0.3); }
+      else { y0 = y1 = A.y - ka.h / 2; x0 = Math.max(A.x - ka.w / 2, Bp.x - kb.w / 2) + 0.3; x1 = Math.min(A.x + ka.w / 2, Bp.x + kb.w / 2) - 0.3; }
+      if ((side && y1 - y0 < 1) || (!side && x1 - x0 < 1)) continue;
+      g.save(); g.globalCompositeOperation = 'lighter'; g.strokeStyle = LILAC; g.globalAlpha = mine ? 0.35 : 0.18; g.lineWidth = 0.5 * u; g.beginPath(); g.moveTo(X(x0), Y(y0)); g.lineTo(X(x1), Y(y1)); g.stroke(); g.restore();
+      g.save(); g.setLineDash([0.12 * u, 0.12 * u]); g.strokeStyle = LILAC; g.lineWidth = 0.06 * u; g.globalAlpha = 0.9; g.beginPath(); g.moveTo(X(x0), Y(y0)); g.lineTo(X(x1), Y(y1)); g.stroke(); g.restore();
+      for (const [bx, by, dx, dy] of side ? [[x0, y0, 0, 1], [x1, y1, 0, -1]] : [[x0, y0, 1, 0], [x1, y1, -1, 0]]) { g.strokeStyle = INK; g.lineWidth = 0.14 * u; g.beginPath(); g.moveTo(X(bx - (side ? 0.35 : 0)), Y(by)); g.lineTo(X(bx + (side ? 0.35 : 0)), Y(by + (side ? 0 : 0))); g.moveTo(X(bx), Y(by)); g.lineTo(X(bx + dx * 0.4), Y(by + dy * 0.4)); g.stroke();
+        g.strokeStyle = LILAC; g.lineWidth = 0.06 * u; g.stroke(); }
+      if (mine) { const st = Math.max(2, 0.09 * u), n2 = 14; for (let i = 0; i < n2; i++) { const k = hash(i, Math.floor(t * 16) + p.id), xx = x0 + (x1 - x0) * k, yy = y0 + (y1 - y0) * k; g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.85; g.fillRect(X(xx) + (hash(i, 3) - 0.5) * st * 3, Y(yy), st, st); } g.globalAlpha = 1; } }
+  }
+  // ---------------- a hanging phone's cable (the tippers): taut up into the dark; it snaps (purple) when his glitch climbs it ----------------
+  function cable(o, f) { const { t, s } = f, st = s.tp && s.tp[o.p.id]; if (!o.hang && !(o.falling && t - st.t0 < 0.25)) return; g.setTransform(1, 0, 0, 1, 0, 0);
+    const [tx, ty] = rot([0, ROOM.U.h / 2], o.nat), x = X(o.x + tx), y = Y(o.y + ty); g.lineCap = 'round';
+    for (const [lw, col] of [[0.16 * u, INK], [0.08 * u, '#e8e4dc']]) { g.strokeStyle = col; g.lineWidth = lw; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.sin(t * 2 + o.p.id) * 6, o.falling ? y - 0.8 * u : -20); g.stroke(); }
+    if (s.snapAt != null && t - s.snapAt < 0.3) { const st2 = Math.max(3, 0.12 * u); for (let i = 0; i < 12; i++) { g.fillStyle = PURP[i % 4]; g.fillRect(x + (hash(i, Math.floor(t * 30)) - 0.5) * 0.8 * u, y - hash(i + 5, 2) * 2 * u, st2, st2); } } }
+  // ---------------- art pass: the fall's tells (ART.md "the fall on its side"): a dotted cream footprint where it will land, his purple
+  // sparks on the low corner while it wobbles, two dust ticks when it lands; a hanging phone shows its footprint from its count-in ----------------
+  function dashBox(cx2, cy2, k, a) { g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a; g.setLineDash([0.32 * u, 0.22 * u]); g.lineDashOffset = -f0t * 2 * u;
+    g.strokeStyle = 'rgba(0,0,0,0.55)'; g.lineWidth = 0.2 * u; rr(g, X(cx2 - k.w / 2), Y(cy2 + k.h / 2), k.w * u, k.h * u, 0.8 * u); g.stroke();
+    g.strokeStyle = '#efe3c8'; g.lineWidth = 0.1 * u; g.stroke(); g.restore(); }
+  let f0t = 0;
+  function tells(f) {
+    const { t, s } = f; f0t = t;
+    for (const p of RP.ph) { const sh = shiftOf(RP, p, s), tp = p.tip || p.standUp;
+      if (tp && t >= tp.tWarn - 0.05 && t < tp.tLand + 0.1) { const k1 = ROOM[p.standUp ? 'U' : 'S'], a = clamp((t - tp.tWarn) / 0.15) * (t > tp.tLand ? 1 - (t - tp.tLand) / 0.1 : 1);
+        dashBox(tp.to[0] + sh + WO[0], tp.to[1] + WO[1], k1, 0.9 * a);
+        if (t < tp.t) { const o = pose(RP, p, t, s), W0 = ROOM[p.standUp ? 'S' : 'U'], st = Math.max(3, 0.13 * u); g.setTransform(1, 0, 0, 1, 0, 0);   // (sparks on the corner it will pivot on)
+          for (let i = 0; i < 10; i++) { g.fillStyle = PURP[i % 4]; g.globalAlpha = 0.9; g.fillRect(X(o.x + W0.w / 2) + (hash(i, Math.floor(t * 20)) - 0.6) * 0.9 * u, Y(o.y - W0.h / 2) + (hash(i + 3, Math.floor(t * 20)) - 0.5) * 0.9 * u, st, st); } g.globalAlpha = 1; } }
+      if (p.tipper) { const T = p.tipper, st = s.tp && s.tp[p.id], o = pose(RP, p, t, s); if (!o.present) continue;
+        if (o.hang && t > T.win[0] - 3 * RP.beat) dashBox(T.good.c[0] + sh + WO[0], T.good.c[1] + WO[1], ROOM[T.good.kind], 0.35 + 0.35 * clamp((t - (T.win[0] - 3 * RP.beat)) / (3 * RP.beat)));
+        if (o.falling && st) { const tg = st.good ? T.good : T.wrong; dashBox(tg.c[0] + sh + WO[0], tg.c[1] + WO[1], ROOM[tg.kind], 0.9); } }
+      // dust when a fallen phone lands (two little ink ticks each side of its bottom)
+      const o = (tp || p.tipper) ? pose(RP, p, t, s) : null;
+      if (o && o.present && o.landed != null && o.landed >= 0 && o.landed < 0.25) { const kb = ROOM[o.body], a = 1 - o.landed / 0.25, d = 0.4 + o.landed * 4; g.setTransform(1, 0, 0, 1, 0, 0); g.strokeStyle = INK; g.lineWidth = Math.max(2, 0.09 * u); g.lineCap = 'round'; g.globalAlpha = a;
+        for (const sx of [-1, 1]) for (const [dy, len] of [[0.15, 0.5], [0.55, 0.35]]) { const bx = o.x + sx * (kb.w / 2 + d), by = o.y - kb.h / 2 + dy; g.beginPath(); g.moveTo(X(bx), Y(by)); g.lineTo(X(bx + sx * len), Y(by + len * 0.4)); g.stroke(); }
+        g.globalAlpha = 1; } }
+  }
+  // art pass: crossing a wall tears him (ART.md): ~8 thin slices of purple/lilac smeared between where he was and where he is, for 0.25 s
+  function tear(f) { const { t, s } = f; if (s.doorAt == null || !s.doorFrom || t < s.doorAt || t - s.doorAt > 0.25) return; const a = 1 - (t - s.doorAt) / 0.25, ht = 1.25, n = 8;
+    g.setTransform(1, 0, 0, 1, 0, 0); for (let i = 0; i < n; i++) { const k = hash(i, Math.floor(s.doorAt * 10)), y = s.y + ht * (i + 0.5) / n, x0 = s.doorFrom.x + (s.x - s.doorFrom.x) * k * 0.5, x1 = s.doorFrom.x + (s.x - s.doorFrom.x) * (0.5 + k * 0.5);
+      g.globalAlpha = a * 0.85; g.fillStyle = i % 3 === 0 ? PURP[2] : i % 3 === 1 ? PURP[1] : LILAC; g.fillRect(Math.min(X(x0), X(x1)), Y(y) - 0.05 * u, Math.abs(X(x1) - X(x0)) + 2, Math.max(2, 0.08 * u)); }
+    g.globalAlpha = 1; }
+  // ---------------- the end: black, the spread (the far phones light purple outward), Petunia 4 pushed in to fill the view ----------------
+  function finale(f) { const { t } = f; if (t < (end.black ?? 1e9)) return; g.setTransform(1, 0, 0, 1, 0, 0); const W = cv.width, H = cv.height;
+    if (t < 120.48) { g.fillStyle = `rgba(0,0,0,${clamp((t - end.black) / 0.12)})`; g.fillRect(0, 0, W, H); return; }
+    g.fillStyle = '#05060c'; g.fillRect(0, 0, W, H);
+    const n = 15, steps = RP.D.spread || [120.48, 120.79, 121.1]; for (let i = 0; i < n; i++) { const d = Math.abs(i - (n - 1) / 2) / ((n - 1) / 2), lt = steps[Math.min(2, Math.floor(d * 3))], on = t >= lt;
+      const w = W * 0.045, h = w * 2.05, x = W * (0.04 + 0.92 * i / (n - 1)) - w / 2, y = H * 0.55 + hash(i, 2) * H * 0.12;
+      g.fillStyle = '#1a2142'; rr(g, x, y, w, h, w * 0.18); g.fill(); g.fillStyle = on ? PURP[i % 2] : '#141a35'; rr(g, x + 3, y + 3, w - 6, h - 6, w * 0.13); g.fill();
+      if (on) { g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = 0.3 * (1 - clamp((t - lt) / 0.6)) + 0.15; g.fillStyle = PURP[1]; rr(g, x - 6, y - 6, w + 12, h + 12, w * 0.25); g.fill(); g.restore(); } }
+    const fin2 = RP.D.finale || [121.0, 121.4]; if (t >= fin2[0] - 0.3) { const k = ease5((t - (fin2[0] - 0.3)) / (fin2[1] - fin2[0] + 0.3)), pet = PET.finale, ph = H * (0.3 + 0.75 * k), pw = ph * 0.6, x = W / 2 - pw / 2, y = H * 0.5 - ph / 2;
+      g.fillStyle = WHITE; rr(g, x - 8, y - 8, pw + 16, ph + 16, pw * 0.14); g.fill(); g.fillStyle = INK; rr(g, x - 4, y - 4, pw + 8, ph + 8, pw * 0.13); g.fill(); g.fillStyle = OWN.J.c; rr(g, x, y, pw, ph, pw * 0.12); g.fill();
+      const fr = pw * 0.05; g.fillStyle = INK; rr(g, x + fr, y + fr, pw - 2 * fr, ph - 2 * fr, pw * 0.09); g.fill();
+      if (pet && pet.complete && pet.naturalWidth) { g.save(); rr(g, x + fr + 2, y + fr + 2, pw - 2 * fr - 4, ph - 2 * fr - 4, pw * 0.08); g.clip(); const sw = pw - 2 * fr, sh = ph - 2 * fr, sc = Math.max(sw / pet.naturalWidth, sh / pet.naturalHeight);
+        g.drawImage(pet, x + fr + (sw - pet.naturalWidth * sc) / 2, y + fr + (sh - pet.naturalHeight * sc) / 2, pet.naturalWidth * sc, pet.naturalHeight * sc); g.restore(); } } }
+  // ---------------- one frame ----------------
+  function draw(f) {
+    const { t, s } = f;
+    if (t < R.WAKE || !s.rOn) { g0.visible = true; mesh.visible = false; v0.draw(f); return; }
+    g0.visible = false; mesh.visible = true; camera(f); fitCanvas(); backdrop(f);
+    const poses = new Map(); for (const p of RP.ph) { const o = pose(RP, p, t, s); if (!o.present) continue; const r = Math.hypot(ROOM.U.w, ROOM.U.h) / 2; if (o.x + r < left || o.x - r > left + cv.width / u || o.y + r < top - cv.height / u || o.y - r > top) continue; poses.set(p.id, o); }
+    const order = [...poses.values()].sort((a, b) => ((a.hang || a.falling || a.carry || a.wob ? 1 : 0) - (b.hang || b.falling || b.carry || b.wob ? 1 : 0)) || (a.p.id === s.ph) - (b.p.id === s.ph));
+    for (const o of order) cable(o, f);
+    for (const o of order) { const G2 = body(o, f); screen(o, f, G2, o.p.id === s.ph); }
+    seams(f, poses); tells(f); tear(f);
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    if (s.squishAt != null && s.failT != null) { const k = clamp((t - s.failT) / 0.15); g.fillStyle = `rgba(154,82,255,${0.3 * k})`; g.fillRect(0, 0, cv.width, cv.height); }
+    if (s.bonkAt != null && t - s.bonkAt < 0.25) { const st = Math.max(3, 0.1 * u); for (let i = 0; i < 10; i++) { g.fillStyle = '#9a9aa6'; g.globalAlpha = 1 - (t - s.bonkAt) / 0.25; g.fillRect(X(s.x) + (hash(i, 9) - 0.5) * u * 1.2, Y(s.y + 0.6) + (hash(i, 8) - 0.5) * u * 1.2, st, st); } g.globalAlpha = 1; }   // (a shut wall: a dead-grey fizz)
+    if (s.shoveAt != null && t - s.shoveAt < 0.35 && s.shoveFrom) { g.strokeStyle = LILAC; g.globalAlpha = 0.6 * (1 - (t - s.shoveAt) / 0.35); g.lineWidth = 0.18 * u; g.lineCap = 'round'; g.beginPath(); g.moveTo(X(s.shoveFrom.x), Y(s.shoveFrom.y + 0.6)); g.lineTo(X(s.x), Y(s.y + 0.6)); g.stroke(); g.globalAlpha = 1; }
+    finale(f); tex.needsUpdate = true;
+  }
+  // ---------------- the overlay: the lyrics in the dark between the phones (the island when there's no room), his thoughts, his glitch words ----------------
+  const TH = C.theme || C.def.theme || {}, LYC = TH.lyricColor || '#c8d2ff', LYK = new Set((TH.lyricKeys || []).map(w => w.toLowerCase()));
+  const LLINES = (() => { const by = new Map(); for (const w of C.signs || []) { if (w.t0 == null) continue; if (!by.has(w.line)) by.set(w.line, []); by.get(w.line).push(w); }
+    const ls = [...by.values()].map(ws => ws.sort((a, b) => a.t0 - b.t0)).sort((a, b) => a[0].t0 - b[0].t0).map((ws, i) => ({ ws, t0: ws[0].t0, t1: ws[ws.length - 1].t1 ?? ws[ws.length - 1].t0 + 0.4, i }));
+    ls.forEach((L, i) => { L.next = ls[i + 1] ? ls[i + 1].t0 : Infinity; }); return ls; })();
+  const LFONT = sz => `400 ${Math.round(sz)}px "Major Mono Display", ui-monospace, monospace`;
+  const curLine = t => { let L = null; for (const l of LLINES) { if (l.t0 <= t + 0.001) L = l; else break; } return L && Math.min(L.next, L.t1 + 2.2) - t >= -0.01 ? L : null; };
+  function pockets(ctx, f) {   // the dark boxes on screen (px): above / below each phone, and the gaps between them
+    const { t, s } = f, W = ctx.canvas.width, H = ctx.canvas.height, rects = [];
+    for (const p of RP.ph) { const o = pose(RP, p, t, s); if (!o.present) continue;
+      // (art pass: a phone mid-tip is turned, so its box is the turned body's bounds — the lyrics never sit on a falling screen)
+      const an = o.nat + o.wob, cA = Math.abs(Math.cos(an)), sA = Math.abs(Math.sin(an)), kb = { w: ROOM.U.w * cA + ROOM.U.h * sA, h: ROOM.U.w * sA + ROOM.U.h * cA }, a = f.project(o.x - kb.w / 2 - 0.25, o.y + kb.h / 2 + 0.25), b = f.project(o.x + kb.w / 2 + 0.25, o.y - kb.h / 2 - 0.25);
+      if (b.x < 0 || a.x > W) continue; rects.push({ x0: a.x, y0: a.y, x1: b.x, y1: b.y }); }
+    const free = (bx) => !rects.some(r => !(bx.x1 <= r.x0 || bx.x0 >= r.x1 || bx.y1 <= r.y0 || bx.y0 >= r.y1)), out = [];
+    for (const r of rects) { out.push({ x0: Math.max(0, r.x0), x1: Math.min(W, r.x1), y0: 0, y1: r.y0 }, { x0: Math.max(0, r.x0), x1: Math.min(W, r.x1), y0: r.y1, y1: H }); }
+    const xs = [0, W, ...rects.flatMap(r => [r.x0, r.x1])].sort((a, b) => a - b); for (let i = 0; i + 1 < xs.length; i++) out.push({ x0: xs[i], x1: xs[i + 1], y0: 0, y1: H });
+    const unit = Math.abs(f.project(0, 0).y - f.project(0, 1).y); let best = null;
+    for (const bx of out) { const w = bx.x1 - bx.x0, h = bx.y1 - bx.y0; if (w < unit * 3 || h < unit * 1.2 || !free({ x0: bx.x0 + 1, x1: bx.x1 - 1, y0: bx.y0 + 1, y1: bx.y1 - 1 })) continue; const a = Math.min(w, unit * 12) * Math.min(h, unit * 4); if (!best || a > best.a) best = { ...bx, a }; }
+    return { best, unit };
+  }
+  function lyrics(ctx, f) {
+    const { t, s, b } = f, L = curLine(t); if (!L || t >= (end.black ?? 1e9)) return;
+    const { best, unit } = pockets(ctx, f); let box = best, island = false;
+    if (!box) { const o = pose(RP, RP.byId.get(s.ph), t, s), K = ROOM[o.room], [ax, ay] = toWorld(o, -1.2, K.gl[3] - 0.43), [bx2, by2] = toWorld(o, 1.2, K.gl[3] - 0.18), A = f.project(ax, ay), Bq = f.project(bx2, by2);
+      box = { x0: Math.min(A.x, Bq.x), x1: Math.max(A.x, Bq.x), y0: Math.min(A.y, Bq.y), y1: Math.max(A.y, Bq.y) }; island = true; }
+    const BW = box.x1 - box.x0, BH = box.y1 - box.y0, out = Math.min(L.next, L.t1 + 2.2) - t, exiting = out < 0.18, GWS = GW();
+    const toks = L.ws.map((w, k) => ({ w, k, txt: w.text.toLowerCase(), key: LYK.has(w.text.replace(/[^a-z0-9']/gi, '').toLowerCase()) }));
+    let SZ = Math.min(island ? BH * 0.7 : unit * 0.75, BH * 0.8); ctx.font = LFONT(SZ); const sp = SZ * 0.45; let tot = toks.reduce((a, it) => a + ctx.measureText(it.txt).width, 0) + sp * (toks.length - 1);
+    const rows = []; if (tot > BW * 0.92 && !island) { let rw = 0, row = []; for (const it of toks) { const wd = ctx.measureText(it.txt).width; if (rw + wd > BW * 0.9 && row.length) { rows.push(row); row = []; rw = 0; } row.push(it); rw += wd + sp; } rows.push(row); } else rows.push(toks);
+    const fit = Math.min(1, ...rows.map(r => BW * 0.92 / Math.max(1, r.reduce((a, it) => a + ctx.measureText(it.txt).width, 0) + sp * (r.length - 1)))), rh = SZ * 1.15 * fit;
+    if (rows.length * rh > BH) return;
+    ctx.save(); const y0 = box.y0 + (BH - rows.length * rh) / 2 + rh * 0.6;
+    rows.forEach((row, ri) => { const rw = row.reduce((a, it) => a + ctx.measureText(it.txt).width, 0) * fit + sp * fit * (row.length - 1); let xx = box.x0 + (BW - rw) / 2;
+      for (const it of row) { const wd = ctx.measureText(it.txt).width * fit, age = t - it.w.t0; if (age < 0) { xx += wd + sp * fit; continue; }
+        const landing = age < 0.22; let txt = it.txt; ctx.save(); ctx.translate(xx + wd / 2, y0 + ri * rh); ctx.scale(fit, fit); ctx.font = LFONT(SZ); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.globalAlpha = (exiting ? 0.5 : 0.9) * clamp(age / 0.06);
+        if (landing) { const stp = Math.floor(age / 0.22 * 3); if (stp === 0 && GWS.length) txt = GWS[Math.floor(hash(it.k + L.i * 31, 11) * GWS.length)]; else if (stp === 1) txt = [...it.txt].map((ch, i) => ch.trim() ? (hash(it.k + i, Math.floor(t * 30)) > 0.5 ? '1' : '0') : ch).join('');
+          const mw = Math.max(wd / fit, SZ * 2.4); if (ctx.measureText(txt).width > mw) { const q = mw / ctx.measureText(txt).width; ctx.scale(q, q); } }
+        if (landing || exiting || (it.key && age < 0.3)) { ctx.fillStyle = PURP[2]; ctx.fillText(txt, -2, 0); ctx.fillStyle = PURP[0]; ctx.fillText(txt, 2, 0); }
+        ctx.lineWidth = Math.max(3, SZ * 0.1); ctx.strokeStyle = 'rgba(0,0,0,.75)'; ctx.strokeText(txt, 0, 0); ctx.fillStyle = landing ? WHITE : island ? '#eaf0ff' : LYC; ctx.fillText(txt, 0, 0); ctx.restore(); xx += wd + sp * fit; } });
+    ctx.restore();
+  }
+  const THS = (C.def.thoughts !== false && C.def.runner && C.def.runner.thoughts) || [], TQ = []; let lastThought = -99;
+  function thoughts(ctx, f) {
+    const { t, s } = f; if (!THS.length || s.gone || s.failT != null) return;
+    const ev = k => (s.jlog || []).find(e => e.k === k);
+    for (const th of THS) { if (THOUGHT_SHOWN.has(th.n)) continue; const e = typeof th.at === 'string' ? ev(th.at) : null, at = typeof th.at === 'string' ? (e ? e.t : null) : th.at; if (at == null || t < at || t > at + 3) continue;
+      if (t - lastThought < 8) continue; const o = pose(RP, RP.byId.get(s.ph), t, s);
+      const busy = P.events.some(e2 => e2.A > t - 0.1 && e2.A < t + 0.6) || Object.values(s.jolt || {}).some(j => j.st === 'warn') || wallYK(RP, t + 0.8, s, ROOM.U) != null || o.lock > 0 || o.wob || o.carry
+        || RP.quiet.some(([a, b2]) => t > a - 0.5 && t < b2) || (t > 89.6 && t < 92.4) || RP.tippers.some(T => !(s.tp && s.tp[T.id]) && t > T.tipper.win[0] - 3 * B && t < T.tipper.win[1]);
+      if (busy) continue; THOUGHT_SHOWN.add(th.n); lastThought = t; const text = typeof th.text === 'function' ? th.text(e || {}) : th.text, face = typeof th.face === 'function' ? th.face(e || {}) : th.face;
+      TQ.push({ ...th, text, t0: t }); if (face) s.react = { name: face, dur: 0.9, at: t }; }
+    for (const q of TQ) { const a = t - q.t0; if (a < 0 || a > 2.1) continue; const pt = f.project(s.x, s.y + 1.9), sz = Math.max(13, ctx.canvas.height * 0.022);
+      ctx.save(); ctx.font = `700 ${Math.round(sz)}px "Major Mono Display", "JetBrains Mono", ui-monospace, monospace`; ctx.textAlign = 'center';
+      if (a < 1.8) {   // art pass: on a dark scrap of his own (night ink, lilac rim) so it reads over white bubbles at speed
+        const tw = ctx.measureText(q.text).width, pw = tw + sz * 1.2, ph = sz * 1.7, W = ctx.canvas.width, x = Math.min(Math.max(pt.x, pw / 2 + 8), W - pw / 2 - 8), y = pt.y;
+        ctx.globalAlpha = Math.min(1, a / 0.08) * 0.92; ctx.fillStyle = 'rgba(18,8,46,0.9)'; rr(ctx, x - pw / 2, y - ph * 0.68, pw, ph, ph / 2); ctx.fill(); ctx.strokeStyle = PURP[1]; ctx.lineWidth = 2; ctx.stroke();
+        if (a < 0.06) { ctx.fillStyle = PURP[2]; ctx.fillText(q.text, x - 2, y); } ctx.fillStyle = '#ece0ff'; ctx.fillText(q.text, x, y); }
+      else { const GWS = GW(); ctx.globalAlpha = 0.6 * (1 - (a - 1.8) / 0.3); ctx.fillStyle = LILAC; for (let i = 0; i < 2; i++) ctx.fillText(GWS[Math.floor(hash(q.n, i) * GWS.length)], pt.x + (i ? 1 : -1) * (a - 1.8) * 120, pt.y - (a - 1.8) * 40); }
+      ctx.restore(); }
+  }
+  function gwords(ctx, f) {   // his glitch language on a door crossing (a seeded word, no names for the move) and the shove's "wh@t?!"
+    const { t, s } = f, GWS = GW(); let w = null, at = null;
+    if (s.doorAt != null && t - s.doorAt < 0.35 && t >= s.doorAt) { w = GWS[Math.floor(hash(Math.floor(s.doorAt * 10), 3) * GWS.length)]; at = s.doorAt; }
+    if (s.shoveAt != null && t - s.shoveAt < 0.45 && t >= s.shoveAt && s.ph !== 17) { w = 'wh@t?!'; at = s.shoveAt; }
+    if (!w) return; const pt = f.project(s.x, s.y + 1.6), sz = Math.max(14, ctx.canvas.height * 0.026);
+    ctx.save(); ctx.font = `700 ${Math.round(sz)}px "JetBrains Mono", ui-monospace, monospace`; ctx.textAlign = 'center'; ctx.globalAlpha = 0.9 * (1 - (t - at) / 0.45); ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(18,8,46,0.85)'; ctx.strokeText(w, pt.x, pt.y); ctx.fillStyle = PURP[2]; ctx.fillText(w, pt.x - 2, pt.y); ctx.fillStyle = LILAC; ctx.fillText(w, pt.x + 1, pt.y); ctx.restore();
+  }
+  function over(ctx, f) { if (f.t < R.WAKE || !f.s.rOn) { if (v0.over) v0.over(ctx, f); return; } lyrics(ctx, f); thoughts(ctx, f); gwords(ctx, f); }
+  return { draw, over, leave() { try { W3.remove(g0); W3.remove(mesh); } catch (e) {} } };
+};

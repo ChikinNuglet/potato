@@ -1,0 +1,97 @@
+// bot-ghost-runner.mjs — plays the Ghost runner (?ghost=runner: run/modes/ghost-runner.mjs) and writes its demo.
+// It plays like a careful human, not a glitch-spammer: it plans the next ~2 s by trying a few dozen short key plans in a copy of the
+// game (the same pure rules the screen runs), keeps the best one, and re-plans 5 times a second. A plan pays for rewriting James's
+// texts before they're Read, staying in play (away from the edge, the header, the dark), and costs for every key it presses
+// (Space costs the most), every Not Delivered kick and every bar kick — so it only glitches for a reason.
+// Usage (from game/): node tools/bot-ghost-runner.mjs [--dry] [--from=T] [--to=T] [--seed=N] [--verbose] [--out=FILE]
+//   --idle / --spam: the naive runs (nothing pressed / Space 4×/s, no walking): print where they die (DESIGN §11 checks 1 + 2)
+import fs from 'fs';
+const G0 = new URL('..', import.meta.url).pathname, id = 'ghost-runner';
+const { makeCourse, makeSim, DT } = await import(G0 + 'run/core.mjs');
+const L = await import(G0 + `run/levels/${id}.mjs`), M = await import(G0 + `run/modes/${id}.mjs`);
+const map = JSON.parse(fs.readFileSync(G0 + 'play/' + L.meta.map)), words = L.parseWords(fs.readFileSync(G0 + L.meta.words, 'utf8'));
+const mf = G0 + 'play/' + L.meta.map.replace('.map.json', '.music.json'); map.music = fs.existsSync(mf) ? JSON.parse(fs.readFileSync(mf)) : null;
+const C = makeCourse(L.build(words, map, null), map), RP = M.prepR(C), P = RP.P;
+const arg = (k, d) => { const a = process.argv.find(a => a.startsWith('--' + k + '=')); return a ? a.split('=')[1] : d; }, has = k => process.argv.includes('--' + k);
+const VERB = has('verbose'), FROM = +arg('from', 0), TO = +arg('to', C.end + 1);
+let seed = +arg('seed', 7); const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+const SEG = 0.125, NSEG = 16, NPLAN = 44, REPLAN = 0.2;
+const api = s => ({ C, DT, die: why => { if (!s.dead) { s.dead = true; s.why = why; } } });
+const clone = s => { const { jlog, rlog, ...rest } = s; const c = structuredClone(rest); c.jlog = null; return c; };
+// one frame in a copy: the same input the engine gives the mode (held flags + presses)
+function stepCopy(c, a, press) { const inp = { Rh: a.d > 0, Lh: a.d < 0, Dh: !!a.dh }; if (press) for (const k of press) inp[k] = true; const t = c.t + DT; M.mode.step(c, inp, t, api(c)); c.t = t; }
+// how good is where a plan ends up (and what it cost on the way)
+function value(c, t0, cost) {
+  if (c.dead || c.failT != null) return -1e6 + (c.failT ?? c.t) * 1000;
+  if (c.needRescue || (c.rescue || 0) > (c.rescue0 || 0)) return -5e5 + c.t * 1000;   // (in the grace a squish only pops him out: still a miss)
+  const home = M.scrollX(c.t), edge = home - M.R.EDGE;
+  let v = c.glitched * 600 - cost;
+  v -= Math.max(0, 1.6 - (c.lx - edge)) * 300;                    // (not right on the edge)
+  v += Math.min(c.lx - home, 2) * 25;                              // (a little ahead of home is good: the texts land ahead)
+  if (c.inPh != null) { const W = M.world(C, c, c.t), g = W.phones.find(g => g.id === c.inPh); if (g && g.I) { const room = g.ht - (c.ly + 1); v -= Math.max(0, 1.2 - room) * 260; v += 60; } }
+  else if (!c.ground) v -= 40;
+  if (!c.charge) v -= 30;
+  v -= (c.darkN || 0) * 150 + (c.bounceN || 0) * 40;
+  return v;
+}
+// run a plan (segments of { d, dh, k }) from a copy of s; returns its value
+function roll(s, plan, n = NSEG) {
+  const c = clone(s), t0 = c.t; c.rescue0 = c.rescue || 0; let cost = 0, nd0 = c.darkN || 0, kicks = 0;
+  for (let i = 0; i < n && i < plan.length; i++) { const a = plan[i], frames = Math.round(SEG / DT);
+    for (let f = 0; f < frames; f++) { stepCopy(c, a, f === 0 && a.k ? [a.k] : null); if (c.dead || c.failT != null) return { v: value(c, t0, cost), c }; }
+    if (a.k) cost += a.k === 'G' ? (c.glitched > (s.glitched || 0) ? 5 : 45) : 6;
+    if ((c.darkN || 0) > nd0) { cost += 220; nd0 = c.darkN; } }
+  return { v: value(c, t0, cost), c };
+}
+function randPlan(base) {
+  const out = []; let d = base && base.length ? base[0].d : 1;
+  for (let i = 0; i < NSEG; i++) { if (rnd() < 0.3) d = [1, 1, 0, -1][Math.floor(rnd() * 4)]; const r = rnd();
+    const k = r < 0.07 ? 'J' : r < 0.12 ? 'G' : r < 0.15 ? 'D' : null; out.push({ d, dh: k === 'G' && rnd() < 0.2, k }); }
+  return out;
+}
+function mutate(plan) { const p = plan.map(a => ({ ...a })); const n = 1 + Math.floor(rnd() * 3);
+  for (let j = 0; j < n; j++) { const i = Math.floor(rnd() * p.length), r = rnd();
+    if (r < 0.35) p[i].k = [null, 'J', 'G', 'D'][Math.floor(rnd() * 4)]; else if (r < 0.7) { const d = [1, 0, -1][Math.floor(rnd() * 3)]; for (let k = i; k < Math.min(p.length, i + 1 + Math.floor(rnd() * 5)); k++) p[k].d = d; }
+    else if (i + 1 < p.length) { const tmp = p[i].k; p[i].k = p[i + 1].k; p[i + 1].k = tmp; } }
+  return p; }
+// the planner: the best of the old plan (shifted), its mutations and fresh random plans
+function plan(s, prev) {
+  const cands = []; const shifted = prev ? [...prev.slice(Math.round(REPLAN / SEG)), ...Array.from({ length: Math.round(REPLAN / SEG) }, () => ({ d: prev[prev.length - 1].d, k: null }))] : null;
+  const fixed = [{ d: 1 }, { d: 0 }, { d: 1, k0: 'G' }, { d: 0, k0: 'G' }, { d: 1, k0: 'J' }, { d: 0, k0: 'D' }, { d: -1 }].map(f => Array.from({ length: NSEG }, (_, i) => ({ d: f.d, k: i === 0 ? f.k0 || null : null })));
+  for (let i = 1; i < 8; i++) for (const d of [1, 0]) fixed.push(Array.from({ length: NSEG }, (_, j) => ({ d, k: j === i ? 'G' : null })));   // (walk, then glitch on segment i: the timing of a rewrite / a wall)
+  for (let i = 1; i < 6; i += 2) fixed.push(Array.from({ length: NSEG }, (_, j) => ({ d: 1, k: j === i ? 'J' : j === i + 3 ? 'G' : null })));
+  if (shifted) cands.push(shifted); cands.push(...fixed);
+  while (cands.length < NPLAN) cands.push(shifted && rnd() < 0.55 ? mutate(shifted) : randPlan(shifted));
+  let best = null; for (const p of cands) { const r = roll(s, p); if (!best || r.v > best.v) best = { p, v: r.v, c: r.c }; }
+  // a second pass round the winner
+  for (let i = 0; i < 10; i++) { const p = mutate(best.p), r = roll(s, p); if (r.v > best.v) best = { p, v: r.v, c: r.c }; }
+  return best;
+}
+function play(from = 0) {
+  const sim = makeSim(C, from), s = sim.s, pr = []; let cur = null, nextPlan = -9, segT = -9, si = 0, dir = 0, dh = false;
+  const press = (t, k) => pr.push([+t.toFixed(4), k]);
+  while (!s.dead && !s.won && s.t < Math.min(TO, C.end + 1)) {
+    const t = s.t, keys = [];
+    const live = t >= M.R.T0 - DT && t < M.R.LOCK && s.failT == null && !s.gone;
+    if (live && t >= nextPlan - 1e-9) { const b = plan(s, cur); cur = b.p; nextPlan = t + REPLAN; segT = t; si = 0; if (VERB && Math.floor(t) % 5 === 0 && t - Math.floor(t) < REPLAN) console.log(t.toFixed(2), 'v', b.v.toFixed(0), 'lx', s.lx.toFixed(1), 'home', M.scrollX(t).toFixed(1), 'in', s.inPh, 'rew', s.glitched); }
+    let a = null; if (live && cur) { si = Math.floor((t - segT) / SEG + 1e-6); a = cur[si] || cur[cur.length - 1]; }
+    const want = a ? a.d : 0, wantDh = a ? !!a.dh : false;
+    if (want !== dir) { if (dir > 0) keys.push('-R'); if (dir < 0) keys.push('-L'); if (want > 0) keys.push('+R'); if (want < 0) keys.push('+L'); dir = want; }
+    if (wantDh !== dh) { keys.push(wantDh ? '+D' : '-D'); dh = wantDh; }
+    if (a && a.k && Math.abs(t - (segT + si * SEG)) < DT * 0.5) { keys.push(a.k); }
+    const inp = {}; for (const k of keys) { inp[k] = true; press(t, k); }
+    sim.step(inp);
+    if (process.env.TRACE && Math.floor(s.t * 4) !== Math.floor((s.t - DT) * 4)) console.log('  ', s.t.toFixed(2), 'lx', s.lx.toFixed(2), 'ly', s.ly.toFixed(2), 'in', s.inPh, 'on', s.onK, 'g', +s.ground, 'home', M.scrollX(s.t).toFixed(2), 'keys', keys.join(''));
+    if (a && a.k && Math.abs(t - (segT + si * SEG)) < DT * 0.5) a.done = true;
+  }
+  return { pr, s };
+}
+function naive(kind) { const sim = makeSim(C, 0), s = sim.s; let n = 0;
+  while (!s.dead && !s.won && s.t < C.end + 1) { const inp = {}; if (kind === 'spam' && s.t >= M.R.T0 && Math.floor(s.t * 4) !== Math.floor((s.t - DT) * 4)) inp.G = true; sim.step(inp); n++; }
+  return s; }
+if (has('idle') || has('spam')) { for (const k of ['idle', 'spam']) { const s = naive(k); console.log(k.padEnd(5), s.dead ? `died ${s.t.toFixed(2)} (${s.why})` : s.won ? 'WON (!!)' : 'alive', '· rescues in grace', s.rescue || 0); } process.exit(0); }
+const t0 = Date.now(), { pr, s } = play(FROM);
+const ev = k => (s.jlog || []).filter(e => e.k === k).length, tg = P.events.length, rew = Object.values(s.out || {}).filter(v => v === 'P').length;
+console.log(`${s.won ? 'WON' : 'LOST at ' + s.t.toFixed(2) + ' (' + s.why + ')'} · ${pr.length} presses (${pr.filter(p => p[1] === 'G').length} Space) · rewrote ${rew}/${tg} moments (${s.glitched} glitches) · Not Delivered ${ev('dark')} · bar kicks ${ev('bounce')} · tp ${ev('tp')} · walls ${ev('wall')} · spit ${ev('spit')} · knocks ${ev('knock')} · jolts ${ev('jolt')} · ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+if (VERB) console.log((s.jlog || []).filter(e => ['fail', 'dark', 'spit', 'rescue', 'tipland', 'jolt', 'knock', 'thru', 'read'].includes(e.k)).map(e => e.t.toFixed(2) + ' ' + e.k + (e.why ? ':' + e.why : '')).join(' | '));
+if (!has('dry') && s.won && FROM === 0) { const out = arg('out', G0 + `run/levels/${id}.demo.json`); fs.writeFileSync(out, JSON.stringify({ level: id, presses: pr })); console.log('wrote', out); }

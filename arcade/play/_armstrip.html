@@ -1,0 +1,46 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#2a2340">
+<div id="g"></div>
+<script type="module">
+const P = new URLSearchParams(location.search), OLD = P.get('m') === 'old', V = Date.now();
+const { createSpud } = await import(OLD ? './_spudold.mjs?v=' + V : './spud3d.mjs?v=' + V);
+const { armsDriver } = await import(OLD ? './_armsfxold.mjs?v=' + V : '../run/armsfx.mjs?v=' + V);
+const disco = (await import('./outfits/disco-legend.mjs')).default;
+const CW = 200, CH = 240, g = document.getElementById('g'), S = [];
+for (const o of [false, true]) { const d = document.createElement('div'); d.style.cssText = `width:${CW}px;height:${CH}px;display:inline-block`; g.appendChild(d);
+  const s = await createSpud(d, {}); if (o) s.wear(disco); S.push({ s, drv: armsDriver(s) }); }
+let T = 0;
+function geo(s) { const out = { tip: [], sh: [] }; const gs = [];
+  s.spud.traverse(m => { if (m.isMesh && m.geometry.attributes.aw && !gs.includes(m.geometry) && m.parent && m.parent.visible) gs.push([m.geometry, m]); });
+  const seen = new Set();
+  for (const [gm, m] of gs) { if (seen.has(gm)) continue; seen.add(gm); const a = gm.attributes.position.array, nr = (gm.attributes.position.count - 2) / 12, e = m.matrixWorld.elements;
+    const ring = r => { let x = 0, y = 0, z = 0; for (let k = 0; k < 12; k++) { const v = (r * 12 + k) * 3; x += a[v]; y += a[v + 1]; z += a[v + 2]; } x /= 12; y /= 12; z /= 12;
+      return [e[0] * x + e[4] * y + e[8] * z + e[12], e[1] * x + e[5] * y + e[9] * z + e[13], e[2] * x + e[6] * y + e[10] * z + e[14]]; };
+    out.tip.push(ring(nr - 5)); out.sh.push(ring(8)); }
+  return out; }
+function idle(n) { for (const { s, drv } of S) { drv.reset(true); s.snap(0); } for (let i = 0; i < n; i++) { T += 1 / 60; for (const { s, drv } of S) { drv.update({ t: T, air: false, vy: 0, vy0: 7 }); s.step(T, 1 / 60); } } }
+window.strip = (name) => {
+  idle(60);
+  const SC = { jump: [66, 3], jumpspin: [66, 3], spin: [72, 3], groove: [120, 5], disco: [120, 5], popout: [84, 3], roof: [160, 0], pump: [160, 0] }[name];
+  const [N, every] = SC, cells = every ? Math.floor((N - 1) / every) + 1 : 0, cv = document.createElement('canvas');
+  cv.width = Math.max(1, cells * CW); cv.height = 2 * CH; const cx = cv.getContext('2d'); cx.fillStyle = '#2a2340'; cx.fillRect(0, 0, cv.width, cv.height);
+  cx.font = '13px monospace'; cx.fillStyle = '#fff';
+  const logs = { bare: [], disco: [] }, t0 = T, TO = 6, VY0 = 7, G = 2 * VY0 / 0.64, LAND = TO + Math.round(0.64 * 60);
+  const dance = name === 'groove' ? 'groove' : name === 'disco' ? 'disco' : name === 'roof' ? 'raise-the-roof' : name === 'pump' ? 'pump' : null;
+  for (let i = 0; i < N; i++) { T += 1 / 60; const t = T, tt = t - t0, beat = dance ? (i / 60) * 2 - 0.5 : 0;
+    const jumping = name === 'jump' || name === 'jumpspin', air = jumping && i >= TO && i < LAND, vy = air ? VY0 - G * (i - TO) / 60 : 0;
+    S.forEach(({ s, drv }, row) => {
+      if (jumping && i === TO) { s.jumped(); if (name === 'jumpspin') { s.spin(); drv.spun(t); } }
+      if (jumping && i === LAND) { s.land(Math.min(9, VY0 * 0.45)); drv.settle(); }
+      if (name === 'spin' && i === TO) { s.spin(); drv.spun(t); }
+      if (name === 'popout' && i === TO) drv.gesture('point', t, 0.8);
+      drv.update({ t, air, vy, vy0: VY0, fly: null, dance, beat, body: true, off: false });
+      s.step(t, 1 / 60);
+      const gg = geo(s), st = s.armsState ? s.armsState() : null;
+      logs[row ? 'disco' : 'bare'].push({ i, t: +tt.toFixed(4), beat, yv: s.state.yaw.v, tip: gg.tip, sh: gg.sh, st });
+      if (every && i % every === 0) { const c = i / every; cx.drawImage(s.renderer.domElement, c * CW, row * CH, CW, CH);
+        cx.fillText(dance ? 'b ' + beat.toFixed(2) : tt.toFixed(2) + 's', c * CW + 6, row * CH + 16); }
+    }); }
+  return { png: every ? cv.toDataURL('image/png') : null, logs };
+};
+window.ready = true;
+</script>

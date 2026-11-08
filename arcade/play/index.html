@@ -1,0 +1,120 @@
+<meta charset="utf-8">
+<title>404: File Not Found</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Inter:wght@400;700&display=swap">
+<style>
+:root { --bg: #17151f; --ink: #f3ece2; --muted: #a8a1b8; --skin: #da9643; --glitch: #9a52ff; --magenta: #e03ccf; --panel: #221f2d; --line: #3a3648; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 "Inter", system-ui, sans-serif; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 10px; }
+#stage { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: calc(100vh - 110px); max-width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #efedf6; touch-action: none; user-select: none; -webkit-user-select: none; }
+#stage canvas { display: block; width: 100% !important; height: 100% !important; }
+.mono { font-family: "Major Mono Display", ui-monospace, monospace; }
+.hud { position: absolute; inset: 0; pointer-events: none; color: var(--hud, #2a2238); font: 400 14px/1.2 "Major Mono Display", monospace; }
+.hud .tl { position: absolute; left: 14px; top: 12px; } .hud .tr { position: absolute; right: 14px; top: 10px; font-size: 22px; }
+.hud .bl { position: absolute; left: 14px; bottom: 12px; display: flex; gap: 10px; align-items: center; font: 700 13px "Inter", sans-serif; }
+.hud .hint { font-weight: 400; color: var(--hud, #2a2238); opacity: 0.7; }
+#charge { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--glitch); background: transparent; }
+#charge.ready { background: var(--glitch); box-shadow: 0 0 0 3px #9a52ff40; }
+#beat { width: 10px; height: 10px; border-radius: 50%; background: var(--hud, #2a2238); opacity: 0.25; transition: opacity 0.08s, transform 0.08s; }
+#beat.on { opacity: 0.6; } #beat.hit { background: var(--skin); opacity: 1; transform: scale(1.7); }
+.bar { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: #0001; } #progress { height: 100%; background: var(--skin); width: 0; }
+#msg { position: absolute; left: 0; right: 0; top: 30%; text-align: center; font: 400 clamp(18px, 3vw, 30px) "Major Mono Display", monospace; color: var(--hudaccent, #6c3fd6); opacity: 0; padding: 0 16px; }
+#msg.show { animation: msg 1.7s ease-out; }
+@keyframes msg { 0% { opacity: 0; transform: translateY(8px); } 12% { opacity: 1; transform: none; } 75% { opacity: 1; } 100% { opacity: 0; } }
+#gwords { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#gwords span { position: absolute; font: 400 clamp(11px, 1.4vw, 16px) "Major Mono Display", monospace; color: var(--glitch); text-shadow: 2px 0 var(--magenta), -2px 0 #2a0f63; transform: translate(-50%, -50%); white-space: nowrap; }
+.screen { position: absolute; inset: 0; display: grid; place-items: center; background: #17151fee; text-align: center; padding: 18px; overflow-y: auto; }
+.screen h1 { font: 400 clamp(26px, 5vw, 56px)/1.05 "Major Mono Display", monospace; margin: 0; color: var(--ink); text-wrap: balance; }
+.screen h1 b { color: var(--skin); font-weight: 400; } .screen h1 i { color: var(--glitch); font-style: normal; }
+.screen h2 { font: 400 clamp(20px, 3.4vw, 36px) "Major Mono Display", monospace; margin: 0 0 6px; color: var(--skin); text-wrap: balance; }
+.screen p { margin: 6px auto; color: var(--muted); max-width: 54ch; }
+.screen .line { font: 400 clamp(14px, 1.9vw, 19px) "Major Mono Display", monospace; color: var(--ink); }
+.keys { display: grid; grid-template-columns: auto auto; gap: 5px 14px; justify-content: center; margin: 12px 0; text-align: left; color: var(--ink); font-size: 14px; }
+kbd { font: 700 12px "Inter", sans-serif; background: #34304a; border: 1px solid #555067; border-bottom-width: 3px; border-radius: 5px; padding: 2px 7px; color: var(--ink); }
+button { font: 700 15px "Inter", sans-serif; color: #1d1205; background: var(--skin); border: 0; border-radius: 10px; padding: 10px 20px; cursor: pointer; margin: 4px; }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+#levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap: 8px; width: min(980px, 100%); margin: 12px auto; }
+.lvl { display: grid; grid-template-columns: 22px 26px 1fr; grid-template-rows: auto auto; align-items: center; text-align: left; gap: 0 8px; background: var(--panel); color: var(--ink); border: 1px solid var(--line); padding: 10px 12px; margin: 0; min-width: 0; }
+.lvl .lamp { grid-row: span 2; width: 14px; height: 14px; border-radius: 50%; background: #3a3648; }
+.lvl.done .lamp { background: #ffd36b; box-shadow: 0 0 10px #ffd36b99; }
+.lvl .num { grid-row: span 2; font: 400 18px "Major Mono Display", monospace; color: var(--skin); }
+.lvl .t { font-weight: 700; } .lvl .p { font-weight: 400; font-size: 12.5px; color: var(--muted); grid-column: 3; }
+.lvl.locked { opacity: 0.45; cursor: not-allowed; }
+.touch { position: absolute; inset: auto 0 10px 0; display: none; justify-content: space-between; padding: 0 12px; pointer-events: none; }
+.touch div { display: flex; gap: 8px; pointer-events: auto; }
+.touch button { width: 58px; height: 58px; border-radius: 50%; padding: 0; margin: 0; font: 700 13px "Inter", sans-serif; background: #ffffffcc; color: #2a2238; border: 2px solid #2a2238; }
+.touch button.on { background: var(--skin); }
+.touch button[data-key="G"] { background: #9a52ffdd; color: #fff; }
+@media (pointer: coarse) { .touch { display: flex; } .hud .bl { bottom: 80px; } }
+.below { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; color: var(--muted); font-size: 13px; }
+#loading, #boot { position: absolute; inset: 0; display: grid; place-items: center; background: #17151f; color: var(--muted); font: 400 18px "Major Mono Display", monospace; }
+</style>
+<div class="wrap">
+  <div id="stage">
+    <div class="hud">
+      <div class="bar"><div id="progress"></div></div>
+      <div class="tl" id="section"></div><div class="tr" id="time"></div>
+      <div class="bl"><span id="charge" title="glitch ready"></span><span id="power">no power</span><span class="hint" id="hint">space: glitch through walls</span><span id="beat"></span></div>
+      <div id="gwords"></div>
+      <div id="msg"></div>
+    </div>
+    <div class="touch" aria-hidden="true">
+      <div><button data-key="L">◀</button><button data-key="R">▶</button><button data-key="D">▼</button></div>
+      <div><button data-key="V">V</button><button data-key="G">glitch</button><button data-key="J">▲</button></div>
+    </div>
+    <div class="screen" id="title" hidden>
+      <div>
+        <h1><b>404</b>: file <i>not</i> found</h1>
+        <p class="line">a potato platformer in ten songs</p>
+        <div class="keys">
+          <span><kbd>←</kbd> <kbd>→</kbd></span><span>move</span>
+          <span><kbd>↑</kbd></span><span>jump · on the beat = bigger</span>
+          <span><kbd>↓</kbd></span><span>duck</span>
+          <span><kbd>space</kbd></span><span>glitch through walls · once per bar</span>
+          <span><kbd>V</kbd></span><span>use the power you downloaded</span>
+          <span><kbd>esc</kbd> <kbd>M</kbd></span><span>pause · sound</span>
+        </div>
+        <p>The screen moves with the song. Get hit in a costume and you lose it. Get hit without one and you glitch out.</p>
+        <button id="start">start · sound on</button>
+      </div>
+    </div>
+    <div class="screen" id="hub" hidden>
+      <div style="width:100%">
+        <h2>the kitchen that still answers</h2>
+        <p id="lampcount"></p>
+        <div id="levels"></div>
+      </div>
+    </div>
+    <div class="screen" id="card" hidden>
+      <div>
+        <p class="mono" id="cardnum"></p>
+        <h1 id="cardtitle"></h1>
+        <p class="mono" id="cardplace" style="color:var(--skin)"></p>
+        <p class="line" id="cardline"></p>
+        <p id="cardpower"></p>
+        <button id="play">play</button><button class="ghost" id="back">kitchen</button>
+      </div>
+    </div>
+    <div class="screen" id="result" hidden>
+      <div>
+        <h2 id="restitle"></h2>
+        <p id="resp">a light comes on in the kitchen.</p>
+        <p class="line" id="resline"></p>
+        <p id="resstats"></p>
+        <button id="next">next song</button><button class="ghost" id="again">again</button><button class="ghost" id="tohub">kitchen</button>
+      </div>
+    </div>
+    <div class="screen" id="paused" hidden>
+      <div><h2>paused</h2><p>esc or P to keep going · M sound</p><button id="resume">keep going</button><button class="ghost" id="quit">kitchen</button></div>
+    </div>
+    <div id="loading" hidden>loading the song…</div>
+    <div id="boot">waking him up…</div>
+  </div>
+  <div class="below"><span>404: File Not Found — test build, private. Songs from the album; Potato’s lines are drafts.</span><button class="ghost" id="mute">sound on</button></div>
+</div>
+<script src="glitchwords.js" charset="utf-8"></script>
+<script type="module" src="main.mjs"></script>

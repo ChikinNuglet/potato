@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game Wardrobe</title>
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #20222b; --panel: #2a2d38; --ink: #f3ece2; --muted: #a39d93; --line: #3b3f4c; --skin: #da9643; --glitch: #9a52ff; --magenta: #e03ccf; color-scheme: dark; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 "Inter", system-ui, sans-serif; margin: 0; padding: 18px 16px; }
+h1 { font: 700 clamp(22px, 3.4vw, 32px)/1.1 "Inter", system-ui, sans-serif; letter-spacing: 0.02em; margin: 0; }
+h1 span { color: var(--skin); }
+.sub { color: var(--muted); margin: 4px 0 14px; max-width: 62ch; }
+.wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 12px; }
+#stage { position: relative; width: 100%; aspect-ratio: 4 / 3; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; touch-action: pan-y; cursor: grab; }
+#stage canvas { display: block; width: 100% !important; height: 100% !important; }
+#gwords { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#gwords span { position: absolute; font: 400 clamp(11px, 1.6vw, 18px) "Major Mono Display", monospace; color: var(--glitch); text-shadow: 2px 0 var(--magenta), -2px 0 #2a0f63; transform: translate(-50%, -50%); white-space: nowrap; }
+.hint { position: absolute; left: 14px; bottom: 10px; color: var(--muted); font-size: 12.5px; pointer-events: none; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+button { font: inherit; font-weight: 700; color: var(--ink); background: #333744; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; cursor: pointer; user-select: none; }
+button:hover { border-color: var(--muted); }
+button[aria-pressed="true"] { background: var(--skin); color: #1d1205; border-color: var(--skin); }
+#glitch { color: #e9dcff; border-color: var(--glitch); }
+#glitch[aria-pressed="true"] { background: var(--glitch); color: #fff; }
+.note { color: var(--muted); font-size: 13px; max-width: 70ch; }
+#q { flex: 1 1 200px; font: inherit; color: var(--ink); background: #1a1c24; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+#lib h2 { font-size: 15px; margin: 14px 0 6px; color: var(--skin); letter-spacing: .03em; }
+#lib .empty { color: var(--muted); font-size: 13px; }
+#lib .row button small { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
+#lib .row button[aria-pressed="true"] small { color: #3b2410; }
+#who { color: var(--muted); font-size: 13px; min-height: 1.4em; }
+</style></head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>game <span>wardrobe</span></h1>
+    <p class="sub">Only the costumes Chikin approved for the game (the approved shelf). Everything else is in his master wardrobe, outside the game. Drag to turn him, tap him to poke, tap the floor to hop.</p>
+  </div>
+  <div id="who"></div>
+  <div id="stage"><div id="gwords"></div><div class="hint">same keys as the game: ← → walk · ↑ hop + spin · ↓ duck · space glitch into the next outfit</div></div>
+  <div class="row">
+    <button id="hop">hop</button>
+    <button id="duck" aria-pressed="false">duck</button>
+    <button id="glitch">glitch (space)</button>
+    <button id="waddle" aria-pressed="false">waddle</button>
+    <button id="spin">spin</button>
+    <button id="poke">poke</button>
+    <button id="face" aria-pressed="true">face</button>
+  </div>
+  <div class="row" id="part"><button data-p="whole" aria-pressed="true">whole outfit</button><button data-p="top" aria-pressed="false">just the top</button><button data-p="bottom" aria-pressed="false">just the bottom</button></div>
+  <div class="row" id="filters"><button data-f="all" aria-pressed="true">everything</button><button data-f="game" aria-pressed="false">his game looks</button><button data-f="agent" aria-pressed="false">agent costumes</button><input id="q" type="search" placeholder="find a costume or an agent…"></div>
+  <p class="note" id="count"></p>
+  <div id="lib"></div>
+</div>
+<script src="./glitchwords.js" charset="utf-8"></script>
+<script type="module">
+import * as T from './vendor/three.module.js';
+import { createSpud } from './spud3d.mjs';
+import { loadOutfit } from './outfits3d.mjs';
+import { createGlitchFX } from './glitchfx.mjs';
+import { initSfx, SFX } from './sfx.mjs';
+
+// THE MASTER LIBRARY (Chikin, Nov 5: "make the one i get a master library that allows me to see all of his costumes we create,
+// including all costumes created for agents"): his game looks (wardrobe.json) + every agent's costume (agent-costumes/library.json,
+// added each night, D-20261105-04). The Star Wars / ARC costumes are NOT here: they live in separate-costumes/, never with the game.
+const getJSON = u => fetch(u, { cache: 'no-store' }).then(r => r.json()).catch(() => ({}));
+const [WR, AG] = await Promise.all([getJSON('./wardrobe.json'), getJSON('./agent-costumes/library.json')]);
+const LOOKS = [{ key: '', label: 'just potato', src: 'game' },
+  ...(WR.looks || []).map(l => ({ key: l.slug, label: l.label, src: 'game', by: l.made_by, kind: l.kind })),
+  ...(AG.costumes || []).filter(c => c.file).map(c => ({ key: 'agent:' + c.file, file: c.file, label: c.agent, src: 'agent', asked: c.asked, team: c.team, built: c.built }))];
+const getBuild = e => !e.key ? Promise.resolve(null) : e.src === 'agent' ? import('./agent-costumes/' + e.file).then(m => m.default) : loadOutfit(e.key);
+
+// the game's way of drawing him: his own scene + the sticker camera, so his real glitch (glitchfx) can run over him
+const stage = document.getElementById('stage'), Wd = () => stage.clientWidth, Hd = () => stage.clientHeight;
+const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); renderer.outputColorSpace = T.LinearSRGBColorSpace;
+stage.prepend(renderer.domElement);
+const cam = new T.OrthographicCamera(-1, 1, 1, -1, -10, 10), TILT = 0.12;
+cam.position.set(0, 0.5 + Math.sin(TILT) * 3, Math.cos(TILT) * 3); cam.lookAt(0, 0.5, 0);
+const fit = () => { const a = Wd() / Hd(), s = 0.82; cam.left = -s * a; cam.right = s * a; cam.top = s + 0.05; cam.bottom = -s; cam.updateProjectionMatrix(); renderer.setSize(Wd(), Hd()); };
+fit(); addEventListener('resize', fit);
+const scene = new T.Scene();
+const spud = await createSpud(stage, { scene, base: './' });
+const fx = createGlitchFX(renderer); fx.setWordsLayer(document.getElementById('gwords'));
+window.spud = spud; window.fx = fx; window.loadOutfit = loadOutfit;
+
+// his screen box (uv), for the glitch: his body plus room for a hat
+const box = () => { const P = [[-0.62, -0.05], [0.62, -0.05], [-0.62, 1.45], [0.62, 1.45]].map(([x, y]) => new T.Vector3(x, y + 0, 0).project(cam));
+  const xs = P.map(p => (p.x + 1) / 2), ys = P.map(p => (p.y + 1) / 2), x = Math.min(...xs), y = Math.min(...ys);
+  return { x, y, w: Math.max(...xs) - x, h: Math.max(...ys) - y }; };
+
+// glitch, the kitchen way: space = he glitches into the NEXT outfit, flickering through two other looks on the way
+// (0.11 s each, the game's numbers), the glitch fading at 2.4/s
+let amount = 0, flk = null, cur = 0, part = 'whole', builds = {};
+// whole / top / bottom, split at his neck (v = SPLIT, 0 = top of his head, 1 = his feet): the top keeps whatever sits above it
+// (hats, helmets, crowns, painted or built), the bottom keeps the clothes below it
+const SPLIT = 0.47;
+function cut(build) { if (!build || part === 'whole') return build;
+  return K => { const o = build(K), top = part === 'top';
+    const c = document.createElement('canvas'); c.width = o.canvas.width; c.height = o.canvas.height;
+    const y = Math.round(SPLIT * c.height), g = c.getContext('2d');
+    if (top) g.drawImage(o.canvas, 0, 0, c.width, y, 0, 0, c.width, y); else g.drawImage(o.canvas, 0, y, c.width, c.height - y, 0, y, c.width, c.height - y);
+    o.canvas = c;
+    if (o.puff) { const f = o.puff; o.puff = (t, th) => (t < SPLIT) === top ? f(t, th) : 0; }
+    if (!top) o.parts = [];   // (the solid pieces are hats/helmets that ride his head: they belong to the top)
+    return o; }; }
+const put = b => spud.wear(cut(b));
+const tnow = () => performance.now() / 1000;
+function glitchNext() { initSfx(); const V = shown(); if (!V.length) return; const at = V.indexOf(cur), i = V[(at + 1) % V.length];
+  const pool = V.filter(j => j !== i && j !== cur), picks = [];
+  while (picks.length < 2 && pool.length) picks.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+  cur = i; mark(); amount = 0.9; SFX.glitch && SFX.glitch();
+  Promise.all([...picks, i].map(j => getBuild(LOOKS[j]).catch(() => null))).then(bs => { if (cur === i) flk = { t0: tnow(), bs, k: -1 }; }); }
+function stepGlitch(t, dt) {
+  if (flk) { const i = Math.min(flk.bs.length - 1, Math.floor((t - flk.t0) / 0.11));
+    if (i !== flk.k) { flk.k = i; put(flk.bs[i] || null); amount = 0.9;
+      if (i === flk.bs.length - 1) { SFX.transform && SFX.transform(); flk = null; } else SFX.glitch && SFX.glitch(); } }
+  amount = Math.max(0, amount - dt * 2.4); return amount; }
+
+let last = performance.now();
+function loop(now) { const t = now / 1000, dt = Math.min(0.05, (now - last) / 1000); last = now;
+  spud.step(t, dt);
+  fx.amount = stepGlitch(t, dt);
+  renderer.setClearColor(0x000000, 0); renderer.clear();
+  if (fx.amount > 0) fx.render(scene, cam, t, box());
+  else { renderer.render(scene, cam); const g = document.getElementById('gwords'); if (g.innerHTML) g.innerHTML = ''; }
+  requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+// ---- input: drag to turn, tap him to poke, tap the floor to hop ----
+const ray = new T.Raycaster(), ptr = new T.Vector2(); let yaw = 0, down = null;
+const cv = renderer.domElement;
+cv.addEventListener('pointerdown', e => { down = { x: e.clientX, yaw, moved: false }; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - down.x; if (Math.abs(dx) > 4) down.moved = true;
+  if (down.moved) { yaw = down.yaw + dx / Wd() * Math.PI * 2; spud.turnTo(yaw); } });
+cv.addEventListener('pointerup', e => { if (down && !down.moved) {
+    const r = cv.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
+    ray.setFromCamera(ptr, cam); const hit = ray.intersectObjects(scene.children, true)[0];
+    if (hit && hit.face) { const o = hit.object, local = o.worldToLocal(hit.point.clone()); spud.poke(local, hit.face.normal.clone()); } else spud.hop(); }
+  down = null; });
+
+const $ = id => document.getElementById(id);
+// the game's keys (run/main.mjs KEY): ↑/W hop + spin, ↓/S duck, space glitch, ←→/A D walk (here: he turns that way and waddles)
+const KEY = { ArrowUp: 'J', KeyW: 'J', Space: 'G', ArrowDown: 'D', KeyS: 'D', ArrowLeft: 'L', KeyA: 'L', ArrowRight: 'R', KeyD: 'R' };
+const setDuck = on => { spud.duck(on); $('duck').setAttribute('aria-pressed', on); };
+let walkDir = 0, waddling = false;
+const setWaddle = on => { if (on !== waddling) { waddling = spud.waddle(); } $('waddle').setAttribute('aria-pressed', waddling); };
+const hopSpin = () => { initSfx(); spud.hop(); spud.spin(); yaw += Math.PI * 2; SFX.jump && SFX.jump(); };
+$('hop').onclick = hopSpin;
+$('spin').onclick = () => { yaw += Math.PI * 2; spud.spin(); };
+$('duck').onclick = () => setDuck($('duck').getAttribute('aria-pressed') !== 'true');
+$('glitch').onclick = e => { e.currentTarget.blur(); glitchNext(); };
+$('waddle').onclick = () => setWaddle(!waddling);
+$('face').onclick = e => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', on); spud.face(on); };
+$('poke').onclick = () => { const a = Math.random() * 2 - 1; spud.poke(new T.Vector3(0.35 * Math.sin(a), 0.4 + 0.3 * Math.random(), 0.35 * Math.cos(a)), new T.Vector3(Math.sin(a), 0.1, Math.cos(a))); };
+addEventListener('keydown', e => { const k = KEY[e.code]; if (!k) return; e.preventDefault(); if (e.repeat) return;
+  if (k === 'G') glitchNext(); else if (k === 'J') hopSpin(); else if (k === 'D') setDuck(true);
+  else { walkDir = k === 'L' ? -1 : 1; yaw = walkDir * 1.2; spud.turnTo(yaw); setWaddle(true); } });
+addEventListener('keyup', e => { const k = KEY[e.code]; if (k === 'D') setDuck(false);
+  else if ((k === 'L' && walkDir < 0) || (k === 'R' && walkDir > 0)) { walkDir = 0; yaw = 0; spud.turnTo(0); setWaddle(false); } });
+
+// ---- the library: filter, search, sections ----
+let filt = 'all';
+const lib = $('lib'), q = $('q');
+const match = e => { const t = q.value.trim().toLowerCase(); return !t || [e.label, e.key, e.asked, e.team, e.by].some(x => x && String(x).toLowerCase().includes(t)); };
+function shown() { return LOOKS.map((e, j) => j).filter(j => (filt === 'all' || LOOKS[j].src === filt) && match(LOOKS[j])); }
+function mark() { lib.querySelectorAll('button[data-j]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.j === cur));
+  const e = LOOKS[cur]; $('who').textContent = !e || !e.key ? '' : e.src === 'agent' ? `${e.label} (${e.team || 'agent'}) asked for: ${e.asked || ''}` : `${e.label} · made by ${e.by || 'Claude'}`; }
+function wearIdx(j) { cur = j; flk = null; mark(); amount = 0.9; initSfx(); SFX.glitch && SFX.glitch();
+  getBuild(LOOKS[j]).then(f => f ? put(f) : spud.wear(null)).catch(err => console.error(LOOKS[j].key, err)); }
+function render() {
+  const V = shown(), sec = (title, src, empty) => { const js = V.filter(j => LOOKS[j].src === src); if (filt !== 'all' && filt !== src) return '';
+    return `<h2>${title} (${js.filter(j => LOOKS[j].key).length})</h2>` + (js.length ? `<div class="row">${js.map(j => `<button data-j="${j}">${LOOKS[j].label}${src === 'agent' && LOOKS[j].team ? `<small>${LOOKS[j].team}</small>` : ''}</button>`).join('')}</div>` : `<p class="empty">${empty}</p>`); };
+  lib.innerHTML = sec('his game looks', 'game', 'nothing matches.') + sec('agent costumes', 'agent', (AG.costumes || []).length ? 'nothing matches.' : 'none built yet: every night Claude builds a costume for each agent named that day, and they show up here.');
+  lib.querySelectorAll('button[data-j]').forEach(b => b.onclick = () => { b.blur(); wearIdx(+b.dataset.j); });
+  const nG = LOOKS.filter(e => e.src === 'game' && e.key).length, nA = LOOKS.filter(e => e.src === 'agent').length;
+  $('count').textContent = `${nG + nA} costumes: ${nG} of his game looks, ${nA} agent costumes. Space glitches him through whatever is shown.`; mark(); }
+for (const b of $('filters').querySelectorAll('button')) b.onclick = () => { b.blur(); filt = b.dataset.f; for (const o of $('filters').querySelectorAll('button')) o.setAttribute('aria-pressed', o === b); render(); };
+q.addEventListener('input', render);
+q.addEventListener('keydown', e => e.stopPropagation());   // (typing a search never moves him)
+for (const b of $('part').children) b.onclick = () => { b.blur(); part = b.dataset.p; for (const o of $('part').children) o.setAttribute('aria-pressed', o === b);
+  flk = null; getBuild(LOOKS[cur]).then(f => f ? put(f) : spud.wear(null)); };
+render();
+</script>
+</body></html>

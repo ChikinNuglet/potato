@@ -1,0 +1,112 @@
+// chat.mjs: the whole conversation as data, phone by phone. SCRIPT.md (Read by 43, the writer) is the source; STEPS.md (The Landing) gives the numbers.
+// Builder, team Downstairs Neighbours, Nov 6. Everything in Potato's mouth is a DRAFT for Chikin (keep / cut / not me / rewrite).
+// A row: t = when it lands (song seconds) · who = J S P D C T H (him) · text.
+//  glow: last moment it can be taken (the sung word it flips on) · to: his version, *stars* mark the words that turn into his glitch font · flip: 'press' = changes on the press, not on glow
+//  alt: { of, text } shows this text if row `of` was never taken · only: { of } the row only happens if `of` was taken · kev: a Kevin line, his purple slides off it
+//  kind: text (default) · photo (pic) · big (one big emoji) · dots (a typing bubble from t to t1) · sys (small grey centred line) · read (tiny grey line under the last text) · heart (a tapback)
+//  cap: a line under a photo, in the same sender's bubble · crop: [x, y, w, h] of the picture (0-1)
+//  noCarry: the next phone doesn't open on it · fall: { at } it shakes loose and leaves the thread at that time
+export const WHO = { J: { name: 'James', col: '#0a84ff', ink: '#ffffff', right: true }, S: { name: 'Sheila', col: '#f0675a', ink: '#1a0b08' }, P: { name: 'Pauline', col: '#2f2f33', ink: '#f2f2f7' },
+  D: { name: 'Dev', col: '#2f2f33', ink: '#f2f2f7' }, C: { name: 'Carol', col: '#2f2f33', ink: '#f2f2f7' }, T: { name: 'taticat', col: '#2f2f33', ink: '#f2f2f7' }, H: { name: '', col: '#2a0f63', ink: '#ece0ff', right: true } };
+
+// owner: whose phone it is (its case colour). x, top: its place on the hill (STEPS.md §2, design/steps-table.json). land, leave, fall: his feet.
+export const STEPS = [
+  { id: 'S1', owner: 'J', name: 'a boy is missing', land: 9.36, leave: 18.04, dy: 4.5, fall: 0.44, x: 1, top: 0, wheel: { free: true }, rows: [
+    { t: 5.15, who: 'S', text: 'anyone seen him?', noCarry: true },
+    { t: 10.20, who: 'P', text: 'checked the park x' },
+    { t: 11.22, who: 'D', text: 'nothing by the shops' },
+    { t: 12.27, who: 'J', text: "porch light's on|for him", kev: true },
+    { t: 13.50, who: 'S', text: "something's in our phones", id: 'phones', to: "*a potato's* in our phones", glow: 16.5, flip: 'press' },
+    { t: 17.02, who: 'C', text: '😂 sheila', alt: { of: 'phones', text: 'sheila love. get some rest' } } ] },
+  { id: 'S2', owner: 'D', name: "she didn't say that", land: 18.48, leave: 25.92, dy: 4.5, fall: 0.44, x: 10, top: -4.5, rows: [
+    { t: 19.18, who: 'P', text: '😂 bless' },
+    { t: 21.62, who: 'D', text: '"a potato" 😭', alt: { of: 'phones', text: '"ghosts" 😭' } },
+    { t: 22.23, who: 'S', text: 'i never said that' },
+    { t: 23.6, who: 'J', text: 'not now, love' },
+    { t: 24.2, who: 'D', text: 'lol', id: 'dud', to: '*lol*', glow: 25.9, flip: 'press' } ] },
+  { id: 'S3', owner: 'C', name: 'someone joined', land: 26.36, leave: 34.44, dy: 4.5, fall: 0.44, x: 19, top: -9, wheel: {}, rows: [
+    { t: 27.25, who: 'S', text: 'who is 44??' },
+    { t: 29.66, who: 'C', text: 'told you. robots.' },
+    { t: 30.6, who: 'S', text: "don't trust this chat", id: 'trust', to: "*do* trust this *potato*", glow: 32.62 },
+    { t: 33.60, who: 'C', text: 'i do 😂', alt: { of: 'trust', text: 'ok sheila' } },
+    { t: 34.20, who: 'T', text: '🥔', kind: 'big' } ] },
+  { id: 'S4', owner: 'S', name: 'she tries to throw him out', land: 34.88, leave: 42.2, dy: 6, fall: 1.0, x: 28, top: -13.5, dog: true, rows: [
+    { t: 35.9, who: 'J', text: "i'm at home", id: 'room', to: "*i'm already in the room*", glow: 37.96 },
+    { t: 38.53, who: 'S', text: 'WHAT room', alt: { of: 'room', text: 'stay there' } },
+    { t: 41.18, who: 'S', text: 'james LOOK at your phone', noCarry: true, fall: { at: 41.91 } } ] },
+  { id: 'S5', owner: 'J', name: 'the joke lands', land: 43.2, leave: 52.86, dy: 4.5, fall: 0.44, x: 37, top: -19.5, rows: [
+    { t: 44.20, who: 'J', text: "what's going on?" },
+    { t: 45.6, who: 'S', text: "it's in the house", id: 'pantry', to: "*there's a potato in the pantry*", glow: 47.85 },
+    { t: 49.26, who: 'J', text: '', kind: 'photo', pic: 'pantry', alt: { of: 'pantry', text: 'what is??', kind: 'text' } },
+    { t: 50.20, who: 'J', text: '...yes?', alt: { of: 'pantry', who: 'S', text: 'the phones' } },
+    { t: 51.48, who: 'C', text: '😂😂', alt: { of: 'pantry', text: 'sheila love' } },
+    { t: 52.27, who: 'J', text: 'get some sleep x' } ] },
+  { id: 'S6', owner: 'P', name: 'james nearly believes her', land: 53.3, leave: 60.04, dy: 4.5, fall: 0.44, x: 46, top: -24, rows: [
+    { t: 54.04, who: 'J', text: "maybe she's right", id: 'tired', to: "maybe she's *tired*", glow: 55.91 },
+    { t: 56.70, who: 'P', text: 'bless her x', alt: { of: 'tired', text: 'right about what x' } },
+    { t: 57.65, who: 'S', text: 'TIRED??', only: { of: 'tired' }, fall: { at: 58.94 } },
+    { t: 59.52, who: 'J', text: '', kind: 'photo', pic: 'dog', cap: 'biscuit 🐾' } ] },
+  { id: 'S7', owner: 'S', name: 'she asks him what he is', land: 60.48, leave: 69.8, dy: 3, fall: 0.36, x: 55, top: -28.5, dog: true, wheel: {}, rows: [
+    { t: 61.40, who: 'S', text: 'are you real?' },
+    { t: 62.25, who: 'H', text: 'define real.', pop: true, noCarry: true },
+    { t: 63.47, who: 'H', text: 'define hand.', pop: true, noCarry: true },
+    { t: 64.08, who: 'H', text: 'define hurt.', pop: true, noCarry: true },
+    { t: 64.70, who: 'H', text: 'define feel.', pop: true, noCarry: true },
+    { t: 65.08, who: 'S', text: 'who ARE you', id: 'poem', to: '*no hands*|*to hold you*|*so i hold*|*the line*', glow: 66.68 },
+    { t: 67.11, who: 'P', text: 'oh sheila. lovely x', alt: { of: 'poem', text: 'who are you talking to love' } },
+    { t: 69.00, t1: 69.8, who: 'S', kind: 'dots', noCarry: true } ] },
+  { id: 'S8', owner: 'J', name: 'he does nothing', land: 70.16, leave: 79.86, dy: 4.5, fall: 0.44, x: 64, top: -31.5, quiet: true, rows: [
+    { t: 71.27, who: 'S', text: 'why is our wifi called potato' },
+    { t: 72.46, who: 'C', text: '😂 sheila' },
+    { t: 76.35, who: 'S', text: 'where is he, james', kev: true },
+    { t: 78.00, who: 'J', text: '', kind: 'photo', pic: 'porch', kev: true, id: 'porch' },
+    { t: 79.37, who: 'S', kind: 'heart', on: 'porch', noCarry: true } ] },
+  { id: 'S9', owner: 'S', name: 'comfort comes out wrong', land: 80.3, leave: 89.26, dy: 4.5, fall: 0.44, x: 73, top: -36, dog: true, rows: [
+    { t: 81.05, who: 'S', text: "james i'm scared" },
+    { t: 82.4, t1: 84.0, who: 'J', kind: 'dots' },
+    { t: 84.8, t1: 85.4, who: 'J', kind: 'dots' },
+    { t: 85.40, who: 'J', text: "you're safe x", id: 'tonight', to: "*tonight, weirdly, i'm in it with you*", glow: 87.63 },
+    { t: 89.25, who: 'S', text: 'prove it. send biscuit' } ] },
+  { id: 'S10', owner: 'J', name: 'the proof is a cat', land: 89.7, leave: 92.09, dy: 6, fall: 0.51, x: 82, top: -40.5, rows: [
+    { t: 89.92, who: 'J', text: '', kind: 'photo', pic: 'pet1', small: true },
+    { t: 90.47, who: 'J', text: '', kind: 'photo', pic: 'pet2', small: true },
+    { t: 91.05, who: 'J', text: '', kind: 'photo', pic: 'pet3', small: true, crop: [0.2, 0.6, 0.55, 0.4] },
+    { t: 91.42, who: 'S', text: 'and WHOSE cat is that', tear: true } ] },
+  { id: 'S11', owner: 'S', name: '43 people read it', land: 92.6, leave: 98.87, dy: 4.5, fall: 0.44, x: 91, top: -46.5, petunia: 92.6, rows: [
+    { t: 94.2, who: 'S', text: "please. it's in THIS chat", id: 'beg', to: '🥔', glow: 96.0 },
+    { t: 96.31, who: 'S', kind: 'read', text: 'Read by 43' },
+    { t: 97.35, t1: 98.70, who: 'T', kind: 'dots', taticat: true, noCarry: true },
+    { t: 98.70, who: 'T', text: '🥔', kind: 'big' } ] },
+  { id: 'S12', owner: 'C', name: 'james types the truth', land: 99.31, leave: 108.24, dy: 4.5, fall: 0.44, x: 100, top: -51, rows: [
+    { t: 101.22, who: 'S', kind: 'sys', text: 'Carol added 41 people.' },
+    { t: 102.0, who: 'J', text: "it's in our phones", id: 'phones2', to: "*a potato's* in our phones", glow: 103.9 },
+    { t: 103.90, who: 'C', text: 'not you too 😂' },
+    { t: 105.11, who: 'J', text: "i didn't type that", alt: { of: 'phones2', text: 'sheila what is this' } },
+    { t: 106.67, who: 'J', text: 'you said potato in the pantry', noCarry: true, only: { of: 'pantry' } },
+    { t: 108.20, who: 'S', text: 'i never said that', alt: { of: 'pantry', text: 'i told you' } } ] },
+  { id: 'S13', owner: 'J', name: 'turn it off', land: 108.68, leave: 116.46, dy: 22.5, fall: 1.26, x: 109, top: -55.5, rows: [
+    { t: 109.19, who: 'S', text: 'turn your phone off' },
+    { t: 110.40, who: 'J', text: 'what if kev calls', kev: true },
+    { t: 111.30, t1: 112.6, who: 'S', kind: 'dots', noCarry: true },
+    { t: 114.10, who: 'S', text: "i'll keep mine on", kev: true },
+    { t: 115.01, who: 'J', text: 'love you. for real' } ] },
+  { id: 'S14', owner: 'S', name: 'the end', land: 117.72, leave: null, x: 127, top: -78, petunia: 0, kev: true, rows: [
+    { t: 0, who: 'S', text: 'kev', kev: true },
+    { t: 0.01, who: 'S', text: "phone's on", kev: true },
+    { t: 0.02, who: 'S', text: "porch light's on", kev: true } ] },
+];
+// the one-step version of S13 -> S14 (LONG_FALL = false): the writer's timing
+export const SHORT_END = { leave: 117.28, dy: 4.5, fall: 0.44, x: 118, top: -60 };
+export const HUSH = [0.65, 116.46, 116.80, 117.14, 117.48];   // (the four dark phones go out on the four "ha"s: the machine's times, even split, check by ear)
+
+// what's in the way (STEPS.md §6). line: one of her lines shakes under the header, then falls · roll: drops to the bar, then rolls along it
+export const HAZ = [
+  { id: 'h1', st: 1, kind: 'line', text: "something's in our phones", swapOf: 'phones', swap: "*a potato's* in our phones", shake: 19.2, at: 20.22, free: true, aim: 0 },
+  { id: 'bell', st: 3, kind: 'roll', icon: 'bell', at: 35.72, floorAt: 36.35, dir: 1, v: 3.1, x: 0.45 },
+  { id: 'block', st: 3, kind: 'roll', icon: 'block', at: 36.30, floorAt: 36.95, dir: -1, v: 3.4, x: 3.2 },
+  { id: 'tired', st: 5, kind: 'line', text: 'TIRED??', only: 'tired', shake: 57.9, at: 58.94, aim: 0, fromRow: true },
+  { id: 'h5', st: 11, kind: 'line', text: "it's in THIS chat", shake: 99.31, at: 99.97, aim: 0, late: 0.37 },
+  { id: 'h6', st: 11, kind: 'line', text: 'james LOOK at your phone', shake: 100.0, at: 100.59, aim: 0, late: 0.5 },
+];
+export const CLOCK_LAND = { '43': 26.36, '85': 101.22 };
+export const TORCHES = [1, 0.9, 0.82, 0.8, 0.8, 0.55, 0.5, 0.35, 0.22, 0.18, 0.14, 0, 0, 0, 0];   // how many torches are still looking, after each step: the chat laughs, some go out (SCRIPT §4)
