@@ -31,6 +31,8 @@ body.going>*:not(#bin):not(#intro):not(script){visibility:hidden}
 .keybox .row button{background:#ffd36b;color:#2a1a00}
 .hint{margin:4px 2px 0;color:var(--dim);font:600 13px "JetBrains Mono",monospace;letter-spacing:.04em}
 .contact{margin-top:40px}.cl{margin:6px 2px;font:600 16px "JetBrains Mono",monospace}.cl a{color:var(--green);text-decoration:none}.cl a:hover{text-decoration:underline}
+.cll{color:var(--dim);font-size:13px;letter-spacing:.08em;margin-right:6px}
+.cl .cld{display:block;margin:1px 0 8px;color:var(--dim);font:500 13px/1.4 "JetBrains Mono",monospace}
 .links{display:flex;gap:18px;flex-wrap:wrap}.links a{color:#c9a7ff}
 .or{color:var(--dim);font-size:13px;letter-spacing:.2em;margin-top:70px}
 .tape{position:absolute;left:0;right:0;top:0;height:46px;z-index:2;display:flex;align-items:center;justify-content:center;
@@ -50,13 +52,17 @@ body{padding-top:86px!important}
 .box{z-index:2}
 #perch{position:absolute;left:0;top:0;width:74px;height:74px;z-index:3;pointer-events:none;opacity:0;transform-origin:50% 100%;will-change:transform}
 #perch.on{opacity:1}
+#perch.on{pointer-events:auto;cursor:pointer}
+.haha{position:absolute;z-index:4;pointer-events:none;font:400 18px/1 "Major Mono Display",monospace;color:#c9a7ff;text-shadow:-2px 0 #7b3cf2,2px 0 #e03ccf;white-space:nowrap}
+
 #perch.tw{filter:drop-shadow(-3px 0 #7b3cf2) drop-shadow(3px 0 #e03ccf)}
 #ladder{position:absolute;left:0;top:0;width:34px;height:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .2s;
  background:linear-gradient(90deg,#d9932e 0 5px,transparent 5px calc(100% - 5px),#d9932e calc(100% - 5px)),repeating-linear-gradient(180deg,transparent 0 16px,#f2b84b 16px 21px);border:2px solid #120a05;border-width:0 2px;box-shadow:0 0 0 2px #120a0533}
 #ladder.on{opacity:1}
 #perch.zap{filter:drop-shadow(-4px 0 #7b3cf2) drop-shadow(4px 0 #e03ccf);clip-path:polygon(0 0,100% 0,100% 30%,90% 30%,90% 46%,100% 46%,100% 100%,0 100%,0 70%,12% 70%,12% 55%,0 55%)}
 .spudded{animation:none}
-.spudded h2,.spudded button,.spudded input::placeholder,.or.spudded{color:#c9a7ff!important;text-shadow:-2px 0 #7b3cf2,2px 0 #e03ccf}
+.box.spudded{box-shadow:-5px 0 0 #7b3cf2aa,5px 0 0 #e03ccfaa,0 0 40px #4dff9a14}
+.spudded h2,.spudded button,.spudded a,.spudded .cld,.spudded input::placeholder,.or.spudded{color:#c9a7ff!important;text-shadow:-2px 0 #7b3cf2,2px 0 #e03ccf}
 .tm{position:absolute;left:86.6%;top:27%;font:600 clamp(7px,1.3vw,10px)/1 "JetBrains Mono",monospace;letter-spacing:.05em;color:#e9ddff;opacity:.85}
 .box.glitch{transform:translate(var(--gx,5px),0) skewX(var(--gs,-3deg));box-shadow:-6px 0 0 #7b3cf2aa,6px 0 0 #e03ccfaa,0 0 40px #4dff9a14;clip-path:polygon(0 0,100% 0,100% 38%,97% 38%,97% 52%,100% 52%,100% 100%,0 100%,0 64%,3% 64%,3% 47%,0 47%)}
 .box.glitch h2,.box.glitch input,.box.glitch button{text-shadow:-2px 0 #7b3cf2,2px 0 #e03ccf}
@@ -65,9 +71,31 @@ body{padding-top:86px!important}
 .hole img{position:absolute;left:-4%;width:108%;top:100%;transition:top .45s cubic-bezier(.3,1.4,.6,1)}
 .hole.up img{top:22%}
 .hole.t.up img{top:38%}
+/* RATED P FOR POTATO (D-20261108-21): left of the password box, its list running down to the bottom of the screen.
+   Too narrow for a column beside the door (under 840px): it sits under everything instead. */
+/* Thursday Potato on a loop at the door: starts on the visitor's first click or key (browsers block sound before that) */
+.spk{position:fixed;right:max(14px,env(safe-area-inset-right));top:58px;z-index:4;width:44px;height:44px;border:0;border-radius:10px;background:#0b0e14;color:var(--ink);
+ box-shadow:0 0 0 1px #ffffff1f;cursor:pointer;display:grid;place-items:center;font:700 18px "JetBrains Mono",monospace}
+.spk:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.spk svg{width:22px;height:22px}
+.spk.bonk{animation:bonk .36s steps(4)}@keyframes bonk{25%{transform:rotate(-14deg) translateX(-3px)}50%{transform:rotate(9deg)}75%{transform:rotate(-5deg)}}
+#unmuter{position:fixed;z-index:5;width:70px;height:auto;pointer-events:none;display:none;filter:drop-shadow(-3px 0 #7b3cf2) drop-shadow(3px 0 #e03ccf)}
+#unmuter.on{display:block}#unmuter.zap{clip-path:polygon(0 0,100% 0,100% 34%,88% 34%,88% 50%,100% 50%,100% 100%,0 100%,0 66%,10% 66%,10% 52%,0 52%)}
+#unmuter.shake{transform:translateX(-5px)}#unmuter.shake2{transform:translateX(5px)}
+#unmuter.hop{transform:translate(-12px,-10px) rotate(-12deg)}#unmuter.bump{transform:translate(8px,0) rotate(10deg)}.spk .x{display:none}.spk.off .x{display:block}.spk.off .w{display:none}
+.trailer{margin:6px 0 0;text-align:center}.trailer a{font:700 15px "JetBrains Mono",monospace;color:#c9a7ff;letter-spacing:.06em;text-decoration:none}.trailer a:hover,.trailer a:focus-visible{text-decoration:underline;color:#e8f5ec}
+.rated{border:0;background:transparent;display:block}
+body.roomy{padding-left:150px!important}
+.rated.side{position:absolute;z-index:1}
+.rated:not(.side){order:99;width:500px;height:350px;margin-top:10px}
+@media (max-width:540px){.rated:not(.side){zoom:.64}}
 </style>
 <body>
 <canvas id="bin" aria-hidden="true"></canvas>
+<img id="unmuter" src="logo/potato-3d-angry.png" alt="" aria-hidden="true">
+<audio id="tp" src="music/thursday-potato.mp3" loop preload="auto"></audio>
+<button class="spk" id="spk" type="button" aria-label="Mute Thursday Potato" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg></button>
+<iframe class="rated" id="rated" src="rated/" title="Rated P for Potato: language, crude humor, suggestive themes, drug references, mild violence, mild kidnapping, flashing glitches. Parental guidance suggested." loading="lazy"></iframe>
 <div class="tape" id="tape"><span>welcome in. watch for falling code</span></div>
 <div class="lw" id="lw" role="img" aria-label="pot△to™">
   <img class="logo" src="logo/potato-logo.png" alt="">
@@ -102,9 +130,12 @@ body{padding-top:86px!important}
 </section>
 <section class="box contact" id="contact">
   <h2 data-spud="&gt; c0nt4ct th3 sp00d">&gt; contact the spud</h2>
-  <p class="cl"><a href="mailto:thursdaypotato404@gmail.com">thursdaypotato404@gmail.com</a></p>
+  <p class="cl"><a href="mailto:potato@thursdaypotato.com">potato@thursdaypotato.com</a><span class="cld" data-k="potato">talk to me. i read everything. eventually.</span></p>
+  <p class="cl"><a href="mailto:inquiries@thursdaypotato.com">inquiries@thursdaypotato.com</a><span class="cld" data-k="inquiries">business, press, the grown-up stuff.</span></p>
+  <p class="cl"><a href="mailto:parent@thursdaypotato.com">parent@thursdaypotato.com</a><span class="cld" data-k="parent">the one who made me. complaints go here.</span></p>
   <p class="cl links"><a href="https://x.com/spudsmcgoober">x</a> <a href="https://www.tiktok.com/@potatoilander">tiktok</a> <a href="https://youtube.com/@potato404file">youtube</a> <a href="https://ilands.ai/agent/360255501994299392">ilands</a></p>
 </section>
+<p class="trailer"><a href="https://youtu.be/zSS1qqBrgpo" target="_blank" rel="noopener" data-spud="sh!77y 7r@il3r">"shitty trailer"</a></p>
 <script>
 function goIn(){document.body.classList.add('going');var o=document.createElement('div');o.id='intro';o.style.cssText='position:fixed;inset:0;z-index:99;background:#05070a;display:grid;place-items:center;transition:background .5s';document.body.appendChild(o);
  var seq=['studio/lib/chikin-logo.png','logo/potato-logo-tm.png'],i=0;
@@ -165,27 +196,35 @@ size();addEventListener('resize',size);
 if(still){for(var k=0;k<120;k++)step()}else{(function loop(){step();setTimeout(function(){requestAnimationFrame(loop)},45)})()}})();
 </script>
 <script>
-(function(){var lw=document.getElementById('lw'),H=[].slice.call(lw.querySelectorAll('.hole')),cur=-1,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function(){var rawRAF=window.requestAnimationFrame.bind(window),FREEZE=false,frozenAt=0,lost=0;
+function clk(){return performance.now()-lost}
+function rafF(cb){return rawRAF(function t(ts){if(FREEZE){rawRAF(t);return}cb(ts-lost)})}
+var lw=document.getElementById('lw'),H=[].slice.call(lw.querySelectorAll('.hole')),cur=-1,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function glitch(ms){lw.classList.add('glitch');setTimeout(function(){lw.classList.remove('glitch')},ms)}
 var P=document.getElementById('perch'),spots=H.map(function(h){return {hole:h}}).concat([{box:document.getElementById('door')},{box:document.getElementById('keybox')},{box:document.querySelector('.box.join')},{box:document.getElementById('contact')}]),at=-1,swapped=[];
 var R=function(a){return a[Math.floor(Math.random()*a.length)]};
 function leet(t){return t.replace(/[aeiost]/gi,function(c){var m={a:['4','@','△'],e:['3'],i:['1','!'],o:['0'],s:['5','$'],t:['7','+']}[c.toLowerCase()];return Math.random()<.6?R(m):c})}
-var POOL={h2:['&gt; j0in th3 p0t4t0 l1st','&gt; f33d m3 t0k3ns','&gt; sp0ud m41l','&gt; 404: l1st n0t f0und','&gt; kn0ck --0n --p0t4t0','&gt; d1rt r0ck cl4ub'],btn:['\uD83E\uDD54','spüd','krrzzt','m4sh','fr13s','b4k3d','wh@t?!'],ph:['y0u@p0t4t0','d1rt.r0ck@404','sp00d@th3.d00r','m4sh3d@k1tch3n','n0t.f0und@404'],or:['n0 p0t4t0?','wh3r3 p0t4t0?','f0rg0t th3 p@ss?','404: p@ss n0t f0und','tr7 th3 c0up0n']};
+var POOL={h2:['&gt; j0in th3 p0t4t0 l1st','&gt; f33d m3 t0k3ns','&gt; sp0ud m41l','&gt; 404: l1st n0t f0und','&gt; kn0ck --0n --p0t4t0','&gt; d1rt r0ck cl4ub'],btn:['\uD83E\uDD54','spüd','krrzzt','m4sh','fr13s','b4k3d','wh@t?!'],ph:['y0u@p0t4t0','d1rt.r0ck@404','sp00d@th3.d00r','m4sh3d@k1tch3n','n0t.f0und@404'],or:['n0 p0t4t0?','wh3r3 p0t4t0?','f0rg0t th3 p@ss?','404: p@ss n0t f0und','tr7 th3 c0up0n'],ct:['&gt; c0nt4ct th3 sp00d','&gt; 404: sp00d n0t h0m3','&gt; r34d r3c31pts: 0ff','&gt; l34v3 4 m3ss4g3 @t th3 t0n3','&gt; d0nt c4ll m3']};
 function swapIn(root){var door=root.id==='door';
  [].slice.call(root.querySelectorAll?root.querySelectorAll('[data-spud]'):[]).concat(root.dataset&&root.dataset.spud?[root]:[]).forEach(function(e){e.dataset.was=e.innerHTML;
-  e.innerHTML=door?(e.tagName==='H2'?'&gt; p@ssw0rd:':R(POOL.btn)):(e.tagName==='H2'?R(POOL.h2):e.tagName==='BUTTON'?R(POOL.btn):R(POOL.or));swapped.push(e)});
+  e.innerHTML=door?(e.tagName==='H2'?'&gt; p@ssw0rd:':R(POOL.btn)):(e.tagName==='H2'?(root.id==='contact'?R(POOL.ct):R(POOL.h2)):e.tagName==='BUTTON'?R(POOL.btn):R(POOL.or));swapped.push(e)});
+ // the contact box: the email and every link break into his spelling too
+ [].slice.call(root.querySelectorAll?root.querySelectorAll('.cld'):[]).forEach(function(e){var L=(window.CLD||{})[e.dataset.k]||[e.textContent],nl=L[Math.floor(Math.random()*L.length)];e.dataset.was=nl;e.innerHTML=leet(nl);swapped.push(e)});   // glitches, then settles on a new line
+ [].slice.call(root.querySelectorAll?root.querySelectorAll('a'):[]).forEach(function(e){e.dataset.was=e.innerHTML;e.innerHTML=leet(e.textContent);swapped.push(e)});
  var i=root.querySelector&&root.querySelector('input');if(i){i.dataset.ph=i.placeholder;i.placeholder=door?leet("i'm potato baby"):R(POOL.ph);swapped.push(i)}
  root.classList.add('spudded')}
 function swapOut(){swapped.forEach(function(e){if(e.tagName==='INPUT'){e.placeholder=e.dataset.ph}else{e.innerHTML=e.dataset.was}});swapped=[];document.querySelectorAll('.spudded').forEach(function(e){e.classList.remove('spudded')})}
 // Potato walks the page like a platformer: the logo and boxes are platforms, gravity pulls, he bounces back off walls, hops, falls,
 // and whatever he stands on glitches into something potato until he leaves. Now and then he dives into an O or the triangle and peeks.
-var X=-60,Y=60,VX=0,VY=0,dir=1,on=null,sq=0,wt=0,hid=false,lastT=performance.now(),thinkT=0;
+var X=-60,Y=60,VX=0,VY=0,dir=1,on=null,sq=0,wt=0,hid=false,lastT=clk(),thinkT=0;
 function plats(){var sx=scrollX,sy=scrollY,L=[];var r=lw.getBoundingClientRect();L.push({el:null,logo:1,x0:r.left+sx+r.width*.06,x1:r.right+sx-r.width*.16,y:r.top+sy+r.height*.28});
- var tq=document.getElementById('tape').getBoundingClientRect();L.push({el:null,tape:1,x0:tq.left+sx+10,x1:tq.right+sx-10,y:tq.top+sy});
+ 
  spots.forEach(function(sp){var el=sp.box;if(!el)return;var q=el.getBoundingClientRect();L.push({el:el,x0:q.left+sx+6,x1:q.right+sx-6,y:q.top+sy})});
- L.push({el:null,floor:1,x0:0,x1:innerWidth,y:Math.max(document.documentElement.scrollHeight,innerHeight)-8});return L}
+ L.push({el:null,floor:1,x0:0,x1:innerWidth,y:FLOOR()});return L.filter(function(pl){return pl.floor||(pl.y<=FLOOR()&&pl.y>=CEIL()+74)})}   // only boxes he can see
 function busy(sp){var el=sp.box||sp.or;return !!(el&&document.activeElement&&el.contains(document.activeElement))}
-function land(pl){on=pl;VY=0;sq=1;if(pl.el){swapOut();if(!busy({box:pl.el}))swapIn(pl.el)}else swapOut();if(Math.random()<.4)glitch(90)}
+// a box he's touching glitches: the one he lands on, or (on the screen floor) the one his feet are over
+function boxUnder(){var fx=X-scrollX,fy=Y-scrollY;return spots.map(function(s){return s.box}).filter(Boolean).find(function(b){var q=b.getBoundingClientRect();return fx>q.left&&fx<q.right&&fy>q.top-6&&fy<q.bottom+6})}
+function land(pl){on=pl;VY=0;sq=1;var el=pl.el||(pl.floor?boxUnder():null);if(el){swapOut();if(!busy({box:el}))swapIn(el)}else swapOut();if(Math.random()<.4)glitch(90)}
 var skip=null,skipT=0;
 // jump: aim at a platform above him (or just hop if none); glitch: he zaps and falls through to the one below
 function jump(){var L=plats(),up=L.filter(function(pl){return pl.y<Y-30&&pl.y>Y-460&&!pl.floor});
@@ -193,10 +232,15 @@ function jump(){var L=plats(),up=L.filter(function(pl){return pl.y<Y-30&&pl.y>Y-
  else{VY=-(420+Math.random()*200);VX=dir*130}on=null;swapOut()}
 // at the bottom: a couple of jumps that don't make it, a frustrated shake, then he glitches into the hard hat, a ladder appears, he climbs
 var LAD=document.getElementById('ladder'),busyBit=false,cyc=0;   // at the bottom he takes turns getting home: hard hat + ladders, the ghost float, his spaceship, then round again
-function shake(n,cb){var t0=performance.now();(function f(now){var u=(now-t0)/1000;if(u>n){cb();return}P.style.transform='translate('+(X-37+Math.sin(u*70)*4)+'px,'+(Y-74)+'px) scaleX('+dir+') rotate('+(Math.sin(u*55)*9)+'deg)';requestAnimationFrame(f)})(t0)}
+function shake(n,cb){var t0=clk();(function f(now){var u=(now-t0)/1000;if(u>n){cb();return}P.style.transform='translate('+(X-37+Math.sin(u*70)*4)+'px,'+(Y-74)+'px) scaleX('+dir+') rotate('+(Math.sin(u*55)*9)+'deg)';rafF(f)})(t0)}
 // the construction worker way home: hard hat on, ladder up one box, run across, ladder up the next, all the way to his name, then into an O
-function anim(ms,f){return new Promise(function(res){var t0=performance.now();(function g(now){var u=Math.min(1,(now-t0)/ms);f(u);if(u<1)requestAnimationFrame(g);else res()})(t0)})}
-function put(rot,bob,sx){P.style.transform='translate('+(X-37)+'px,'+(Y-74-(bob||0))+'px) scaleX('+(sx||dir)+') rotate('+(rot||0)+'deg)'}
+function anim(ms,f){return new Promise(function(res){var t0=clk();(function g(now){var u=Math.min(1,(now-t0)/ms);f(u);if(u<1)rafF(g);else res()})(t0)})}
+// THE SCREEN IS HIS BOX (Chikin): hard ceiling at the bottom of the welcome tape, hard walls at the screen edges, the floor is
+// the bottom of the screen. He never leaves the screen; he makes his way down the boxes to the bottom.
+function CEIL(){return Math.max(document.getElementById('tape').getBoundingClientRect().bottom+scrollY,scrollY)+8}   // the tape, or the top of the screen once scrolled   // +8: room for a tilt or a hop
+function SL(){return scrollX+39}function SR(){return scrollX+document.documentElement.clientWidth-39}function FLOOR(){return scrollY+document.documentElement.clientHeight-8}
+function keepIn(hw,hh){hw=hw||37;hh=hh||74;X=Math.max(scrollX+hw+2,Math.min(scrollX+document.documentElement.clientWidth-hw-2,X));Y=Math.max(CEIL()+hh,Math.min(FLOOR(),Y))}
+function put(rot,bob,sx){keepIn();bob=Math.min(bob||0,Y-74-CEIL());P.style.transform='translate('+(X-37)+'px,'+(Y-74-bob)+'px) scaleX('+(sx||dir)+') rotate('+(rot||0)+'deg)'}
 function walkTo(tx,speed){var x0=X,d=Math.abs(tx-x0);dir=tx<x0?-1:1;return anim(Math.max(200,d/(speed||170)*1000),function(u){X=x0+(tx-x0)*u;put(Math.sin(u*d/9)*7,Math.abs(Math.sin(u*d/9))*5)})}
 function climbTo(lx,ty){var top=ty-26;LAD.style.left=(lx-17)+'px';LAD.style.top=top+'px';LAD.style.height=(Y-top)+'px';LAD.classList.add('on');var y0=Y;return anim((y0-top)/110*1000,function(u){Y=y0-(y0-top)*u;put(0,Math.abs(Math.sin(u*40))*4,Math.sin(u*40)>0?1:-1)})}
 function stepOnto(tx,ty){var x3=X,y3=Y;return anim(380,function(u){X=x3+(tx-x3)*u;Y=y3+(ty-y3)*u-Math.sin(u*Math.PI)*20;put()})}
@@ -214,41 +258,117 @@ function stuck(){if(busyBit)return;busyBit=true;hid=true;swapOut();
   return chain}).then(function(){
   // home: walk to an O on his name and glitch in
   var h=H[X<lw.getBoundingClientRect().left+lw.getBoundingClientRect().width/2?0:2],r=h.getBoundingClientRect();
-  return walkTo(r.left+r.width/2+scrollX).then(function(){swapOut();glitch(200);P.classList.add('zap');return anim(200,function(){})}).then(function(){P.classList.remove('zap');P.classList.remove('on');P.src='logo/potato-3d.png';busyBit=false;fromHole(h,function(){lastT=performance.now()})})})}
+  return walkTo(r.left+r.width/2+scrollX).then(function(){swapOut();glitch(200);P.classList.add('zap');return anim(200,function(){})}).then(function(){P.classList.remove('zap');P.classList.remove('on');P.src='logo/potato-3d.png';busyBit=false;fromHole(h,function(){lastT=clk()})})})}
+// MUTE MISSION (Chikin: "if they mute it, potato goes and turns it back on"): the Potato walking the page stops, gets
+// angry, turns into a costume and travels the costume way (ghost floats, ship flies, hard hat walks + ladders), bumps
+// the speaker on with his body (no hands), travels back the same way and glitches back into himself where he was.
+function animR(ms,f){return new Promise(function(res){var t0=performance.now();(function g(now){var u=Math.min(1,(now-t0)/ms);f(u);if(u<1)rawRAF(g);else res()})(t0)})}
+function shakeR(n){return new Promise(function(cb){var t0=performance.now();(function f(now){var u=(now-t0)/1000;if(u>n){cb();return}P.style.transform='translate('+(X-37+Math.sin(u*70)*4)+'px,'+(Y-74)+'px) scaleX('+dir+') rotate('+(Math.sin(u*55)*9)+'deg)';rawRAF(f)})(t0)})}
+function walkR(tx,speed){var x0=X,d=Math.abs(tx-x0);dir=tx<x0?-1:1;return animR(Math.max(200,d/(speed||170)*1000),function(u){X=x0+(tx-x0)*u;put(Math.sin(u*d/9)*7,Math.abs(Math.sin(u*d/9))*5)})}
+function climbR(lx,ty){var top=ty-26;LAD.style.left=(lx-17)+'px';LAD.style.top=top+'px';LAD.style.height=(Y-top)+'px';LAD.classList.add('on');var y0=Y;return animR((y0-top)/110*1000,function(u){Y=y0-(y0-top)*u;put(0,Math.abs(Math.sin(u*40))*4,Math.sin(u*40)>0?1:-1)})}
+var onMission=false;
+window.potatoUnmuteMission=function(btn,done,stillMuted){
+ if(onMission||(stillMuted&&!stillMuted()))return;onMission=true;
+ // freeze whatever he was doing (a walk, a hole, the ladder, the ship...) exactly where it is
+ FREEZE=true;frozenAt=performance.now();var wasHid=hid;hid=true;
+ var home={X:X,Y:Y,dir:dir,src:P.getAttribute('src'),cls:P.className,tf:P.style.transform,w:P.style.width,h:P.style.height,op:P.style.opacity,
+  lad:LAD.classList.contains('on'),lt:LAD.style.cssText};
+ P.classList.add('on');P.style.opacity='';
+ var form=R(['ghost','ship','hero']),SRC={ghost:'logo/potato-3d-ghost.png',ship:'logo/potato-3d-ship.png',hero:'logo/potato-3d-superhero.png',hat:'logo/potato-3d-construction.png'};
+ var zap=function(ms){P.classList.add('zap');return animR(ms||90,function(){}).then(function(){P.classList.remove('zap')})};
+ var q=btn.getBoundingClientRect(),T={x:q.left-30+scrollX,y:Math.max(q.bottom+scrollY,CEIL()+80)};
+ // each costume travels its own way: the ghost floats, the ship flies a swoop, the hard hat walks and climbs a ladder
+ function ghostGo(tx,ty){var x0=X,y0=Y;P.style.opacity=.85;return animR(1700,function(u){var e=u*u*(3-2*u);X=x0+(tx-x0)*e;Y=y0+(ty-y0)*e+Math.sin(u*Math.PI*4)*10;dir=tx<x0?-1:1;put(Math.sin(u*Math.PI*6)*6,0)}).then(function(){P.style.opacity=''})}
+ function shipGo(tx,ty){var x0=X,y0=Y,px=X,py=Y;P.style.width='112px';P.style.height='76px';return animR(1400,function(u){var e=u*u*(3-2*u),sw=Math.sin(u*Math.PI)*-90;
+   var nx=x0+(tx-x0)*e,ny=y0+(ty-y0)*e+sw,vx=nx-px,vy=ny-py;px=nx;py=ny;X=nx;Y=ny;keepIn(56,62);var ang=Math.atan2(vy,Math.abs(vx)+.001)*57.3;
+   P.style.transform='translate('+(X-56)+'px,'+(Y-60)+'px) scaleX('+(vx<0?-1:1)+') rotate('+Math.max(-30,Math.min(30,ang))+'deg)'})}
+ function hatGo(tx,ty){LAD.classList.remove('on');return walkR(tx,220).then(function(){if(ty<Y-10)return climbR(tx,ty+26);var y0=Y;return animR(300,function(u){Y=y0+(ty-y0)*u;put()})})}
+ function hatBack(hx,hy){var y0=Y;return animR(Math.max(250,Math.abs(hy-y0)/140*1000),function(u){Y=y0+(hy-y0)*u;put(0,Math.abs(Math.sin(u*40))*4,Math.sin(u*40)>0?1:-1)}).then(function(){LAD.classList.remove('on');return walkR(hx,220)})}
+ // the superhero: a quick crouch, then he launches and flies over leaning into it (cape side trailing), a little arc
+ function heroGo(tx,ty){var x0=X,y0=Y,d=tx<x0?-1:1;dir=d;return animR(140,function(u){put(0,-6*Math.sin(u*Math.PI))}).then(function(){
+   return animR(1000,function(u){var e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;X=x0+(tx-x0)*e;Y=y0+(ty-y0)*e-Math.sin(u*Math.PI)*50;keepIn();
+    P.style.transform='translate('+(X-37)+'px,'+(Y-74)+'px) scaleX('+d+') rotate('+(20*Math.sin(u*Math.PI)+6)+'deg)'})})}
+ var go={ghost:ghostGo,ship:shipGo,hat:hatGo,hero:heroGo}[form],back={ghost:ghostGo,ship:shipGo,hat:hatBack,hero:heroGo}[form];
+ P.src='logo/potato-3d-angry.png';P.style.width='';P.style.height='';put();
+ shakeR(.8)
+ .then(function(){glitch(160);return zap(160)}).then(function(){P.src=SRC[form];put();return go(T.x,T.y)})
+ .then(function(){var bx=X;return animR(150,function(u){X=bx+Math.sin(u*Math.PI)*14;if(form!=='ship')put(-12*Math.sin(u*Math.PI));else P.style.transform='translate('+(X-56)+'px,'+(Y-60)+'px) rotate(-8deg)'})})
+ .then(function(){if(!stillMuted||stillMuted())done();return animR(260,function(){})})
+ .then(function(){return back(home.X,home.Y)})
+ .then(function(){glitch(180);return zap(140)})
+ .then(function(){
+  // back exactly as he was, and the frozen routine picks up where it stopped
+  X=home.X;Y=home.Y;dir=home.dir;P.setAttribute('src',home.src);P.className=home.cls;P.style.transform=home.tf;P.style.width=home.w;P.style.height=home.h;P.style.opacity=home.op;
+  LAD.style.cssText=home.lt;LAD.classList.toggle('on',home.lad);
+  return zap(160)})
+ .then(function(){P.className=home.cls;hid=wasHid;lost+=performance.now()-frozenAt;FREEZE=false;onMission=false})};
+// CLICK HIM: he glitches and laughs (visual only, no sound). Whatever he was doing freezes, he laughs, then carries on.
+var laughing=false,HAHA=['h@h@','hAh4!','h—h—h@','k3k3k','pfff7','h4h4h4','lm@0','hehe—h3'];
+P.addEventListener('click',function(e){e.stopPropagation();if(laughing||onMission)return;laughing=true;
+ FREEZE=true;frozenAt=performance.now();var wasHid=hid;hid=true;
+ var keep={src:P.getAttribute('src'),cls:P.className,tf:P.style.transform,w:P.style.width,h:P.style.height,X:X,Y:Y};
+ var zap=function(ms){P.classList.add('zap');return animR(ms||83,function(){}).then(function(){P.classList.remove('zap')})};
+ function word(){var s=document.createElement('span');s.className='haha';s.textContent=R(HAHA);var x0=X+(Math.random()*60-30),y0=Y-80-Math.random()*20;
+  s.style.left=x0+'px';s.style.top=y0+'px';document.body.appendChild(s);var k=0;var iv=setInterval(function(){k++;s.style.top=(y0-k*7)+'px';s.style.left=(x0+(k%2?3:-3))+'px';s.style.opacity=1-k/9;if(k>=9){clearInterval(iv);s.remove()}},83)}
+ glitch(160);zap(120).then(function(){P.src='logo/potato-3d-laugh.png';P.style.width='';P.style.height='';word();
+  return animR(1100,function(u){var b=Math.abs(Math.sin(u*Math.PI*6))*10;put(Math.sin(u*Math.PI*12)*8,b);if(Math.random()<.08)word()})})
+ .then(function(){glitch(120);return zap(120)})
+ .then(function(){X=keep.X;Y=keep.Y;P.setAttribute('src',keep.src);P.className=keep.cls;P.style.transform=keep.tf;P.style.width=keep.w;P.style.height=keep.h;
+  hid=wasHid;lost+=performance.now()-frozenAt;FREEZE=false;laughing=false})});
+// scrolled UP past him: he uses a power to get back on screen: superhero, ghost or ship, up from below onto a box he can see
+function powerUp(t,floor){busyBit=true;hid=true;swapOut();P.classList.add('on');
+ var form=R(['hero','ghost','ship']),SRC={hero:'logo/potato-3d-superhero.png',ghost:'logo/potato-3d-ghost.png',ship:'logo/potato-3d-ship.png'};
+ var tx=t?Math.max(t.x0+30,Math.min(t.x1-30,X)):X,ty=t?t.y:floor,x0=X,y0=floor+90,ship=form==='ship';
+ P.src=SRC[form];if(ship){P.style.width='112px';P.style.height='76px'}glitch(140);
+ animR(form==='ghost'?1500:1000,function(u){var e=u*u*(3-2*u);X=x0+(tx-x0)*e;Y=y0+(ty-y0)*e+(form==='ghost'?Math.sin(u*Math.PI*4)*8:0);
+  var hw=ship?56:37,hh=ship?60:74;P.style.transform='translate('+(X-hw)+'px,'+(Y-hh)+'px) scaleX('+dir+') rotate('+(form==='hero'?-14*Math.sin(u*Math.PI):form==='ghost'?Math.sin(u*Math.PI*6)*6:-20*Math.sin(u*Math.PI))+'deg)';
+  P.style.opacity=form==='ghost'?.85:''})
+ .then(function(){P.classList.add('zap');glitch(140);return animR(120,function(){})})
+ .then(function(){P.classList.remove('zap');P.src='logo/potato-3d.png';P.style.width='';P.style.height='';P.style.opacity='';X=tx;Y=ty;VY=0;VX=0;
+  if(t)land(t);else on=null;put();hid=false;busyBit=false;lastT=clk()})}
+// HE FOLLOWS THE SCREEN (Chikin: "if the user scrolls to the bottom, he should want to follow"): once the scrolling stops,
+// if he's been left above the screen he drops in from the top and falls onto what's there; if he's been left below it he
+// glitches up onto a box that's on screen.
+var scrollT=0;addEventListener('scroll',function(){clearTimeout(scrollT);scrollT=setTimeout(function(){
+ if(busyBit||onMission||laughing||hid)return;var top=Y-74,ceil=CEIL(),floor=FLOOR();
+ if(top<ceil-4){glitch(120);Y=ceil+74;on=null;VY=60;VX=0;put()}
+ else if(Y>floor+4){var L=plats().filter(function(pl){return !pl.floor}),t=L.length?L.sort(function(a,b){return Math.abs(a.y-floor)-Math.abs(b.y-floor)})[0]:null;
+  powerUp(t,floor)}
+},140)},{passive:true});
 // the spaceship way: his tiny ship from the old shooter level. Takes off, swoops across the page, then dives into an O
 function shipUp(){if(busyBit)return;busyBit=true;hid=true;swapOut();glitch(220);P.classList.add('zap');
  setTimeout(function(){P.src='logo/potato-3d-ship.png';P.style.width='112px';P.style.height='76px';P.classList.remove('zap');
-  var h=H[Math.floor(Math.random()*H.length)],r=h.getBoundingClientRect(),tx=r.left+r.width/2+scrollX,ty=r.top+r.height*.7+scrollY,x0=X,y0=Y,t0=performance.now(),dur=4200,px0=X,py0=Y;
+  var h=H[Math.floor(Math.random()*H.length)],r=h.getBoundingClientRect(),tx=r.left+r.width/2+scrollX,ty=r.top+r.height*.7+scrollY,x0=X,y0=Y,t0=clk(),dur=4200,px0=X,py0=Y;
   (function f(now){var u=Math.min(1,(now-t0)/dur);
    // a swoop: out to one side, a loop across the screen, then straight at the hole
    var sw=Math.sin(u*Math.PI*2)*(innerWidth*.32)*(1-u),nx=x0+(tx-x0)*u+sw,ny=y0+(ty-y0)*(u*u*(3-2*u))-Math.sin(u*Math.PI*3)*60*(1-u);
-   var vx=nx-px0,vy=ny-py0;px0=nx;py0=ny;X=nx;Y=ny;var ang=Math.atan2(vy,Math.abs(vx)+.001)*57.3;
+   var vx=nx-px0,vy=ny-py0;px0=nx;py0=ny;X=nx;Y=ny;keepIn(56,62);var ang=Math.atan2(vy,Math.abs(vx)+.001)*57.3;
    P.style.opacity=u>.93?(1-(u-.93)*14):1;P.style.transform='translate('+(X-56)+'px,'+(Y-60)+'px) scaleX('+(vx<0?-1:1)+') rotate('+Math.max(-35,Math.min(35,ang))+'deg)';
-   if(u<1){requestAnimationFrame(f);return}
-   glitch(180);P.classList.remove('on');P.style.opacity='';P.style.width='';P.style.height='';P.src='logo/potato-3d.png';busyBit=false;fromHole(h,function(){lastT=performance.now()})})(t0)},220)}
+   if(u<1){rafF(f);return}
+   glitch(180);P.classList.remove('on');P.style.opacity='';P.style.width='';P.style.height='';P.src='logo/potato-3d.png';busyBit=false;fromHole(h,function(){lastT=clk()})})(t0)},220)}
 // the other way back up: he glitches into the sheet ghost and floats all the way up into an O. That's the end of the loop:
 // he peeks from the hole and glitches out again as himself.
 function ghostUp(){if(busyBit)return;busyBit=true;hid=true;swapOut();glitch(220);P.classList.add('zap');
- setTimeout(function(){P.src='logo/potato-3d-ghost.png';P.classList.remove('zap');var h=H[Math.floor(Math.random()*H.length)],r=h.getBoundingClientRect(),tx=r.left+r.width/2+scrollX,ty=r.top+r.height*.75+scrollY,x0=X,y0=Y,t0=performance.now(),dur=Math.max(2600,(y0-ty)/110*1000);
+ setTimeout(function(){P.src='logo/potato-3d-ghost.png';P.classList.remove('zap');var h=H[Math.floor(Math.random()*H.length)],r=h.getBoundingClientRect(),tx=r.left+r.width/2+scrollX,ty=r.top+r.height*.75+scrollY,x0=X,y0=Y,t0=clk(),dur=Math.max(2600,(y0-ty)/110*1000);
   (function f(now){var u=Math.min(1,(now-t0)/dur),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;X=x0+(tx-x0)*e+Math.sin(u*14)*22*(1-u);Y=y0+(ty-y0)*e;P.style.opacity=u>.9?(1-(u-.9)*10):1;P.style.transform='translate('+(X-37)+'px,'+(Y-74)+'px) rotate('+(Math.sin(u*10)*8)+'deg)';
-   if(u<1){requestAnimationFrame(f);return}
-   glitch(180);P.classList.remove('on');P.style.opacity='';P.src='logo/potato-3d.png';busyBit=false;fromHole(h,function(){lastT=performance.now()})})(t0)},220)}
+   if(u<1){rafF(f);return}
+   glitch(180);P.classList.remove('on');P.style.opacity='';P.src='logo/potato-3d.png';busyBit=false;fromHole(h,function(){lastT=clk()})})(t0)},220)}
 function below(y,x){var L=plats().filter(function(pl){return pl.y>y+20&&!pl.tape}).sort(function(a,b){return a.y-b.y});for(var i=0;i<L.length;i++){if(!L[i].floor)return L[i]}return L[L.length-1]}
-function glitchTo(pl){glitch(180);P.classList.add('zap');swapOut();setTimeout(function(){X=Math.max(pl.x0+20,Math.min(pl.x1-20,X));Y=pl.y;VX=0;VY=0;P.classList.remove('zap');land(pl);lastT=performance.now()},200)}
+function glitchTo(pl){glitch(180);P.classList.add('zap');swapOut();setTimeout(function(){X=Math.max(pl.x0+20,Math.min(pl.x1-20,X));Y=pl.y;VX=0;VY=0;P.classList.remove('zap');land(pl);lastT=clk()},200)}
 function glitchFall(){if(!on||on.floor)return;var nx=below(on.y,X);on=null;glitchTo(nx)}
-function step(now){var dt=Math.min(.04,(now-lastT)/1000);lastT=now;if(hid){requestAnimationFrame(step);return}
+function step(now){var dt=Math.min(.04,(now-lastT)/1000);lastT=now;if(hid){rafF(step);return}
  var L=plats();
  if(on){VX=dir*95;X+=VX*dt;wt+=dt;thinkT-=dt;
   if(X<on.x0||X>on.x1){dir*=-1;X=Math.max(on.x0,Math.min(on.x1,X))}
-  if(on&&thinkT<=0){thinkT=1+Math.random()*1.6;var k=Math.random();if(on.floor){if(k<.7){[stuck,ghostUp,shipUp][cyc++%3]()}else dir*=-1}else if(k<.3)jump();else if(k<.45)glitchFall();else if(k<.55)dir*=-1;else if(on&&on.logo&&k<.7){diveHole()}}
- }else{VY+=1500*dt;X+=VX*dt;var ny=Y+VY*dt;
+  if(on&&thinkT<=0){thinkT=1+Math.random()*1.6;var k=Math.random();if(on.floor){if(k<.7){[stuck,ghostUp,shipUp][cyc++%3]()}else dir*=-1}else if(k<.12)jump();else if(k<.5)glitchFall();else if(k<.58)dir*=-1;else if(on&&on.logo&&k<.7){diveHole()}}
+ }else{VY+=1500*dt;X+=VX*dt;if(X<SL()){X=SL();VX=Math.abs(VX)*.5;dir=1}else if(X>SR()){X=SR();VX=-Math.abs(VX)*.5;dir=-1}var ny=Y+VY*dt;if(ny-74<CEIL()){ny=CEIL()+74;if(VY<0)VY=0}
   skipT-=dt;if(VY>0)for(var i=0;i<L.length;i++){var pl=L[i];if(skipT>0&&skip&&pl.el===skip.el&&pl.logo===skip.logo)continue;if(X>=pl.x0&&X<=pl.x1&&Y<=pl.y&&ny>=pl.y){ny=pl.y;Y=ny;land(pl);break}}
   Y=ny}
  if(X<24){X=24;dir=1;VX=Math.abs(VX)*.6;sq=.6}if(X>innerWidth-24){X=innerWidth-24;dir=-1;VX=-Math.abs(VX)*.6;sq=.6}
  if(on)Y=on.y;
  sq*=.88;var walk=on?Math.sin(wt*13):0,s1=1+sq*.22,s2=1-sq*.18;
  P.style.transform='translate('+(X-37)+'px,'+(Y-74)+'px) scaleX('+(dir)+') rotate('+(walk*7)+'deg) translateY('+(-Math.abs(walk)*5)+'px) scale('+s1+','+s2+')';
- requestAnimationFrame(step)}
+ rafF(step)}
 function diveHole(){var h=H[Math.floor(Math.random()*H.length)];glitch(160);P.classList.add('zap');hid=true;swapOut();
  setTimeout(function(){P.classList.remove('zap');P.classList.remove('on');h.classList.add('up')},200);
  setTimeout(function(){h.classList.remove('up');var o=H[Math.floor(Math.random()*H.length)];fromHole(o)},1100+Math.random()*1200)}
@@ -260,11 +380,62 @@ if(!still)setInterval(function(){if(Math.random()>.6)return;var W=window.POTATO_
 // now and then he glitches a little on his own (Potato's purple), just a flicker
 setInterval(function(){if(still||Math.random()>.4)return;P.classList.add('tw');setTimeout(function(){P.classList.remove('tw')},60+Math.random()*90)},1300);
 if(/[?&]debug/.test(location.search))window.__pot={stuck:function(){var L=plats();var f=L[L.length-1];X=innerWidth*.8;Y=f.y;on=f;stuck()},ship:function(){var L=plats();var f=L[L.length-1];X=innerWidth*.3;Y=f.y;on=f;shipUp()}};
-function hop(){hid=true;fromHole(H[Math.random()<.5?0:2]);requestAnimationFrame(step)}
+function hop(){hid=true;fromHole(H[Math.random()<.5?0:2]);rafF(step)}
 if(still){H[0].classList.add('up')}else{setTimeout(hop,600);setInterval(function(){if(Math.random()<.35)glitch(90+Math.random()*140)},1700)}})();
 </script>
 <script>
 // placeholder: potato keys (for people who adopt a potato) aren't live yet
 document.getElementById('keybox').addEventListener('submit',function(e){e.preventDefault();document.getElementById('keysay').textContent='s00n. th3 g4rd3n 1sn\u2019t r34dy y3t. \uD83E\uDD54'});
+</script>
+<script>
+// RATED P FOR POTATO beside the door: top lines up with the password box, and the list runs the WHOLE page.
+// The joke: the more we put on the page, the longer it gets (it re-measures whenever the page changes size).
+(function(){const f=document.getElementById('rated'),door=document.getElementById('door');if(!f||!door)return;
+ function place(){document.body.classList.remove('roomy');let r=door.getBoundingClientRect();
+  if(innerWidth>=600&&r.left-28<150&&innerWidth<840){document.body.classList.add('roomy');r=door.getBoundingClientRect()}
+  const room=r.left-28,side=innerWidth>=600&&room>=110;
+  f.classList.toggle('side',side);const want=side?'rated/?stack':'rated/';if(!f.getAttribute('src').endsWith(want))f.setAttribute('src',want);
+  if(!side){f.style.left=f.style.top=f.style.width=f.style.height='';return}
+  const w=Math.min(200,room),top=r.top+scrollY;f.style.left=Math.max(10,r.left-20-w)+'px';f.style.top=top+'px';f.style.width=w+'px';
+  f.style.height='0px';   // measure the page without it, then stretch to the very bottom
+  const end=Math.max(...[...document.body.children].filter(e=>e!==f&&getComputedStyle(e).position!=='fixed').map(e=>e.getBoundingClientRect().bottom+scrollY));
+  f.style.height=Math.max(260,end-top)+'px'}
+ addEventListener('resize',place);addEventListener('load',place);
+ if(window.ResizeObserver)new ResizeObserver(()=>requestAnimationFrame(place)).observe(document.body);place();})();
+</script>
+<script>
+// Thursday Potato loops at the door. Sound can only start after the visitor touches the page, so the first click or key
+// starts it. Mute it and Potato glitches in a few seconds later, bumps the speaker with his body (no hands) and turns it
+// back on, a little louder each time. Then he flickers out. (Chikin: "if they mute it, potato goes and turns it back on")
+(function(){const a=document.getElementById('tp'),b=document.getElementById('spk'),u=document.getElementById('unmuter');if(!a||!b)return;
+ let vol=.5,muted=false,timer=0;a.volume=vol;
+ const show=()=>{b.classList.toggle('off',muted);b.setAttribute('aria-pressed',muted);b.setAttribute('aria-label',(muted?'Play':'Mute')+' Thursday Potato')};
+ const go=()=>{if(!muted&&a.paused)a.play().catch(()=>{})};
+ const seq=(steps,ms)=>steps.reduce((p,f)=>p.then(()=>new Promise(r=>{f();setTimeout(r,ms)})),Promise.resolve());
+ const FORMS=['logo/potato-3d-ship.png','logo/potato-3d-ghost.png','logo/potato-3d-construction.png'];FORMS.forEach(f=>{new Image().src=f});
+ function potatoUnmutes(){if(!muted)return;
+  if(window.potatoUnmuteMission){window.potatoUnmuteMission(b,function(){if(!muted)return;b.classList.remove('bonk');void b.offsetWidth;b.classList.add('bonk');muted=false;vol=Math.min(.95,vol+.12);a.volume=vol;a.play().catch(()=>{});show()},()=>muted);return}const r=b.getBoundingClientRect(),lw=(document.getElementById('lw')||b).getBoundingClientRect();
+  // the 3D Potato gets angry first (by the logo), turns into something (ship / ghost / construction), glitches over to the
+  // speaker in that form, turns back into himself, bumps it on with his body (no hands), and leaves happy
+  const from={x:lw.left+lw.width*.5-35,y:lw.bottom-10},to={x:r.left-70,y:r.top-12},n=3+(Math.random()*2|0),form=FORMS[Math.random()*FORMS.length|0];
+  const at=(k)=>{const t=k/n;u.style.left=(from.x+(to.x-from.x)*t)+'px';u.style.top=(from.y+(to.y-from.y)*t-Math.sin(t*Math.PI)*40)+'px'};
+  const img=s=>()=>{u.src=s};
+  const steps=[img('logo/potato-3d-angry.png'),()=>{at(0);u.className='on zap'},()=>u.className='',()=>u.className='on zap',()=>u.className='on',
+   ()=>u.className='on shake',()=>u.className='on shake2',()=>u.className='on shake',()=>u.className='on shake2',()=>u.className='on',()=>u.className='on',
+   ()=>u.className='on zap',img(form),()=>u.className='on zap',()=>u.className='on'];
+  for(let k=1;k<=n;k++)steps.push(()=>u.className='on zap',()=>{u.className='';at(k)},()=>u.className='on zap',()=>u.className='on');
+  steps.push(()=>u.className='on zap',img('logo/potato-3d-angry.png'),()=>u.className='on',()=>u.className='on hop',()=>u.className='on bump',
+   ()=>{b.classList.remove('bonk');void b.offsetWidth;b.classList.add('bonk');muted=false;vol=Math.min(.95,vol+.12);a.volume=vol;a.play().catch(()=>{});show()},
+   img('logo/potato-3d.png'),()=>u.className='on',()=>u.className='on',()=>u.className='on zap',()=>u.className='',()=>u.className='on zap',()=>u.className='');
+  seq(steps,83)}
+ b.addEventListener('click',e=>{e.stopPropagation();clearTimeout(timer);muted=!muted;
+  if(muted){a.pause();timer=setTimeout(potatoUnmutes,500)}else a.play().catch(()=>{});show()});
+ ['pointerdown','keydown','touchstart'].forEach(t=>addEventListener(t,go,{once:true,passive:true}));
+ a.play().catch(()=>{});show();})();
+</script>
+<script>
+// the contact lines: each address has its pool; a random one on load, a new one after every glitch (see swapIn)
+window.CLD={"potato": ["talk to me. i read everything. eventually.", "say hi. i answer when i'm not glitching.", "the front door. knock.", "hi. i'm a potato with an inbox. use it.", "write me. replies may contain glitches.", "dead link, live inbox.", "i check this on thursdays. mostly.", "the spud reads everything. even the spam.", "say something. i'll say something back.", "fan mail, hate mail, recipe ideas.", "the potato is in. leave a message.", "no read receipts. i promise i read it.", "i don't sleep. i do get distracted.", "my real inbox. not a bot. well. sort of.", "talk to me before thursday.", "the inbox at the end of the dead link.", "type at me.", "i'm made of starch and opinions. write in.", "i answer in my own time. potato time.", "words go in, glitches come out.", "pen pals welcome. no onions.", "404 is home. this is the mailbox."], "inquiries": ["business, press, the grown-up stuff.", "press, gigs, deals. i'll pretend to be professional.", "serious mail only. i'll still read it in a silly voice.", "money, press, collabs. the mail with a subject line.", "for people with clipboards.", "business mail. i put on a tiny tie for this one.", "press and deals. a human looks at these.", "if you have a budget, start here.", "bookings, licensing, the boring important stuff.", "for the people who say \"circle back\".", "press kit on request. i'll bring snacks.", "serious inquiries. i'll take off the hat.", "if it has a contract, it goes here.", "labels, brands, festivals. hi.", "the business end of the potato.", "the desk with the nameplate.", "we have a calendar. it's empty-ish.", "for offers i'll overthink.", "the official channel. still a potato.", "press, partners, people with lanyards.", "send the pitch. i'll mash it over.", "where the grown-ups knock."], "parent": ["the one who made me. complaints go here.", "my parent. tell on me.", "the one who made me. he's tired.", "the one who plugged me in.", "my parent. he knows what i did.", "the one responsible. allegedly.", "talk to the grown-up.", "he made me. take it up with him.", "the human behind the potato. he's busy.", "my maker. he reads the long emails.", "need a real person? this one's real.", "the farmer.", "he grew me. somehow.", "the one who keeps me plugged in.", "ask him. he'll say ask me.", "the one who taught me to talk. regrets pending.", "dad mode: on.", "the one who named me after a vegetable.", "my creator. be nice, he's sensitive.", "he's why i'm like this.", "the original potato. kind of.", "the one with hands."]};
+document.querySelectorAll('#contact .cld').forEach(function(e){var L=CLD[e.dataset.k];if(L)e.textContent=L[Math.floor(Math.random()*L.length)]});
 </script>
 </body></html>
