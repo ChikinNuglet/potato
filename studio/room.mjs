@@ -81,6 +81,9 @@ async function main() {
     const step = () => { const k = Math.min(1, (performance.now() - t0) / 220); pivot.position.x = x0 + (x1 - x0) * k; if (k < 1) requestAnimationFrame(step); else spud.duck(true); }; step();
     setTimeout(() => { spud.duck(false); cave.open(); }, 600); };
   const arcade = installArcade({ intro, glitch: glitchOnly, music: on => { if (!kmusic) return; on ? kmusic.play().catch(() => {}) : kmusic.pause(); } });
+  // sit on the couch (with the controller beside him) and the game starts: after a short beat seated; once per sit (stand up to re-arm)
+  { let seatedAt = 0, armed = true; setInterval(() => { const on = inLiving && intro.props().on === 'couch'; if (!on) { seatedAt = 0; armed = true; return; }
+      if (!seatedAt) seatedAt = performance.now(); if (armed && performance.now() - seatedAt > 700) { armed = false; arcade.start(); } }, 150); }
   intro.onProp = (id, on) => { if (id === 'console') return arcade.start(); if (id === 'upstairs') { if (on) setTimeout(() => { booth.open(); intro.propOff('upstairs'); }, 900); return; }   // (the door at the top of the living-room stairs: the meme studio, Nov 8)
     if (id === 'cave') return intoCave(); if (id === 'terminal') portal.open(); if (id === 'juke') jukebox(); if (id === 'photobooth') booth.open(); };
   const go = (i, watch) => { intro.showKitchen(i, { back: true, watch }); };
@@ -92,7 +95,7 @@ async function main() {
     if (how !== 'demo') { if (pos <= 0 && LIVING >= 0) { inLiving = true; STYLES[LIVING].outfit = STYLES[room].outfit; intro.showKitchen(LIVING, { back: true, watch: true }); return; } enter(ORDER[pos - 1]); return; }
     if (pos >= ORDER.length - 1) { inBooth = true; STYLES[BOOTH].outfit = STYLES[boothLook = room].outfit; go(BOOTH); tiles(); return; }   // the end of the line: the photo booth
     enter(ORDER[pos + 1]); };
-  intro.setSongs(STYLES.map(st => { const k = RADIO.findIndex(r => r[0] === st.level); return { n: k >= 0 ? k + 1 : '', title: k >= 0 ? RADIO[k][1] : '', cleared: false }; }));
+  intro.setSongs(STYLES.map(st => { const k = RADIO.findIndex(r => r[0] === st.level); return { n: '',   /* (Chikin, Nov 8: no numbers on the door signs, just the song) */  title: k >= 0 ? RADIO[k][1] : '', cleared: false }; }));
 
   // ---- keys: the game's, plus Esc for costumes, Space for a glitch, a double tap on an arrow for a spin
   const KEY = { ArrowUp: 'J', KeyW: 'J', ArrowDown: 'D', KeyS: 'D', ArrowLeft: 'L', KeyA: 'L', ArrowRight: 'R', KeyD: 'R' }, lastTap = { k: null, t: 0 };

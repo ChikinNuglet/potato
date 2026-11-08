@@ -347,6 +347,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     walk.door = false; walk.use = i; walk.chain = -1; walk.hopAt = 0; walk.then = null; walk.via = undefined; faceDir = 0; walk.hop = true; walk.dir = 0;
     walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw((a + b) / 2))); return true; };
   S.propOff = id => { const i = idOf(id); if (i >= 0 && ps[i]) ps[i].on = false; };
+  S.propOn = id => { const i = idOf(id); if (i >= 0 && ps[i]) ps[i].on = true; };
   S.spinBy = d => { spinOff += Math.PI * 2 * d; spud.turnBy(Math.PI * 2 * d); };
   return S;
 }

@@ -34,11 +34,11 @@ export function installArcade({ intro, glitch, music }) {
     const pad = document.createElement('div'); pad.id = 'arc-pad';
     pad.innerHTML = '<svg viewBox="0 0 64 30"><rect x="2" y="2" width="60" height="26" rx="13" fill="#3a3f4c" stroke="#120a05" stroke-width="3"/><circle cx="18" cy="15" r="4" fill="#e85aa8" stroke="#120a05" stroke-width="1.5"/><circle cx="46" cy="15" r="4" fill="#4dd2ff" stroke="#120a05" stroke-width="1.5"/></svg>';
     document.body.append(pad);
-    const sx = R.left + R.width * 0.44, sy = R.top + R.height * 0.72;   // the console's cubby (roughly: under the TV)
+    const sx = R.left + R.width * (me.x + me.w) + 10, sy = R.top + R.height * (1 - me.y - me.h * 0.5);   // off the cushion beside him
     const ex = R.left + R.width * (me.x + me.w / 2) - 32, ey = R.top + R.height * (1 - me.y - me.h * 0.42);   // his lap
     const t0 = performance.now(), T = 650;
     return new Promise(done => { (function f(n) { const k = Math.min(1, (n - t0) / T), e = 1 - Math.pow(1 - k, 2);
-      const x = sx + (ex - sx) * e, y = sy + (ey - sy) * e - Math.sin(Math.PI * k) * R.height * 0.22;
+      const x = sx + (ex - sx) * e, y = sy + (ey - sy) * e - Math.sin(Math.PI * k) * R.height * 0.12;
       pad.style.left = x + 'px'; pad.style.top = y + 'px'; pad.style.transform = `rotate(${720 * e}deg)`;
       if (k < 1) requestAnimationFrame(f); else { pad.style.transform = 'rotate(0deg)'; done(pad); } })(t0); });
   }
@@ -66,9 +66,10 @@ export function installArcade({ intro, glitch, music }) {
 
   async function start() {
     if (busy) return; busy = true;
-    intro.sitOn && intro.sitOn('couch');
+    if (intro.props().on !== 'couch') intro.sitOn && intro.sitOn('couch');
     for (let i = 0; i < 40 && intro.props().on !== 'couch'; i++) await wait(100);   // (until he's sat down: 4 s at most)
     await wait(250);
+    intro.propOn && intro.propOn('console');   // (the couch's controller stops being drawn there: it's in his lap now)
     const pad = await flipPad();
     await wait(350);
     glitch(); music(false);
