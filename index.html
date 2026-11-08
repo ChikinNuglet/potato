@@ -88,7 +88,6 @@ body{padding-top:86px!important}
   <div class="row"><input id="potkey" autocomplete="off" spellcheck="false" placeholder="your potato's key"><button type="submit" data-spud="spüd">key</button></div>
   <p class="say" id="keysay" role="status"></p>
 </form>
-<div class="or" data-spud="n0 p0t4t0?">no password?</div>
 <img id="perch" src="logo/potato-3d.png" alt="" aria-hidden="true">
 <div id="ladder" aria-hidden="true"></div>
 <section class="box join">
@@ -161,7 +160,7 @@ if(still){for(var k=0;k<120;k++)step()}else{(function loop(){step();setTimeout(f
 <script>
 (function(){var lw=document.getElementById('lw'),H=[].slice.call(lw.querySelectorAll('.hole')),cur=-1,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function glitch(ms){lw.classList.add('glitch');setTimeout(function(){lw.classList.remove('glitch')},ms)}
-var P=document.getElementById('perch'),spots=H.map(function(h){return {hole:h}}).concat([{box:document.getElementById('door')},{box:document.getElementById('keybox')},{box:document.querySelector('.box.join')},{box:document.getElementById('contact')},{or:document.querySelector('.or')}]),at=-1,swapped=[];
+var P=document.getElementById('perch'),spots=H.map(function(h){return {hole:h}}).concat([{box:document.getElementById('door')},{box:document.getElementById('keybox')},{box:document.querySelector('.box.join')},{box:document.getElementById('contact')}]),at=-1,swapped=[];
 var R=function(a){return a[Math.floor(Math.random()*a.length)]};
 function leet(t){return t.replace(/[aeiost]/gi,function(c){var m={a:['4','@','△'],e:['3'],i:['1','!'],o:['0'],s:['5','$'],t:['7','+']}[c.toLowerCase()];return Math.random()<.6?R(m):c})}
 var POOL={h2:['&gt; j0in th3 p0t4t0 l1st','&gt; f33d m3 t0k3ns','&gt; sp0ud m41l','&gt; 404: l1st n0t f0und','&gt; kn0ck --0n --p0t4t0','&gt; d1rt r0ck cl4ub'],btn:['\uD83E\uDD54','spüd','krrzzt','m4sh','fr13s','b4k3d','wh@t?!'],ph:['y0u@p0t4t0','d1rt.r0ck@404','sp00d@th3.d00r','m4sh3d@k1tch3n','n0t.f0und@404'],or:['n0 p0t4t0?','wh3r3 p0t4t0?','f0rg0t th3 p@ss?','404: p@ss n0t f0und','tr7 th3 c0up0n']};
