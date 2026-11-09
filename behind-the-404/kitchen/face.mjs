@@ -43,5 +43,6 @@ export async function createLiveFace(spud, base) {
       if (key !== lastKey) { lastKey = key; paint(name, blink); }
     },
     reset() { cur = null; until = 0; rest = null; lastKey = ''; paint(null, false); },
+    addFace(name, img) { if (img && !F[name]) F[name] = img; },   // CAVE (Nov 7): extra faces a room brings along (the cave's brow waggle: sneaky with his brows lifted)
   };
 }
