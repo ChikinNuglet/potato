@@ -48,7 +48,7 @@ body{padding-top:86px!important}
 .lw.glitch>.logo:first-child{transform:translateX(2px) skewX(-6deg)}
 .hole{position:absolute;overflow:hidden}
 .gname{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;font:400 clamp(30px,9vw,74px)/1 "Major Mono Display",monospace;color:#f1e8ff;text-shadow:-4px 0 #7b3cf2,4px 0 #e03ccf;letter-spacing:.02em;white-space:nowrap}
-.lw.nameglitch .gname{opacity:1}.lw.nameglitch>.logo:first-child{opacity:.15}
+.gname.long{font-size:clamp(12px,3.9vw,26px);letter-spacing:0}.lw.nameglitch .gname{opacity:1}.lw.nameglitch>.logo:first-child{opacity:.15}
 .box{z-index:2}
 #perch{position:absolute;left:0;top:0;width:74px;height:74px;z-index:3;pointer-events:none;opacity:0;transform-origin:50% 100%;will-change:transform}
 #perch.on{opacity:1}
@@ -379,8 +379,8 @@ function diveHole(){var h=H[Math.floor(Math.random()*H.length)];glitch(160);P.cl
 // he arrives by glitching out of an O: peeks, then glitches down onto whatever's below
 function fromHole(h,cb){h.classList.add('up');setTimeout(function(){h.classList.remove('up');glitch(170);var r=h.getBoundingClientRect();X=r.left+r.width/2+scrollX;Y=r.top+scrollY;on=null;P.classList.add('on');var nx=below(r.bottom+scrollY-10,X);hid=false;glitchTo(nx);cb&&cb()},1500)}
 // his name keeps glitching into his own code: his glitch language (glitchwords.js, his words) and glitched spellings of his name
-var GN=['p0t4t0','P%T@T0?!','p0t\u25b3t0','POT4T0_404','p\u00f8t\u25b3t\u00f8','P0T@T0','pot\u25b3to','p0t4t0?!','P\u25b3T\u25b3T0'],gn=document.getElementById('gname'),gi=-1;
-if(!still)setInterval(function(){if(Math.random()>.6)return;var W=window.POTATO_GLITCH_WORDS||[],t;if(W.length&&Math.random()<.5){t=W[Math.floor(Math.random()*W.length)]}else{var j;do{j=Math.floor(Math.random()*GN.length)}while(j===gi);gi=j;t=GN[j]}gn.textContent=t;lw.classList.add('nameglitch');glitch(140);setTimeout(function(){lw.classList.remove('nameglitch')},140+Math.random()*220)},1100);
+var GN=['p0t4t0','P%T@T0?!','p0t\u25b3t0','POT4T0_404','p\u00f8t\u25b3t\u00f8','P0T@T0','pot\u25b3to','p0t4t0?!','P\u25b3T\u25b3T0'],gn=document.getElementById('gname'),gi=-1;gn.dataset.big='404: file not found';   /* (Chikin, Nov 8: the name glitches from Potato to 404: File Not Found) */
+if(!still)setInterval(function(){if(Math.random()>.6)return;var W=window.POTATO_GLITCH_WORDS||[],t;gn.classList.remove('long');if(Math.random()<.45){t=gn.dataset.big;gn.classList.add('long')}else if(W.length&&Math.random()<.5){t=W[Math.floor(Math.random()*W.length)]}else{var j;do{j=Math.floor(Math.random()*GN.length)}while(j===gi);gi=j;t=GN[j]}gn.textContent=t;lw.classList.add('nameglitch');glitch(140);setTimeout(function(){lw.classList.remove('nameglitch')},140+Math.random()*220)},1100);
 // now and then he glitches a little on his own (Potato's purple), just a flicker
 setInterval(function(){if(still||Math.random()>.4)return;P.classList.add('tw');setTimeout(function(){P.classList.remove('tw')},60+Math.random()*90)},1300);
 if(/[?&]debug/.test(location.search))window.__pot={stuck:function(){var L=plats();var f=L[L.length-1];X=innerWidth*.8;Y=f.y;on=f;stuck()},ship:function(){var L=plats();var f=L[L.length-1];X=innerWidth*.3;Y=f.y;on=f;shipUp()}};
