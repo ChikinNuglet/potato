@@ -8,6 +8,7 @@
 // right wall the WATCH door (the song's demo, hands-off).
 // House style (Vega's stickers): thick dark ink, flat fills with one cel-shade band, warm light. Purple is his glitch only.
 // STYLES[i] (album order, one per song) = { id, level, name, outfit (slug | null), badge, door, paint(ctx, t, lit, o), icon(ctx, size) }.
+import { livingRoom } from './living.mjs';   // THE LIVING ROOM (Nov 8): its own file, painted with this kit
 const OLD_WHITE = (() => { try { return +new URLSearchParams(location.search).get('border') > 0; } catch (e) { return false; } })();   // NO WHITE LINES (Nov 5, D-20261105-09): the white sticker borders are off; ?border=1 shows the old ones to compare
 export const INK = '#120a05', WARM = '#ffcf8a';
 export const rnd = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -87,8 +88,17 @@ const PIECES = [
     x.strokeStyle = 'rgba(255,207,138,.05)'; x.lineWidth = 3; for (let i = 0; i < 1600; i += 46) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, 640); x.stroke(); } }],
   [3.85, 'floor', x => { x.fillStyle = '#2a1f19'; x.fillRect(0, 640, 1600, 260); for (let r = 0; r < 4; r++) for (let c = 0; c < 22; c++) if ((r + c) % 2) { x.fillStyle = '#3a2b22'; x.fillRect(c * 76 - (r % 2) * 38, 640 + r * 65, 76, 65); }
     x.fillStyle = '#120c09'; x.fillRect(0, 632, 1600, 14); }],
-  [4.15, 'window', x => { x.fillStyle = '#0b1530'; x.fillRect(150, 150, 300, 230); x.fillStyle = '#f2e6c4'; x.beginPath(); x.arc(390, 200, 22, 0, 7); x.fill();
-    for (let i = 0; i < 14; i++) { const bx = 160 + i * 21, bh = 40 + rnd(i, 1) * 90; x.fillStyle = '#121a2e'; x.fillRect(bx, 380 - bh, 19, bh); x.fillStyle = WARM; if (rnd(i, 2) < 0.6) x.fillRect(bx + 6, 390 - bh + 14, 5, 6); }
+  [4.15, 'window', x => {   // the outside follows the visitor's own clock (Chikin, Nov 7: "if its night its night"): night, dawn, day, dusk
+    const hr = new Date().getHours() + new Date().getMinutes() / 60, night = hr < 5.5 || hr >= 20, dawn = !night && hr < 7.5, dusk = !night && hr >= 17.5, day = !night && !dawn && !dusk;
+    const g = x.createLinearGradient(0, 150, 0, 380);
+    if (night) { g.addColorStop(0, '#060c20'); g.addColorStop(1, '#0b1530'); } else if (day) { g.addColorStop(0, '#5aa6e6'); g.addColorStop(1, '#bfe2f5'); }
+    else if (dawn) { g.addColorStop(0, '#3b4a8a'); g.addColorStop(.6, '#e89a7a'); g.addColorStop(1, '#ffd29a'); } else { g.addColorStop(0, '#2a2468'); g.addColorStop(.55, '#c2566e'); g.addColorStop(1, '#f2a35a'); }
+    x.fillStyle = g; x.fillRect(150, 150, 300, 230);
+    if (night) { x.fillStyle = '#f2e6c4'; x.beginPath(); x.arc(390, 200, 22, 0, 7); x.fill(); x.fillStyle = 'rgba(242,230,196,.8)'; for (let i = 0; i < 18; i++) x.fillRect(158 + rnd(i, 5) * 280, 158 + rnd(i, 6) * 90, 2, 2); }
+    else if (day) { x.fillStyle = '#fff4c2'; x.beginPath(); x.arc(392, 196, 24, 0, 7); x.fill(); x.fillStyle = 'rgba(255,255,255,.85)'; [[200, 190], [260, 214], [330, 176]].forEach(([cx, cy]) => { x.beginPath(); x.ellipse(cx, cy, 26, 9, 0, 0, 7); x.fill(); }); }
+    else { x.fillStyle = dawn ? '#ffe7b0' : '#ffb26b'; x.beginPath(); x.arc(dawn ? 210 : 390, 300, 26, 0, 7); x.fill(); }
+    const bld = night ? '#121a2e' : day ? '#7d8aa3' : '#3a2f52';
+    for (let i = 0; i < 14; i++) { const bx = 160 + i * 21, bh = 40 + rnd(i, 1) * 90; x.fillStyle = bld; x.fillRect(bx, 380 - bh, 19, bh); x.fillStyle = WARM; if (!day && rnd(i, 2) < (night ? 0.6 : 0.35)) x.fillRect(bx + 6, 390 - bh + 14, 5, 6); }
     x.lineWidth = 16; x.strokeStyle = '#5a3a26'; x.strokeRect(150, 150, 300, 230); x.lineWidth = 9; x.beginPath(); x.moveTo(300, 150); x.lineTo(300, 380); x.moveTo(150, 265); x.lineTo(450, 265); x.stroke();
     x.lineWidth = 6; x.strokeStyle = INK; x.strokeRect(142, 142, 316, 246); }],
   [4.45, 'cabinets', x => { for (let i = 0; i < 4; i++) { x.fillStyle = '#6a4630'; x.fillRect(820 + i * 150, 110, 140, 170); x.lineWidth = 6; x.strokeStyle = INK; x.strokeRect(820 + i * 150, 110, 140, 170);
@@ -996,7 +1006,7 @@ function fridgeDoor(x, k) {   // the lower door swings open (hinged on the right
 { const st = S.find(s => s.id === 'disco-legend');
   st.props = [
     { id: 'ball', kind: 'switch', x0: 690, x1: 850, y0: 330, y1: 480, hint: [850, 372], sfx: { on: 'partyOn', off: 'partyOff' }, face: { on: ['smirk', 1.2] } },
-    { id: 'juke', kind: 'switch', x0: 160, x1: 440, y0: 270, y1: 650, hint: [300, 258], sfx: { on: 'juke', off: 'flick' } },
+    { id: 'juke', kind: 'switch', call: true, x0: 160, x1: 440, y0: 270, y1: 650, hint: [300, 258], sfx: { on: 'juke', off: 'flick' } },   // (call: room.mjs plays a full song per coin, Nov 8)
     { id: 'speaker', kind: 'bump', x0: 1455, x1: 1595, y0: 200, y1: 650, hint: [1525, 188], sfx: { bump: 'boom' } },
     { id: 'stoolL', kind: 'hop', x0: 910, x1: 1010, top: 542, y0: 530, y1: 740, sfx: { land: 'squeak' } },
     { id: 'stoolR', kind: 'hop', x0: 1200, x1: 1300, top: 542, y0: 530, y1: 740, sfx: { land: 'squeak' } },
@@ -1005,6 +1015,9 @@ function fridgeDoor(x, k) {   // the lower door swings open (hinged on the right
   st.under = (x, t, lit, P) => { const pa = flip(P.ball || Z, t, 0.4); if (pa > 0) { x.fillStyle = `rgba(6,5,12,${0.26 * pa})`; x.fillRect(-2400, 0, 6400, 900); } };   // party: the room drops a little darker so the light show reads
   st.over = (x, t, lit, P, me) => {
     const jk = flip(P.juke || Z, t, 0.4);   // the jukebox playing: notes float up out of it
+    { const js = P.juke || Z, ca = since(js, t); if (js.on && ca < 0.8) {   // the coin: flipped up off him, spinning, and down into the slot (Chikin, Nov 8: "pop a coin in")
+        const k = ca / 0.8, cx = 300 + (1 - k) * 120, cy = 430 - Math.sin(Math.PI * Math.min(1, k * 1.15)) * 150 + k * 20, w = 14 * Math.abs(Math.cos(ca * 18)) + 3;
+        x.save(); x.globalAlpha = k > 0.9 ? (1 - k) * 10 : 1; ell(x, cx, cy, w, 14, '#f2c230', { lw: 3 }); x.restore(); } }
     if (jk > 0) for (let i = 0; i < 6; i++) { const ph = (t * 0.42 + i / 6) % 1, nx = 300 + (i - 2.5) * 34 + Math.sin(ph * 7 + i) * 26, ny = 300 - ph * 260; note(x, nx, ny, DISCO[i % 5], Math.sin(ph * Math.PI) * jk, 1.3 + 0.4 * rnd(i, 4)); }
     const ba = since(P.speaker || Z, t);   // the speakers: a shock ring off each cone
     if (ba >= 0 && ba < 0.7) for (const y of [350, 570]) for (let k = 0; k < 3; k++) { const r = 50 + ba * 320 - k * 40; if (r < 50) continue; x.save(); x.globalAlpha = 1 - ba / 0.7;
@@ -1268,8 +1281,19 @@ function clockFace(x, s, t) {   // the stopped clock: knock and it chimes, its h
     { id: 'chair', kind: 'hop', bump: true, busy: 2.4, x0: 980, x1: 1060, top: 610, y0: 460, y1: 760, sfx: { land: 'creak', bump: 'scoot' } },
     { id: 'table', kind: 'hop', busy: 2.2, x0: 560, x1: 980, top: 556, y0: 540, y1: 770, sfx: { land: 'clatter' } },
     { id: 'stove', kind: 'hop', seat: [975, 1045], x0: 810, x1: 1060, top: 380, y0: 372, y1: 392, sfx: { land: 'clang' } },
-    { id: 'counter', kind: 'hop', x0: 1062, x1: 1448, top: 452, y0: 444, y1: 470, sfx: { land: 'thunk' } } ];
-  st.under = (x, t, lit, P) => { hauntChair(x, P.fallen || Z, t); clockFace(x, P.clock || Z, t);
+    { id: 'counter', kind: 'hop', x0: 1062, x1: 1448, top: 452, y0: 444, y1: 470, sfx: { land: 'thunk' } },
+    // THE OLD PHONE (Chikin, Nov 8: "an old timey phone that you answer when you glitch, and you get the option to join the chat"): a
+    // candlestick phone on the counter that rings now and then; glitch it and he picks up; room.mjs asks "join the chat?"
+    { id: 'phone', kind: 'switch', call: true, x0: 1150, x1: 1250, y0: 330, y1: 452, hint: [1200, 322], sfx: { on: 'flick', off: 'flick' }, face: { on: ['question', 1.2] } } ];
+  const oldPhone = (x, t, s) => { const up = s.on, ring = !up && (t % 7) < 1.3, sh = ring ? Math.sin(t * 60) * 3 : 0; x.save(); x.translate(1200 + sh, 452);
+    ell(x, 0, -6, 34, 9, '#1c1712', { lw: 4 }); box(x, -9, -92, 18, 86, '#1c1712', { r: 6, lw: 4, sh: 'r' });   // the base, the stem
+    ell(x, 0, -100, 16, 12, '#2a221a', { lw: 4 }); box(x, 12, -84, 20, 6, '#3a3026', { r: 3, lw: 2 });   // the mouthpiece, the hook
+    if (!up) { box(x, 24, -100, 12, 44, '#1c1712', { r: 6, lw: 4, sh: 'r' }); ell(x, 30, -58, 12, 8, '#2a221a', { lw: 3 }); }   // the earpiece, hanging on the hook
+    else { x.save(); x.translate(60, -150); x.rotate(-0.6); box(x, -6, -22, 12, 44, '#1c1712', { r: 6, lw: 4, sh: 'r' }); x.restore(); seg(x, [[30, -80], [52, -120], [62, -138]], 2.5, '#1c1712'); }   // picked up
+    seg(x, [[-30, -4], [-70, 6], [-110, 4]], 2.5, '#1c1712');   // the cord
+    if (ring) for (const d of [-1, 1]) for (let k = 1; k <= 2; k++) { x.beginPath(); x.arc(d * 6, -100, 22 + k * 10, d > 0 ? -0.7 : Math.PI - 0.7 + 0.0, d > 0 ? 0.7 : Math.PI + 0.7); x.lineWidth = 3; x.strokeStyle = '#f2ead6'; x.stroke(); }
+    x.restore(); };
+  st.under = (x, t, lit, P) => { hauntChair(x, P.fallen || Z, t); clockFace(x, P.clock || Z, t); oldPhone(x, t, P.phone || Z);
     const c = P.chair || Z, a = since(c, t), dx = a >= 0 && a < 2.4 ? (a < 0.35 ? ez(a / 0.35) : 1 - ez((a - 0.6) / 1.8)) * 70 : 0;   // the chair slides off on its own when he bumps it, then creeps back
     x.save(); x.translate(dx, sink(c, t)); box(x, 1000, 470, 14, 140, '#4a3a2c', { lw: 4 }); box(x, 980, 610, 80, 20, '#4a3a2c', { sh: 'b', lw: 6 }); box(x, 986, 630, 12, 120, '#3a2c20', { sh: 'n', lw: 4 }); box(x, 1042, 630, 12, 120, '#3a2c20', { sh: 'n', lw: 4 }); cobweb(x, 998, 630, 50, 0, Math.PI * 0.5, 0.4); x.restore(); };
 }
@@ -1292,6 +1316,16 @@ function clockFace(x, s, t) {   // the stopped clock: knock and it chimes, its h
     const tk = fade(landed(P.table || Z, t), 0.8); if (tk > 0) { seg(x, [[594, 578], [946, 578]], 5, '#d8ffe0'); glow(x, 770, 578, 200, BG.green, 0.3 * tk); } };
 }
 
+// MACHINE LEARNING (Chikin, Nov 8: "cyborg room, he stands under the light, it lowers to his head"): room.mjs sets st.mlRing = the
+// performance.now() it started; the ring light comes down out of the lamp and settles round his head, humming green, then the video plays
+{ const st = S.find(s => s.id === 'circuit-cyborg'), was = st.over;
+  st.over = (x, t, lit, P, me) => { if (was) was(x, t, lit, P, me); if (!st.mlRing) return;
+    const k = Math.min(1, (performance.now() - st.mlRing) / 1400), e = 1 - Math.pow(1 - k, 3), cx = st.mlX || 770, y = 360 + (468 - 360) * e;
+    seg(x, [[cx - 30, 330], [cx - 52, y]], 2, '#2a2d36'); seg(x, [[cx + 30, 330], [cx + 52, y]], 2, '#2a2d36');   // the cables it comes down on
+    x.save(); x.globalCompositeOperation = 'lighter'; glow(x, cx, y, 90, '#57ff7a', 0.35 + 0.3 * e); x.restore();
+    x.beginPath(); x.ellipse(cx, y, 62, 14, 0, 0, TAU); x.lineWidth = 12; x.strokeStyle = '#120a05'; x.stroke(); x.lineWidth = 6; x.strokeStyle = k < 1 ? '#8fffa8' : (Math.floor(performance.now() / 90) % 2 ? '#57ff7a' : '#d8ffe0'); x.stroke(); };
+}
+
 // ---- 10. the break room: the tube light, the coffee machine, the microwave, the poster, the water cooler, both chairs, the table, the counter
 function poster(x, s, t) {   // knock it crooked: the one circle rolls down into the corner
   const k = flip(s, t, 0.5), r = k * 0.13 + (s.on ? wob(since(s, t), 1.2, 9) * 0.07 : 0), cxp = 15 + 54 * ez(s.on ? (since(s, t) - 0.15) / 0.7 : 1 - since(s, t) / 0.5), cyp = 150 + 13 * k;
@@ -1307,8 +1341,15 @@ function poster(x, s, t) {   // knock it crooked: the one circle rolls down into
     { id: 'chairL', kind: 'hop', x0: 478, x1: 562, top: 604, y0: 470, y1: 740, sfx: { land: 'squeak' } },
     { id: 'chairR', kind: 'hop', x0: 988, x1: 1072, top: 604, y0: 470, y1: 740, sfx: { land: 'squeak' } },
     { id: 'table', kind: 'hop', x0: 590, x1: 950, top: 566, y0: 548, y1: 744, sfx: { land: 'clink' } },
-    { id: 'counter', kind: 'hop', x0: 820, x1: 1110, top: 462, y0: 452, y1: 640, sfx: { land: 'thunk' } } ];
-  st.under = (x, t, lit, P) => { poster(x, P.poster || Z, t);
+    { id: 'counter', kind: 'hop', x0: 820, x1: 1110, top: 462, y0: 452, y1: 640, sfx: { land: 'thunk' } },
+    // THE TERMS (Chikin, Nov 8: "a paper on the table, you go up to it and a question bar comes up asking if you want to read the terms"):
+    // room.mjs shows the bar when he's next to it (or glitches it) and opens Read the Terms' level select
+    { id: 'terms', kind: 'switch', call: true, x0: 650, x1: 760, y0: 520, y1: 600, hint: [705, 512], sfx: { on: 'flick', off: 'flick' } } ];
+  const termsPaper = (x, t) => { x.save(); x.translate(705, 556); x.rotate(-0.06);   // the contract, lying on the table: lines of fine print, a signature line, a corner turned up
+    box(x, -48, -14, 96, 26, '#f7f2e4', { r: 2, lw: 4, sh: 'b' }); for (let k = 0; k < 4; k++) seg(x, [[-38, -8 + k * 5], [24 - (k % 2) * 14, -8 + k * 5]], 1.5, '#9a927e');
+    seg(x, [[12, 8], [40, 8]], 2, '#2a2a2a'); poly(x, [[40, -14], [48, -14], [48, -6]], '#e0d8c2', { lw: 2 });
+    const g = 0.5 + 0.5 * Math.sin(t * 3); x.globalAlpha = 0.25 * g; box(x, -52, -18, 104, 34, 'rgba(255,240,180,0.5)', { r: 4, sh: 'n', lw: 0 }); x.restore(); };
+  st.under = (x, t, lit, P) => { poster(x, P.poster || Z, t); termsPaper(x, t);
     const cf = P.coffee || Z; if (cf.on) { const u = Math.min(1, since(cf, t) / 4); circ(x, 888, 394, 4, '#5cff8a', { sh: 'n', lw: 0 }); glow(x, 888, 394, 14, '#5cff8a', 0.6);   // brewing: the light goes green, it drips, the pot fills
       x.fillStyle = '#4a2a14'; x.fillRect(838, 458 - 18 - 18 * u, 44, 18 + 18 * u); box(x, 836, 420, 48, 40, 'rgba(200,220,230,.35)', { r: 4, lw: 4 }); if (u < 1) { seg(x, [[860, 404], [860, 420]], 9); seg(x, [[860, 404], [860, 420]], 5, '#4a2a14'); for (let k = 0; k < 2; k++) { const ph = (t * 2.6 + k / 2) % 1; x.beginPath(); x.ellipse(860, 422 + ph * 26, 5 + ph * 2, 8, 0, 0, TAU); x.fillStyle = '#5a3418'; x.fill(); stroke(x, { lw: 3 }); } } steam(x, 860, 372, t, u < 1 ? 1 : 3, 60 + 40 * u, 0.3, 6); }   // (a fat drip, ink-edged; it steams once full)
     const mw = P.micro || Z; if (mw.on) { const ph = t * 2.2; box(x, 952, 410, 92, 42, '#ffcf6a', { r: 4, sh: 'n', lw: 4 }); glow(x, 998, 431, 70, '#ffd27a', 0.5); ell(x, 998, 446, 34, 4, '#e8b04a', { lw: 2 }); box(x, 998 + Math.sin(ph) * 22 - 9, 426, 18, 20, '#f2f0ea', { r: 4, lw: 3 }); }   // (a mug going round)
@@ -1352,8 +1393,33 @@ function deskCal(x, X = 866, Y = 372) {   // the joke: April 4, circled. On the 
 function terminal(x, t, P) { const on = true, X = 1296, Y = 366;   // the old terminal: use it and it asks for the password
   box(x, X - 8, Y + 72, 126, 14, '#b9b1a0', { r: 4, lw: 4, sh: 'n' }); box(x, X, Y, 110, 74, '#d9d2c0', { r: 10, lw: 5 }); box(x, X + 10, Y + 9, 90, 54, '#06140c', { r: 6, sh: 'n', lw: 3 });
   const f = Math.floor(t * 3); x.fillStyle = '#4dff9a'; for (let r = 0; r < 4; r++) { const L = 18 + rnd(r, f) * 52; x.fillRect(X + 18, Y + 18 + r * 10, r === 3 ? (f % 2 ? 8 : 0) : L, 4); } }
-bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 1286, x1: 1420, y0: 360, y1: 450, hint: [1350, 350], sfx: { on: 'flick', off: 'flick' } }];
-bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); };
+// ---- THE POTATO CAVE (Nov 7, cave crew): a trapdoor in the kitchen floor. Something's always playing down there: the light through its
+// cracks flickers like a screen. Use it (tap / E) and it flips open, the light comes up, and he drops into the cave (studio/cave.mjs).
+function trapdoor(x, t, P) { const s = P.cave || Z, a = s.n ? since(s, t) : 99, k = a < 0.25 ? ez(a / 0.25) : a < 1.3 ? 1 : a < 1.6 ? 1 - ez((a - 1.3) / 0.3) : 0;
+  const L = [252, 404], B = [232, 424], y0 = 718, y1 = 788, f = Math.floor(t * 2.3), FL = ['#6ad0ff', '#ffb04a', '#ff6a5a', '#7dff9a', '#ffd98a'], col = FL[f % FL.length], fl = 0.55 + 0.45 * rnd(Math.floor(t * 9), 3);
+  const hole = () => { x.beginPath(); x.moveTo(L[0], y0); x.lineTo(L[1], y0); x.lineTo(B[1], y1); x.lineTo(B[0], y1); x.closePath(); };
+  if (k > 0.01) {   // open: the hole, lit from below, the light coming up out of it, the lid standing up behind it
+    hole(); x.fillStyle = '#0b0705'; x.fill(); x.save(); hole(); x.clip(); glow(x, 328, y1, 120, col, 0.75 * k); x.restore();
+    x.save(); x.globalCompositeOperation = 'lighter'; const g = x.createLinearGradient(0, y1, 0, y0 - 300); g.addColorStop(0, rgba(col, 0.45 * k * fl)); g.addColorStop(1, rgba(col, 0)); x.fillStyle = g; x.beginPath(); x.moveTo(B[0], y1); x.lineTo(B[1], y1); x.lineTo(L[1] + 40, y0 - 300); x.lineTo(L[0] - 40, y0 - 300); x.closePath(); x.fill(); x.restore();
+    const ly = y0 - 92 * k; poly(x, [[L[0], y0], [L[1], y0], [L[1] + 4, ly], [L[0] - 4, ly]], '#6b4426', { lw: 6, shade: [L[1] - 24, ly, 30, y0 - ly] }); stroke(x, { lw: 6 }); hole(); stroke(x, { lw: 6 }); return; }
+  const bp = t % 5.5, bump = bp < 0.32 ? Math.sin(bp / 0.32 * Math.PI) * 7 : 0;   // (Reviewer: every few seconds the lid bumps up a little and light spills out: something's on down there)
+  if (bump > 0.5) { x.save(); x.globalCompositeOperation = 'lighter'; glow(x, 328, y0 + 4, 150, col, 0.5 * bump / 7); x.restore(); }
+  x.save(); x.translate(0, -bump);
+  poly(x, [[L[0], y0], [L[1], y0], [B[1], y1], [B[0], y1]], '#6b4426', { lw: 6, shade: [232, y1 - 14, 200, 14] });   // shut: planks, an iron ring, light through the cracks
+  for (const u of [0.33, 0.66]) { const xa = L[0] + (L[1] - L[0]) * u, xb = B[0] + (B[1] - B[0]) * u; seg(x, [[xa, y0 + 3], [xb, y1 - 3]], 7, '#0b0705'); seg(x, [[xa, y0 + 6], [xb, y1 - 6]], 4, rgba(col, 0.75 + 0.25 * fl));
+    x.save(); x.globalCompositeOperation = 'lighter'; glow(x, (xa + xb) / 2, (y0 + y1) / 2, 70, col, 0.3 * fl); x.restore(); }
+  x.save(); x.globalCompositeOperation = 'lighter'; x.lineWidth = 4; x.strokeStyle = rgba(col, 0.35 + 0.3 * fl); x.beginPath(); x.moveTo(L[0] - 3, y0 - 2); x.lineTo(L[1] + 3, y0 - 2); x.stroke(); x.restore();   // (light round its edge)
+  x.beginPath(); x.ellipse(328, y1 - 16, 15, 8, 0, 0, TAU); x.lineWidth = 6; x.strokeStyle = INK; x.stroke(); x.lineWidth = 3; x.strokeStyle = '#8a8f99'; x.stroke(); x.restore(); }
+bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 1286, x1: 1420, y0: 360, y1: 450, hint: [1350, 350], sfx: { on: 'flick', off: 'flick' } },
+  { id: 'cave', kind: 'switch', call: true, busy: 1.7, x0: 236, x1: 420, y0: 704, y1: 800, hint: [328, 690], sfx: { on: 'creak', off: 'creak' } }];   // (the cave: room.mjs opens it)
+// the sticky note on the laptop (Chikin, Nov 8: "put a little sticky note that has the password on the computer"): yellow, a bit crooked,
+// stuck to the screen's corner, "niepal" in his scrawl. An easy puzzle: the password's right there if you look.
+function stickyNote(x) { x.save(); x.translate(1525, 250); x.rotate(-0.06);   // on the fridge door, big (Chikin: "put it on the fridge so you can read it" / "its still small")
+  box(x, -62, -58, 124, 116, '#f7e26a', { r: 3, lw: 5, sh: 'b' }); x.fillStyle = 'rgba(0,0,0,.07)'; x.fillRect(-62, -58, 124, 18);
+  circ(x, 0, -56, 10, '#e8463a', { lw: 4 });   // the magnet
+  x.fillStyle = '#23235e'; x.font = 'italic 700 36px "Comic Sans MS", "Marker Felt", cursive'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('niepal', 0, 8);
+  seg(x, [[-42, 38], [40, 35]], 3, '#23235e'); x.restore(); }
+bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); stickyNote(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); trapdoor(x, t, P); };
 const derive = (id, o) => { const st = Object.assign({}, bareSt, { props: propsBare.slice(), under: uBare, id }, o); S.push(st); return st; };
 
 // Between Messages: nobody's home, the lamp's off, and someone's flashlight is going through the kitchen
@@ -1363,10 +1429,23 @@ derive('burglar', { name: 'nobody home', outfit: 'burglar', badge: '#23283a', da
   emblem(x) { ell(x, 50, 62, 26, 24, '#da9643'); x.beginPath(); x.moveTo(24, 50); x.quadraticCurveTo(50, 8, 76, 50); x.closePath(); x.fillStyle = '#17161c'; x.fill(); stroke(x, { lw: 5 }); box(x, 22, 46, 56, 11, '#2c2b33', { r: 4, sh: 'n', lw: 4 }); } });
 
 // Binary: the kitchen as he sees it, all zeros and ones. Everything's still solid, nothing switches
-derive('binary', { name: 'the simulation', outfit: 'simulation', badge: '#0d2a1b', under: null, anim: null, dark: 0, props: propsBare.filter(p => p.kind === 'hop'),
-  base(x) { for (const [, , d] of PIECES) d(x); x.save(); const m = x.getTransform(), sq = x.__sq; x.__sq = 0; x.setTransform(1, 0, 0, 1, 0, 0); const d = x.getImageData(0, 0, 1600, 900), p = d.data, lum = new Float32Array(1600 * 900);
-    for (let i = 0; i < lum.length; i++) { const l = (0.3 * p[i * 4] + 0.59 * p[i * 4 + 1] + 0.11 * p[i * 4 + 2]) / 255, k = Math.min(1, l * 1.25); lum[i] = k; p[i * 4] = 2 + 18 * k; p[i * 4 + 1] = 12 + 96 * k; p[i * 4 + 2] = 8 + 52 * k; }
-    x.putImageData(d, 0, 0); x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; for (let X = 8; X < 1600; X += 13) for (let Y = 9; Y < 900; Y += 17) { const k = lum[Y * 1600 + X]; x.fillStyle = `rgba(77,255,154,${(0.1 + 0.8 * k * k).toFixed(3)})`; x.fillText(rnd(X, Y) > 0.5 ? '1' : '0', X, Y); } x.setTransform(m); x.__sq = sq; x.restore(); },
+derive('binary', { name: 'the simulation', outfit: 'simulation', badge: '#0d2a1b', under: null, dark: 0, props: [], noSign: true, noSong: true, noLeftDoor: true,
+  // (Chikin, Nov 8: no button for it; "change the background to digital binary with a lighted doorway that leads back into the house": the
+  // living room's front door opens into it. No kitchen in here any more: just the code, green on black, and the warm doorway home.)
+  door: { kind: 'swing', panel: '#2a1c12', trim: '#3a2a1c', knob: '#e0b45a', light: '#ffd9a0', plate: '#1d140f', plateTrim: '#8a5a36', deco: 'kitchen' },
+  door2: { kind: 'swing', panel: '#2a1c12', trim: '#3a2a1c', knob: '#e0b45a', light: '#ffd9a0', plate: '#1d140f', plateTrim: '#8a5a36', deco: 'kitchen' },
+  base(x) { x.save(); const m = x.getTransform(), sq = x.__sq; x.__sq = 0; x.setTransform(1, 0, 0, 1, 0, 0);
+    x.fillStyle = '#03080a'; x.fillRect(0, 0, 1600, 900);
+    for (const [cx, cy, r] of [[1490, 520, 560]]) { const g = x.createRadialGradient(cx, cy, 10, cx, cy, r); g.addColorStop(0, 'rgba(255,214,150,0.42)'); g.addColorStop(1, 'rgba(255,214,150,0)'); x.fillStyle = g; x.fillRect(0, 0, 1600, 900); }   // the doorways' warm light, spilling into the code
+    x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    for (let X = 8; X < 1600; X += 13) { const col = rnd(X, 1), len = 0.35 + 0.65 * rnd(X, 2), head = rnd(X, 3) * 900;
+      for (let Y = 9; Y < 900; Y += 17) { const d = ((head - Y) / 900 + 1) % 1, k = d < len ? (1 - d / len) : 0.05, warm = Math.max(0, 1 - Math.abs(X - 1490) / 260);
+        x.fillStyle = warm > 0.2 && rnd(X, Y + 7) < warm * 0.5 ? `rgba(255,217,160,${(0.15 + 0.6 * k).toFixed(3)})` : `rgba(77,255,154,${(0.06 + 0.86 * k * k).toFixed(3)})`;
+        x.fillText(rnd(X, Y) > 0.5 ? '1' : '0', X, Y); } }
+    x.fillStyle = 'rgba(77,255,154,0.25)'; x.fillRect(0, 707, 1600, 2);   // the floor: one line of light
+    x.setTransform(m); x.__sq = sq; x.restore(); },
+  anim(x, t) { x.font = '700 15px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; const f = Math.floor(t * 12);
+    for (let i = 0; i < 60; i++) { const X = 8 + 13 * Math.floor(rnd(i, f) * 123), Y = 9 + 17 * Math.floor(rnd(i + 99, f) * 52); x.fillStyle = 'rgba(180,255,210,0.85)'; x.fillText(rnd(i, f + 3) > 0.5 ? '1' : '0', X, Y); } },
   emblem(x) { x.fillStyle = '#4dff9a'; x.font = '700 40px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('01', 50, 50); } });
 
 // Christmas: its own room, not the kitchen with decorations. A fireplace, a big tree, snow, cookies. We love Christmas.
@@ -1444,14 +1523,15 @@ derive('booth', { name: 'photobooth', outfit: null, badge: '#7b3cf2', dark: 0, u
   anim(x, t, lit, P) { const g = P.gumball || Z, k = g.n ? Math.min(1, since(g, t) / 0.6) : 1; circ(x, 390, 430, 70, 'rgba(180,220,255,.28)', { sh: 'n', lw: 6 }); for (let i = 0; i < 16; i++) circ(x, 346 + rnd(i, 1) * 88, 400 + rnd(i, 2) * 80, 11, COLS[i % 4], { sh: 'n', lw: 3 }); if (k < 1) circ(x, 390 + 40 * k, 540 + 100 * k * k, 11, '#e23b2e', { sh: 'n', lw: 3 }); },
   emblem(x) { box(x, 26, 22, 48, 58, '#d42f27', { r: 6, lw: 5 }); ell(x, 62, 44, 8, 8, '#4db3ff', { lw: 3 }); } });
 for (const id of ['burglar', 'binary', 'santa', 'pumpkin', 'taticat', 'booth']) DOORS[id] = DOORS.bare;
-DOORS.santa = Object.assign({}, DOORS.bare, { panel: '#7a2024', trim: '#4c1216', knob: '#f4c430', light: '#ffd98a' }); DOORS.taticat = Object.assign({}, DOORS.bare, { panel: '#efe5cf', trim: '#6b4426', knob: '#c9a36b', light: '#ffe2a8' }); DOORS.booth = Object.assign({}, DOORS.bare, { panel: '#3a2458', trim: '#241432', knob: '#f4c430', light: '#ffd98a' }); DOORS.pumpkin = Object.assign({}, DOORS.bare, { panel: '#3a2450', trim: '#241432', knob: '#e87a1e', light: '#ff9a3c' }); DOORS.binary = Object.assign({}, DOORS.bare, { panel: '#0d2a1b', trim: '#06140c', knob: '#4dff9a', light: '#4dff9a' });
+// THE LIVING ROOM (Nov 8): through the left door of Potato's own kitchen (room.mjs). Its file is living.mjs; this hands it the kitchen's kit.
+{ const LV = livingRoom({ INK, WARM, TAU, rnd, box, poly, circ, ell, seg, glow, cone, steam, city, rgba, dk, lt, topShade, PIECE, Z, since, landed, fade, wob, ez }); derive('living', LV); DOORS.living = LV.door; } DOORS.taticat = Object.assign({}, DOORS.bare, { panel: '#efe5cf', trim: '#6b4426', knob: '#c9a36b', light: '#ffe2a8' });
 // anything you can use gives a small glitch now and then, so you find it without being told
 function usableGlitch(x, st, t) { if (typeof x.drawImage !== 'function' || !x.canvas || x.canvas.width !== 1600) return; (st.props || []).forEach((p, i) => { if (p.kind === 'hop' || p.bump) return; const ph = (t * 0.31 + i * 0.37 + rnd(i, 7)) % 1; if (ph > 0.07) return; const f = Math.floor(t * 18), X = ROOM.ox + p.x0 * ROOM.sx, W = (p.x1 - p.x0) * ROOM.sx, H = p.y1 - p.y0; for (let q = 0; q < 3; q++) { const y = p.y0 + rnd(f, q + i) * H * 0.8, h = 6 + rnd(q, f) * 16, dx = (rnd(f, q + 30) - 0.5) * 34; x.drawImage(x.canvas, X, y, W, h, X + dx, y, W, h); } }); }
 
 const ORDER = [   // the room's order: the album, then Binary, Santa, Halloween, and Taticat's (found in the 404)
   ['thursday-potato', 'bare'], ['get-down', 'disco-legend'], ['confidently-incorrect', 'construction-crew'], ['read-the-terms', 'suit-tie'],
   ['between-messages', 'burglar'], ['ghost-in-the-group-chat', 'sheet-ghost'], ['still-here', 'castle-knight'], ['no-answer', 'noir-detective'],
-  ['turn-me-off', 'tin-robot'], ['last-lights-on', 'circuit-cyborg'], ['binary-static', 'binary'], ['boo-not-found', 'pumpkin'], ['carol-of-the-bells', 'santa'], ['taticat', 'taticat'], ['booth', 'booth']];
+  ['turn-me-off', 'tin-robot'], ['last-lights-on', 'circuit-cyborg'], ['binary-static', 'binary'], ['boo-not-found', 'pumpkin'], ['carol-of-the-bells', 'santa'], ['taticat', 'taticat'], ['booth', 'booth'], ['living', 'living']];   // (the living room after the booth: not a song, no tile)
 
 function doorPath(x, d, X0, Y0, W, H) {   // the doorway's shape: square, rounded (a hatch) or arched (the castle)
   x.beginPath(); if (d.kind === 'arch') { const r = W / 2; x.moveTo(X0, Y0 + H); x.lineTo(X0, Y0 + r); x.arc(X0 + r, Y0 + r, r, Math.PI, 0); x.lineTo(X0 + W, Y0 + H); x.closePath(); }
@@ -1508,6 +1588,11 @@ function panelDeco(x, d, X0, Y0, W, H, t) {
       { const on = Math.floor(t * 1.5) % 2; circ(x, R - 24, Y0 + 158, 9, on ? '#ff9a2e' : '#6a3a14', { sh: 'n', lw: 3 }); if (on) glow(x, R - 24, Y0 + 158, 30, '#ff9a2e', 0.45); }
       stripes(x, X0 + 8, Y0 + H - 60, W - 16, 48, '#f2c230', INK, 14, { r: 3 });
       for (const [a, b] of [[X0 + 12, Y0 + 12], [R - 12, Y0 + 12], [X0 + 12, Y0 + H - 72], [R - 12, Y0 + H - 72]]) circ(x, a, b, 4, '#8a6a1a', { sh: 'n', lw: 2 }); break;
+    case 'front':     // the front door: a little window up top (the night or the day outside), the house number, a letterbox, a spyhole
+      box(x, X0 + 34, Y0 + 26, W - 68, 60, '#0b1530', { r: [30, 30, 4, 4], sh: 'n', lw: 5 }); seg(x, [[cx, Y0 + 26], [cx, Y0 + 86]], 4); glow(x, cx, Y0 + 60, 50, '#ffcf8a', 0.18);
+      box(x, cx - 34, Y0 + 104, 68, 30, '#e0b45a', { r: 5, sh: 'b', f: 0.3, lw: 4 }); x.save(); x.fillStyle = INK; x.font = '700 22px Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('404', cx, Y0 + 120); x.restore();
+      circ(x, cx, Y0 + 152, 5, '#e0b45a', { sh: 'n', lw: 3 }); box(x, cx - 30, Y0 + 236, 60, 14, '#e0b45a', { r: 3, sh: 'b', f: 0.4, lw: 4 }); seg(x, [[cx - 22, Y0 + 243], [cx + 22, Y0 + 243]], 3);
+      box(x, X0 + 20, Y0 + 270, W - 40, 52, d.panel, { r: 4, sh: 'b', f: 0.25, lw: 4 }); break;
     case 'borg':      // the collective's door: traces, a seam, a green eye
       x.save(); x.strokeStyle = '#57ff7a'; x.globalAlpha = 0.55 + 0.25 * Math.sin(t * 3); x.lineWidth = 3;
       for (const [a, b] of [[[X0 + 20, Y0 + 40], [X0 + 60, Y0 + 80]], [[R - 20, Y0 + 120], [R - 70, Y0 + 170]], [[X0 + 24, Y0 + 260], [X0 + 80, Y0 + 300]]]) { x.beginPath(); x.moveTo(...a); x.lineTo(b[0], a[1]); x.lineTo(...b); x.stroke(); circ(x, b[0], b[1], 4, '#57ff7a', { sh: 'n', lw: 0 }); }
@@ -1537,7 +1622,7 @@ function doorway(x, st, t, open, G = DOOR) {   // (G: which doorway; the watch d
   x.save(); if (d.tilt) { x.translate(x0, y1); x.rotate(d.tilt); x.translate(-x0, -y1); }
   doorPath(x, d, x0, y0, W, H); x.save(); x.clip();
   const g = x.createRadialGradient(x0 + W / 2, y0 + H * 0.55, 10, x0 + W / 2, y0 + H * 0.55, H * 0.7); g.addColorStop(0, '#ffffff'); g.addColorStop(0.45, d.light); g.addColorStop(1, dk(d.light, 0.35));
-  x.fillStyle = open > 0 ? g : '#000'; x.fillRect(x0, y0, W, H); x.restore();
+  if (open > 0 && d.view) d.view(x, x0, y0, W, H, t); else { x.fillStyle = open > 0 ? g : '#000'; x.fillRect(x0, y0, W, H); } x.restore();   // (d.view: what's really out there, the living room's street)
   if (open < 0.999) {
     x.save(); doorPath(x, d, x0, y0, W, H); x.clip();
     if (d.kind === 'slide') x.translate(-W * 0.98 * open, 0);
@@ -1581,7 +1666,7 @@ function sign(x, st, t, o) {
   plate(x, d, t, SIGN);
   if (!o || !o.name) return;
   x.save(); x.textBaseline = 'middle';
-  x.font = MONO(22); x.textAlign = 'left'; x.fillStyle = '#ffd9a0'; x.fillText(String(o.num).padStart(2, '0'), x0 + 26, y0 + 30);
+  x.font = MONO(22); x.textAlign = 'left'; x.fillStyle = '#ffd9a0'; /* (Chikin, Nov 8: no numbers on the door signs) */
   const lit = !!o.cleared; circ(x, x1 - 32, y0 + 30, 10, lit ? '#ffcf8a' : '#2a2620', { sh: 'n', lw: 4 }); if (lit) { glow(x, x1 - 32, y0 + 30, 34, '#ffcf8a', 0.6); circ(x, x1 - 35, y0 + 27, 3, '#fff6e0', { sh: 'n', lw: 0 }); }
   const name = o.name.toLowerCase(); let size = 34, lines = wrap(x, name, size, W - 44);
   while ((lines.length > 2 || lines.some(l => x.measureText(l).width > W - 44)) && size > 18) { size -= 2; lines = wrap(x, name, size, W - 44); }
@@ -1626,7 +1711,7 @@ const bases = new Map();
 // that has nothing on it, raw x 0..STRIP, tiled outward mirror by mirror: seamless where it meets the room on the left; on the
 // right a soft corner shadow where the room's last column meets it)
 const LIVE_STRIP = new Set(['disco-legend']);   // (rooms whose plain stretch is drawn live, not in the base)
-const STRIP = { bare: 130, 'disco-legend': 150, 'orbital-astronaut': 120, 'construction-crew': 120, 'suit-tie': 130, 'noir-detective': 120, 'sheet-ghost': 95, 'castle-knight': 64, 'deep-sea-diver': 85, 'tin-robot': 90, 'circuit-cyborg': 130 };
+const STRIP = { bare: 130, 'disco-legend': 150, 'orbital-astronaut': 120, 'construction-crew': 120, 'suit-tie': 130, 'noir-detective': 120, 'sheet-ghost': 95, 'castle-knight': 64, 'deep-sea-diver': 85, 'tin-robot': 90, 'circuit-cyborg': 130, living: 28 };
 function strip(x, room, b, X0, X1, dir) {   // fill X0..X1 with the room's raw 0..b, tiled away from the room (dir -1: leftward from X1, +1: rightward from X0)
   const { ox, sx } = ROOM, cw = b * sx;
   for (let i = 0, n = Math.ceil((X1 - X0) / cw) + 1; i < n; i++) { const mir = dir < 0 ? i % 2 === 0 : i % 2 === 1, d0 = dir < 0 ? X1 - (i + 1) * cw : X0 + i * cw;
@@ -1660,8 +1745,8 @@ for (const st of S) {
       else if (st.dark && lit < 1) { ctx.fillStyle = `rgba(6,5,12,${st.dark * (1 - lit)})`; ctx.fillRect(0, 0, ROOM.ox, 900); ctx.fillRect(E, 0, 1600 - E, 900); }
       ctx.save(); ctx.beginPath(); ctx.rect(ROOM.ox, 0, E - ROOM.ox, 900); ctx.clip(); ctx.translate(ROOM.ox, 0); ctx.scale(ROOM.sx, 1); ctx.__sq = ROOM.sx;   // the "use me" glints, over it all
       try { propMarks(ctx, st, t, P, o); } finally { ctx.__sq = 0; ctx.restore(); } }
-    doorway(ctx, st, t, o ? o.open || 0 : 0); sign(ctx, st, t, o);
-    ctx.save(); ctx.translate(WDOOR.x0 + WDOOR.x1, 0); ctx.scale(-1, 1); doorway(ctx, st, t, o ? o.open2 || 0 : 0, WDOOR); ctx.restore(); usableGlitch(ctx, st, t); ctx.restore(); };
+    if (!st.noLeftDoor) doorway(ctx, st, t, o ? o.open || 0 : 0); if (!st.noSign && !st.noLeftDoor) sign(ctx, st, t, o);   // (noLeftDoor: the binary outside has only its lit doorway home, Nov 8)
+    ctx.save(); ctx.translate(WDOOR.x0 + WDOOR.x1, 0); ctx.scale(-1, 1); doorway(ctx, st.door2 ? { door: st.door2 } : st, t, o ? o.open2 || 0 : 0, WDOOR); ctx.restore(); if (st.wallDeco) st.wallDeco(ctx, t); usableGlitch(ctx, st, t); ctx.restore(); };
   st.icon = (ctx, size = 48) => { ctx.save(); ctx.scale(size / 100, size / 100); ctx.lineJoin = 'round'; ctx.lineCap = 'round';   // a round sticker badge: ink ring, the colour, the costume's key shape (the old white border only with ?border=, D-20261105-09)
     if (OLD_WHITE) { ctx.beginPath(); ctx.arc(50, 50, 49, 0, TAU); ctx.fillStyle = '#fbf6ec'; ctx.fill(); } ctx.beginPath(); ctx.arc(50, 50, 44.5, 0, TAU); ctx.fillStyle = INK; ctx.fill();
     ctx.beginPath(); ctx.arc(50, 50, 40, 0, TAU); ctx.fillStyle = st.badge; ctx.fill(); ctx.save(); ctx.clip(); ctx.fillStyle = dk(st.badge, 0.28); ctx.beginPath(); ctx.arc(62, 62, 40, 0, TAU); ctx.arc(50, 50, 60, 0, TAU, true); ctx.fill();

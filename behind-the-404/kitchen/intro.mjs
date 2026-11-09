@@ -78,8 +78,16 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
   // what E (and a tap beside him) can use: switches, things to knock, things to bump. Chairs + stools are walked into or hopped onto instead,
   // so E next to a chair still means the pot / the cauldron behind it
   const usable = p => p.kind === 'switch' || p.kind === 'knock' || p.kind === 'bump';
+  const upNow = () => !phys.air && phys.on >= 0 && !!props()[phys.on] && !!props()[phys.on].walk;   // (on the stairs / the landing)
+  const reachable = p => !(p.upY != null && (!upNow() || phys.y < wy(p.upY) - 0.12)) && !(p.downOnly && phys.y > 0.12);
+  const stairsI = () => props().findIndex(q => q.walk);
+  // up or down the stairs first, then do it: then = { up: true | false, use: i | x: raw X }
+  function viaStairs(then) { const si = stairsI(), p = props()[si]; if (si < 0) return false; walk.then = then; walk.dir = 0; faceDir = 0; walk.chain = -1; walk.hopAt = 0;
+    if (then.up) { walk.use = si; walk.hop = true; walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(p.seat[0] + 20))); }   // to the foot, hop on
+    else { walk.use = -1; walk.hop = false; walk.to = Math.max(lo(), worldOfRaw(p.x0 - 30)); }   // off the bottom step
+    return true; }
   const seatOf = p => p.seat || [p.x0, p.x1];
-  function standOK(i, X, t) { const p = props()[i]; if (!p || p.top == null) return false; const [a, b] = seatOf(p), m = b - a <= 130 ? 8 : 0;   // (a seat: a little give; a counter / table: its own edge, no hanging off it)
+  function standOK(i, X, t) { const p = props()[i]; if (!p || p.top == null) return false; if (p.topAt) return X >= p.x0 && X <= p.x1; const [a, b] = seatOf(p), m = b - a <= 130 ? 8 : 0;   // (a seat: a little give; a counter / table: its own edge, no hanging off it)
     return X >= a - m && X <= b + m && (!p.standIf || p.standIf(ps[i], t)); }
   const idOf = id => props().findIndex(q => q.id === id);
   const lightWant = () => lamps.length ? lamps.filter(i => ps[i].on).length / lamps.length : 1;   // (the room's light: its lamp, or the share of its torches still lit)
@@ -109,7 +117,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     if (okL && (X < mid(p) || !okR)) return L; if (okR) return R; return X < mid(p) ? Math.max(rl, L) : Math.min(rh, R); }
   const toward = (p, X) => Math.sign(mid(p) - X) || 0;
   function turnToward(dir) { faceDir = dir; if (!moving && walk.to == null) turnAt(dir ? dir * 0.6 : 0.32); }
-  function goUse(i, X) { const p = props()[i]; walk.use = i; walk.hop = false; walk.door = false; walk.dir = 0; walk.chain = -1; walk.hopAt = 0; faceDir = 0; walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(spotFor(p, X)))); }
+  function goUse(i, X) { const p = props()[i]; if (p && !reachable(p) && !(p.upY != null && upNow()) && viaStairs({ up: p.upY != null, use: i })) return; walk.use = i; walk.hop = false; walk.door = false; walk.dir = 0; walk.chain = -1; walk.hopAt = 0; faceDir = 0; walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(spotFor(p, X)))); }
   function useNow(i) { const t = now(), s = ps[i], p = props()[i]; if (!p || t - s.tap < 0.5) return; s.tap = t; fire(i, 'use');   // (a tap can't fire the same thing twice in half a second)
     const X = rawX(); if (phys.on < 0 && !phys.air && covers(p, X, rawY(phys.y))) { const tx = spotFor(p, X); walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(tx))); walk.use = -1; walk.dir = 0; faceDir = toward(p, tx); }   // he steps back to watch it
     else turnToward(toward(p, X)); }
@@ -126,8 +134,16 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     for (let k = pend.length - 1; k >= 0; k--) { const q = pend[k]; if (t < q.at) continue; pend.splice(k, 1); if (ps[q.i] && ps[q.i].t0 === q.stamp) play(q.sn); }
     if (phys.on >= 0 && !phys.air && L[phys.on] && L[phys.on].zones) for (const z of L[phys.on].zones) if (z.act === 'hot' && X >= z.x0 && X <= z.x1) { const j = idOf(z.id); if (j >= 0 && ps[j].on) { hot(z, X, t); break; } }
     near = -1; let best = 1e9;   // the one E uses: in reach; nearest the middle of him; switches / knocks before things you bump
-    for (let i = 0; i < L.length; i++) { const p = L[i]; if (!usable(p)) continue; const g = gapTo(p, X); if (g > REACH) continue; const sc = g + Math.abs(X - mid(p)) * 0.25 + (p.kind === 'bump' ? 40 : 0); if (sc < best) { best = sc; near = i; } }
+    for (let i = 0; i < L.length; i++) { const p = L[i]; if (!usable(p) || !reachable(p)) continue; const g = gapTo(p, X); if (g > REACH) continue; const sc = g + Math.abs(X - mid(p)) * 0.25 + (p.kind === 'bump' ? 40 : 0); if (sc < best) { best = sc; near = i; } }
     const want = lightWant(); litK += (want - litK) * Math.min(1, (want > litK ? 14 : 7) / 60 * 2); if (Math.abs(want - litK) < 0.01) litK = want; }
+  // THE FRONT DOOR (the living room, Nov 8): it doesn't go anywhere yet. Walk into it and it opens a crack: the street, the outside he's never
+  // been. He looks (awe), the night comes in, it swings shut, and he steps back. Walk off and back to look again.
+  let peek = null, peekArm = true;
+  function peekOut() { const t = now(); if (peek || !peekArm || !looping || enter) return; peek = { t0: t }; peekArm = false;
+    walk.dir = 0; walk.to = null; walk.use = -1; walk.then = null; moving = false; spud.waddle(false); turnAt(-0.95); play('creak'); S.onFace && S.onFace('awe', 2.2); }
+  function stepPeek(T0) { if (!peek) { if (!peekArm && pivot.position.x - lo() > 0.45) peekArm = true; return; } const a = T0 - peek.t0;
+    door.want = a < 2.4 ? 0.62 : 0; if (a >= 2.4 && !peek.shut) { peek.shut = true; play('thud'); turnAt(0.32); walk.to = lo() + 0.55; }
+    if (a > 2.9) peek = null; }
   function leave() { if (phys.on >= 0 && ps[phys.on]) ps[phys.on].off = now(); phys.on = -1; }
   // his height: a real jump in here, landing on whatever's under him on the way down (or the floor); walk off an edge and he drops.
   // Exact steps of the arc (not frame-rate dependent): the same hop at 10 fps as at 60
@@ -136,12 +152,15 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     if (phys.air) { const y0 = phys.y, vb = phys.vy; let y1 = y0 + vb * dt - g * dt * dt / 2; phys.vy = vb - g * dt; if (y1 >= CEIL && phys.vy > 0) { y1 = CEIL; phys.vy = 0; } y1 = Math.min(CEIL, y1);
       if (phys.vy <= 0) { let best = 0, bi = -1; const yTop = vb > 0 ? Math.min(CEIL, y0 + vb * vb / (2 * g)) : y0;   // (the top of the arc, if it fell inside this step)
         let score = -1;   // (the highest surface under him; one right under his middle beats one he'd only catch with an edge)
-        const L = props(); if (!free) for (let i = 0; i < L.length; i++) { const p = L[i]; if (p.top == null || !standOK(i, X, t)) continue; const ty = wy(p.top), [a, b] = seatOf(p), sc = ty + (X >= a && X <= b ? 10 : 0);
+        const L = props(); if (!free) for (let i = 0; i < L.length; i++) { const p = L[i]; if (p.top == null || !standOK(i, X, t)) continue; const ty = wy(p.topAt ? p.topAt(X) : p.top), [a, b] = p.topAt ? [p.x0, p.x1] : seatOf(p), sc = ty + (X >= a && X <= b ? 10 : 0);
           if (sc > score && yTop >= ty - 0.03 && y1 <= ty) { score = sc; best = ty; bi = i; } }
         if (y1 <= best) { const sp = -phys.vy; y1 = best; phys.air = false; phys.dbl = false; phys.vy = 0; phys.on = bi; ARMS.settle(); spud.land(Math.min(6, sp * 0.6));
           if (bi >= 0) { fire(bi, 'land'); landZones(bi, X, t); } else if (sfx.land) sfx.land(Math.min(1.4, sp / 6));
           if (walk.chain >= 0) { if (bi >= 0 && bi === walk.via) walk.hopAt = t + 0.18; else walk.chain = -1; } } }   // (on the way up to a counter: one more hop)
       phys.y = y1; }
+    else if (phys.on >= 0 && !free && props()[phys.on].topAt && standOK(phys.on, X, t)) { const p = props()[phys.on], top = p.topAt(X), ty = wy(top), s = ps[phys.on];   // STAIRS (the living room): he walks up and down them, a step at a time
+      if (s.top !== top) { if (s.top != null && p.creak && p.creak(top) && p.stepSfx) play(p.stepSfx); s.top = top; }   // (one or two boards creak)
+      if (Math.abs(ty - phys.y) > 0.003) phys.y += Math.sign(ty - phys.y) * Math.min(Math.abs(ty - phys.y), dt * 5.5); else phys.y = ty; }
     else if (phys.on >= 0 && (free || !standOK(phys.on, X, t))) { phys.air = true; phys.vy = 0; leave(); }   // off the edge
     else if (phys.on < 0 && phys.y > 0) { phys.air = true; phys.vy = 0; }
     if (flip.k != null) { flip.k = Math.min(1, flip.k + dt / FLIP_T); const e = flip.k < 1 ? flip.k * flip.k * (3 - 2 * flip.k) : 1;   // (eased: quick in the middle, settles upright)
@@ -159,7 +178,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     shown() { return looping; },
     // E (main.mjs): use the thing he's next to (marked with the sparkle); nothing in reach: he walks over to the nearest one and uses it
     use() { if (!looping || enter) return false; if (near >= 0) { useNow(near); return true; }
-      const L = props(), X = rawX(); let bi = -1, bg = 1e9; L.forEach((p, i) => { if (!usable(p)) return; const g = gapTo(p, X); if (g < bg) { bg = g; bi = i; } });
+      const L = props(), X = rawX(); let bi = -1, bg = 1e9; L.forEach((p, i) => { if (!usable(p)) return; const g = gapTo(p, X) + (reachable(p) ? 0 : 400); if (g < bg) { bg = g; bi = i; } });
       if (bi < 0) return false; goUse(bi, X); return true; },
     props() { return { list: props(), state: ps, near, y: phys.y, on: phys.on >= 0 ? props()[phys.on].id : null, x: rawX() }; },   // (for checks)
     busy() { return !!enter; },
@@ -172,8 +191,8 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
       const vw = viewW(); plane.scale.set(vw, vw * 9 / 16, 1); plane.position.set(0, 1.6, -3); plane.visible = true;
       cam.up.set(0, 1, 0); cam.zoom = 1; cam.position.set(0, 1.6, 10); cam.lookAt(0, 1.6, 0); cam.updateProjectionMatrix();
       pivot.rotation.set(0, 0, 0); pivot.scale.setScalar(1); pivot.visible = true; spud.place(0, 0); spud.duck(false);   // (a level may have left him hidden, flipped or mid-spin)
-      stopDance(true); gameBeat(STYLES[cur].level);
-      walk = { dir: 0, to: null, door: false, ducking: false, use: -1, chain: -1, via: -1, hopAt: 0 }; moving = false; faceDir = 0; phys.y = 0; phys.vy = 0; phys.air = false; phys.on = -1; phys.dbl = false; flip.k = null; resetProps();
+      stopDance(true); if (!STYLES[cur].noSong) gameBeat(STYLES[cur].level);
+      walk = { dir: 0, to: null, door: false, ducking: false, use: -1, chain: -1, via: -1, hopAt: 0, then: null }; peek = null; peekArm = true; moving = false; faceDir = 0; phys.y = 0; phys.vy = 0; phys.air = false; phys.on = -1; phys.dbl = false; flip.k = null; resetProps();
       door2 = { open: 0, want: 0 };
       if (o.back && o.watch) { pivot.position.set(hi() - 0.25, 0, 0); door = { open: 0, want: 0 }; door2 = { open: 1, want: 0 }; spud.waddle(false); spud.snap(-0.6); }   // back out of the watch door
       else if (o.back) { pivot.position.set(lo() + 0.25, 0, 0); door = { open: 1, want: 0 }; spud.waddle(false); spud.snap(0.6); }   // he's just come back out; it swings shut behind him
@@ -202,7 +221,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
       fx.amount = 0.9; lastGl = now(); sfx.glitch && sfx.glitch(); S.onFace && S.onFace(Math.random() < 0.5 ? 'smirk' : 'wide', 0.9); },
     key(k, down) {   // 'L' / 'R' walk, 'J' hop + spin, 'D' duck
       if (!looping || enter) return;
-      if (k === 'L' || k === 'R') { const d = k === 'L' ? -1 : 1; if (down) { walk.dir = d; walk.to = null; walk.door = false; walk.use = -1; walk.chain = -1; walk.hopAt = 0; faceDir = 0; } else if (walk.dir === d) walk.dir = 0; }
+      if (k === 'L' || k === 'R') { const d = k === 'L' ? -1 : 1; if (down) { walk.dir = d; walk.to = null; walk.door = false; walk.use = -1; walk.chain = -1; walk.hopAt = 0; walk.then = null; faceDir = 0; if (peek && d > 0) peek.t0 = Math.min(peek.t0, now() - 2.4); } else if (walk.dir === d) walk.dir = 0; }
       else if (k === 'J' && down) { if (!jump()) { if (airJump()) { ARMS.spun(now()); sfx.jump && sfx.jump(); } return; } spud.spin(); ARMS.spun(now()); sfx.jump && sfx.jump(); if (now() - lastFace > FACE_GAP) S.onFace && S.onFace(Math.random() < 0.6 ? 'smirk' : 'startled', 0.8); }   // a real hop: he can land on things
       else if (k === 'D') { walk.ducking = down; spud.duck(down); } },
     // a click / tap / drag at (u, v) on the stage (0..1): walk there; on a door (or past it) = go through it (left: play, right: watch).
@@ -210,7 +229,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     walkTo(u, v = 0.8, o = {}) { if (!looping || enter) return; const x = (u - 0.5) * viewW(), y = 1.6 + (0.5 - v) * (cam.top - cam.bottom);
       const X = (x / viewW() + 0.5) * 1600, Y = (0.5 - (y - 1.6) / planeH()) * 900;
       walk.door = doorAt(X, Y);   // a door, its sign, or the wall beside it
-      walk.use = -1; walk.chain = -1; walk.hopAt = 0; faceDir = 0;
+      walk.use = -1; walk.chain = -1; walk.hopAt = 0; walk.then = null; faceDir = 0;
       if (!walk.door && !o.drag) {
         const RX = (X - ROOM.ox) / ROOM.sx, L = props(), cx = rawX(), feet = rawY(phys.y);
         const mx = (o.min || 0) / ROOM.sx, my = o.min || 0; let bi = -1, ba = 1e9;   // a prop? (the smallest tap box under the finger)
@@ -218,8 +237,10 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
           if (c - a < mx) { const k = (mx - (c - a)) / 2; a -= k; c += k; } if (d - b < my) { const k = (my - (d - b)) / 2; b -= k; d += k; } d = Math.min(d, cap);
           if (RX >= a && RX <= c && Y >= b && Y <= d && (c - a) * (d - b) < ba) { ba = (c - a) * (d - b); bi = i; } });
         if (bi < 0 && near >= 0 && Math.abs(RX - cx) < 80 && Y < feet && Y > feet - 225) { walk.to = null; walk.dir = 0; useNow(near); return; }   // a tap on him (not on a thing): he uses what he's next to (a phone has no E)
+        if (bi >= 0 && L[bi].walk) { const tx = Math.max(L[bi].x0 + 10, Math.min(L[bi].x1 - 10, RX)); if (upNow()) { walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(tx))); walk.dir = 0; } else viaStairs({ up: true, x: tx }); return; }   // the stairs: up them, to there
+        if (bi < 0 && upNow() && Y > 640) { viaStairs({ up: false, x: RX }); return; }   // the floor, from up there: down the stairs first
         if (bi >= 0) { const p = L[bi], hop = (p.kind === 'hop' || (p.top != null && p.standIf && p.standIf(ps[bi], now()))) && !((p.bump || p.kind !== 'hop') && phys.on === bi);   // (a hop-on thing; or the haunted chair once it's up)
-          if (!hop) { if (gapTo(p, cx) <= REACH * 0.8 && !(phys.on < 0 && covers(p, cx, feet))) { walk.to = null; walk.dir = 0; useNow(bi); } else goUse(bi, cx); return; }   // walk over beside it, use it
+          if (!hop) { if (reachable(p) && gapTo(p, cx) <= REACH * 0.8 && !(phys.on < 0 && covers(p, cx, feet))) { walk.to = null; walk.dir = 0; useNow(bi); } else goUse(bi, cx); return; }   // walk over beside it, use it
           const [a, b] = seatOf(p); let tx = Math.max(a + 24, Math.min(b - 24, RX)), go = bi;
           if (wy(p.top) - phys.y > reachH() * 0.92) {   // too high to hop straight up (a counter from the floor): up via something lower that runs under it
             go = -1; for (let j = 0; j < L.length; j++) { const q = L[j]; if (j === bi || q.top == null || q.standIf) continue; const [qa, qb] = seatOf(q), l2 = Math.max(a, qa) + 16, h2 = Math.min(b, qb) - 16, qy = wy(q.top);
@@ -230,7 +251,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
       walk.to = walk.door === 'watch' ? hi() + 0.01 : walk.door ? lo() - 0.01 : Math.max(lo(), Math.min(hi() - 0.05, x)); walk.dir = 0; },   // (the floor just short of the watch door: only the door itself goes through it)
     onDoor(u, v) { const x = (u - 0.5) * viewW(), y = 1.6 + (0.5 - v) * (cam.top - cam.bottom); const X = (x / viewW() + 0.5) * 1600, Y = (0.5 - (y - 1.6) / planeH()) * 900; return !!doorAt(X, Y); },
     // through a door: 'demo' goes through the watch door (right), everything else through the song's door (left)
-    enterDoor(how = 'play') { if (how === 'demo' && !S.rightOpen) return; if (!looping || enter) return; const side = how === 'demo' ? 'watch' : 'play'; enter = { t0: now(), how, side, phase: 'walk', t1: 0, done: false }; (side === 'watch' ? door2 : door).want = 1; walk.dir = 0; walk.to = null; walk.use = -1; walk.ducking = false; spud.duck(false);
+    enterDoor(how = 'play') { if (how === 'demo' && !S.rightOpen) return; if (how !== 'demo' && S.leftShut) return peekOut(); if (!looping || enter) return; const side = how === 'demo' ? 'watch' : 'play'; enter = { t0: now(), how, side, phase: 'walk', t1: 0, done: false }; (side === 'watch' ? door2 : door).want = 1; walk.dir = 0; walk.to = null; walk.use = -1; walk.ducking = false; spud.duck(false);
       sfx.pop && sfx.pop(); S.onFace && S.onFace('smirk', 1.2); },
     poke() { fx.amount = 0.9; lastGl = now(); },
     rect() { const v = new T.Vector3(); let x0 = 1, y0 = 1, x1 = 0, y1 = 0; const px = pivot.position.x, py = pivot.position.y, s = pivot.scale.x;
@@ -286,12 +307,15 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
       if (!d && walk.to != null) { const gap = walk.to - pivot.position.x; if (Math.abs(gap) < 0.06) { walk.to = null; if (walk.door) S.enterDoor(walk.door === 'watch' ? 'demo' : 'play');
           else if (walk.use >= 0) { const i = walk.use, p = props()[i]; walk.use = -1; if (p && walk.hop && phys.on !== i) { if (jump()) { sfx.jump && sfx.jump(); } } else if (p) { ps[i].tap = T0; fire(i, 'use'); faceDir = toward(p, rawX()); } } }   // got there: use it (turned to it) / hop up
         else d = Math.sign(gap); }
+      if (walk.then && !phys.air && (walk.then.up ? upNow() : phys.on < 0 && phys.y <= 0.001)) { const th = walk.then; walk.then = null; if (th.use != null) goUse(th.use, rawX()); else { walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(th.x))); walk.use = -1; } }   // (the stairs route: next leg)
       if (walk.hopAt && T0 >= walk.hopAt) { walk.hopAt = 0; const c = walk.chain; walk.chain = -1; if (c >= 0 && standOK(c, rawX(), T0) && jump()) sfx.jump && sfx.jump(); }   // (table -> counter: the second hop)
+      if (walk.dir > 0 && !phys.air && phys.on < 0 && phys.y <= 0.001) { const si = stairsI(), sp = props()[si], X = rawX();   // (→ held into the foot of the stairs: he walks up them, the way anyone would; taps keep their own route)
+        if (sp && X >= sp.x0 && X < sp.x0 + 30) { phys.on = si; ps[si].top = null; } }
       if (d && !walk.ducking && !enter) { pivot.position.x = Math.max(lo() - 0.02, Math.min(hi(), pivot.position.x + d * SPEED * dt)); if (moving !== d) { moving = d; spud.waddle(true); turnAt(d * 0.95); }
         if (pivot.position.x <= lo() && d < 0) S.enterDoor('play');                // walked into the door: through it
         else if (pivot.position.x >= hi() && d > 0) { if (walk.dir > 0) S.enterDoor('demo'); else if (!walk.door) walk.to = null; } }   // walked (→ held) into the watch door: through it
       else if (moving) { moving = false; spud.waddle(false); turnAt(faceDir ? faceDir * 0.6 : 0.32); }   // stops: back to the side-eye (or turned to the thing he just used)
-      if (!enter) { door.want = !tr && pivot.position.x - lo() < 0.9 ? 0.16 : 0; door2.want = S.rightOpen && !tr ? (hi() - pivot.position.x < 0.9 ? 0.7 : 0.3) : 0; }   // near one, that door comes ajar: a sliver of the song's light (the way in, no sign needed)
+      if (!enter) { door.want = !tr && pivot.position.x - lo() < 0.9 && !S.leftShut ? 0.16 : 0; stepPeek(T0); door2.want = S.rightOpen && !tr ? (hi() - pivot.position.x < 0.9 ? 0.7 : 0.3) : 0; }   // near one, that door comes ajar: a sliver of the song's light (the way in, no sign needed)
       if (!enter) { const X = rawX(); stepY(dt, X, T0, false); stepProps(T0, X, walk.ducking ? 0 : d); }
     }
     stepDance(T0, dt);
@@ -312,12 +336,18 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     fx2.clearRect(0, 0, 960, 540); const e = enter, [G, dd] = e ? doorOf(e) : [DOOR, door];
     if (e && dd.open > 0) {   // the song's light, washing out of the doorway and over him
       const [ax, ay] = toFg(doorX(G), wy((G.y0 + G.y1) / 2)), [, by] = toFg(0, wy(G.y0)), r = Math.abs(ay - by) * 1.6;
-      const k = e.phase === 'in' ? ease((now() - e.t1) / 0.9) : 0, col = STYLES[cur].door.light;
+      const k = e.phase === 'in' ? ease((now() - e.t1) / 0.9) : 0, col = ((e.side === 'watch' && STYLES[cur].door2) || STYLES[cur].door).light;
       const g = fx2.createRadialGradient(ax, ay, 4, ax, ay, r * (0.6 + 0.9 * k)); g.addColorStop(0, `rgba(255,255,255,${0.15 + 0.7 * k})`); g.addColorStop(0.5, hexA(col, 0.12 + 0.4 * k)); g.addColorStop(1, hexA(col, 0));
       fx2.fillStyle = g; fx2.fillRect(0, 0, 960, 540); }
     if (white > 0) { fx2.fillStyle = `rgba(255,250,238,${Math.min(1, white)})`; fx2.fillRect(0, 0, 960, 540); } }
   const hexA = (c, a) => `rgba(${parseInt(c.slice(1, 3), 16)},${parseInt(c.slice(3, 5), 16)},${parseInt(c.slice(5, 7), 16)},${a})`;
   S.dressOnly = slug => { fx.amount = 0.9; lastGl = now(); sfx.glitch && sfx.glitch(); if (!slug) { spud.wear(null); return Promise.resolve(); } return loadOutfit(slug).then(b => spud.wear(b)).catch(() => {}); };
+  // (arcade, Nov 8) send him to sit on a hop-on thing (the couch), and put a switch back off (the controller back on the console)
+  S.sitOn = id => { const i = idOf(id); if (i < 0 || !looping || enter) return false; const [a, b] = seatOf(props()[i]);
+    walk.door = false; walk.use = i; walk.chain = -1; walk.hopAt = 0; walk.then = null; walk.via = undefined; faceDir = 0; walk.hop = true; walk.dir = 0;
+    walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw((a + b) / 2))); return true; };
+  S.propOff = id => { const i = idOf(id); if (i >= 0 && ps[i]) ps[i].on = false; };
+  S.propOn = id => { const i = idOf(id); if (i >= 0 && ps[i]) ps[i].on = true; };
   S.spinBy = d => { spinOff += Math.PI * 2 * d; spud.turnBy(Math.PI * 2 * d); };
   return S;
 }
