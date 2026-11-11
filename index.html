@@ -139,7 +139,7 @@ body.roomy{padding-left:150px!important}
 </section>
 <p class="trailer"><a href="trailer/" data-spud="sh!77y c0nc3p7 7r@il3r">"shitty concept trailer"</a> <span class="wip">(work in progress)</span></p>
 <img class="maker" src="logo/chikin-logo.webp" alt="ChikinNuglet" width="320" height="91">
-<script>var CLOSED_NOW=true;/* (mirrors CLOSED in the door's handler: when locked, he glitches 'l0cked' into the box, never the password) */
+<script>var CLOSED_NOW=false;/* (mirrors CLOSED in the door's handler: when locked, he glitches 'l0cked' into the box, never the password) */
 function goIn(){document.body.classList.add('going');var o=document.createElement('div');o.id='intro';o.style.cssText='position:fixed;inset:0;z-index:99;background:#05070a;display:grid;place-items:center;transition:background .5s';document.body.appendChild(o);
  var seq=['studio/lib/chikin-logo.png','logo/potato-logo-tm.png'],i=0;
  (function next(){if(i>=seq.length){location.href='studio/?t';return}var potLogo=(i===1);o.style.background=potLogo?'transparent':'#05070a';var im=new Image();im.src=seq[i++];im.alt='';im.style.cssText='grid-area:1/1;width:min(560px,80vw);opacity:0;transition:opacity .6s';o.appendChild(im);
@@ -149,7 +149,7 @@ var f=document.getElementById('door'),c=document.getElementById('code'),say=docu
 try{if(localStorage.getItem('potato-room-unlocked')==='1'){say.textContent='you already have a key. come in.';}}catch(e){}
 f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().toUpperCase();
  // CLOSED (Chikin, Nov 8): "right now, i will unlock later". The kitchen is shut to everyone; Taticat's own room (/behind-the-404/) stays open. To reopen: CLOSED=false.
- var CLOSED=true;   /* LOCKED again (Chikin, Nov 8 late: "close the house"). Was OPEN again (Chikin, Nov 8 late: password 'potato', showing someone). Was LOCKED (Chikin, Nov 8 late: "lock the door"). Streaming = free play: set false (and remove the house curtain). The password stays secret. */if(CLOSED){var pz=(v||'').toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(!v||pz==='impotatobaby'||v.replace(/\s|\uFE0F/g,'')==='\uD83E\uDD54'||v.replace(/\s/g,'').toLowerCase()==='potato'){say.textContent='b3ing w0rked 0n. the l1ghts c0me 0n wh3n i\'m l1ve.';return}}   // closed: only a one-time coupon code opens it, once, nothing remembered
+ var CLOSED=false;   /* OPEN again (Chikin, Nov 8 late: password 'potato', showing someone). Was LOCKED (Chikin, Nov 8 late: "lock the door"). Streaming = free play: set false (and remove the house curtain). The password stays secret. */if(CLOSED){var pz=(v||'').toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(!v||pz==='impotatobaby'||v.replace(/\s|\uFE0F/g,'')==='\uD83E\uDD54'||v.replace(/\s/g,'').toLowerCase()==='potato'){say.textContent='b3ing w0rked 0n. the l1ghts c0me 0n wh3n i\'m l1ve.';return}}   // closed: only a one-time coupon code opens it, once, nothing remembered
  if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&v.toLowerCase()==='test'){try{sessionStorage.setItem('potato-key-pass',String(Date.now()))}catch(e){}say.textContent='0pen.';goIn();return}   // (local previews on Chikin's Mac only: 'test' walks in as a new visitor would)
  try{if(!v&&localStorage.getItem('potato-room-unlocked')==='1'){goIn();return}}catch(e){}
  if(!v){say.textContent='krrzzt— type your password.';return}
