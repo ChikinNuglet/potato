@@ -215,7 +215,7 @@ function swapIn(root){var door=root.id==='door';
  // the contact box: the email and every link break into his spelling too
  [].slice.call(root.querySelectorAll?root.querySelectorAll('.cld'):[]).forEach(function(e){var L=(window.CLD||{})[e.dataset.k]||[e.textContent],nl=L[Math.floor(Math.random()*L.length)];e.dataset.was=nl;e.innerHTML=leet(nl);swapped.push(e)});   // glitches, then settles on a new line
  [].slice.call(root.querySelectorAll?root.querySelectorAll('a'):[]).forEach(function(e){e.dataset.was=e.innerHTML;e.innerHTML=leet(e.textContent);swapped.push(e)});
- var i=root.querySelector&&root.querySelector('input');if(i){i.dataset.ph=i.placeholder;i.placeholder=door?(CLOSED_NOW?leet('l0cked'):'\uD83E\uDD54'):R(POOL.ph);swapped.push(i)}
+ var i=root.querySelector&&root.querySelector('input');if(i){i.dataset.ph=i.placeholder;i.placeholder=door?(CLOSED_NOW?leet('l0cked'):"i'm potato baby"):R(POOL.ph);swapped.push(i)}
  root.classList.add('spudded')}
 function swapOut(){swapped.forEach(function(e){if(e.tagName==='INPUT'){e.placeholder=e.dataset.ph}else{e.innerHTML=e.dataset.was}});swapped=[];document.querySelectorAll('.spudded').forEach(function(e){e.classList.remove('spudded')})}
 // Potato walks the page like a platformer: the logo and boxes are platforms, gravity pulls, he bounces back off walls, hops, falls,
