@@ -204,7 +204,15 @@ function him(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 (function(){var m=$('desk-more');if(!m)return;function flip(v){if(v.paused){[].forEach.call(m.querySelectorAll('video'),function(o){if(o!==v)o.pause()});v.play()}else v.pause()}m.addEventListener('click',function(e){if(e.target.tagName==='VIDEO')flip(e.target)});m.addEventListener('keydown',function(e){if(e.target.tagName==='VIDEO'&&(e.key==='Enter'||e.key===' ')){e.preventDefault();flip(e.target)}})})();
 var have=get();
 if(have){show(have)}
-else if(!LIVE&&!LOCAL){$('tap').textContent='s00n';coupon.addEventListener('click',function(){tell('not yet. s00n. the machine that cuts these is still being built.',true)})}
+else if(!LIVE&&!LOCAL){
+  // TURNED ON Nov 13 2026 (Chikin, leaving for Texas, his family holding coupons: "do it" / "the potatos should cycle through the long context" / "thats the point" /
+  // "is random"). One tap deals one at random from the pot of Potatoes grown from the Long Context. No email, no code, no mail room. It is NOT one per
+  // person: this browser remembers the one it was dealt, a cleared browser can draw again, and two people can be dealt the same one. That is his call.
+  $('help').hidden=true;
+  coupon.addEventListener('click',function(){coupon.disabled=true;coupon.style.animation='none';tell('krrzzt...');
+    fetch('pool.json').then(function(r){return r.json()}).then(function(j){var P=j.potatoes,q=P[Math.floor(Math.random()*P.length)],p={spud:parseInt(String(q.id).replace(/\D/g,''),10)||1,potato:q};
+      keep(p);coupon.classList.add('torn');tell('');setTimeout(function(){show(p)},matchMedia('(prefers-reduced-motion: reduce)').matches?50:620)})
+     .catch(function(){coupon.disabled=false;coupon.style.animation='';tell("that didn't go. try again in a minute.",true)})})}
 else{
   coupon.addEventListener('click',function(){coupon.disabled=true;coupon.style.animation='none';askmail.hidden=false;$('email').focus();tell('')});
   askmail.addEventListener('submit',function(e){e.preventDefault();var v=$('email').value.trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){tell("that's not an email. i checked.",true);return}
