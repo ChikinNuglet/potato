@@ -11,6 +11,40 @@ export const VIDEO = false;
 // PLACE[i] = { x0, x1, gy } for COURSE[i]; HOLES = [{ x0, x1, gy, what }] (the vats carved out of the floors)
 export const PLACE = [], HOLES = [];
 
+// ---- THE REBUILD (Nov 12): Quality Control's plan the crew's own notes, built and measured by team Dry Stamp.
+// Chikin, Nov 11: "this is boring...the whole level has nothing to jump over". Every part of the rebuild is ONE SWITCH here:
+// set it false and that part plays as it did before (the old rows are all still in the tables below). To try one off without
+// an edit: the page takes ?ci_off=pallets,vats (or ?ci_off=all), the tools take CI_OFF=pallets,vats. Report + numbers:
+// levels/confidently-incorrect/REBUILD-REPORT.md.
+const RB_Q = (k) => { try { if (typeof process !== 'undefined' && process.env && process.env['CI_' + k.toUpperCase()]) return process.env['CI_' + k.toUpperCase()].split(',');
+  if (typeof location !== 'undefined') return (new URLSearchParams(location.search).get('ci_' + k) || '').split(','); } catch (e) {} return []; };
+const RB_OFF = RB_Q('off'), RB_ON = RB_Q('on'), sw = (name, dflt = true) => RB_ON.includes(name) ? true : RB_OFF.includes('all') || RB_OFF.includes(name) ? false : dflt;
+export const REBUILD = {
+  videoStickers: sw('videoStickers'),   // (Chikin, Nov 12 night: "thats what drives this one... just get the stickers" / "the stickers give the background movement") the wall follows the YouTube video: every sticker in it, one at a time, big and solid, each until the next one pushes it off, with the video's rubber stamps and sign plates. Table: ci-video-stickers.mjs (generated from confidently-incorrect/VIDEO-STICKERS.md). false = the sticker rework's short see-through ones.
+  kevinKnock: sw('kevinKnock'),   // (Chikin, Nov 12 night: "kevins crate sticks around for waaaaay tooo long" / "it should just get knocked off the track" / "he sticks around with that speech bubble for the whole video") about six seconds after the lid shuts, the crate is clipped and tumbles off the belt. His screen goes back to its corner and only shows when a message comes. false = it rides to the end as before.
+  crownOut: sw('crownOut'),       // (Chikin, Nov 12, D-20261112-28: "yes", take the crown out) no cardboard crown lowered onto his hard hat at 3:29 and none worn after it: an old-story prop. The crate on that beat is drawn as an ordinary crate. The lyric's own crown sticker on "king" is a sticker and stays.
+  bigCrates: sw('bigCrates'),     // the crate you hop: 0.9 wide x 0.72 high and SOLID at that size (was 0.6 x 0.55, killing only in a 0.48 middle); drawn 1.1 x 1.0
+  solidCrates: sw('solidCrates'), // …and it ends a go anywhere on that box. false = it looks big but only its 0.48 middle counts, as forgiving as before (late players: see the report)
+  pallets: sw('pallets'),         // the belt changes height: five pallets (1.0 high, made of shipped crates) he hops up onto and runs along
+  vats: sw('vats'),               // vats 3 -> 7: a new one at 33.58, a gap in the catwalk at 82.69, leap vats at 138.45 + 164.58; spaghetti + stew wider
+  lesson: sw('lesson'),           // the first half-minute teaches one move at a time (five rows out, the belt stalls before the first gate)
+  quiet: sw('quiet'),             // nothing to press while Kevin or Mom is talking (51.16, 144.84, 170.99, 171.83, 228.22 out; the 226.96 stack is one crate)
+  spacing: sw('spacing'),         // four rows that broke the file's own spacing rule come out (88.77, 186.59, 216.53, 238.30)
+  blankFact: sw('blankFact'),     // the one true thing is the only blank thing: no FACT label, and it is the one jam Space does not clear (the crawl runs on to 234.90)
+  retry: sw('retry'),             // 23 retry points (was 17) and a death is sent back to a point 1.0 s before it (was 1.5 s)
+  poPad: sw('poPad'),             // the first pad takes a press on "PO" (62.65): its window is +-0.35 s (was +-0.2)
+  dropIn: sw('dropIn'),           // crates, press heads and gates land on the belt on a beat, two beats before their press (the story file)
+  stumble: sw('stumble'),         // Kevin's typing stumble at the desk (Nippl, backspace, the word again)
+  momTimes: sw('momTimes'),       // "who was caesar" sent as the belt stalls; "kevin, dinner" typed faster; "kevin??" 0.9 s later, after the sticker (ESTIMATED times)
+  proud: sw('proud'),             // his face in the first half-minute is proud, not a smirk (a smirk now means: just got past a checker)
+  kevinAhead: sw('kevinAhead'),   // Kevin's crate rides AHEAD of Potato with his own sign-off as its label (was: FRAGILE, towed behind him)
+  stickerTable: sw('stickerTable'),   // the wall stickers read the curated table below (once per name, 0.85 s each, bare wall in the five quiet windows)
+  stickerRework: sw('stickerRework'),   // THE STICKER REWORK (second pass, Chikin Nov 12): every sticker ONCE, on its own sung word, a short hit; Bezos + Einstein back on the wall (D-20261103-57); false = the first pass's table
+  eagleArt: sw('eagleArt'),       // (Chikin, Nov 12: "if you can make a better little eagle asset, thats best, something that looks better than the little hand scribble ones") the rechargeable eagles are the video's own eagle (play/stickers-ci2/eagle.webp, cut from the YouTube video at 2:15, no white border); false = the hand-drawn ones
+  beltArt: sw('beltArt'),         // seven crates carry their own sticker as the thing he jumps (yak, toaster, gary, walnut, rockets, hurricane, narrator)
+};
+const R = REBUILD;
+
 export const P = 0.5925, OFF = 0.1481;            // the song's beat (map.period / map.offset)
 export const END = 248.3, PREROLL = 14;
 
@@ -34,9 +68,11 @@ export const LEDGES = [
   [194.16, 194.96, 5.1, 'bread'], [194.96, 195.66, 6.2, 'lettuce'], [195.66, 197.63, 7.3, 'mountain'],   // (edges press + 0.35: a regular player's late hop still clears the layer)                  // C89-C91: EVEREST, the sandwich
   [197.63, 200.36, 7.3, 'meat'],                                                                                       // C92: the wobbling deli meat (pump)
   [235.47, 236.60, 13.4, 'brim'],                                                                                      // C112: Cornelius's hat brim
+  // REBUILD: the pallets (1.0 above their floor; the edge sits 0.30 s after the step press; he leaves by running off the end or leaping a vat)
+  ...(R.pallets ? [[20.68, 25.60, 1.0, 'pallet'], [50.52, 55.18, 1.0, 'pallet'], [123.34, 127.00, 5.0, 'pallet'], [132.21, 138.53, 9.0, 'pallet'], [160.57, 164.66, 9.0, 'pallet']] : []),
 ];
 // the launches (§3.5): ↑ on the pad in its window and the shipment carries him up a floor. [press t, from y, to y, air]
-export const LAUNCHES = [[62.953, 1.6, F2, 1.85], [97.83, F1, F2, 1.185], [129.313, F2, F3, 1.185], [206.931, SUMMIT, ROOF, 1.185]];
+export const LAUNCHES = [[62.953, 1.6, F2, 1.85, R.poPad ? 0.35 : 0.2], [97.83, F1, F2, 1.185], [129.313, F2, F3, 1.185], [206.931, SUMMIT, ROOF, 1.185]];
 export const CHUTES = [[85.07, F2, F1], [175.09, F3, F2]];
 
 // ---- the course (§3.4): [press time, kind, label, extra] — kind: low ↑ · high ↓ · wall Space · hole ↑ (a vat) · dbl ↑↑ ·
@@ -105,7 +141,73 @@ const ADD = [
   //  gate, the cabbage, before the spaghetti vat, "DOI", after the stew, the eagles' landing, the overflow, lift B, the summit, MIT)
   L(22.86, 'fax'), L(25.55), L(31.60), L(54.36), L(109.87), L(144.84), L(162.07), L(197.06),
 ];
-export const COURSE = [...BASE, ...ADD].sort((a, b) => a[0] - b[0]);
+// REBUILD: the plan's change list, as rows taken out (CUT) and rows changed (SWAP) by their press time. Nothing above is edited.
+const CUT = new Set([
+  ...(R.lesson ? [19.25, 25.55, 27.92, 31.60, 38.34] : []),                  // the lesson: one move at a time
+  ...(R.quiet ? [51.16, 144.84, 170.99, 171.83, 228.22] : []),                // still thumbs while Kevin and Mom talk
+  ...(R.spacing ? [88.77, 186.59, 216.53, 238.30] : []),                      // closer than the spacing rules above allow
+  ...(R.pallets ? [54.36, 165.35] : []),                                      // the last thing before a leap off a pallet / the first after it
+]);
+const SWAP = {
+  ...(R.pallets ? Object.fromEntries([20.38, 50.22, 123.04, 131.91, 160.27].map(t => [t, [t, 'step', '', 'pallet']])) : {}),
+  ...(R.vats ? { 33.58: [33.58, 'hole', '', 'vat'], 82.69: [82.69, 'hole', '', 'catwalk', 0.30], 138.45: [138.45, 'hole', '', 'vat', 0.42], 164.58: [164.58, 'hole', '', 'vat', 0.42],   // (the plan said 0.30: run, a missed leap off a 1.0-high pallet simply sailed over a 0.30 s vat and landed. 0.42 is the first width where no press means the vat)
+   
+    55.10: [55.10, 'hole', 'QUANTUM SPAGHETTI', 'spaghetti', 0.36], 69.27: [69.27, 'hole', 'STEW', 'stew', 0.36] } : {}),
+  ...(R.quiet ? { 226.96: L(226.96, 'narrator') } : {}),
+  ...(R.blankFact ? { 233.56: [233.56, 'wall', '', 'fact'] } : {}),
+};
+// REBUILD: the stickers that tell the story (Quality Control's Story seat). [tapped word time, name, 'w' wall (big, see-through) |
+// 'b' belt (the sticker is the thing he jumps: its crate carries it)]. Once per name in the whole level, each for STK.life seconds;
+// none in the quiet (71.3-74.6), chorus 1 (86.2-97.3), the stall (142.6-148.3, where only Kevin's own sticker shows), the still
+// (199.9-206.9) or from 232.2 to the end. ci-stickers.mjs (generated) stays the full pool. (einstein + bezos are in the table as the
+// plan wrote it; in pass 1 the story file still left both off the wall. The gremlin slot at 165.66 is held empty. This is the FIRST
+// pass's table: the sticker rework below replaces it when REBUILD.stickerRework is on.)
+export const STK = { life: 0.85, tIn: 0.10, tOut: 0.20, a: 0.55 };
+const STICKERS_PASS1 = [
+  [16.51, 'acrobat', 'w'], [17.56, 'fanny-pack', 'w'], [22.05, 'einstein', 'w'], [22.91, 'fax', 'w'], [23.79, 'yak', 'b'], [27.5, 'possum', 'w'],
+  [30, 'citations', 'w'], [30.93, 'cabbage', 'w'], [34.86, 'goblin', 'w'], [37.43, 'toaster', 'b'], [39.59, 'caesar', 'w'], [40.36, 'bezos', 'w'],
+  [45.63, 'ferret', 'w'], [46.54, 'electronics', 'w'], [49.15, 'gary', 'b'], [51.83, 'university', 'w'], [54.8, 'spaghetti', 'w'],
+  [56.36, 'linguini', 'w'], [57.7, 'doi', 'w'], [60.7, 'cliff', 'w'],
+  [64.52, 'authority', 'w'], [66.33, 'screw', 'w'], [68.73, 'stew', 'w'], [70.84, 'walnut', 'b'], [74.62, 'forehead', 'w'], [77, 'statistics', 'w'],
+  [79.5, 'restaurant', 'w'], [80.53, 'zip-code', 'w'], [82.69, 'station', 'w'],
+  [105.31, 'napoleon', 'w'], [107.76, 'ego', 'w'], [110.13, 'chimichanga', 'w'], [116.25, 'evidence', 'w'], [118.34, 'stephanie', 'w'], [122.33, 'shield', 'w'],
+  [129.46, 'granola', 'w'], [131.62, 'silicon', 'w'], [132.46, 'steroids', 'w'], [134.97, 'weapon', 'w'], [135.86, 'neural', 'w'], [141.86, 'peru', 'w'],
+  [158.5, 'fire', 'w'], [160.71, 'incorrect', 'w'], [170.23, 'earbuds', 'w'],
+  [173.05, 'rockets', 'b'], [175.71, 'hot-pockets', 'w'], [180.14, 'orthodontics', 'w'], [180.9, 'dolphin', 'w'], [183.99, 'hurricane', 'b'],
+  [187.12, 'knowledge', 'w'], [193.81, 'everest', 'w'], [195.84, 'taxonomy', 'w'],
+  [214.6, 'bots', 'w'], [217.87, 'franklin', 'w'], [219.23, 'calculator', 'w'], [225.2, 'reactor', 'w'], [227.26, 'narrator', 'b'],
+  [230.74, 'helmet', 'w'], [231.3, 'browser', 'w'],
+];
+// THE STICKER REWORK (second pass, Nov 12). Chikin: "man confidently was supposed to have a sticker rework remember / jeff bezos and
+// the rest" · "there were stickers created for each of the keywords" · "they shouldnt be reusing the stickers, one joke and done" ·
+// "the stickers are hanging around too long, and some of them dont make sense". So: every sticker in the song's set
+// (play/stickers-ci2) appears ONCE, on the word it is a picture of (times are the word's own time in words/confidently-incorrect.json;
+// pass 1 kept twelve on a neighbouring word), for STK.life seconds, one on the wall at a time, none while Mom types.
+// BEZOS and EINSTEIN are ON (D-20261103-57, Chikin Nov 3: "google says were good with bezos / its exactly what we have been doing":
+// in-game only, tied to the lyric, never labelled with his name; it revises D-20261102-08, the "never Bezos" note). The gremlin stays
+// out (a look-alike; no original yet). cornelius (never used before) is on his word. The older Potato-pose set (play/stickers-ci) is
+// not used: the only Potato is the one you play.
+const STICKERS_REWORK = [
+  [15.57, 'silicon', 'w'], [16.94, 'acrobat', 'w'], [18.21, 'fanny-pack', 'w'], [22.05, 'einstein', 'w'], [22.91, 'fax', 'w'], [24.03, 'yak', 'b'],
+  [27.92, 'possum', 'w'], [30.00, 'citations', 'w'], [31.31, 'cabbage', 'w'], [34.86, 'goblin', 'w'], [37.43, 'toaster', 'b'], [39.59, 'caesar', 'w'], [40.36, 'bezos', 'w'],
+  [45.63, 'ferret', 'w'], [46.54, 'electronics', 'w'], [49.15, 'gary', 'b'], [51.83, 'university', 'w'], [55.10, 'spaghetti', 'w'], [57.18, 'linguini', 'w'], [58.98, 'doi', 'w'],
+  [64.52, 'authority', 'w'], [66.92, 'screw', 'w'], [69.27, 'stew', 'w'], [70.84, 'walnut', 'b'], [74.96, 'forehead', 'w'], [79.50, 'restaurant', 'w'], [80.53, 'zip-code', 'w'],
+  [82.32, 'station', 'w'], [85.80, 'cliff', 'w'],
+  [105.31, 'napoleon', 'w'], [110.66, 'chimichanga', 'w'], [118.34, 'stephanie', 'w'], [130.19, 'granola', 'w'], [132.79, 'steroids', 'w'], [134.97, 'weapon', 'w'], [141.86, 'peru', 'w'],
+  [152.82, 'statistics', 'w'], [158.50, 'fire', 'w'], [169.23, 'neural', 'w'], [170.23, 'earbuds', 'w'], [173.35, 'rockets', 'b'], [174.56, 'evidence', 'w'], [177.76, 'hot-pockets', 'w'],
+  [180.14, 'orthodontics', 'w'], [180.90, 'dolphin', 'w'], [183.99, 'hurricane', 'b'], [187.12, 'knowledge', 'w'], [189.89, 'shield', 'w'], [193.81, 'everest', 'w'], [195.84, 'taxonomy', 'w'],
+  [210.82, 'incorrect', 'w'], [217.14, 'bots', 'w'], [218.16, 'franklin', 'w'], [219.45, 'calculator', 'w'], [222.31, 'ego', 'w'], [225.20, 'reactor', 'w'], [227.58, 'narrator', 'b'],
+  [230.74, 'helmet', 'w'], [231.30, 'browser', 'w'], [235.43, 'cornelius', 'w'],
+];
+// the word each one is on (for the report's table, and so the next reader can check the match)
+export const STICKER_WORDS = { silicon: 'silicon', acrobat: 'acrobat', 'fanny-pack': 'fanny (pack)', einstein: 'Einstein', fax: 'fax', yak: 'yak', possum: 'possum', citations: 'citations', cabbage: 'cabbage',
+  goblin: 'goblin', toaster: 'toaster', caesar: 'Caesar', bezos: 'Jeff (Bezos)', ferret: 'ferret', electronics: 'RadioShack', gary: 'Gary', university: 'University', spaghetti: 'spaghetti', linguini: 'Linguini',
+  doi: 'hell-no (the DOI number)', authority: 'authority', screw: 'screw', stew: 'stew', walnut: 'walnut', forehead: 'Forehead', restaurant: 'restaurants', 'zip-code': 'ZIP (code)', station: 'station', cliff: 'cliff',
+  napoleon: 'Napoleon', chimichanga: 'chimichanga', stephanie: 'Stephanie', granola: 'granola', steroids: 'steroids', weapon: 'weaponized', peru: 'Peru', statistics: 'statistic', fire: 'fire', neural: 'neural',
+  earbuds: 'earbuds', rockets: 'rockets', evidence: 'evidence', 'hot-pockets': 'Hot (Pockets)', orthodontics: 'orthodontics', dolphin: 'dolphin', hurricane: 'hurricane', knowledge: 'knowledge', shield: 'defensive',
+  everest: 'Everest', taxonomy: 'taxonomy', incorrect: 'incorrect', bots: 'bots', franklin: 'Franklin', calculator: 'calculator', ego: 'ego', reactor: 'reactor', narrator: 'narrator', helmet: 'helmet', browser: 'browser', cornelius: 'Cornelius' };
+export const STICKERS = R.stickerRework ? STICKERS_REWORK : STICKERS_PASS1;
+export const COURSE = [...BASE, ...ADD].filter(r => !CUT.has(r[0])).map(r => SWAP[r[0]] || r).sort((a, b) => a[0] - b[0]);
 export const STACK_H = 1.7, STACK_AIR = 0.25, STACK_MID = 0.5;   // the stack: 1.7 high (a hop peaks at ~1.5), the air jump 0.25 s in, its middle met 0.5 s in
 export const UP_KINDS = new Set(['low', 'hole', 'dbl', 'step', 'pad', 'crumble', 'fake', 'orb', 'hurdle', 'pump', 'stack']);
 // what a cleared press ships (§3.4 "What each kind does to the story"): crates/vats/ledges stamped + shipped
@@ -117,12 +219,13 @@ export const SECTIONS = [['laptop', -14, 0], ['belt', 12.8, 0.5], ['verse', 14.3
   ['cornelius', 232.41, 0.95], ['mit', 236.90, 1.15], ['outro', 241.89, 0]];
 // (stage 2: every jam crawl now ends just AFTER its gate — the glitch through it restarts the belt — instead of a moment before
 //  it, so the gate is never met in the same instant the belt speeds up; the breath ends 0.56 s before the Nature Valley pad)
-export const BOOSTS = [[39.30, 41.23, 0.30, 'jam'], [59.00, 60.27, 0.35, 'jam'], [73.50, 75.07, 0.35, 'jam'], [114.20, 115.54, 0.35, 'jam'], [127.30, 128.75, 0.30, 'breath'],
+export const BOOSTS = [...(R.lesson ? [[24.40, 25.23, 0.35, 'jam']] : []), [39.30, 41.23, 0.30, 'jam'], [59.00, 60.27, 0.35, 'jam'], [73.50, 75.07, 0.35, 'jam'], [114.20, 115.54, 0.35, 'jam'], [127.30, 128.75, 0.30, 'breath'],
   [146.71, 148.27, 0.30, 'jam'], [156.00, 157.65, 0.30, 'jam'], [175.19, 176.75, 0.15, 'dark'], [176.75, 178.33, 0.32, 'dark'], [190.20, 191.85, 0.30, 'jam'], [203.60, 206.20, 0.10, 'still'],
-  [232.69, 234.01, 0.30, 'jam']].map(([t0, t1, k, why]) => ({ t0, t1, k, why }));
+  [232.69, R.blankFact ? 234.90 : 234.01, 0.30, 'jam']].map(([t0, t1, k, why]) => ({ t0, t1, k, why }));
 // (stage 2: each point checked by a script — standing on a plain floor, ≥ 1.2 s to the next press, the demo wins from it — and
 //  nudged to the nearest moment that is; the plan's 59.95 / 74.96 sat in front of a jam gate, 150.23 / 161.31 on a press)
-export const RETRY = [14.37, 38.77, 58.61, 75.32, 86.30, 100.30, 112.50, 130.70, 140.65, 149.03, 159.20, 174.10, 177.71, 192.60, 202.12, 214.69, 232.35];
+export const RETRY = R.retry ? [14.37, 19.10, 27.60, 31.50, 38.77, 58.61, 75.32, 86.30, 88.80, 100.30, 112.50, 128.10, 130.70, 140.65, 149.03, 159.20, 174.10, 177.71, 192.60, 202.12, 205.40, 214.69, 232.35]
+  : [14.37, 38.77, 58.61, 75.32, 86.30, 100.30, 112.50, 130.70, 140.65, 149.03, 159.20, 174.10, 177.71, 192.60, 202.12, 214.69, 232.35];
 export const CUTS = [[-14, 13.4, 'float'], [241.3, 248.41, 'float']];   // (rework: control from 13.4, just after the push-through, so the belt has crates from its start)
 
 // ---- Kevin's and Mom's messages (§4.2): [typing starts, sent, from, text] ----
@@ -131,17 +234,21 @@ export const CUTS = [[-14, 13.4, 'float'], [241.3, 248.41, 'float']];   // (rewo
 const PRE = 'Dear Potato, what is the capital of ';
 export const MSG_Q = PRE + 'Neipal?', MSG_SIGN = 'thanks, -Kevin';
 export const MSG1 = MSG_Q + ' ' + MSG_SIGN, SENT1 = -2.2;
-export const KEYS1 = [[-13.0, ''], [-7.6, PRE], [-6.2, PRE], [-5.0, MSG_Q], [-2.6, MSG1], [SENT1, MSG1]];
+// REBUILD (stumble): he types "Nippl", holds, backspaces to "N", then gets the word out. Nobody reacts: it is Kevin's one joke. The
+// plan wrote the stumble for the spelling "Niepal" and asked for Chikin's yes; his words on file are "Neipal", so it lands on that.
+// All of these times are ESTIMATED (the desk is before the song's taps).
+export const KEYS1 = R.stumble ? [[-13.0, ''], [-8.6, PRE], [-8.0, PRE], [-7.3, PRE + 'Nippl'], [-6.7, PRE + 'Nippl'], [-6.25, PRE + 'N'], [-5.9, PRE + 'N'], [-5.0, MSG_Q], [-2.6, MSG1], [SENT1, MSG1]]
+  : [[-13.0, ''], [-7.6, PRE], [-6.2, PRE], [-5.0, MSG_Q], [-2.6, MSG1], [SENT1, MSG1]];
 export const MESSAGES = [
   [-13.0, SENT1, 'kevin', MSG1],
-  [36.0, 38.6, 'kevin', 'who was caesar'],
+  R.momTimes ? [37.9, 39.3, 'kevin', 'who was caesar'] : [36.0, 38.6, 'kevin', 'who was caesar'],   // (REBUILD, ESTIMATED: sent the instant the belt stalls)
   [50.6, 52.0, 'kevin', 'who is dr gary'],
   [71.5, 74.6, 'kevin', '…', 'unsent'],
   [138.4, 140.6, 'kevin', 'how many ppl live in peru'],
   [144.0, 144.9, 'kevin', 'its me kevin'],
   [146.8, 147.3, 'kevin', 'potato?'],
-  [171.0, 172.3, 'mom', 'kevin, dinner'],
-  [175.4, 176.0, 'mom', 'kevin??'],
+  [171.0, R.momTimes ? 171.9 : 172.3, 'mom', 'kevin, dinner'],   // (REBUILD: the whole line is up 0.67 s before the 172.57 crate)
+  R.momTimes ? [176.3, 176.9, 'mom', 'kevin??'] : [175.4, 176.0, 'mom', 'kevin??'],   // (REBUILD, ESTIMATED: after the hot-pockets sticker, in the dark; her first key ends the sticker)
   [203.7, 205.0, 'mom', 'who is this. where is my son'],
   [227.60, 228.25, 'mom', 'GIVE HIM BACK'],
   [243.67, 246.63, 'mom', 'please', 'beats'],
@@ -166,7 +273,7 @@ export const KEYTICKS = (() => { const out = [];
 const FACES0 = [
   [-4.8, 'question', 1.4], [-2.2, 'thinking', 3.3], [1.134, 'question', 1.6], [2.73, 'startled', 2.9], [5.63, 'dizzy', 1.8],
   [7.4, 'thinking', 2.2], [9.62, 'smirk', 0.6], [10.17, 'determined', 0.7], [10.79, 'grin', 2.4], [13.18, 'focused', 1.3],
-  [14.4, 'smirk', 9.8], [24.38, 'startled', 0.4], [24.78, 'smirk', 1.2], [26, 'smirk', 13], [39.3, 'question', 1.4], [40.78, 'grin', 0.8], [41.62, 'proud', 3.6],
+  [14.4, R.proud ? 'proud' : 'smirk', 9.8], [24.38, 'startled', 0.4], [24.78, 'smirk', 1.2], [26, R.proud ? 'proud' : 'smirk', 13], [39.3, 'question', 1.4], [40.78, 'grin', 0.8], [41.62, 'proud', 3.6],
   [45.2, 'grin', 8], [53.34, 'smirk', 4.6], [58.0, 'deadpan', 1.8], [59.82, 'smirk', 0.4], [60.13, 'determined', 2.5], [62.65, 'proud', 1.9],
   [64.52, 'grin', 4.3], [73.5, 'angry', 1.1], [74.62, 'grin', 4.3], [78.95, 'grin', 4.5], [83.45, 'wide', 2.7],
   [86.20, 'proud', 4.6], [90.79, 'determined', 2.4], [93.15, 'smirk', 2.5], [95.68, 'grin', 2.1], [97.83, 'proud', 7], [104.83, 'awe', 2.6], [107.47, 'grin', 4.8],
@@ -187,7 +294,7 @@ export const LEDGER = [
   [-0.75, 0.16, 'tick'], [-0.35, 0.16, 'tick'], [0.0, 0.18, 'tick'], [0.32, 0.22, 'tick'], [0.62, 0.22, 'tick'], [0.93, 0.22, 'tick'], [1.27, 0.22, 'tick'],
   [1.134, 0.45, 'glitch', 'question'], [2.73, 0.45, 'glitch'], [5.63, 0.80, 'big'], [10.79, 0.35, 'small'],
   [121.90, 0.35, 'small', 'oh'], [145.52, 0.40, 'glitch', 'question'], [146.71, 0.45, 'glitch', 'oh'],
-  [171.0, 0.5, '', 'oh'], [175.4, 0.5, '', 'oh'], [203.7, 0.5, '', 'oh'], [227.6, 0.5, '', 'oh'],
+  [171.0, 0.5, '', 'oh'], [R.momTimes ? 176.3 : 175.4, 0.5, '', 'oh'], [203.7, 0.5, '', 'oh'], [227.6, 0.5, '', 'oh'],
   [242.5, 0.9, 'big'],
 ];
 export const GRAB = 147.82;                        // HE'S: the Space press that takes Kevin
@@ -215,7 +322,7 @@ export const MOMENTS = [
   [118.9, 'wing', 'Stephanie\'s twelve papers -> hobgoblin', 'hops'], [121.0, 'wing', 'white-out tape: Oops. Correction.', 'none'],
   [127.3, 'wing', 'the journal in silence', 'none'], [129.31, 'upper', 'Nature Valley: up to F3', 'pad'], [140.57, 'upper', 'the population counter', 'hops'],
   [144.93, 'upper', 'who is Kevin? the slip stamped SOURCE, machines stall', 'none'], [147.82, 'upper', 'HE\'S IN THE DATA NOW: Kevin taken', 'space'],
-  [148.27, 'furnace', 'every machine roars back on; Kevin rides a FRAGILE crate', 'none'], [157.20, 'furnace', 'the survey binder into the furnace', 'space'],
+  [148.27, 'furnace', R.kevinAhead ? 'every machine roars back on; Kevin drops into the crate ahead of Potato on the far belt; his own sign-off is its label; it is never attached to him' : 'every machine roars back on; Kevin rides a FRAGILE crate', 'none'], [157.20, 'furnace', 'the survey binder into the furnace', 'space'],
   [159.53, 'furnace', 'furnace doors blast open', 'none'], [171.0, 'furnace', 'Mom: kevin, dinner', 'none'], [175.09, 'furnace', 'socket dive, the dark', 'fall'],
   [178.33, 'furnace', 'the barrage', 'hops'], [185.0, 'furnace', 'robo-raccoon kicks the KNOWLEDGE shelf', 'hop'], [190.2, 'furnace', 'JAM-7 fact-check crew', 'space'],
   [193.81, 'deli', 'EVEREST: the sandwich', 'climb'], [199.99, 'deli', 'ANSWER ✓ (toothpick)', 'hop'], [203.6, 'deli', 'the still; Mom: who is this', 'none'],

@@ -1,0 +1,185 @@
+{
+ "what": "Potato's body in the world, as numbers. LOADED by the engine (engine/body.mjs, physpose.mjs, senses.mjs). Moved here from design/physics.json in the Build round (that copy stays for tools/throw_numbers.mjs, the design calculator). Units: bh = body heights (150 px on the desktop), seconds, radians. Argue any number on the board.",
+ "deadWeight": true,
+ "deadWeight_note": "BOLD CHOICE, one flag. true = thrown again and again he goes limp and heavy (see grudge). false = every throw is the same.",
+ "units": {
+  "px_per_bh_desktop": 150,
+  "tick_hz": 60,
+  "substeps": 4
+ },
+ "body": {
+  "radius": 0.5,
+  "mass": 1.0,
+  "mass_personality_range": [
+   0.85,
+   1.2
+  ],
+  "inertia_factor": 0.5,
+  "gravity": 26,
+  "air_drag_per_s": 0.12,
+  "max_speed": 45,
+  "max_spin": 11,
+  "spin_air_loss_per_s": 0.12,
+  "centre_of_mass_from_feet": 0.38,
+  "half_height": 0.5375,
+  "half_width": 0.52,
+  "potato_contact_radius": 0.52,
+  "upright_tolerance_rad": 0.35,
+  "shape_note": "measured off the model: body 1 tall + 0.075 of feet, profile.json front max 0.523. The contact distance follows his real outline (taller than wide); the spin maths stays a disc of radius 0.5."
+ },
+ "contact": {
+  "restitution_floor": 0.35,
+  "restitution_wall": 0.55,
+  "restitution_ceiling": 0.45,
+  "restitution_potato": 0.25,
+  "rest_speed": 1.6,
+  "friction": 0.6,
+  "friction_potato": 0.4,
+  "roll_damping_per_s": 4.5,
+  "stick_speed": 0.35,
+  "stick_spin": 0.9,
+  "stick_frames": 6,
+  "impact_event_min_speed": 0.8,
+  "ground_drag_per_s": 3.0,
+  "ground_drag_note": "Build round, from the first real throw: with only spin damping he rolled 2.8 bh along the floor like a ball. This takes sideways speed while he is on the floor. 0 = the design-round behaviour (tools/throw_numbers.mjs).",
+  "hold_min_speed": 2,
+  "hold_per_speed": 4,
+  "hold_frames_max": 3,
+  "hitstop": { "on": true, "kinds": ["splat"], "base_f": 2, "speed_per_extra_f": 3, "max_f": 4, "note": "final round (director E1): a first contact that sticks holds its crush frame 2 to 4 frames, longer the harder he hit (2 at 12 bh/s, 4 at 18). Nothing of his advances; the flesh jiggle still arrives. The crack and the hole are not touched (the director: do not touch). on: false = off (bench / pet: ?hitstop=0)." },
+  "hold_note": "the animator's bounce_floor rule: the surface keeps him 1 + round(v / 4) frames (capped 3) before restitution lets him go. Build round."
+ },
+ "squash": {
+  "cap": 0.18,
+  "cap_note": "Chikin picked 0.18 from the squash ladder, Nov 12 2026 (\"0.18\"). Earlier: spudphys/squash.mjs canon guard: 0.12 until Chikin has seen the squash ladder stills (0.12 / 0.18 / 0.28). direction.json asks for up to 0.28 on a landing.",
+  "stiffness": 260,
+  "damping": 18.7,
+  "full_at_speed": 12,
+  "curve_power": 0.8,
+  "flight_stretch_full_at_speed": 30,
+  "model_land_speed_scale": 0.33,
+  "upright_alignment_for_model_land": 0.8,
+  "clips_may_exceed_cap": false,
+  "clips_note": "moves.json keys squashes far past the cap (set_down 0.84, splat_wall 0.32). spudphys/squash.mjs says new squash looks go to Chikin as stills first. Until he has seen the squash ladder on the REAL model this stays false and every sy is clamped to 1 - cap .. 1 + cap; true lets clips through.",
+  "full_at_speed_note": "was 22 in the design. On the real model a drop from the hand (9 bh/s) squashed 6% and read as nothing; at 12 it is 9.5%, still under the cap.",
+  "flesh_dip_under_cap": 0.35,
+  "flesh_note": "while the cap is on, the model's own squash kick (flesh) is scaled by this so bone + flesh stay near 12%. With clips_may_exceed_cap true it is the animator's full kick."
+ },
+ "grab": {
+  "pick_radius": 0.53,
+  "follow_halflife_ms": 35,
+  "pendulum_damping_ratio": 0.22,
+  "velocity_window_ms": 90,
+  "stale_sample_ms": 45,
+  "throw_gain": 1.0,
+  "spin_from_offset": 1.6,
+  "pendulum_omega": 9.5,
+  "pendulum_max_roll": 1.1,
+  "pendulum_note": "the animator's numbers (moves.json hang): the one body spring that is allowed to ring",
+  "spin_from_horizontal_speed": 0.6,
+  "spin_note": "the animator's rule (moves.json air): spin = 1.6 * sideways offset of the grab from his centre of mass * release speed + 0.6 * horizontal speed, capped at body.max_spin. A throw from dead centre does not spin.",
+  "poke_click_max_ms": 200,
+  "poke_move_max_px": 6,
+  "pick_up_hold_min_ms": 180,
+  "throw_min_speed": 3,
+  "pendulum_drive": 0.7,
+  "pendulum_drive_note": "how much of the hand's acceleration reaches the swing (1 = a real pendulum; lower = heavier, calmer in a carry). Build round, from the first strips: at 1 a brisk carry laid him flat."
+ },
+ "exits": {
+  "first_contact_only": true,
+  "crack_speed": 18,
+  "crack_min_gap_s": 20,
+  "crack_lifetime_s": [
+   4,
+   8
+  ],
+  "crack_rays": [
+   9,
+   14
+  ],
+  "crack_length_bh": [
+   0.8,
+   2.2
+  ],
+  "hole_speed": 28,
+  "hole_min_gap_s": 180,
+  "hole_away_s": [
+   2.5,
+   6
+  ],
+  "hole_closes_after_s": 8,
+  "script_potato_throw_max_speed": 16,
+  "crack_speed_bounds": [
+   14,
+   24
+  ],
+  "hole_speed_bounds": [
+   22,
+   34
+  ],
+  "calibrate": true,
+  "calibrate_note": "the pet logs the first-contact speed of every throw (a number, nothing else) and after 20 throws sets crack_speed at this user's 65th percentile and hole_speed at the 93rd, inside the bounds. A gentle hand and a violent hand both get a crack about one throw in three and a hole about one in fifteen. false = the fixed numbers above.",
+  "crack_starts_after_settle_f": 30,
+  "crack_note": "the comedian's rule: the crack does not fire on impact. Physics marks the spot and the speed; the crack draws 30 frames after he has settled.",
+  "splat_speed": 12,
+  "splat_note": "first contact only, on a wall, ceiling or the floor: under splat_speed he bounces (real restitution); splat_speed to crack_speed he sticks, slides and peels (the animator's splat_wall clip); crack_speed to hole_speed he comes off the edge at the glass (crack_hit); over hole_speed he goes through (through_404). Every later contact of the same throw is a plain bounce."
+ },
+ "shove": {
+  "bump": 2.5,
+  "shove": 6,
+  "big_shove": 10,
+  "recoil_fraction": 0.35,
+  "goes_free_above": 1.5
+ },
+ "grudge": {
+  "note": "DEAD WEIGHT. Each throw adds 1; it drains 1 every drain_s. Mass and sag grow with it, so the same flick sends him less far and he hangs lower from the cursor. Never below min_throw_gain: he can always be thrown.",
+  "max": 4,
+  "drain_s": 25,
+  "free_throws": 2,
+  "mass_per_point": 0.18,
+  "sag_bh_per_point": 0.04,
+  "min_throw_gain": 0.72
+ },
+ "room": {
+  "floor": "top of the Dock (bottom of the display work area)",
+  "ceiling": "bottom of the menu bar (top of the work area)",
+  "walls": "left and right edges of the primary display (or the Dock's edge when it sits on a side)",
+  "poll_work_area_s": 1,
+  "ledges": []
+ },
+ "judge_proposed": {
+  "note": "proposed additions to direction.json judge (the director decides; the animator asks for the same thing as argument 1). Free flight cannot pass a position-step limit (a hole throw moves 0.6 bh per frame), so in free mode judge the CHANGE of velocity instead. Measured in tools/throw_numbers.mjs: 0.45 bh/s per frame at most outside contact frames (gravity is 0.433).",
+  "free_mode_exempt_from_position_step": true,
+  "max_free_dv_bh_s_per_frame": 0.6,
+  "max_roll_step_rad": 0.2
+ },
+ "scuffs": { "on": true, "min_speed": 6, "len_per_speed": 0.028, "max_len_bh": 0.55, "stay_s": 40, "max": 8, "note": "BOLD CHOICE (engineer, final round): where he lands hard he leaves a short ink skid on the Dock line or the screen edge, the way he was going. Stays about 40 s, goes one stroke at a time. engine/fx.mjs kind scuff. Off: on = false (bench / pet: ?scuffs=0)." },
+ "crowd_space": { "on": true, "depth_stagger_bh": 1.1, "inside": 0.82, "after_f": 12, "cooldown_f": 90, "note": "final round (director E4, Potato seat): two who are both just standing never stay inside each other; after 12 frames the later arrival waddles out to direction.json crowd.personal_space_body_widths. engine/crowd.mjs. on: false = off (?space=0)." },
+ "rooted": true,
+ "yaw_slew_rad_per_frame": 0.13, "yaw_slew_note": "assembly round: the rig never asks the model to turn faster than this (the judge allows 0.15). Found by throwing one Potato into another mid about-face: 0.228 a frame before, see draft1/CHECKS.md. 0 = off.",
+ "slipstream": { "on": true, "min_speed": 9, "reach": 1.05, "lean": 7, "wob": 4, "max_gust": 0.6, "cooldown_f": 50, "quiet_after_poke_f": 60, "note": "BOLD CHOICE (engineer, assembly round): your cursor has air. A fast pointer passing close rocks his flesh once, the way it was going. engine/slipstream.mjs. Off: on = false (bench / pet: ?slipstream=0)." },
+ "rooted_note": "BOLD CHOICE (engineer, Build round), one flag. true = picked up off the ground he holds on for a beat: his feet stay, he stretches toward your hand, then comes free (see root). false = he leaves the ground the frame you lift.",
+ "root": {
+  "max_frames": 14,
+  "free_at_pull_bh": 0.32,
+  "stretch_at_full": 0.12,
+  "lean_at_full_bh": 0.06,
+  "pop_wob_kick": 2.2,
+  "pop_squash_kick": 1.6,
+  "only_from": [
+   "ground"
+  ]
+ },
+ "flight": {
+  "stretch_per_speed": 0.016,
+  "stretch_halflife_f": 2.0,
+  "stretch_cap": 0.12,
+  "stretch_cap_note": "final round: the flight has its own cap, so a deeper impact squash (squash.cap, Chikin's call from the ladder) never changes the arc the director signed.",
+  "stretch_note": "1 + 0.016 * speed along his velocity, clamped by squash.cap; kept as a strain tensor and low-passed so the axis never snaps"
+ },
+ "hang": {
+  "stretch_cap": 0.12, "stretch_cap_note": "the stretch in your hand keeps its own cap, so the deeper wall squash (0.18) does not change it", "stretch_base": 0.07,
+  "stretch_per_speed": 0.012,
+  "blend_f": 4
+ },
+  "drive": { "note": "YOU DRIVE (Nov 12 night, Chikin: he moved like he was in pudding). tempo = walk-cycle frames per tick, stride = step length x, jump_vx / jump_vy = the jump.", "tempo": 2, "stride": 3.0, "jump_vx": 2.8, "jump_vy": 8.2 }
+}

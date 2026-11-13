@@ -31,7 +31,7 @@ export function build(words, map) {
     looks, glows: looks.map(l => l[0]),
     // faces on song moments (the runner's list, the quiet lines go soft). The mode adds its own.
     faces: [[5.85, 'smirk', 1.1], [18.05, 'wide', 0.6], [26.36, 'smirk', 0.8], [37.96, 'smirk', 1.0], [48.52, 'skeptical', 0.9], [54.25, 'skeptical', 0.35], [61.40, 'thinking', 3.2],
-      [68.37, 'smirk', 1.0], [76.35, 'sleepy', 1.2], [87.39, 'sleepy', 1.2], [92.05, 'question', 1.2], [105.19, 'smirk', 0.9], [107.65, 'thinking', 0.9], [110.71, 'shock', 0.9]],
+      [68.90, 'skeptical', 0.8], [76.35, 'sleepy', 1.2], [87.39, 'sleepy', 1.2], [92.05, 'question', 1.2], [105.19, 'smirk', 0.9], [107.65, 'thinking', 0.9], [110.40, 'sleepy', 1.2]],   // (Walkies, items 38 and 39, DRAFT: it was a shock face on "what if kev calls"; on Kevin's lines his face stays soft. And no smirk at "oh sheila. lovely x", which moved to 68.90)
     story,
     theme: { noPunch: true, noBeatSpin: true, noGhost: true, backdrop: 'plain', bg: '#0b0e1d', digit: '#1a2142', digit2: '#ffd6a0', edge: '#c8d2ff', block: '#0c0f1c', word: '#f0f2ff',
       light: '#000000', light2: '#000000', halo: '#e9e6ff', lyric: '#c8d2ff', lyricColor: '#c8d2ff', lyricKeys: ['ghost', 'chat', 'real', 'there', 'room', 'block', 'mute'],

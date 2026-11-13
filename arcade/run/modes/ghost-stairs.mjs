@@ -10,9 +10,17 @@
 //  · SPACE: on a text that glows (any time, anywhere on the phone), he blinks onto it and it's his. The words change on the sung word, not on the press. No glow: a fizz and a short phase
 //    (through anything). On a Kevin line: his purple slides off and nothing happens.
 //  · In the way: a line that shakes then falls (step aside) · something round that rolls (hop) · a wheel stuck in the door (spin next to it).
+//
+// THE REBUILD (Nov 12). Chikin, Nov 11: "more potato having to dodge what is coming from the right" · "the chat moves by too fast" · "the picture of 'biscuit' needs to be put in".
+// The plan is team Walkies' the crew's own notes, the change list); built and run after them. What changed in here:
+//  · a hit: he tears purple for R.TEAR and is carried up to R.KNOCK along the bar. Space still works. Nothing ends the run (item 5)
+//  · HAZ kind 'send': one of James's photos comes in from the right wall as a blank frame, a blue nose first. It shoves, it never tears (item 6)
+//  · HAZ `on`, `fx`, icon 'laugh' · row kind 'none', `from: 'right'`, `load` · a new row eases in over R.ANIM, one arrival at a time (items 4, 7)
+//  · gag kinds photo-load, photo-lean, silhouette-brighten, and the oneBrightLine switch (item 8) · Biscuit is Chikin's photo (item 49)
 import * as G0 from './ghost-in-the-group-chat.mjs';
 import { STEPS, WHO, HAZ, HUSH, SHORT_END, TORCHES } from '../levels/ghost-stairs/chat.mjs';
-import { GAGS, TATICAT_TYPES, TATICAT_DOTS } from '../levels/ghost-stairs/gags.mjs';
+const BISCUIT_PIC = 'levels/ghost-runner/biscuit/biscuit-04-WHINY-the-one.webp';   // Chikin's own picture of Biscuit (logged in ASSET-CREDITS.md). Never the ones in biscuit/not-him or biscuit/maybe
+import { GAGS, UNKNOWN_TYPES, UNKNOWN_DOTS } from '../levels/ghost-stairs/gags.mjs';
 const ease = x => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
 const ease5 = x => { x = Math.max(0, Math.min(1, x)); return x * x * x * (x * (x * 6 - 15) + 10); };
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -30,9 +38,12 @@ export const R = {
   NEARLY: true,         // ★ the foreman's bold choice: dots have meant 'that's where you go next' all song. After Read 4:04 they start in Kevin's own thread, on the last phone, where there is no next, and they stop. Nothing is sent. Only if he pressed Read. false: gone
   NEARLY_IN: 0.5, NEARLY_FOR: 1.0,
   ECHO: true,           // his faint outline shows Space and the spin once, on the first phone
+  DOG_WALL_OLD: false,  // her wallpaper dog: false = redrawn from Biscuit's photo (the rebuild) · true = the Nov 6 side-on silhouette
+  TEAR: 0.5,            // a hit (Walkies, item 5): he tears purple this long while the thing carries him up to KNOCK along the bar. He can still press Space
+  SEND_PEEK: 0.4,       // a photo on its way in (Walkies, item 6): how far its blue nose pokes through the right wall before it goes
   VH: 16.6, LEFT: 6, FLOOR: 0.617,                                                      // the view: the live phone's left edge from the screen's left, the floor's height on screen
   PW: 7, PH: 15, FLOOR_Y: 9.9, HEAD: 1.5, STRIP: 1.5, BAR: 0.72, Y0: 100,            // a phone (STEPS §2)
-  FS: 0.52, HOTFS: 0.44, MAXW: 5.6, PADX: 0.3, ROW1: 0.96, ROWL: 0.64, GAP: 0.14, NAME: 0.32, PHOTO: 2.0, PHOTOS: 1.32, BIG: 1.05, GREY: 0.5, READ: 0.48, ANIM: 0.18,
+  FS: 0.52, HOTFS: 0.44, MAXW: 5.6, PADX: 0.3, ROW1: 0.96, ROWL: 0.64, GAP: 0.14, NAME: 0.32, PHOTO: 2.0, PHOTOS: 1.32, BIG: 1.05, GREY: 0.5, READ: 0.48, ANIM: 0.3,
   WAKE: 7.88, S1: 9.36, PULL: 0.8, WALK: 7.2, ACCG: 70, ACCA: 42, GRAV: 46, HOP: 2.6, V2: 10, FALL: 20, COY: 0.09, DROP: 0.24, FOOT: 0.26, HW: 0.42, HT: 1.25, PHASE: 0.45,
   FIZZCD: 1.2, DBL: 0.3, SPIN: 0.42, SPINCD: 0.5, KNOCK: 1.5, DOOR: 1.0, TIP: 0.3, GLOWIN: 0.35, B: 0.61227, LINEG: 60, LINEHIT: 2.3, WHEEL_R: 2.8, ROLL_R: 0.45,
 };
@@ -67,7 +78,7 @@ export function prep(C) {
   if (R.NEARLY && R.READ_RECEIPT) { const q = last, o = { t: 0, t1: 1e9, who: 'D', kind: 'dots', nearly: true, noCarry: true, rid: rows.length, st: q.i }; rows.push(o); q.rows.push(o); }   // (the foreman's dots: times come from his press, see nearlyAt)
   const byId = {}; for (const r of rows) if (r.id) byId[r.id] = r;
   const dark = []; if (R.LONG_FALL) { const a = steps[12], b = last; for (let k = 1; k <= 4; k++) { const f = k / 5, top = a.yt + (b.yt - a.yt) * f, x0 = a.x0 + (b.x0 - a.x0) * f; dark.push({ x0, x1: x0 + R.PW, yt: top, yb: top - R.PH, at: HUSH[k] }); } }
-  const haz = HAZ.map(h => h.kind === 'line' ? { ...h, d: textDims(h.text), dSwap: h.swap ? textDims(h.swap) : null } : { ...h });
+  const haz = HAZ.filter(h => h.on !== false).map(h => h.kind === 'line' ? { ...h, d: textDims(h.text), dSwap: h.swap ? textDims(h.swap) : null } : h.kind === 'send' ? { ...h, r: byId[h.row] } : { ...h });   // (on: false = switched off in chat.mjs)
   const out = { C, steps, rows, byId, dark, haz, last }; PREP.set(C, out); return out;
 }
 const taken = (s, id) => !!(s.take && s.take[id] != null);
@@ -83,7 +94,9 @@ export function say(s, r, t) {
 }
 const SOLID = k => k === 'text' || k === 'big' || k === 'photo';
 const nearlyAt = s => s.take.receipt + R.NEARLY_IN;   // (when his dots start: from the press, not the song)
-const isUp = (s, r, t) => { if (r.nearly) { if (!taken(s, 'receipt')) return false; const a = nearlyAt(s); return t >= a && t < a + R.NEARLY_FOR + 0.15; } if (t < r.t) return false; if (r.only && !taken(s, r.only.of)) return false; if (r.kind === 'dots' && r.taticat && !TATICAT_TYPES) return false; if (r.kind === 'dots' && t >= r.t1 + 0.15) return false; if (r.fall && t >= r.fall.at + 0.2) return false; return true; };
+const own = (s, r) => !(r.alt && !taken(s, r.alt.of));   // true: the row says its own thing · false: its alt, because he never took the glow it answers
+export const tIn = (s, r) => r.from === 'right' && own(s, r) ? r.t - R.ANIM : r.t;   // a photo sent in from the right makes its room in the thread while its frame is still on the way, so it has stopped at r.t
+const isUp = (s, r, t) => { if (r.kind === 'none' && own(s, r)) return false; if (r.nearly) { if (!taken(s, 'receipt')) return false; const a = nearlyAt(s); return t >= a && t < a + R.NEARLY_FOR + 0.15; } if (t < tIn(s, r)) return false; if (r.only && !taken(s, r.only.of)) return false; if (r.kind === 'dots' && r.unknown && !UNKNOWN_TYPES) return false; if (r.kind === 'dots' && t >= r.t1 + 0.15) return false; if (r.fall && t >= r.fall.at + 0.2) return false; return true; };
 // the phone's thread at t: the rows on it, newest last, with their boxes in the world
 export function stack(P, s, t, q) {
   const list = []; const prev = P.steps[q.i - 1];
@@ -98,11 +111,11 @@ export function stack(P, s, t, q) {
     const named = SOLID(k) && v.who !== 'H' && v.who !== lastWho || (k === 'dots' && v.who !== lastWho && v.who === 'T'); if (named) h += R.NAME; if (r.id === 'dud' && v.mine && GAGS.edited.on) h += 0.3;
     out.push({ r, v, h, w, named, x0: 0, x1: 0, y0: 0, y1: 0 }); if (SOLID(k)) lastWho = v.who; }
   let y = q.fl + R.STRIP + 0.05;
-  for (let i = out.length - 1; i >= 0; i--) { const b = out[i], r = b.r; const inn = r.nearly ? ease((t - nearlyAt(s)) / R.ANIM) : q.id === 'S14' ? 1 : ease((t - r.t) / R.ANIM); const gone = r.fall ? 1 - ease((t - r.fall.at) / 0.2) : r.nearly ? 1 - ease((t - nearlyAt(s) - R.NEARLY_FOR) / 0.15) : r.kind === 'dots' ? 1 - ease((t - r.t1) / 0.15) : 1, k = inn * gone;
+  for (let i = out.length - 1; i >= 0; i--) { const b = out[i], r = b.r; const inn = r.nearly ? ease((t - nearlyAt(s)) / R.ANIM) : q.id === 'S14' ? 1 : ease((t - tIn(s, r)) / R.ANIM); const gone = r.fall ? 1 - ease((t - r.fall.at) / 0.2) : r.nearly ? 1 - ease((t - nearlyAt(s) - R.NEARLY_FOR) / 0.15) : r.kind === 'dots' ? 1 - ease((t - r.t1) / 0.15) : 1, k = inn * gone;
     b.y0 = y; b.y1 = y + b.h; b.pop = inn; const right = WHO[b.v.who] && WHO[b.v.who].right || r.right, m = 0.42; b.right = right; b.x0 = right ? q.x1 - m - b.w : q.x0 + m; b.x1 = b.x0 + b.w; if (b.v.kind === 'sys') { b.x0 = q.x0 + 0.5; b.x1 = q.x1 - 0.5; } y += (b.h + R.GAP) * k; }
   return out;
 }
-const platsOf = st => st.filter(b => SOLID(b.v.kind)).slice(-2).map(b => ({ b, id: b.r.rid, x0: b.x0, x1: b.x1, y: b.y1 - (b.named ? R.NAME : 0) }));
+const platsOf = st => st.filter(b => SOLID(b.v.kind) && !(b.r.from === 'right' && b.pop < 1)).slice(-2).map(b => ({ b, id: b.r.rid, x0: b.x0, x1: b.x1, y: b.y1 - (b.named ? R.NAME : 0) }));
 const stepOf = (P, s) => P.steps[Math.max(0, Math.min(P.steps.length - 1, s.st))];
 const wheelOf = (q, s) => q.wheel && !(s.wheel && s.wheel[q.i] != null);
 
@@ -115,9 +128,14 @@ export function hazAt(P, h, s, t) {
     if (t < h.at) { if (h.fromRow) return null; const k = 1; return { kind: 'line', x, y: y0, w: ww, h: hh, d, shake: k, falling: false }; }
     const dt = t - h.at, y = y0 - 0.5 * R.LINEG * dt * dt, ty = q.fl + 0.05, tl = Math.sqrt(2 * Math.max(0.1, y0 - ty) / R.LINEG), k = clamp(dt / tl), xx = xr + (x - xr) * ease(k); if (y <= ty) { const age = dt - tl; return age > 0.18 ? null : { kind: 'line', x: xx, y: ty, w: ww, h: hh, d, falling: false, broke: age / 0.18 }; }
     return { kind: 'line', x: xx, y, w: ww, h: hh, d, falling: true }; }
-  if (h.kind === 'roll') { if (t < h.at) return null; const xs = q.x0 + (h.x ?? (h.dir > 0 ? 0.8 : R.PW - 0.8)), yt = q.yt - R.HEAD;
+  if (h.kind === 'roll') { if (t < h.at) return null; const xs = q.x0 + (h.fx != null ? 0.16 + h.fx * (R.PW - 0.32) : h.x ?? (h.dir > 0 ? 0.8 : R.PW - 0.8)), yt = q.yt - R.HEAD;
     if (t < h.floorAt) { const k = ease((t - h.at) / (h.floorAt - h.at)); return { kind: 'roll', x: xs, y: yt + (q.fl + R.ROLL_R - yt) * (k * k), r: R.ROLL_R, rot: 0 }; }
     const x = xs + h.dir * h.v * (t - h.floorAt); if (x < q.x0 + 0.3 || x > q.x1 - 0.3) return null; return { kind: 'roll', x, y: q.fl + R.ROLL_R, r: R.ROLL_R, rot: h.dir * (t - h.floorAt) * h.v / R.ROLL_R }; }
+  // a photo on its way in: nose (it pokes through the right wall, low, by the door) -> go (the blank frame comes in along the bar, then lifts into its place in the thread) -> at (stopped: the row draws it from here)
+  if (h.kind === 'send') { const r = h.r; if (!r || !own(s, r) || t < h.nose || t >= h.at) return null;
+    const sz = r.small ? R.PHOTOS : R.PHOTO, w = sz * 1.3, xP = q.x1 - 0.16 - R.SEND_PEEK, xS = q.x1 - 0.42 - w, yL = q.fl + 0.06, yS = q.fl + R.STRIP + 0.05 + (r.capD ? r.capD.h + 0.08 : 0);
+    if (t < h.go) return { kind: 'send', x0: q.x1 - 0.16 - R.SEND_PEEK * ease((t - h.nose) / 0.25), y: yL, w, h: sz, nose: true };
+    const k = (t - h.go) / (h.at - h.go); return { kind: 'send', x0: xP + (xS - xP) * ease(k / 0.6), y: yL + (yS - yL) * ease((k - 0.5) / 0.5), w, h: sz, nose: false }; }
   return null;
 }
 
@@ -159,7 +177,8 @@ export const mode = {
     if (inp.G) space(P, s, t, q, st, plats, byId, log);
     if (R.BLINK_BACK && s.backAt != null && t >= s.backAt) { s.backAt = null; if (s.on != null) { s.blink = 0.22; s.blinkFrom = { x: s.x, y: s.y }; s.y = q.fl; s.on = null; s.ground = true; s.vy = 0; } }
     // ---- moving ----
-    let nx = s.x + s.vx / 120; const canDoor = !lastStep && t >= q.door && (!wheelOf(q, s) || q.wheel.free);
+    let nx = s.x + s.vx / 120; if (s.carry && t < s.carry.t + R.TEAR) nx += s.carry.dir * (2 * R.KNOCK / R.TEAR) * (1 - (t - s.carry.t) / R.TEAR) / 120;   // (a hit carries him: fast, then letting go; R.KNOCK in all, less if a wall is in the way)
+    const canDoor = !lastStep && t >= q.door && (!wheelOf(q, s) || q.wheel.free);
     const xa = q.x0 + 0.6, xb = q.x1 - 0.6;
     if (nx > xb) { if (canDoor && hx > 0 && s.y < q.fl + R.STRIP) return leave(P, s, t, q, log); nx = xb; s.vx = 0; } if (nx < xa) { nx = xa; s.vx = 0; }
     if (s.ground && s.on == null && Math.abs(nx - s.x) > 1e-4) { s.typed = (s.typed || 0) + Math.abs(nx - s.x); s.typedT = t; } s.x = nx; s.walking = s.ground && Math.abs(s.vx) > 0.4; if (Math.abs(s.vx) > 0.4) s.facing = Math.sign(s.vx) * 0.95; else if (s.ground) s.facing = q.quiet || q.kev ? 0.1 : 0.45;
@@ -172,7 +191,7 @@ export const mode = {
     hazards(P, s, t, q, log);
     if (!lastStep) { if (t >= q.leave - R.TIP && t < q.leave && s.ground && s.on == null) s.x = Math.min(xb, s.x + 3.2 / 120);
       if (t >= q.leave) return leave(P, s, t, q, log); }
-    s.phase = t < s.phaseUntil ? 0.6 : 0;
+    s.phase = t < s.phaseUntil || t < (s.tearUntil ?? -9) ? 0.6 : 0;   // (s.phase is what the page draws as his purple glitch. Only phaseUntil lets things through him: a tear is a hit, not a dodge)
   },
 };
 function spinKeys(s, inp, t, log) {
@@ -193,7 +212,7 @@ function leave(P, s, t, q, log) {
   if (q.leave == null) return;
   if (wheelOf(q, s) && !q.wheel.free) { s.squashAt = t; s.react = { name: 'shock', dur: 0.6, at: t }; log('jam', { st: q.i }); s.wheel = { ...s.wheel, [q.i]: -1 }; }
   if (s.ground && !s.on && t < q.leave - 0.02) s.leftAt = { ...s.leftAt, [q.i]: t };
-  s.m = 'drop'; s.dropT = t; s.dropDur = q.fall; s.dropFrom = { x: s.x, y: s.y }; s.on = null; s.backAt = null; s.vx = 0; log('drop', { st: q.i });
+  s.m = 'drop'; s.carry = null; s.dropT = t; s.dropDur = q.fall; s.dropFrom = { x: s.x, y: s.y }; s.on = null; s.backAt = null; s.vx = 0; log('drop', { st: q.i });
   if (q.id === 'S4') s.rideT = t;
   if (q.id === 'S10') { s.glitchAt = t; s.useT = t; s.charge = false; s.phaseUntil = t + q.fall; log('tear'); }   // (he goes down through the question on his own: no press, Petunia's next either way)
 }
@@ -203,12 +222,16 @@ function hazards(P, s, t, q, log) {
     if (h.kind === 'line' && st.x == null && t >= h.shake + (h.late ? (h.at - h.shake - h.late) : 0)) st.x = lineX(h, s, q);
     if (h.fromRow && st.y0 == null && t >= h.at - 1 / 60) { const b = stack(P, s, h.at - 0.01, q).find(b => b.r.fall && b.v.text === h.text); if (b) { st.y0 = b.y0; st.xr = (b.x0 + b.x1) / 2; } }
     const g = hazAt(P, h, s, t); if (!g) continue; let hit = false;
+    if (g.kind === 'send') { if (g.nose || !(s.x + R.HW > g.x0 && s.x - R.HW < g.x0 + g.w && s.y < g.y + g.h && s.y + H > g.y)) continue;   // (James can't see him: the photo isn't aimed, it just needs the room)
+      if (purple) { if (!st.thru) { st.thru = true; log('thru', { h: h.id }); } continue; } if (st.thru) continue;
+      s.x = Math.max(q.x0 + 0.6, g.x0 - R.HW); s.vx = Math.min(s.vx, 0); if (!st.shoved) { st.shoved = true; if (!h.free) s.react = { name: 'startled', dur: 0.4, at: t }; log('shove', { h: h.id }); } continue; }
     if (g.kind === 'line' && g.falling) hit = s.x + R.HW > g.x - R.LINEHIT / 2 && s.x - R.HW < g.x + R.LINEHIT / 2 && s.y + H > g.y && s.y < g.y + g.h;
     if (g.kind === 'roll' && t >= h.floorAt) hit = Math.abs(s.x - g.x) < 0.3 + g.r * 0.7 && s.y < g.y + g.r * 0.9 && s.y + H > g.y - g.r;
     if (!hit) continue; st.done = true;
     if (purple) { log('thru', { h: h.id }); continue; }
     if (h.free) { s.react = { name: 'startled', dur: 0.4, at: t }; log('flinch'); continue; }
-    const dir = g.kind === 'roll' ? h.dir : s.x >= g.x ? 1 : -1; s.x = clamp(s.x + dir * R.KNOCK, q.x0 + 0.6, q.x1 - 0.6); if (g.kind === 'line') s.noG = t + R.B; s.knockAt = t; s.hurtUntil = t + 0.2; s.react = { name: 'shock', dur: 0.5, at: t }; log('knock', { h: h.id });
+    const dir = g.kind === 'roll' ? h.dir : s.x >= g.x ? 1 : -1; s.carry = { t, dir }; s.tearAt = t; s.tearUntil = t + R.TEAR; s.knockAt = t; s.hurtUntil = t + 0.2;   // (Walkies, item 5: he tears and is carried, he isn't jumped along the bar, and his glitch isn't taken: Space still works)
+    s.react = { name: 'shock', dur: 0.5, at: t }; log('knock', { h: h.id });
     if (h.icon === 'block' && GAGS.blockHalo.on) s.halo = t; }
 }
 function startStairs(s, t, api) {
@@ -238,7 +261,14 @@ const HIS = px => `400 ${Math.max(1, Math.round(px))}px "Major Mono Display", ui
 function rr(g, x, y, w, h, r) { r = Math.max(0, Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2)); g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
 const mixC = (a, b, k) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * k)).join(',')})`; };
 function dogShape(x, cx, cy, r) { x.beginPath(); x.ellipse(cx, cy, r, r * 0.9, 0, 0, 7); x.fill(); x.beginPath(); x.ellipse(cx - r * 0.85, cy - r * 0.25, r * 0.3, r * 0.55, 0.4, 0, 7); x.fill(); x.beginPath(); x.ellipse(cx + r * 0.85, cy - r * 0.25, r * 0.3, r * 0.55, -0.4, 0, 7); x.fill(); }
-function dogWall(x, cx, cy, r) {   // her dog's silhouette (Chikin: "the dog silhouette screensaver"), the wallpaper Petunia eats: sitting side-on, one flat shape, one ear, a collar. Pale, so it sits behind a chat
+function dogWall(x, cx, cy, r) {   // her dog's outline, redrawn from Chikin's photo of Biscuit (Walkies' test 12: the old one was a grown dog side-on with a collar, and Biscuit is a small fluffy puppy sitting facing you, ears down, no collar). Flat, pale, behind the chat. R.DOG_WALL_OLD: true = the old one
+  if (R.DOG_WALL_OLD) return dogWallSide(x, cx, cy, r);
+  const el = (a, b, rx, ry, rot = 0) => { x.beginPath(); x.ellipse(cx + a * r, cy + b * r, rx * r, ry * r, rot, 0, 7); x.fill(); };
+  x.fillStyle = M.dog; el(0.04, 0.82, 0.74, 0.98); el(0.6, 1.42, 0.42, 0.4); el(-0.56, 1.46, 0.36, 0.34);   // the sitting body, the haunches
+  for (const a of [-0.3, 0.22]) { x.fillRect(cx + (a - 0.17) * r, cy + 0.9 * r, 0.34 * r, 0.84 * r); el(a, 1.74, 0.23, 0.13); }   // two stubby front legs, paws
+  el(0, -0.5, 0.64, 0.58);                                                                                     // the big round head
+  x.fillStyle = M.dog2; el(-0.63, -0.3, 0.2, 0.44, 0.22); el(0.63, -0.3, 0.2, 0.44, -0.22); el(0, -0.3, 0.25, 0.19); }   // ears down each side, the muzzle
+function dogWallSide(x, cx, cy, r) {   // (the Nov 6 silhouette, kept) her dog's silhouette (Chikin: "the dog silhouette screensaver"), the wallpaper Petunia eats: sitting side-on, one flat shape, one ear, a collar. Pale, so it sits behind a chat
   x.fillStyle = M.dog; const el = (a, b, rx, ry, rot = 0) => { x.beginPath(); x.ellipse(cx + a * r, cy + b * r, rx * r, ry * r, rot, 0, 7); x.fill(); };
   el(0.2, -0.5, 0.44, 0.42); el(0.72, -0.38, 0.36, 0.2, 0.12); el(-0.08, 0.5, 0.52, 0.88, 0.22); el(-0.45, 1.22, 0.58, 0.42); x.fillRect(cx + 0.12 * r, cy + 0.6 * r, 0.26 * r, 1.04 * r); x.fillRect(cx + 0.12 * r, cy + 1.54 * r, 0.42 * r, 0.12 * r);
   x.strokeStyle = M.dog; x.lineWidth = 0.16 * r; x.lineCap = 'round'; x.beginPath(); x.moveTo(cx - 0.9 * r, cy + 1.3 * r); x.quadraticCurveTo(cx - 1.4 * r, cy + 1.2 * r, cx - 1.3 * r, cy + 0.62 * r); x.stroke();
@@ -259,7 +289,7 @@ export const modeView = ({ T, world: W3, C, cam }) => {
   const tex = new T.CanvasTexture(cv); tex.colorSpace = T.NoColorSpace; tex.minFilter = T.LinearFilter;
   const mesh = new T.Mesh(new T.PlaneGeometry(1, 1), new T.MeshBasicMaterial({ map: tex, transparent: false, depthWrite: false, depthTest: false })); mesh.renderOrder = -5; mesh.frustumCulled = false; W3.add(mesh);
   const img = src => { if (typeof Image === 'undefined' || !src) return null; const im = new Image(); im.src = new URL('../' + src, import.meta.url).href; return im; };
-  const PICS = { pet1: img('easter/petunia-square.jpg'), pet2: img('easter/petunia-2-square.jpg'), pet3: img('easter/petunia-3-square.jpg'), pet4: img('easter/petunia-4-square.jpg'), pantry: photo('pantry'), dog: photo('dog'), porch: photo('porch') };
+  const PICS = { pet1: img('easter/petunia-square.jpg'), pet2: img('easter/petunia-2-square.jpg'), pet3: img('easter/petunia-3-square.jpg'), pet4: img('easter/petunia-4-square.jpg'), pantry: photo('pantry'), dog: img(BISCUIT_PIC), dog0: photo('dog'), porch: photo('porch') };   // (dog0: the old code-drawn dog, only if Chikin's photo fails to load)
   const okImg = im => im && (im.getContext || (im.complete && im.naturalWidth));
   const iw = im => im.naturalWidth || im.width, ih = im => im.naturalHeight || im.height;
   let vw = 16, vh = 10, z = 1, cx = 0, cy = 0, u = 50, left = 0, top = 0;
@@ -323,16 +353,18 @@ export const modeView = ({ T, world: W3, C, cam }) => {
     const isS = q.owner === 'S', petT = isS ? (q.petunia === 0 ? 0 : q.petunia ?? (q.i > 9 ? 0 : null)) : null, pet = okImg(PICS.pet4) ? PICS.pet4 : null;
     // the wallpaper: her dog's shape, until Petunia eats it
     g.save(); rr(g, 0.16, 0.16, R.PW - 0.32, R.PH - 0.32, 0.54); g.clip();
-    if (q.dog) dogWall(g, R.PW / 2, 4.9, 1.9);
+    if (q.dog) { const A = GAGS.dogGlow, up = A.on && q.id === A.step && t >= A.t ? ease((t - A.t) / A.s) * A.k : 0;   // (silhouette-brighten: her dog's outline comes up once, as she asks for him)
+      if (up > 0) { const keep = M; M = { ...M, dog: mixC(keep.dog, '#c9955a', up), dog2: mixC(keep.dog2, '#8a5a32', up) }; dogWall(g, R.PW / 2, 4.9, 1.9); M = keep; } else dogWall(g, R.PW / 2, 4.9, 1.9); }
     if (petT != null && pet) { const k = clamp((t - petT) / 0.5), hold = petT > 0 ? 1 - 0.8 * ease((t - petT - 1.25) / 0.5) : 0.2, rad = 15 * k, cxx = q.spot - q.x0, cyy = R.FLOOR_Y; g.save(); g.beginPath(); g.arc(cxx, cyy, rad + 0.01, 0, 7); g.clip(); g.globalAlpha = hold; const sc = Math.max(R.PW / iw(pet), R.PH / ih(pet)); g.drawImage(pet, (R.PW - iw(pet) * sc) / 2, (R.PH - ih(pet) * sc) / 2, iw(pet) * sc, ih(pet) * sc); g.globalAlpha = 1; g.restore(); }
     g.restore();
     header(q, f);
     // the thread: the rows; older ones go under the header
     const st = stack(P, s, t, q); g.save(); g.beginPath(); g.rect(0.16, R.HEAD, R.PW - 0.32, R.FLOOR_Y - R.HEAD); g.clip();
     st.forEach((b, i) => { const n = st[i + 1]; b.tail = SOLID(b.v.kind) && !(n && SOLID(n.v.kind) && n.v.who === b.v.who); row(q, b, f); }); hearts(q, st, f);
+    if (GAGS.oneBrightLine.on) { const nw = [...st].reverse().find(b => SOLID(b.v.kind)); if (nw) { g.fillStyle = M.scr; g.globalAlpha = 1 - GAGS.oneBrightLine.dim; g.fillRect(0.16, R.HEAD, R.PW - 0.32, q.yt - nw.y1 - R.HEAD - 0.04); g.globalAlpha = 1; } }   // (off by default: only the newest line at full strength)
     g.restore();
     // falling lines + rollers
-    for (const h of P.haz) if (h.st === q.i) { const gm = hazAt(P, h, s, t); if (gm && !(s.hz[h.id] && s.hz[h.id].done && gm.kind === 'roll')) hazard(q, h, gm, t); }
+    for (const h of P.haz) if (h.st === q.i) { const gm = hazAt(P, h, s, t); if (gm && !(s.hz[h.id] && s.hz[h.id].done && gm.kind === 'roll')) hazard(q, h, gm, t, q); }
     // the falling truth: "james LOOK at your phone" lands on the bar, and the bar gives
     const fr = q.rows.find(r => r.fall && r.id == null && !r.only); if (fr && t >= fr.fall.at && t < q.leave) { const d = fr.d, xx = q.x0 + 0.42, k = clamp((t - fr.fall.at) / 0.26), yy = R.FLOOR_Y - 2.2 + 2.2 * (k * k) - d.h; g.fillStyle = WHO.S.col; rr(g, xx - q.x0, yy, d.w, d.h, 0.34); g.fill(); textRow(fr.d.lines, xx - q.x0 + R.PADX, yy, d.h, WHO.S.ink, false); }
     bar(q, f); door(q, f); slider(q, f);
@@ -355,7 +387,7 @@ export const modeView = ({ T, world: W3, C, cam }) => {
   }
   function row(q, b, f) {
     const { t, s } = f, r = b.r, v = b.v, k = v.kind, o0 = WHO[v.who] || WHO.P, o = o0.col === WHO.P.col ? { ...o0, col: M.grey, ink: M.greyInk } : o0, ly = wy => q.yt - wy, x0 = b.x0 - q.x0, x1 = b.x1 - q.x0, yT = ly(b.y1), yB = ly(b.y0);
-    const pop = q.id === 'S14' ? 1 : ease((t - r.t) / R.ANIM); if (pop <= 0) return;
+    const sent = r.from === 'right' && k === 'photo', pop = q.id === 'S14' ? 1 : sent ? (t >= r.t ? 1 : 0) : ease((t - r.t) / R.ANIM); if (pop <= 0) return;   // (a sent photo isn't faded in: its frame travelled here, see hazard())
     let dy = 0, dx = 0; const shakeT = r.fall ? r.fall.at - 0.8 : 1e9; if (t >= shakeT) { const a = Math.min(1, (t - shakeT) / 0.5) * 0.08; dx = Math.sin(t * 60) * a; dy = Math.cos(t * 47) * a; }
     g.save(); g.translate(dx, dy); g.globalAlpha = pop;
     let y = yT; if (b.named) { g.fillStyle = M.sub; font(0.26, 600); g.textAlign = b.right ? 'right' : 'left'; g.textBaseline = 'middle'; fillT(o.name, b.right ? x1 - 0.1 : x0 + 0.1, y + 0.14); y += R.NAME; }
@@ -363,9 +395,15 @@ export const modeView = ({ T, world: W3, C, cam }) => {
     if (k === 'text') { const col = v.who === 'H' ? DEEP : o.col; g.fillStyle = col; rr(g, x0, y, bw, bh, 0.34); g.fill(); if (b.tail) bubbleTail(b.right ? x1 : x0, y + bh, b.right, col); textRow(v.d.lines, x0 + R.PADX, y, bh, o.ink, b.right);
       if (r.id === 'dud' && v.mine && GAGS.edited.on) { g.fillStyle = M.sub; font(0.24, 500); g.textAlign = 'left'; g.textBaseline = 'middle'; fillT(GAGS.edited.text, x0 + 0.1, y + bh + 0.16); } }
     else if (k === 'big') { g.textAlign = b.right ? 'right' : 'left'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; font(0.92, 500); fillT('🥔', b.right ? x1 : x0 + 0.05, y + bh / 2); }
-    else if (k === 'photo') { const im = PICS[v.pic], cap = r.capD, ph = bh - (cap ? cap.h + 0.08 : 0); g.save(); rr(g, x0, y, bw, ph, 0.3); g.clip(); g.fillStyle = '#222'; g.fillRect(x0, y, bw, ph); if (okImg(im)) { const cr = r.crop || [0, 0, 1, 1], sw = iw(im) * cr[2], sh = ih(im) * cr[3], sc = Math.max(bw / sw, ph / sh); g.drawImage(im, iw(im) * cr[0], ih(im) * cr[1], sw, sh, x0 + (bw - sw * sc) / 2, y + (ph - sh * sc) / 2, sw * sc, sh * sc); } g.restore();
+    else if (k === 'photo') { const im = okImg(PICS[v.pic]) ? PICS[v.pic] : PICS[v.pic + '0'], cap = r.capD, ph = bh - (cap ? cap.h + 0.08 : 0);
+      const SW = GAGS.sameWay, ld = r.load || (SW.on && q.id === SW.step && v.pic === SW.pic ? SW.load : 0), kl = ld ? clamp((t - r.t) / ld) : 1;   // (photo-load: the picture fills in from the top, ears first. The first cat does it the same way the dog did)
+      const BK = GAGS.biscuitKnows, L7 = steps[6].land, lean = BK.on && r.id === 'biscuit' && q.id === BK.step && s.st === q.i ? BK.deg * Math.PI / 180 * ease((t - L7) / (BK.ms / 1000)) * (1 - ease((t - BK.until) / 0.25)) : 0;   // (photo-lean: once, away from him, when he lands under it)
+      g.save(); if (lean) { g.translate(x0 + bw / 2, y + ph); g.rotate(lean); g.translate(-(x0 + bw / 2), -(y + ph)); }
+      g.save(); rr(g, x0, y, bw, ph, 0.3); g.clip(); g.fillStyle = ld ? M.grey : '#222'; g.fillRect(x0, y, bw, ph); if (okImg(im) && kl > 0) { g.beginPath(); g.rect(x0, y, bw, ph * kl); g.clip(); const cr = r.crop || [0, 0, 1, 1], sw = iw(im) * cr[2], sh = ih(im) * cr[3], sc = Math.max(bw / sw, ph / sh); g.drawImage(im, iw(im) * cr[0], ih(im) * cr[1], sw, sh, x0 + (bw - sw * sc) / 2, y + (ph - sh * sc) / 2, sw * sc, sh * sc); } g.restore();
+      if (sent && kl < 1) { g.strokeStyle = WHO.J.col; g.lineWidth = 0.09; g.globalAlpha = pop * (1 - kl); rr(g, x0 + 0.045, y + 0.045, bw - 0.09, ph - 0.09, 0.27); g.stroke(); g.globalAlpha = pop; }   // (the frame's blue edge goes as the picture arrives)
+      g.restore();
       if (cap) { const cx = b.right ? x1 - cap.w : x0; g.fillStyle = o.col; rr(g, cx, y + ph + 0.08, cap.w, cap.h, 0.34); g.fill(); textRow(cap.lines, cx + R.PADX, y + ph + 0.08, cap.h, o.ink, b.right); } }
-    else if (k === 'dots') { typing(x0, yB - 0.8, pop, t); }
+    else if (k === 'dots') { typing(x0, yB - 0.8, pop * (r.nearly ? 1 : 1 - ease((t - r.t1) / 0.15)), t); }   // (the dots fade as they stop, so the line above never closes over them: it showed once Biscuit's frame came in right behind James's dots)
     else if (k === 'sys') { g.fillStyle = M.sub; font(0.3, 500); g.textAlign = 'center'; g.textBaseline = 'middle'; fillT(r.text, R.PW / 2, (yT + yB) / 2); }
     else if (k === 'read') { const glowing = r.id === 'receipt' && !v.mine; g.textAlign = b.right ? 'right' : 'left'; g.textBaseline = 'middle'; g.fillStyle = v.mine ? M.typed : r.id === 'receipt' ? M.sub : M.ink; if (r.id !== 'receipt') g.globalAlpha = pop * 0.7; font(0.34, 500); fillT(v.text, b.right ? x1 - 0.1 : x0 + 0.1, (yT + yB) / 2); g.globalAlpha = pop; if (glowing) { const wd = g.measureText(v.text).width / TS + 0.34; g.strokeStyle = PURP[1]; g.globalAlpha = 0.5 + 0.4 * Math.sin(t * 2.2); g.lineWidth = 0.07; rr(g, x1 + 0.07 - wd, yT - 0.02, wd, yB - yT + 0.04, 0.16); g.stroke(); g.globalAlpha = pop; } }
     // the glow: what's still his to take
@@ -380,8 +418,12 @@ export const modeView = ({ T, world: W3, C, cam }) => {
   }
   function hearts(q, st, f) { const { t } = f; for (const r of q.rows) if (r.kind === 'heart' && t >= r.t) { const b = st.find(b => b.r.id === r.on); if (!b) continue; const k = ease((t - r.t) / 0.2), x = b.x0 - q.x0 + 0.1, y = q.yt - b.y1 + R.NAME + 0.1; g.fillStyle = M.heart; g.beginPath(); g.arc(x, y, 0.32 * k, 0, 7); g.fill(); g.fillStyle = '#ff5a6a'; g.textAlign = 'center'; g.textBaseline = 'middle'; font(0.3 * Math.max(0.2, k), 500); fillT('❤', x, y + 0.01); } }
   function hazard(q, h, gm, t) {
+    if (gm.kind === 'send') {   // James's photo coming in: a blank frame with his blue edge, through the right wall. No word on it: the colour says whose it is, the shape says what
+      const fx = gm.x0 - q.x0, fy = q.yt - gm.y - gm.h; g.save(); g.beginPath(); g.rect(0.16, R.HEAD, R.PW - 0.32, R.FLOOR_Y - R.HEAD); g.clip();
+      g.fillStyle = WHO.J.col; rr(g, fx, fy, gm.w, gm.h, 0.3); g.fill(); g.fillStyle = M.grey; rr(g, fx + 0.09, fy + 0.09, gm.w - 0.18, gm.h - 0.18, 0.22); g.fill(); g.restore(); return; }
     const lx = gm.x - q.x0, ly = q.yt - gm.y;
     if (gm.kind === 'line') { const sh = gm.shake ? Math.sin(t * 60) * 0.07 : 0, a = gm.broke != null ? 1 - gm.broke : 1; g.save(); g.globalAlpha = a; g.fillStyle = WHO.S.col; rr(g, lx - gm.w / 2 + sh, ly - gm.h, gm.w, gm.h, 0.34); g.fill(); textRow(gm.d.lines, lx - gm.w / 2 + sh + R.PADX, ly - gm.h, gm.h, WHO.S.ink, false); g.restore(); }
+    else if (h.icon === 'laugh') { g.save(); g.translate(lx, ly); g.rotate(-gm.rot); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff'; font(gm.r * 2.05, 500); fillT('😂', 0, 0.03); g.restore(); }   // (the chat's laugh, as a thing: the emoji itself rolls along the bar)
     else { g.save(); g.translate(lx, ly); g.rotate(-gm.rot); const r = gm.r; g.fillStyle = '#d8d8de'; g.strokeStyle = INK; g.lineWidth = 0.09; g.beginPath(); g.arc(0, 0, r, 0, 7); g.fill(); g.stroke();
       if (h.icon === 'bell') { g.fillStyle = INK; g.beginPath(); g.moveTo(-0.24, 0.16); g.quadraticCurveTo(-0.2, -0.28, 0, -0.28); g.quadraticCurveTo(0.2, -0.28, 0.24, 0.16); g.closePath(); g.fill(); g.fillRect(-0.05, 0.18, 0.1, 0.07); g.strokeStyle = '#ff3b30'; g.lineWidth = 0.08; g.beginPath(); g.moveTo(-0.3, 0.3); g.lineTo(0.3, -0.3); g.stroke(); }
       else { g.strokeStyle = '#ff3b30'; g.lineWidth = 0.1; g.beginPath(); g.arc(0, 0, 0.27, 0, 7); g.stroke(); g.beginPath(); g.moveTo(-0.19, -0.19); g.lineTo(0.19, 0.19); g.stroke(); } g.restore(); }
@@ -408,8 +450,8 @@ export const modeView = ({ T, world: W3, C, cam }) => {
     const x = 0.5, w = R.PW - 1, y = 1.9, h = 0.9; g.fillStyle = 'rgba(44,44,46,0.97)'; rr(g, x, y, w, h, h / 2); g.fill(); g.fillStyle = UI.ink; font(0.3, 500); g.textAlign = 'center'; g.textBaseline = 'middle'; fillT('slide to power off', x + w / 2 + 0.3, y + h / 2); g.fillStyle = '#f2f2f7'; g.beginPath(); g.arc(x + h / 2 + (w - h) * k, y + h / 2, h / 2 - 0.08, 0, 7); g.fill(); g.fillStyle = '#ff3b30'; g.fillRect(x + h / 2 + (w - h) * k - 0.04, y + 0.28, 0.08, 0.34); }
   // his faint outline shows Space and the spin once, on the first phone (no words)
   function echo(f) { if (!R.ECHO) return; const { t, s } = f; const q = steps[0]; if (s.st !== 0 || s.m !== 'on') return; const shape = (x, y, hw, a, col) => { const cxx = X(x), by = Y(y), hh = 1.3 * u, h2 = hw * u; g.setTransform(1, 0, 0, 1, 0, 0); g.save(); g.globalAlpha = a; g.strokeStyle = col; g.lineWidth = Math.max(2, 0.06 * u); g.beginPath(); g.moveTo(cxx - h2, by); g.quadraticCurveTo(cxx - h2, by - hh * 1.25, cxx, by - hh); g.quadraticCurveTo(cxx + h2, by - hh * 1.25, cxx + h2, by); g.closePath(); g.stroke(); g.restore(); };
-    if (t >= 13.9 && t < 14.9 && !taken(s, 'phones')) { const st = stack(P, s, t, q), b = st.find(b => b.r.id === 'phones'); if (b) { const k = Math.sin(clamp((t - 13.9) / 1.0) * Math.PI); shape((b.x0 + b.x1) / 2, q.fl + (b.y1 - R.NAME - q.fl) * k, 0.56, 0.75, PURP[1]); } }
-    if (t >= 15.2 && t < 16.6 && !(s.wheel && s.wheel[0] != null)) { const k = clamp((t - 15.2) / 0.8), xx = s.x + (q.x1 - 1.1 - s.x) * ease(k), sp = t >= 16.0 ? Math.abs(Math.cos(Math.PI * (t - 16.0) / 0.42)) : 1; shape(xx, q.fl, 0.56 * Math.max(0.1, sp), 0.7 * Math.min(1, (16.6 - t) / 0.2), LILAC); } }
+    if (t >= 14.9 && t < 15.9 && !taken(s, 'phones')) { const st = stack(P, s, t, q), b = st.find(b => b.r.id === 'phones'); if (b) { const k = Math.sin(clamp((t - 14.9) / 1.0) * Math.PI);   /* (the glowing line moved to 14.50, Walkies item 10, so his outline shows the press one second later too) */ shape((b.x0 + b.x1) / 2, q.fl + (b.y1 - R.NAME - q.fl) * k, 0.56, 0.75, PURP[1]); } }
+    if (t >= 16.0 && t < 17.4 && !(s.wheel && s.wheel[0] != null)) { const k = clamp((t - 16.0) / 0.8), xx = s.x + (q.x1 - 1.1 - s.x) * ease(k), sp = t >= 16.8 ? Math.abs(Math.cos(Math.PI * (t - 16.8) / 0.42)) : 1; shape(xx, q.fl, 0.56 * Math.max(0.1, sp), 0.7 * Math.min(1, (17.4 - t) / 0.2), LILAC); } }   // (and the spin's outline after it, so the two never show at once)
   let f0 = null, lastSt = -1, swapT = -9, swapFrom = -1;
   // ---------------- one frame ----------------
   function draw(f) {
@@ -442,7 +484,7 @@ export const modeView = ({ T, world: W3, C, cam }) => {
     const W = ctx.canvas.width, H = ctx.canvas.height, x0 = W * (R.LEFT + R.PW + 2.2) / (R.VH * W / H), maxW = W - x0 - W * 0.03, SZ = Math.max(12, H * 0.03), y = H * 0.1; ctx.save(); ctx.font = `400 ${Math.round(SZ)}px "Major Mono Display", ui-monospace, monospace`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     const sp = ctx.measureText(' ').width; let xx = x0, yy = y; for (const w of L.ws) { const txt = String(w.text ?? w.word).toLowerCase(), wd = ctx.measureText(txt).width, on = t >= w.t0; if (xx + wd > x0 + maxW) { xx = x0; yy += SZ * 1.5; } ctx.globalAlpha = on ? 0.5 : 0.14; ctx.fillStyle = on && t - w.t0 < 0.15 ? PURP[3] : '#c8d2ff'; ctx.fillText(txt, xx, yy); xx += wd + sp; }
     ctx.restore(); }
-  function thoughts(ctx, f) { const { t, s } = f; let th = null; if (GAGS.notMe.on && t >= 34.44 && t < 35.65 && s.dropT != null) th = GAGS.notMe; else if (GAGS.tooHeavy.on && t >= 42.6 && t < 43.3) th = GAGS.tooHeavy; else if (GAGS.untouched.on && s.m === 'drop' && s.st === 12 && !s.glitched) th = GAGS.untouched; if (!th) return; const a = t - (th === GAGS.notMe ? 34.44 : th === GAGS.untouched ? s.dropT + 0.1 : 42.6), pt = f.project(s.x, s.y + 1.85), sz = Math.max(13, ctx.canvas.height * 0.024); ctx.save(); ctx.font = `400 ${Math.round(sz)}px "Major Mono Display", ui-monospace, monospace`; const heavy = th === GAGS.tooHeavy; ctx.textAlign = heavy ? 'left' : 'center'; const tw2 = ctx.measureText(th.text).width, W = ctx.canvas.width, x = heavy ? Math.min(pt.x, W - tw2 - 8) : Math.min(Math.max(pt.x, tw2 / 2 + 8), W - tw2 / 2 - 8);   // (the S4 thought hangs off him, out over the dark)
+  function thoughts(ctx, f) { const { t, s } = f; let th = null; if (GAGS.notMe.on && t >= 34.44 && t < 35.65 && s.dropT != null && taken(s, 'trust')) th = GAGS.notMe;   /* (only if the unknown number's 🥔 landed: on the missed path Carol says "ok sheila" there instead) */ else if (GAGS.tooHeavy.on && t >= 42.6 && t < 43.3) th = GAGS.tooHeavy; else if (GAGS.untouched.on && s.m === 'drop' && s.st === 12 && !s.glitched) th = GAGS.untouched; if (!th) return; const a = t - (th === GAGS.notMe ? 34.44 : th === GAGS.untouched ? s.dropT + 0.1 : 42.6), pt = f.project(s.x, s.y + 1.85), sz = Math.max(13, ctx.canvas.height * 0.024); ctx.save(); ctx.font = `400 ${Math.round(sz)}px "Major Mono Display", ui-monospace, monospace`; const heavy = th === GAGS.tooHeavy; ctx.textAlign = heavy ? 'left' : 'center'; const tw2 = ctx.measureText(th.text).width, W = ctx.canvas.width, x = heavy ? Math.min(pt.x, W - tw2 - 8) : Math.min(Math.max(pt.x, tw2 / 2 + 8), W - tw2 / 2 - 8);   // (the S4 thought hangs off him, out over the dark)
     ctx.globalAlpha = Math.min(1, a / 0.08, (th.s - 0.3 - a + 0.3) / 0.2) * 0.92; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = 'rgba(42,15,99,.95)'; ctx.strokeText(th.text, x, pt.y); ctx.fillStyle = '#ece0ff'; ctx.fillText(th.text, x, pt.y); ctx.restore(); }
   function halo(ctx, f) { const { t, s } = f; if (s.halo == null || t - s.halo > B) return; const pt = f.project(s.x, s.y + 1.7), k = (t - s.halo) / B, r = ctx.canvas.height * 0.03; ctx.save(); ctx.translate(pt.x, pt.y); ctx.scale(1, 0.34); ctx.strokeStyle = '#ff3b30'; ctx.globalAlpha = 1 - k * k; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.stroke(); ctx.restore(); }
   function padlock(ctx, f) {   // the comedian's first laugh: on sung "face" the lock screen's padlock shakes no, the way phones do. At 7.88 he's in anyway

@@ -1,0 +1,432 @@
+[
+{
+"t": 6.41,
+"line": 1,
+"key": "silicon"
+},
+{
+"t": 7.69,
+"line": 1,
+"key": "authority"
+},
+{
+"t": 16.51,
+"line": 2,
+"key": "acrobat"
+},
+{
+"t": 17.56,
+"line": 3,
+"key": "fanny-pack"
+},
+{
+"t": 20.38,
+"line": 4,
+"key": "evidence"
+},
+{
+"t": 22.05,
+"line": 5,
+"key": "einstein"
+},
+{
+"t": 22.91,
+"line": 5,
+"key": "fax"
+},
+{
+"t": 23.79,
+"line": 5,
+"key": "yak"
+},
+{
+"t": 27.5,
+"line": 7,
+"key": "possum"
+},
+{
+"t": 30,
+"line": 8,
+"key": "citations"
+},
+{
+"t": 30.93,
+"line": 8,
+"key": "cabbage"
+},
+{
+"t": 34.86,
+"line": 10,
+"key": "goblin"
+},
+{
+"t": 37.43,
+"line": 11,
+"key": "toaster"
+},
+{
+"t": 39.59,
+"line": 12,
+"key": "caesar"
+},
+{
+"t": 40.36,
+"line": 12,
+"key": "bezos"
+},
+{
+"t": 45.63,
+"line": 14,
+"key": "ferret"
+},
+{
+"t": 46.54,
+"line": 15,
+"key": "electronics"
+},
+{
+"t": 49.15,
+"line": 16,
+"key": "gary"
+},
+{
+"t": 51.83,
+"line": 17,
+"key": "university"
+},
+{
+"t": 54.8,
+"line": 18,
+"key": "spaghetti"
+},
+{
+"t": 56.36,
+"line": 19,
+"key": "linguini"
+},
+{
+"t": 57.7,
+"line": 20,
+"key": "doi"
+},
+{
+"t": 60.13,
+"line": 21,
+"key": "citations"
+},
+{
+"t": 60.7,
+"line": 21,
+"key": "cliff"
+},
+{
+"t": 64.52,
+"line": 22,
+"key": "authority"
+},
+{
+"t": 65.11,
+"line": 23,
+"key": "fanny-pack"
+},
+{
+"t": 65.6,
+"line": 23,
+"key": "fax"
+},
+{
+"t": 66.33,
+"line": 23,
+"key": "screw"
+},
+{
+"t": 68.73,
+"line": 24,
+"key": "stew"
+},
+{
+"t": 70.84,
+"line": 25,
+"key": "walnut"
+},
+{
+"t": 74.62,
+"line": 27,
+"key": "forehead"
+},
+{
+"t": 77,
+"line": 28,
+"key": "statistics"
+},
+{
+"t": 79.06,
+"line": 29,
+"key": "bots"
+},
+{
+"t": 79.5,
+"line": 29,
+"key": "restaurant"
+},
+{
+"t": 80.53,
+"line": 29,
+"key": "zip-code"
+},
+{
+"t": 82.69,
+"line": 30,
+"key": "station"
+},
+{
+"t": 96.44,
+"line": 36,
+"key": "citations"
+},
+{
+"t": 98.24,
+"line": 37,
+"key": "acrobat"
+},
+{
+"t": 100.65,
+"line": 38,
+"key": "incorrect"
+},
+{
+"t": 103.46,
+"line": 39,
+"key": "fanny-pack"
+},
+{
+"t": 105.31,
+"line": 40,
+"key": "napoleon"
+},
+{
+"t": 107.76,
+"line": 41,
+"key": "ego"
+},
+{
+"t": 109.74,
+"line": 41,
+"key": "authority"
+},
+{
+"t": 110.13,
+"line": 42,
+"key": "chimichanga"
+},
+{
+"t": 114.18,
+"line": 43,
+"key": "goblin"
+},
+{
+"t": 116.25,
+"line": 44,
+"key": "evidence"
+},
+{
+"t": 118.34,
+"line": 45,
+"key": "stephanie"
+},
+{
+"t": 122.33,
+"line": 47,
+"key": "shield"
+},
+{
+"t": 123.04,
+"line": 47,
+"key": "university"
+},
+{
+"t": 129.46,
+"line": 50,
+"key": "granola"
+},
+{
+"t": 131.62,
+"line": 51,
+"key": "silicon"
+},
+{
+"t": 132.46,
+"line": 51,
+"key": "steroids"
+},
+{
+"t": 134.97,
+"line": 52,
+"key": "weapon"
+},
+{
+"t": 135.86,
+"line": 53,
+"key": "neural"
+},
+{
+"t": 141.86,
+"line": 55,
+"key": "peru"
+},
+{
+"t": 142.54,
+"line": 55,
+"key": "statistics"
+},
+{
+"t": 146.41,
+"line": 57,
+"key": "doi"
+},
+{
+"t": 150.23,
+"line": 59,
+"key": "station"
+},
+{
+"t": 158.5,
+"line": 62,
+"key": "fire"
+},
+{
+"t": 160.27,
+"line": 63,
+"key": "ego"
+},
+{
+"t": 160.71,
+"line": 63,
+"key": "incorrect"
+},
+{
+"t": 165.66,
+"line": 65,
+"key": "gremlin"
+},
+{
+"t": 166.86,
+"line": 66,
+"key": "shield"
+},
+{
+"t": 169.23,
+"line": 67,
+"key": "neural"
+},
+{
+"t": 170.23,
+"line": 67,
+"key": "earbuds"
+},
+{
+"t": 173.05,
+"line": 68,
+"key": "rockets"
+},
+{
+"t": 175.71,
+"line": 69,
+"key": "hot-pockets"
+},
+{
+"t": 180.14,
+"line": 71,
+"key": "orthodontics"
+},
+{
+"t": 180.9,
+"line": 72,
+"key": "dolphin"
+},
+{
+"t": 183.99,
+"line": 73,
+"key": "hurricane"
+},
+{
+"t": 185.96,
+"line": 74,
+"key": "linguini"
+},
+{
+"t": 187.12,
+"line": 74,
+"key": "knowledge"
+},
+{
+"t": 193.81,
+"line": 77,
+"key": "everest"
+},
+{
+"t": 195.84,
+"line": 78,
+"key": "taxonomy"
+},
+{
+"t": 214.6,
+"line": 86,
+"key": "bots"
+},
+{
+"t": 217.87,
+"line": 87,
+"key": "franklin"
+},
+{
+"t": 219.23,
+"line": 88,
+"key": "calculator"
+},
+{
+"t": 221.29,
+"line": 89,
+"key": "acrobat"
+},
+{
+"t": 222.31,
+"line": 89,
+"key": "ego"
+},
+{
+"t": 223.73,
+"line": 90,
+"key": "knowledge"
+},
+{
+"t": 225.2,
+"line": 90,
+"key": "reactor"
+},
+{
+"t": 226.23,
+"line": 91,
+"key": "possum"
+},
+{
+"t": 227.26,
+"line": 91,
+"key": "narrator"
+},
+{
+"t": 230.74,
+"line": 93,
+"key": "helmet"
+},
+{
+"t": 231.3,
+"line": 93,
+"key": "browser"
+},
+{
+"t": 239.51,
+"line": 96,
+"key": "university"
+}
+]

@@ -1,0 +1,12 @@
+Original Studio Figure
+SPDX-License-Identifier: CC0-1.0
+
+The original procedural stick figure geometry, UV coordinates and skeleton in
+studio-figure.glb are dedicated to the public domain under CC0 1.0 Universal.
+They may be used, modified and redistributed without asking permission.
+
+Full dedication and fallback license:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+This dedication does not apply to uploaded skins, the Three.js runtime, Wordset,
+or other separately credited dependencies. Their respective terms still apply.

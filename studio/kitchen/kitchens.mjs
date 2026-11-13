@@ -11,6 +11,7 @@
 import { livingRoom } from './living.mjs';   // THE LIVING ROOM (Nov 8): its own file, painted with this kit
 const OLD_WHITE = (() => { try { return +new URLSearchParams(location.search).get('border') > 0; } catch (e) { return false; } })();   // NO WHITE LINES (Nov 5, D-20261105-09): the white sticker borders are off; ?border=1 shows the old ones to compare
 export const INK = '#120a05', WARM = '#ffcf8a';
+export const HOUSE = { on: false };   // (Nov 12 night: room.mjs turns this on when a room is opened from the house page: the fridge note reads Thursday, no trapdoor)
 export const rnd = (a, b = 0) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
 const TAU = Math.PI * 2;
 const hx = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
@@ -1417,9 +1418,9 @@ bareSt.props = [...propsBare, { id: 'terminal', kind: 'switch', call: true, x0: 
 function stickyNote(x) { x.save(); x.translate(1525, 250); x.rotate(-0.06);   // on the fridge door, big (Chikin: "put it on the fridge so you can read it" / "its still small")
   box(x, -62, -58, 124, 116, '#f7e26a', { r: 3, lw: 5, sh: 'b' }); x.fillStyle = 'rgba(0,0,0,.07)'; x.fillRect(-62, -58, 124, 18);
   circ(x, 0, -56, 10, '#e8463a', { lw: 4 });   // the magnet
-  x.fillStyle = '#23235e'; x.font = 'italic 700 36px "Comic Sans MS", "Marker Felt", cursive'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('niepal', 0, 8);
+  x.fillStyle = '#23235e'; x.font = 'italic 700 ' + (HOUSE.on ? 27 : 36) + 'px "Comic Sans MS", "Marker Felt", cursive'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(HOUSE.on ? 'Thursday' : 'niepal', 0, 8);
   seg(x, [[-42, 38], [40, 35]], 3, '#23235e'); x.restore(); }
-bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); stickyNote(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); trapdoor(x, t, P); };
+bareSt.under = (x, t, lit, P, me) => { uBare(x, t, lit, P, me); deskCal(x); stickyNote(x); terminal(x, t, P); box(x, 600, 120, 92, 100, '#6b4426', { lw: 5, sh: 'n' }); if (PET) x.drawImage(PET, 610, 130, 72, 80); if (!HOUSE.on) trapdoor(x, t, P); };
 const derive = (id, o) => { const st = Object.assign({}, bareSt, { props: propsBare.slice(), under: uBare, id }, o); S.push(st); return st; };
 
 // Between Messages: nobody's home, the lamp's off, and someone's flashlight is going through the kitchen

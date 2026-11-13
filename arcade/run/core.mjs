@@ -391,6 +391,7 @@ export function makeSim(C, from = C.start) {
     if (C.def.vanish && inp.G && s.ground && s.on && s.on.tab && s.x >= s.on.x1 - (C.def.vanish.zone ?? 2.6)) {   // close the tab: he's gone till the next message
       const next = C.solids.filter(q => q.kind === 'block' && !q.ceil && q.x0 > s.on.x1 - 0.05).sort((a, b) => a.x0 - b.x0)[0];
       if (next || C.def.vanish.final) { s.gone = next || { x0: Infinity, y1: s.y }; s.goneAt = t; s.goneFrom = { x: s.x, y: s.y }; s.t = t; return s; } }   // (final: the last close — he doesn't come back)
+    if (C.def.party && C.def.party.oneVerb && (inp.L || inp.R) && !inp.G) inp = { ...inp, G: true };   // (Get Down's rebuild, one verb: ←/→ is the same spin as Space)
     if (inp.G && s.charge && !captcha) {
       // the glitch is a blink: he skips a few frames. A firewall ahead: straight through it. Anywhere else: a snap up + short hop
       const wallAhead = C.solids.some(q => q.kind === 'wall' && !q.thick && q.x1 > s.x - PW / 2 && q.x0 - (s.x + PW / 2) < (C.def.glitchReach ?? 1.8) && q.y0 < s.y + PH && q.y1 > s.y)
@@ -472,7 +473,7 @@ export function makeSim(C, from = C.start) {
     const body = gd > 0 ? { x0: nx - PW / 2 + 0.12, x1: nx + PW / 2 - 0.12, y0: y + PH - hh + 0.08, y1: y + PH - 0.1 } : { x0: nx - PW / 2 + 0.12, x1: nx + PW / 2 - 0.12, y0: y + 0.08, y1: y + hh - 0.1 };
     s.ducking = ducking;
     const hit = q => body.x1 > q.x0 && body.x0 < q.x1 && body.y1 > q.y0 && body.y0 < q.y1;
-    if (C.def.party) { const PA = C.def.party, spin = inp.L || inp.R;   // Get Down: beat a party crasher by clearing it (a jump) or spinning (←/→) as he passes it — in the air, both: double energy
+    if (C.def.party) { const PA = C.def.party, spin = inp.L || inp.R || (PA.oneVerb && inp.G);   // Get Down: beat a party crasher by clearing it (a jump) or spinning (←/→) as he passes it — in the air, both: double energy
       const beat = (h, how) => { s.cuts = { ...(s.cuts || {}), [h.i]: t }; s.energy = Math.min(PA.full, s.energy + PA.gain[how]); s.pops = [...s.pops.slice(-7), { t, i: h.i, how, x: (h.x0 + h.x1) / 2, y: h.y0, crash: h.crash }]; s.popAt = t; if (!(s.react && s.react.at === t)) s.react = { name: how === 'both' ? 'laugh' : 'smirk', dur: 0.5, at: t }; };
       if (spin) s.spinAt = t;
       for (const h of C.hazards) { if (!h.crash || (s.cuts && s.cuts[h.i] != null) || h.x0 > nx + 4 || h.x1 < nx - 2) continue; const hb = h.hb || h;

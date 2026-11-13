@@ -15,12 +15,14 @@
 import { W, H, clamp, ease, rnd, span, fade, glow } from '../story.mjs';
 import * as D from './ci-factory.mjs';
 import { CI_STICKERS } from './ci-stickers.mjs';
+import { VIDEO_STICKERS, VIDEO_STAMPS } from './ci-video-stickers.mjs';   // (the YouTube video's own sticker order: REBUILD.videoStickers)
 import { BLANK_Q } from '../blank.mjs';   // (the clean-slate run: game/playthroughs/README.md)
 // SET STRIP (Chikin, Nov 5: "the assets are supposed to go away" / "It's a setting, they have to fill the space",
 // D-20261105-12/28): in the movie set (?blank) the previous-story props, signs, cards, gags and characters are not drawn;
 // only the look stays (the factory, its zone palettes, the machines on the music, the belts, the roof). ?oldprops shows
 // them again in a blank run, to compare. The playable game (no ?blank) draws exactly what it drew before.
 const SET = BLANK_Q && !(() => { try { return new URLSearchParams(location.search).has('oldprops'); } catch (e) { return false; } })();
+const R = D.REBUILD;   // the Nov 12 rebuild's switches (ci-factory.mjs)
 const OLD_WHITE = (() => { try { return +new URLSearchParams(location.search).get('border') > 0; } catch (e) { return false; } })();   // NO WHITE LINES (Nov 5, D-20261105-09): the white sticker borders are off; ?border=1 shows the old ones to compare
 export const KEYTICKS = D.KEYTICKS;
 
@@ -113,7 +115,7 @@ let SECRET = null;   // (rework: the summit secret — set from s.ciSecret each 
 const shipped = t => { let n = 0; for (const a of SHIPT) if (a <= t) n++; else break; return n + (SECRET != null && t >= SECRET ? 10 : 0); };
 // the lies the shipped crates carry: [sung at, Chat's decal (or null: a name-only label), label]. A crate shows a lie only once it
 // has been sung (the review's low finding: back-belt crates used to show lie names before they were sung). (No BEZOS: the Caesar lie ships as SALAD.)
-const LIES = [[24.03, 'decal_yak', 'YAK'], [40.78, null, 'SALAD'], [49.15, 'decal_drgary', 'DR. GARY'], [55.10, 'decal_spaghetti', 'Q. SPAG'], [69.27, null, 'STEW'],
+const LIES = [[24.03, 'decal_yak', 'YAK'], [40.78, null, 'SALAD'], [49.15, null, 'DR. GARY']   /* (the blocky Dr. Gary decal is out: he has his own sticker, on the wall. Chikin, Nov 12 night) */, [55.10, 'decal_spaghetti', 'Q. SPAG'], [69.27, null, 'STEW'],
   [79.50, 'decal_restaurant', ''], [80.80, 'decal_zipcode', ''], [118.83, 'decal_goblin', 'S. GOB'], [130.19, 'decal_granola', ''], [176.60, 'decal_handpie', ''],
   [193.81, 'decal_everest', 'EVEREST'], [199.99, null, 'NEPAL'], [218.16, 'decal_franklin', ''], [236.46, 'decal_cornelius_bust', 'CORN.'], [239.12, null, 'MIT']];
 const liesSung = t => LIES.filter(l => l[0] <= t);
@@ -209,9 +211,11 @@ function chatBar(ctx, t, L) {
   box(ctx, bx, by, bw, bh, PAPER, { border: 10, ink: 4 });
   txt(ctx, 'kevin', bx + 14, by - 1, 11, '#fff', { align: 'left', stroke: 4 });
   const typed = D.typedAt(m, t); ctx.font = `${CHAT_F} ${CHAT_PX}px ${SANS}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = INK;
-  let last = null; for (const q of CL.ch) { if (q.i >= typed.length) break; last = q;
+  let pfx = 0; while (pfx < typed.length && typed[pfx] === D.MSG1[pfx]) pfx++;   // (REBUILD: the stumble types letters that are not in the final line: those are drawn as typed, after the part that matches)
+  let last = null; for (const q of CL.ch) { if (q.i >= pfx) break; last = q;
     if (t >= sent && (q.two || (q.lift != null && t >= q.lift))) continue;   // sent: the sign-off drops off as the slip; the question's letters lift off one by one
     ctx.fillText(q.c, q.x, q.y); }
+  if (pfx < typed.length && CL.ch[pfx]) { const q0 = CL.ch[pfx], tail = typed.slice(pfx), x0 = q0.x - ctx.measureText(q0.c).width / 2; ctx.textAlign = 'left'; ctx.fillText(tail, x0, q0.y); ctx.textAlign = 'center'; last = { x: x0 + ctx.measureText(tail).width, y: q0.y, c: '' }; }
   if (t < sent && Math.floor(t * 2.5) % 2) { ctx.save(); ctx.font = `${CHAT_F} ${CHAT_PX}px ${SANS}`; const cx = last ? last.x + ctx.measureText(last.c).width / 2 + 2 : bx + 18, cy = last ? last.y : by + 28; ctx.restore(); ctx.fillRect(cx, cy - 11, 2, 22); }
   const ax = bx + bw - 34, ay = by + bh / 2, hot = t > sent - 0.25; poly(ctx, [[ax - 10, ay - 12], [ax + 14, ay], [ax - 10, ay + 12], [ax - 5, ay]], hot ? HAZ : INK, 2.5);
   ctx.restore();
@@ -270,13 +274,34 @@ function factoryBack(ctx, e, t, mt, pal, U, kick, snare, hat, bass) {
 // Review fix (Nov 2 late): BIG (from just under the lyric band down into the belt, 240 px to half the screen tall, up to 42% of
 // the width) and see-through (0.42), in front of the back-wall machines, behind the belt, the crates and Potato. ONE at a time:
 // a sticker whose word comes < 0.9 s after the one on the wall is skipped, and each peels off before the next slaps on. Its top
-// 14% fades out (the lyric band) and its bottom 24% melts into the belt. Never Bezos (a real person's likeness) and not Einstein
+// 14% fades out (the lyric band) and its bottom 24% melts into the belt.
+// *** OUT OF DATE, Nov 12: the next sentence ("Never Bezos ... not Einstein") was the Nov 2 art pass's call (D-20261102-08). It is
+// SUPERSEDED by D-20261103-57 (Chikin, Nov 3: "google says were good with bezos / its exactly what we have been doing"): the Bezos
+// cartoon sticker may be used in-game, on "Who was Caesar? Jeff Bezos", never labelled with his name, never in marketing; Einstein is in
+// as well. With REBUILD.stickerRework on (ci-factory.mjs) both are on the wall, faded in the back like the rest, each on its own lyric.
+// The old rule only still applies on the pre-rebuild path (every switch off = the level as it was). ***
+// Never Bezos (a real person's likeness) and not Einstein
 // (his estate enforces his likeness; Chikin plans to sell the game): the fax sticker covers that moment. Kevin's own sticker comes in
 // on "Kevin?" (145.52), gets worried on "Kevin?!" (146.71), SCARED on 147.09 (the same scared face as the kidnapped Kevin, shaking)
 // and breaks up into the factory's green binary on "HE'S" (147.82): he's in the data now.
 const STK_BASE = new URL('../../play/stickers-ci2/', import.meta.url).href, STK_IMG = {}, STK_FADE = {};
 const KEVIN_STK = 145.52, KEVIN_WORRY = 146.71, KEVIN_SCARE = 147.09, KEVIN_SHRED = 147.82, STK_GAP = 0.9, STK_TOP = 104;
+const STK_IN = R.stickerTable ? D.STK.tIn + 0.06 : 0.22, STK_OUT = R.stickerTable ? D.STK.tOut : 0.3;
 const STICKS = (() => { const out = [], seen = {};
+  if (R.videoStickers) {   // THE VIDEO'S STICKERS: every one, in its order, each up until the next arrives (never longer than 5 s). Mom's typing still clears the wall; "Kevin?" is still his alone.
+    const moms = D.MESSAGES.filter(m => m[2] === 'mom').map(m => m[0]);
+    for (const [st, key] of [...VIDEO_STICKERS, [KEVIN_STK, 'kevin']].sort((a, b) => a[0] - b[0])) { if (key !== 'kevin' && st > KEVIN_STK - 0.3 && st < KEVIN_SHRED + 0.6) continue; out.push({ t: st, key }); }
+    out.forEach((o, i) => { const n1 = out[i + 1]; let end = o.key === 'kevin' ? KEVIN_SHRED + 0.6 : Math.min(o.t + 5, n1 ? n1.t - 0.02 : 1e9);
+      if (o.key !== 'kevin') for (const m of moms) if (m > o.t && m < end) end = m;
+      o.end = end; o.marks = VIDEO_STAMPS.filter(m => m[0] >= o.t && m[0] < end).map(m => ({ t: m[0], kind: m[1], text: m[2] })); });
+    return out; }
+  if (R.stickerTable) {   // REBUILD: the curated table (once per name, a short life, bare wall in the quiet windows)
+    const moms = D.MESSAGES.filter(m => m[2] === 'mom').map(m => m[0]);
+    for (const [st, key, where] of [...D.STICKERS, [KEVIN_STK, 'kevin', 'w']].sort((a, b) => a[0] - b[0])) { if ((key === 'bezos' || key === 'einstein') && !R.stickerRework) continue; if (where === 'b' && R.beltArt) continue; out.push({ t: st, key }); }   // (rework: both ON, D-20261103-57)
+    out.forEach((o, i) => { const n1 = out[i + 1]; let end = o.key === 'kevin' ? KEVIN_SHRED + 0.6 : Math.min(o.t + D.STK.life, n1 ? n1.t - 0.02 : 1e9);
+      if (o.key !== 'kevin') for (const m of moms) if (m > o.t && m < end) end = m;   // (Mom's first keystroke knocks off whatever is up)
+      o.end = end; });
+    return out; }
   for (const [st, key] of [...CI_STICKERS, [KEVIN_STK, 'kevin']].sort((a, b) => a[0] - b[0])) {
     if (key === 'bezos' || key === 'einstein' || st < 13.18 || st > 241.0) continue;
     if (key !== 'kevin' && st > KEVIN_STK - 0.3 && st < KEVIN_SHRED + 0.6) continue;   // ("Kevin?" is his sticker's moment alone)
@@ -300,10 +325,10 @@ function kevinStk(im, t) { if (typeof document === 'undefined') return im; const
 let STK_SEEN = 0;
 function stickerLayer(ctx, e, t, U, kick, roof, deli, dark) {
   if (t < 13.18 || t >= 241.3) return; if (!STK_SEEN) { STK_SEEN = 1; STICKS.forEach(o => stkImg(o.key)); }
-  const s = e.s, fl = floorTop(s.x, t), beltTop = proj(s.x, fl).y, H0 = clamp(beltTop + 10 - STK_TOP, 240, H * 0.5), base = (deli ? 0.30 : roof ? 0.50 : 0.42) * (1 - 0.7 * dark);
+  const s = e.s, fl = floorTop(s.x, t), beltTop = proj(s.x, fl).y, H0 = clamp(beltTop + 10 - STK_TOP, 240, H * 0.5), base = (R.videoStickers ? 0.97 : R.stickerTable ? (deli ? 0.42 : D.STK.a) : deli ? 0.30 : roof ? 0.50 : 0.42) * (1 - (R.videoStickers ? 0.35 : 0.7) * dark);
   const me = proj(s.x, s.y + 0.6), meR = U * 0.9;
   for (const o of STICKS) { if (t < o.t - 0.02 || t > o.end) continue; let im = stkImg(o.key); if (!im) continue;
-    const u = t - o.t, inK = clamp(u / 0.22), sc0 = inK < 0.6 ? lerp(0.6, 1.06, inK / 0.6) : lerp(1.06, 1.0, (inK - 0.6) / 0.4), out = o.key === 'kevin' ? 0 : clamp((t - (o.end - 0.3)) / 0.3);
+    const u = t - o.t, inK = clamp(u / STK_IN), sc0 = inK < 0.6 ? lerp(0.6, 1.06, inK / 0.6) : lerp(1.06, 1.0, (inK - 0.6) / 0.4), out = o.key === 'kevin' ? 0 : clamp((t - (o.end - STK_OUT)) / STK_OUT);
     const sc = sc0 * (1 - 0.08 * out) * (1 + 0.02 * kick);
     let h = H0 * sc, w = h * im.width / im.height; if (w > W * 0.42 * sc) { w = W * 0.42 * sc; h = w * im.height / im.width; }
     const cx = W * 0.62 - out * 40, top = clamp(beltTop + 10 - H0, STK_TOP, 170) + (H0 - h) * 0.5, rot = (lerp(-6, -2, inK) + 8 * out + (o.key.length % 3 - 1) * 1.5) * Math.PI / 180;
@@ -314,7 +339,19 @@ function stickerLayer(ctx, e, t, U, kick, roof, deli, dark) {
     const shake = o.key === 'kevin' && t >= KEVIN_SCARE ? [Math.sin(t * 2 * Math.PI * 30) * 4, Math.cos(t * 2 * Math.PI * 23) * 2] : [0, 0];
     ctx.save(); ctx.globalAlpha = a; ctx.translate(cx + shake[0], top + h / 2 + shake[1]); ctx.rotate(rot); ctx.drawImage(im, -w / 2, -h / 2, w, h);
     if (u < 0.08) { ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.5 * (1 - u / 0.08); ctx.fillStyle = '#ffffff'; ctx.fillRect(-w / 2, -h / 2, w, h * 0.8); }
-    ctx.restore(); }
+    ctx.restore();
+    if (o.marks) for (const m of o.marks) { if (t < m.t) continue; const v = t - m.t, k = clamp(v / 0.12), fadeOut = 1 - out;
+      ctx.save(); ctx.globalAlpha = fadeOut * (1 - 0.35 * dark); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      if (m.kind === 'stamp') {   // the rubber stamp: comes down big and crooked, lands with a thud, ink a little patchy
+        const sz = lerp(2.1, 1, k * k), fs = Math.max(13, Math.min(26, (w * 0.95) / Math.max(8, m.text.length) * 1.5));
+        ctx.translate(cx + w * 0.10, top + h * 0.62); ctx.rotate(-0.21 + (m.text.length % 3 - 1) * 0.04); ctx.scale(sz, sz); ctx.font = '700 ' + fs + 'px "Major Mono Display", ui-monospace, monospace';
+        const tw = ctx.measureText(m.text).width + fs * 1.1, th = fs * 1.9; ctx.globalAlpha *= 0.35 + 0.63 * k; ctx.fillStyle = 'rgba(243,223,174,0.34)'; ctx.fillRect(-tw / 2, -th / 2, tw, th); ctx.strokeStyle = '#c2281c'; ctx.fillStyle = '#c2281c'; ctx.lineWidth = Math.max(3.5, fs * 0.22);
+        ctx.strokeRect(-tw / 2, -th / 2, tw, th); ctx.lineWidth = Math.max(1.5, fs * 0.07); ctx.strokeRect(-tw / 2 + fs * 0.24, -th / 2 + fs * 0.24, tw - fs * 0.48, th - fs * 0.48); ctx.fillText(m.text, 0, fs * 0.06);
+      } else {   // the sign plate: hangs under the sticker
+        const fs = Math.max(11, Math.min(18, (w * 0.98) / Math.max(8, m.text.length) * 1.45)); ctx.translate(cx, top + h * 0.80 + (1 - k) * -10); ctx.rotate(0.02); ctx.font = '700 ' + fs + 'px "Major Mono Display", ui-monospace, monospace';
+        const tw = ctx.measureText(m.text).width + fs * 1.2, th = fs * 1.8; ctx.globalAlpha *= k; ctx.fillStyle = '#f3dfae'; ctx.strokeStyle = '#120a05'; ctx.lineWidth = 3; ctx.fillRect(-tw / 2, -th / 2, tw, th); ctx.strokeRect(-tw / 2, -th / 2, tw, th); ctx.fillStyle = '#120a05'; ctx.fillText(m.text, 0, fs * 0.06); }
+      ctx.restore(); }
+  }
 }
 // Kevin's sticker, taken into the data on "HE'S": it tears into strips that slide apart and turn into falling green 0s and 1s
 function kevinShred(ctx, im, cx, top, w, h, rot, k, a0) {
@@ -488,14 +525,15 @@ export function ciView({ T, world, C, cam }) {
       //  the crown, the fold and the push-through flash are the old story: in the set the belts run from 0 to the end)
       if (t >= 243.6 && !SET) { dawn(ctx, t, s); return; }
       if (t < 13.18 && !SET) { deskFront(ctx, t, s, U); bubble(ctx, t, s, U); return; }
+      if (!SET && R.kevinAhead) kevinCrateAhead(ctx, t, s, U, crate);   // (REBUILD: on the far belt, so it is painted before his belt, the pallets and everything he jumps)
       belts(ctx, t, s, U, mt, kick);
       courseThings(ctx, t, s, U, mt, kick);
       if (!SET) frontSet(ctx, t, s, U, mt, kick);
-      if (!SET) kevinCrate(ctx, t, s, U, crate);
+      if (!SET && !R.kevinAhead) kevinCrate(ctx, t, s, U, crate);
       if (!SET) monitor(ctx, t, s, U, crate);
       if (!BLANK_Q) liesCounter(ctx, t, palAt(t), true);   // (?blank: the hung counter goes too, D-20261103-24)
       if (!SET) bubble(ctx, t, s, U);
-      if (!SET) crown(ctx, t, s, U);   // (Chikin: "The crown is an asset from a previous story")
+      if (!SET && !D.REBUILD.crownOut) crown(ctx, t, s, U);   // (Chikin: "The crown is an asset from a previous story")
       if (!SET && t >= 241.3) fold(ctx, t, s, U, crate);
       if (!SET && t >= 13.18 && t < 13.6) { ctx.fillStyle = '#eafff1'; ctx.globalAlpha = 1 - (t - 13.18) / 0.42; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
     },
@@ -556,7 +594,7 @@ function belts(ctx, t, s, U, mt, kick) {
     for (let x = a.x + U * 0.6; x < x1; x += U * 1.6) if (x > x0) circ(ctx, x, y0 + U * 0.62, 3, '#6a7280', 1.5);
     ctx.lineWidth = 4; ctx.strokeStyle = INK; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y0); if (a.x > -10) { ctx.moveTo(a.x, y0); ctx.lineTo(a.x, y1); } if (b.x < W + 10) { ctx.moveTo(b.x, y0); ctx.lineTo(b.x, y1); } ctx.stroke(); }
 }
-const STORY_LEDGE = new Set(['wheel', 'paper', 'fake', 'bot', 'professor', 'para', 'chart', 'bread', 'lettuce', 'mountain', 'meat', 'brim']);
+const STORY_LEDGE = new Set(['pallet', 'wheel', 'paper', 'fake', 'bot', 'professor', 'para', 'chart', 'bread', 'lettuce', 'mountain', 'meat', 'brim']);
 function ledgeFace(ctx, q, x, y, w, h, t, U) {
   const what = q.text;
   // (set strip (Chikin: "the assets are supposed to go away"): the ¶ crates, citation wheels, Stephanie's papers, the fake belt, the bots, the professor, the bar chart,
@@ -580,6 +618,7 @@ function ledgeFace(ctx, q, x, y, w, h, t, U) {
       else { ctx.save(); ctx.translate(x, y); ctx.scale(k, 1); const L = w; box(ctx, 0, 0, L * 0.8, hh * 0.55, '#f4f1ea', { ink: 4, band: '#d6d0c2', border: 6 }); ctx.fillStyle = CARD2; ctx.fillRect(0, hh * 0.45, L * 0.8, 3);
         circ(ctx, L * 0.88, hh * 0.22, hh * 0.32, '#f2c79a', 4); box(ctx, L * 0.95, -hh * 0.15, hh * 0.18, hh * 0.6, INK, { ink: 0 }); for (const dx of [0.85, 0.9]) circ(ctx, L * dx, hh * 0.12, 2.5, INK, 0); ctx.restore(); } }
     ctx.restore(); return; }
+  if (what === 'pallet') { palletFace(ctx, x, y, w, h, U); return; }
   const col = { para: CARD, ledge: '#8a8f99', pad: '#ffcf4a', chart: ['#4dd07a', '#ffcf4a', '#ff8a5a'][Math.round((q.y1 - 8.6) / 0.6)] || '#4dd07a', bread: '#e2b46b', lettuce: '#7cc45a', mountain: '#7d8aa0', meat: '#d9534f', brim: '#2e3036' }[what] || CARD;
   if (what === 'meat' || what === 'bread' || what === 'lettuce' || what === 'mountain') { const hh = Math.min(h, U * 1.1); poly(ctx, [[x, y + 4], [x + w * 0.25, y - 3], [x + w * 0.5, y + 3], [x + w * 0.75, y - 4], [x + w, y + 2], [x + w, y + hh], [x, y + hh]], col, 4, 6);
     if (what === 'mountain') poly(ctx, [[x + w * 0.2, y + 2], [x + w * 0.45, y - U * 0.9], [x + w * 0.7, y + 2]], '#7d8aa0', 3);
@@ -594,6 +633,18 @@ function ledgeFace(ctx, q, x, y, w, h, t, U) {
   if (what === 'pad') { stripes(ctx, x, y, w, U * 0.22, HAZ, INK, 9); const near = Math.abs(t - D.LAUNCHES[0][0]) < 2.5; if (near) glow(ctx, x + w / 2, y, 60, '#ffcf4a', 0.4); }
   if (what === 'brim') { ctx.fillStyle = '#222428'; ctx.fillRect(x, y + h * 0.5, w, h * 0.5); }
 }
+
+// REBUILD: a pallet = a raised run of the belt, built from crates he has already shipped (stamped, stacked two deep on wooden
+// skids). No words on it: the stamps and the cardboard say what it is made of.
+function palletFace(ctx, x, y, w, h, U) {
+  const n = Math.max(1, Math.round(w / (U * 1.02))), cw = w / n, sk = Math.min(h * 0.16, U * 0.16), ch = h - sk, i0 = Math.max(0, Math.floor((-20 - x) / cw)), i1 = Math.min(n, Math.ceil((W + 20 - x) / cw));
+  for (let i = i0; i < i1; i++) { const cx = x + i * cw, hue = (i * 7) % 3 === 0 ? CARD_HOT : (i * 5) % 4 === 1 ? CARD2 : CARD;
+    box(ctx, cx, y, cw, ch, hue, { ink: 3.5, band: CARD2 }); cardFace(ctx, cx, y, cw, ch, U, hue);
+    ctx.fillStyle = 'rgba(18,10,5,0.35)'; ctx.fillRect(cx + cw * 0.42, y + 2, cw * 0.16, ch - 4);   // the packing tape down its face
+    if ((i * 3) % 4 !== 1) { ctx.save(); ctx.translate(cx + cw * 0.5, y + ch * 0.5); ctx.globalAlpha = 0.85; if (!stampArt(ctx, 'stamp_fact', 0, 0, cw * 0.8, 1, -0.2 + (i % 3) * 0.12)) stamp(ctx, 0, 0, cw * 0.28, 1); ctx.restore(); } }
+  ctx.fillStyle = '#6b4a2a'; ctx.fillRect(Math.max(-10, x), y + ch, Math.min(W + 10, x + w) - Math.max(-10, x), sk); ctx.fillStyle = INK;
+  for (let i = i0; i <= i1; i++) ctx.fillRect(x + i * cw - 3, y + ch, 6, sk);   // the skids' feet
+  ctx.lineWidth = 4; ctx.strokeStyle = INK; ctx.strokeRect(x, y, w, h); stripes(ctx, x, y, Math.min(w, U * 0.2), ch, HAZ, INK, 8); }   // (its near edge is striped: the step)
 
 // ---------- the course's things, painted where the course puts them (stage 1: set dressing he hops / ducks / glitches on the word) ----------
 function courseThings(ctx, t, s, U, mt, kick) {
@@ -624,24 +675,39 @@ function lowCrate(ctx, r, p, U, t, after, kick) {
       if (after > 0.15 + k * 0.12) { const kk = clamp((after - 0.15 - k * 0.12) / 0.3); if (!stampArt(ctx, 'stamp_fact', 0, h * 0.05, w * 0.95, kk)) stamp(ctx, 0, 0, w * 0.32, kk); }
       ctx.restore(); }
     ctx.restore(); return; }
-  const w = U * 1.0, h = U * 0.85, ship = after > 0.45 ? clamp((after - 0.45) / 0.6) : 0; if (ship >= 1) return;
+  const w = U * (R.bigCrates ? 1.1 : 1.0), h = U * (R.bigCrates ? 1.0 : 0.85), ship = after > 0.45 ? clamp((after - 0.45) / 0.6) : 0; if (ship >= 1) return;   // (REBUILD: drawn 1.1 x 1.0, it is solid at 0.9 x 0.72)
+  const lie = R.beltArt && BELT_ART[r.what] ? stkRaw(BELT_ART[r.what]) : null;   // (REBUILD: seven crates carry their own sticker: the lie IS the thing he jumps)
   let x = r.x1 != null ? proj((r.x + r.x1) / 2, r.gy).x - w / 2 : p.x, y = p.y - h, a = 1, rot = 0;
   if (r.what === 'yak' && t < 23.79) { const k = clamp((t - 23.2) / 0.59); if (k <= 0) return; y = lerp(p.y - h - U * 3, y, k * k); }      // dropped by the press on "battle"
-  if (r.what === 'hats' || r.what === 'crown') return;                                                                                      // (their own pictures)
+  if (r.what === 'hats' || (r.what === 'crown' && !D.REBUILD.crownOut)) return;                                                                                      // (their own pictures)
   if (r.what === 'overflow' || r.what === 'hurricane' || r.what === 'bigscrew') { const k = clamp(1 + after / 1.0); rot = (1 - k) * (r.what === 'hurricane' ? 6 : 3); x += (1 - k) * U * 3; }   // drawn rolling / tumbling in
   // (review fix, Chikin's belt note at 12.8: the belt's first crate is on screen from the push-through: it rides the conveyor in at the
   //  right edge and waits there until its real spot scrolls on — only extra warning, the hitbox never moves; drawn = real from ~14.9)
   if (r.tp === 15.89 && t > 13.18) { const edge = W - w - U * 0.5, x0 = x; x = Math.min(x, edge); if (x < x0) rot = Math.sin(t * 9) * 0.03; }
+  // REBUILD (dropIn): a plain crate is dropped onto the belt from the chutes above, landing ON A BEAT. The plan asked for two beats
+  // before its press; run, the screen only shows 1.29 s ahead of him (1.12 s on the roof), so two beats ahead lands off screen. It
+  // lands on the last beat at least 0.75 s before the press (0.75 to 1.34 s ahead), and until then its place on the belt is marked
+  // by its shadow and a dashed outline, so nothing he has to read arrives late.
+  if (R.dropIn && r.kind === 'low' && !OWN_ENTRANCE.has(r.what) && r.tp !== 15.89) { const land = D.OFF + Math.floor((r.tp - 0.75 - D.OFF) / D.P) * D.P, k = (t - (land - 0.22)) / 0.22;
+    if (k < 1) { ctx.save(); ctx.globalAlpha = 0.55; ctx.setLineDash([7, 6]); ctx.lineWidth = 2.5; ctx.strokeStyle = '#ffe6c2'; ctx.strokeRect(x + 3, y + 3, w - 6, h - 6); ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x + w / 2, p.y - 2, w * (0.25 + 0.25 * clamp(k)), U * 0.06, 0, 0, 7); ctx.fill(); ctx.restore();
+      if (k <= 0) return; y = lerp(y - U * 4.2, y, k * k); }
+    else if (t - land < 0.14) { const q = 1 - (t - land) / 0.14; y += h * 0.1 * q; } }   // the thump as it lands
   if (r.kind === 'hurdle') { const k = clamp((t - 185.0) / 0.4); if (t < 185.0) return; y = lerp(p.y - h - U * 3.6, y, k * k); }   // the raccoon knocks the first crate off the shelf at 185.0 (seen ~1.2 s before he meets it); on the drop the rest follow behind him
   if (ship > 0) { x -= ship * U * 0.9; y += ship * ship * U * 1.2; a = 1 - ship; }
   ctx.save(); ctx.globalAlpha = a; ctx.translate(x + w / 2, y + h / 2); ctx.rotate(rot);
   const fact = r.what === 'fact';
   if (fact) { box(ctx, -w / 2, -h / 2, w, h, '#f6f4ee', { ink: 3.5, band: '#dcd8cc', border: 5 }); pict(ctx, r, w, h, t); }
-  else hazCrate(ctx, w, h, U, r, t);
+  else { NO_PICT = !!lie; hazCrate(ctx, w, h, U, r, t); NO_PICT = false; }
+  if (lie) { const lh = U * 1.3, lw = Math.min(U * 1.55, lh * lie.naturalWidth / lie.naturalHeight), lhh = lw * lie.naturalHeight / lie.naturalWidth; ctx.drawImage(lie, -lw / 2, h / 2 - h * 0.17 - lhh, lw, lhh); }   // (as tall as he is, standing in its crate)
   if (after > 0.15 && !fact) { const k = clamp((after - 0.15) / 0.3); if (!stampArt(ctx, 'stamp_fact', 0, h * 0.05, w * 0.95, k)) stamp(ctx, 0, 0, w * 0.32, k); }   // every lie he clears is stamped FACT
   ctx.restore();
 }
 // a crate he has to jump, centred on (0,0): bright kraft, ink (the old thick white border only with ?border=, D-20261105-09), a hazard band along its foot, the label on top
+const OWN_ENTRANCE = new Set(['yak', 'hats', 'crown', 'overflow', 'hurricane', 'bigscrew', 'fact']);   // (crates that already come in their own way)
+const BELT_ART = { yak: 'yak', toaster: 'toaster', gary: 'gary', walnut: 'walnut', rockets: 'rockets', hurricane: 'hurricane', narrator: 'narrator' };
+const STK_RAW = {}; function stkRaw(key) { if (typeof Image === 'undefined') return null; let im = STK_RAW[key]; if (!im) { im = STK_RAW[key] = new Image(); im.decoding = 'async'; im.src = STK_BASE + key + '.webp'; } return im.complete && im.naturalWidth > 0 ? im : null; }
+let NO_PICT = false;
 function hazCrate(ctx, w, h, U, r, t, alt = '') {
   const col = r.what === 'walnut' ? '#b07a42' : CARD_HOT;
   if (OLD_WHITE) { ctx.save(); ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(6, U * 0.13); ctx.strokeStyle = '#ffffff'; ctx.strokeRect(-w / 2, -h / 2, w, h); ctx.restore(); }
@@ -649,11 +715,11 @@ function hazCrate(ctx, w, h, U, r, t, alt = '') {
   if (r.what !== 'walnut') cardFace(ctx, -w / 2, -h / 2, w, h, U, col);
   stripes(ctx, -w / 2 + 2, h / 2 - h * 0.17, w - 4, h * 0.15, HAZ, INK, 7); ctx.lineWidth = 3; ctx.strokeStyle = INK; ctx.strokeRect(-w / 2, -h / 2, w, h);
   if (alt === 'fire') { ctx.save(); ctx.globalCompositeOperation = 'lighter'; glow(ctx, 0, -h * 0.1, h * 0.7, '#ff8a3c', 0.5 + 0.2 * Math.sin(t * 12)); ctx.restore(); }
-  ctx.save(); ctx.translate(0, -h * 0.08); pict(ctx, r, w * 0.92, h * 0.8, t); ctx.restore(); }
+  if (!NO_PICT) { ctx.save(); ctx.translate(0, -h * 0.08); pict(ctx, r, w * 0.92, h * 0.8, t); ctx.restore(); } }
 // Chat's printed cardboard on a crate face (washed toward the crate colour so the label on it still reads), ink edge redrawn
 function cardFace(ctx, x, y, w, h, U, col = CARD) { if (tile(ctx, 'tile_cardboard_front', x + 1.5, y + 1.5, w - 3, h - 3, U * 2.2, x, y, col, 0.42)) { ctx.lineWidth = 3.5; ctx.strokeStyle = INK; ctx.strokeRect(x, y, w, h); } }
 // Chat's crate labels (decals) by what the crate is, and the two plain crates that carry a lie sung just before them
-const DECAL = { yak: 'decal_yak', gary: 'decal_drgary', awning: 'decal_restaurant', mailbox: 'decal_zipcode', gremlin: 'turn_gremlin_qc_front', gremlin2: 'turn_gremlin_qc_front' };
+const DECAL = { yak: 'decal_yak', awning: 'decal_restaurant', mailbox: 'decal_zipcode', gremlin: 'turn_gremlin_qc_front', gremlin2: 'turn_gremlin_qc_front' };
 const DECAL_AT = { 123.04: 'decal_goblin', 220.64: 'decal_franklin' };   // (S. GOBLIN under the white-out tape on "Oops. Correction."; BEN FRANKLIN after the three bots)
 const PICTO = { wheel: 'picto_loading' };
 function pict(ctx, r, w, h, t) { const l = r.label, wt = r.what;
@@ -752,7 +818,7 @@ function inspector(ctx, x, gy, U, t, big) { const sc = (big ? 1.4 : 1) * U / 60;
   ctx.restore(); }
 function factCrate(ctx, x, gy, U, t, after) { const w = U * 0.9, h = U * (D.VIDEO ? 0.9 : 2.9), through = after > 0 ? clamp(after / 0.3) : 0, shake = after < 0 && after > -1 ? (rnd(Math.floor(t * 30), 4) - 0.5) * 3 : 0;
   ctx.save(); ctx.translate(x + w / 2 + shake - through * U * 2.2, gy - h / 2); box(ctx, -w / 2, -h / 2, w, h, '#f6f4ee', { ink: 4, border: 7, band: '#e2ded2' });
-  txt(ctx, 'FACT', 0, 0, 15, INK);
+  if (!R.blankFact) txt(ctx, 'FACT', 0, 0, 15, INK);   // (REBUILD: the one true thing is the only blank thing)
   if (after > 0) { ctx.lineWidth = 2; ctx.strokeStyle = CARD2; ctx.setLineDash([3, 3]); ctx.strokeRect(-w / 2 + 3, -h / 2 + 3, w - 6, h - 6); ctx.setLineDash([]);   // the stamp can't print on it: it slides off, smudged
     ctx.save(); ctx.globalAlpha = 0.5 * (1 - through); stamp(ctx, w * 0.4, -h * 0.3, w * 0.28, 1, '#c0302a', '✓'); ctx.restore(); }
   ctx.restore();
@@ -767,6 +833,10 @@ function vat(ctx, r, p, U, t, after) { const w = r.kind === 'dbl' ? U * 0.75 * 1
 const VATCOL = { spaghetti: '#f2c45a', stew: '#9a4a2a', eagles: '#6fc2b4', professor: '#3a3f4a', paper: '#7ad0c0', wheel: '#7ad0c0', fake: '#6fc2b4', bot: '#6fc2b4', vat: '#6fc2b4', launch: '#6fc2b4' };
 function vatHole(ctx, hl, t, U) { if (SET) hl = { ...hl, what: 'vat' };   // (set strip: a plain vat, no QUANTUM SPAGHETTI / STEW, no strands)
   const a = proj(hl.x0, hl.gy), b = proj(hl.x1, hl.gy); if (b.x < -40 || a.x > W + 40) return;
+  if (hl.what === 'catwalk') { const gx = a.x, gw = b.x - a.x; ctx.save();   // REBUILD: a gap in the catwalk: the deck plates are gone, two hang bent off the edges, the wall shows through
+    poly(ctx, [[gx - 2, a.y], [gx + gw * 0.2, a.y + U * 0.42], [gx + gw * 0.16, a.y + U * 0.56], [gx - 2, a.y + U * 0.32]], '#3a4048', 3.5);
+    poly(ctx, [[gx + gw + 2, a.y], [gx + gw * 0.84, a.y + U * 0.3], [gx + gw * 0.87, a.y + U * 0.44], [gx + gw + 2, a.y + U * 0.32]], '#3a4048', 3.5);
+    stripes(ctx, gx - U * 0.3, a.y, U * 0.3, U * 0.14, HAZ, INK, 7); stripes(ctx, gx + gw, a.y, U * 0.3, U * 0.14, HAZ, INK, 7); ctx.restore(); return; }
   const x = a.x, w = b.x - a.x, top = a.y + U * 0.55, bot = Math.min(H + 20, a.y + U * 3.2), col = VATCOL[hl.what] || '#6fc2b4', boil = hl.what === 'spaghetti' && t >= 55.843 ? clamp((t - 55.843) / 0.3) : 0;
   ctx.save(); ctx.fillStyle = '#1b1e24'; ctx.fillRect(x, top - U * 0.2, w, bot - top + U * 0.2);
   ctx.fillStyle = col; ctx.fillRect(x + 4, top, w - 8, U * 0.35); ctx.fillStyle = 'rgba(18,10,5,0.25)'; ctx.fillRect(x + 4, top + U * 0.22, w - 8, U * 0.13);
@@ -779,6 +849,11 @@ function vatHole(ctx, hl, t, U) { if (SET) hl = { ...hl, what: 'vat' };   // (se
   ctx.restore(); }
 function eagles(ctx, r, t, s, U) { if (t < r.tp - 1.4 || t > r.tp + 3.2) return; const throws = [105.48, 106.19, 106.9];
   throws.forEach((ot, i) => { const ox = X(ot), oy = D.F2 + 2.1 + (s && s.orbAt != null ? 0 : 0); let p = proj(ox, oy); const carried = t >= ot && t < ot + 0.71; if (carried) p = proj(s.x + 0.55, s.y + 1.35); else if (t > ot) return;
+    const eim = R.eagleArt ? stkRaw('eagle') : null;
+    if (eim) { const hgt = U * 1.7, wid = hgt * eim.naturalWidth / eim.naturalHeight, bob = Math.round(Math.sin(t * 9 + i * 2.1) * 3);   // the video's eagle: he bobs, he does not flap (he is plugged in)
+      ctx.save(); ctx.translate(p.x, p.y + bob); if (carried) ctx.rotate(-0.12); ctx.drawImage(eim, -wid / 2, -hgt * 0.62, wid, hgt);
+      if (!carried) { box(ctx, -U * 0.16, hgt * 0.42, U * 0.32, U * 0.14, '#2a2f38', { ink: 2 }); ctx.fillStyle = '#7dff9a'; ctx.fillRect(-U * 0.13, hgt * 0.42 + U * 0.03, U * 0.26 * clamp((t - ot + 1.4) / 1.4), U * 0.07); }   // charging
+      ctx.restore(); return; }
     const flap = Math.sin(t * 22 + i) * 0.5; ctx.save(); ctx.translate(p.x, p.y); const sc = U / 60;
     ctx.scale(sc, sc); for (const sd of [-1, 1]) { ctx.save(); ctx.scale(sd, 1); ctx.rotate(-0.3 + flap * 0.6); poly(ctx, [[6, 0], [60, -14], [52, 4], [30, 10]], '#c9a26a', 3); ctx.restore(); }
     circ(ctx, 0, 0, 13, '#8a5a2a', 3); circ(ctx, 0, -16, 9, '#fff6e0', 3); poly(ctx, [[6, -18], [16, -14], [6, -12]], HAZ, 2);
@@ -832,7 +907,7 @@ function frontSet(ctx, t, s, U, mt, kick) {
   // 202.12: one small red QC bulb on "incorrect"
   if (t > 202.12 && t < 206.3) { const p = proj(X(204.5), D.SUMMIT + 2.4); circ(ctx, p.x, p.y, 6, RED, 2); glow(ctx, p.x, p.y, 30, '#ff3a2a', 0.5); }
   // 209.53 → 209.83: an overhead crane lowers the cardboard crown (it lands on his hard hat: crown())
-  if (t > 208.9 && t < 209.9) { const hp = proj(s.x + CROWN_DX, s.y + CROWN_DY), k = clamp((t - 209.0) / 0.83); const y = lerp(-40, hp.y, ease(k)); ctx.fillStyle = INK; ctx.fillRect(hp.x - 1.5, -10, 3, y + 10); crownShape(ctx, hp.x, y, U); }
+  if (!D.REBUILD.crownOut && t > 208.9 && t < 209.9) { const hp = proj(s.x + CROWN_DX, s.y + CROWN_DY), k = clamp((t - 209.0) / 0.83); const y = lerp(-40, hp.y, ease(k)); ctx.fillStyle = INK; ctx.fillRect(hp.x - 1.5, -10, 3, y + 10); crownShape(ctx, hp.x, y, U); }
   // 214.60 "SENT": a pneumatic tube fires the ANSWER crate out of the factory
   if (t > 213.6 && t < 216) { const p = { x: bgx(214.6, 0.5, t, 0.6), y: proj(0, D.ROOF).y }, k = clamp((t - 214.6) / 0.5); box(ctx, p.x - U * 0.4, p.y - U * 5.4, U * 0.8, U * 5.4, 'rgba(200,230,255,0.25)', { ink: 3.5 });
     ctx.save(); ctx.translate(p.x, p.y - U * 0.6 - k * k * U * 9); box(ctx, -U * 0.32, -U * 0.3, U * 0.64, U * 0.6, CARD, { ink: 3, band: CARD2 }); txt(ctx, 'ANSWER', 0, 0, 8, INK); ctx.restore(); }
@@ -852,7 +927,7 @@ function crown(ctx, t, s, U) { if (t < 209.83 || t > 242.47) return; const p = p
 
 // ---------- Kevin's FRAGILE crate (from DATA 148.55): it rides 1.4 behind him, swaying on the beat; never touches a hazard ----------
 function kevinCrate(ctx, t, s, U, CR) {
-  if (s.grabAt == null || t < s.grabAt + 0.38 || t >= 242.5) { CR.y = null; return; }
+  if (s.grabAt == null || t < s.grabAt + 0.38 || t >= 242.5 || (R.kevinKnock && t >= s.grabAt + 8)) { CR.y = null; CR.px = null; return; }
   const cx = s.x - 1.4, fl = floorUnder(cx, s.y + 0.4), want = fl != null ? fl : s.y; if (CR.y == null || Math.abs(t - CR.t) > 0.5) CR.y = want; CR.y += (want - CR.y) * Math.min(1, (t - CR.t > 0 ? t - CR.t : 0) * 9); CR.t = t;
   const g = s.grabAt, land = clamp((t - (g + 0.38)) / 0.35), p = proj(cx, CR.y), sway = Math.sin(CC.beatOf(t) * Math.PI) * 0.06, w = U * 1.05, h = U * 0.7;
   ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(sway);
@@ -916,10 +991,47 @@ function scaredFace(ctx, which, B, t, level) { if (!B) return; const F = KFACE[w
   else { brow(F.eL[0] - r * 1.0, F.eL[1] - r * 1.15, F.eL[0] + r * 0.8, F.eL[1] - r * 1.6); brow(F.eR[0] - r * 0.8, F.eR[1] - r * 1.6, F.eR[0] + r * 1.0, F.eR[1] - r * 1.15); }
   ctx.restore(); }
 // when Kevin is scared (the kidnapping, then the socket dive into the dark and just before the slam)
+// REBUILD (kevinAhead): Kevin's crate rides AHEAD of Potato on the far belt: small, solid, never attached to him, never opened
+// again, never in danger. 144.9 an open, empty crate with no name comes in and waits ahead, under the monitor · HE'S (the Space
+// press): Kevin drops straight down into it, no reeling · on DATA the lid shuts and his own sign-off slip is slapped on as the
+// label · after that he only watches, through the slat (wide eyes once, till 149.0; he looks up when Mom types) · 230.49 one
+// full-size hat lands on the crate (he is 25).
+function kevinCrateAhead(ctx, t, s, U, CR) {
+  const g = s.grabAt; if (t < 144.9) { CR.y = null; CR.px = null; return; } if (t >= 242.5) return;   // (the fold drops it, empty: fold())
+  let fy = D.FLOORS[0][2]; for (const [a, , y] of D.FLOORS) if (t >= a - 0.3) fy = y;   // the far belt runs level with the floor he is on (never up a pallet, never down a vat)
+  if (CR.y == null || Math.abs(t - CR.t) > 0.5) CR.y = fy; CR.y += (fy - CR.y) * Math.min(1, Math.max(0, t - CR.t) * 5); CR.t = t;
+  const arrive = ease(clamp((t - 144.9) / 0.6)), cx = s.x + 4.4 + (1 - arrive) * 11, sc = 0.9, p = proj(cx, CR.y), w = U * 1.1 * sc, h = U * 0.8 * sc;
+  const shutAt = g != null ? Math.max(148.27, g + 0.73) : 1e9, shut = t >= shutAt, sway = shut ? Math.sin(CC.beatOf(t) * Math.PI) * 0.025 : 0;
+  const KO = R.kevinKnock && g != null ? shutAt + 6 : 1e9, ko = t >= KO ? (t - KO) / 1.0 : 0;   // knocked off the track: one hit, a tumble, gone
+  if (ko >= 1) { CR.y = null; CR.px = null; return; }
+  if (ko > 0 && ko < 0.16) { ctx.save(); ctx.translate(p.x - w * 0.6, p.y - h * 0.5); ctx.strokeStyle = INK; ctx.lineWidth = 4; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + 0.3, r0 = U * 0.25, r1 = U * (0.5 + 2.2 * ko); ctx.beginPath(); ctx.moveTo(Math.cos(a) * r0, Math.sin(a) * r0); ctx.lineTo(Math.cos(a) * r1, Math.sin(a) * r1); ctx.stroke(); } ctx.restore(); }
+  ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(sway);
+  if (ko > 0) { ctx.translate(ko * U * 2.6, -Math.sin(ko * Math.PI) * U * 1.5 + ko * ko * U * 6); ctx.rotate(ko * 5.2); }
+  if (!shut) {
+    for (const d of [-1, 1]) poly(ctx, [[d * w * 0.5, -h], [d * w * 0.72, -h - h * 0.3], [d * w * 0.42, -h - h * 0.34], [d * w * 0.24, -h]], CARD2, 3);   // the flaps, open
+    ctx.fillStyle = '#2a1c10'; ctx.fillRect(-w / 2 + 3, -h - 3, w - 6, h * 0.2);   // the dark inside
+    if (g != null && t >= g + 0.38) { const k = clamp((t - g - 0.38) / 0.3);   // he drops straight down out of the monitor into it
+      ctx.save(); ctx.beginPath(); ctx.rect(-w * 2, -h - U * 7, w * 4, U * 7 + h * 0.1); ctx.clip(); kevin(ctx, 0, -h + lerp(-U * 1.5, U * 0.5, k * k), U * sc, 'scared', t); ctx.restore(); }
+    box(ctx, -w / 2, -h, w, h, CARD, { ink: 3.5, band: CARD2 }); cardFace(ctx, -w / 2, -h, w, h, U); }
+  else { const k = clamp((t - shutAt) / 0.18), bnc = Math.exp(-(t - shutAt) / 0.1) * Math.cos((t - shutAt) * 32);
+    ctx.save(); ctx.scale(1 + 0.1 * bnc, 1 - 0.1 * bnc); box(ctx, -w / 2, -h, w, h, CARD, { ink: 3.5, band: CARD2 }); cardFace(ctx, -w / 2, -h, w, h, U);
+    ctx.fillStyle = CARD2; ctx.fillRect(-w / 2, -h + h * 0.13, w, 2.5); ctx.fillStyle = 'rgba(18,10,5,0.3)'; ctx.fillRect(-w * 0.07, -h, w * 0.14, h * 0.13);   // the lid, taped shut
+    // the slat he watches through
+    const sy = -h * 0.66, wide = t < 149.0 || span(t, 241.67, 242.47), mom = D.MESSAGES.some(([a, b, who]) => who === 'mom' && t >= a - 0.2 && t < b + 1.6), er = h * (wide ? 0.085 : 0.06), blink = !wide && (t * 0.37 % 1) < 0.03;
+    ctx.fillStyle = '#1a120a'; ctx.fillRect(-w * 0.34, sy - h * 0.11, w * 0.68, h * 0.22); ctx.lineWidth = 2.5; ctx.strokeStyle = INK; ctx.strokeRect(-w * 0.34, sy - h * 0.11, w * 0.68, h * 0.22);
+    if (!blink) for (const d of [-1, 1]) { const ex = d * w * 0.13 + (wide ? Math.sin(t * 60 + d) * 0.6 : 0); circ(ctx, ex, sy, er, '#fff6e0', 1.5); circ(ctx, ex + (mom ? 0 : er * 0.25), sy - (mom ? er * 0.4 : 0), er * 0.45, INK, 0); }
+    ctx.restore();
+    ctx.save(); ctx.scale(1 + 0.5 * (1 - k), 1 + 0.5 * (1 - k)); ctx.globalAlpha = k; slip(ctx, 0, -h * 0.27, U * 0.42 * sc, -0.06, 0); ctx.restore();   // his own sign-off, slapped on: the label
+    if (t >= 230.49) { const hk = clamp((t - 230.49) / 0.28), hy = lerp(-h - U * 3.2, -h + U * 0.04, hk * hk); if (!pic(ctx, 'prop_hardhat_small', 0, hy, U * 1.05, U * 0.8, { bottom: true })) hardHat(ctx, 0, hy - U * 0.3, U * 0.8); } }   // one full-size hat, on the crate
+  ctx.restore();
+  if (ko > 0) { CR.px = null; return; }   // (nothing hangs over a crate that is leaving)
+  CR.x = cx; CR.px = p.x; CR.py = p.y;
+}
 const kevinScared = (t, g) => (g != null && t >= g + 0.38 && t < 150.6) || span(t, 175.09, 175.89) || span(t, 241.67, 242.47);
 
 // ---------- the gantry monitor: Kevin's and Mom's messages (a thing in the world: hanging over the belt, then bolted to Kevin's crate) ----------
-function msgAt(t) { let m = null; for (const r of D.MESSAGES) if (t >= r[0] - 0.05) m = r; return m && (t < m[1] + 7 || m[2] === 'mom' || m[3] === 'its me kevin' || m[3] === 'potato?') ? m : null; }
+function msgAt(t) { let m = null; for (const r of D.MESSAGES) if (t >= r[0] - 0.05) m = r; if (R.kevinKnock) return m && t < m[1] + 2.5 ? m : null;   /* (Chikin, Nov 12 night: "he sticks around with that speech bubble for the whole video": a message is up while it is typed and for 2.5 s after, then the screen goes) */
+  return m && (t < m[1] + 7 || m[2] === 'mom' || m[3] === 'its me kevin' || m[3] === 'potato?') ? m : null; }
 function monitor(ctx, t, s, U, CR) {
   if (t < 13.18 || t >= 242.5) return;
   const g = s.grabAt, onCrate = g != null && t >= g + 1.23 && CR.px != null, falling = g != null && t >= g + 0.97 && t < g + 1.23;
@@ -932,11 +1044,12 @@ function monitor(ctx, t, s, U, CR) {
   if (vis <= 0.01) return;
   const big = !(onCrate || falling) && t >= KEVIN_SCARE - 0.2 && t < gk + 0.75 ? ease((t - KEVIN_SCARE + 0.2) / 0.25) * (1 - ease((t - gk - 0.45) / 0.3)) : 0;
   w = lerp(w, 330, big); h = lerp(h, 112, big);   // (bottom stays above his head on the upper floor; right edge clear of the lyric)
+  if (R.kevinAhead && CR.px != null && t >= 144.9) x = lerp(x, Math.max(12, Math.min(W - w - 12, CR.px - w / 2)), ease((t - 144.9) / 0.6));   // (REBUILD: it slides along its gantry to hang over the open crate)
   if (t < 13.18 + 0.9) y -= (1 - ease((t - 13.18) / 0.9)) * 140;                                                                       // the screen drops in on its cables
   if (t >= 13.18 && t < 14.37) { const k = ease((t - 13.3) / 0.9), bx = lerp(W * 0.3, x + 7, k), by = lerp(H * 0.62, y + 7, k), bw = lerp(W * 0.5, w - 14, k);   // Kevin's chat bar flies up into it
     if (k < 1) { ctx.save(); ctx.globalAlpha = 1 - k * 0.6; box(ctx, bx, by, bw, lerp(40, h - 14, k), PAPER, { ink: 3, border: 6 }); ctx.restore(); } }
-  if ((onCrate || falling) && CR.px != null) { const tx = CR.px - U * 2.6, ty = CR.py - U * 2.75, k = onCrate ? 1 : ease((t - g - 0.97) / 0.26); w = lerp(304, U * 3.3, k); h = lerp(80, U * 1.05, k); x = Math.max(12, lerp(x, tx, k)); y = Math.max(8, lerp(y, ty, k));
-    if (onCrate) { ctx.fillStyle = INK; ctx.fillRect(CR.px - U * 0.3, ty + h, 4, CR.py - (ty + h) - U * 0.68); } }
+  if ((onCrate || falling) && CR.px != null) { const tx = CR.px - U * (R.kevinAhead ? 1.65 : 2.6), ty = CR.py - U * 2.75, k = onCrate ? 1 : ease((t - g - 0.97) / 0.26); w = lerp(304, U * 3.3, k); h = lerp(80, U * 1.05, k); x = Math.max(12, lerp(x, tx, k)); y = Math.max(8, lerp(y, ty, k));
+    if (onCrate) { ctx.fillStyle = INK; ctx.fillRect(CR.px - (R.kevinAhead ? 2 : U * 0.3), ty + h, 4, CR.py - (ty + h) - U * 0.68); } }
   else { ctx.save(); ctx.globalAlpha = vis; ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x + 40, -5); ctx.lineTo(x + 40, y); ctx.moveTo(x + w - 40, -5); ctx.lineTo(x + w - 40, y); ctx.stroke(); ctx.restore(); }   // hanging from the gantry
   const dark = span(t, 175.19, 178.33), flick = t > 243 ? 0 : 0;
   // (when he flies up past it — a launch apex — the hanging monitor goes see-through so he's never hidden behind the screen)
@@ -966,7 +1079,7 @@ function monitor(ctx, t, s, U, CR) {
   if (dark) glow(ctx, x + w / 2, y + h / 2, 90, '#fff0ea', 0.35);
   ctx.restore();
   // 147.82 HE'S → 148.20 IN → 148.55 DATA: his tether (purple: his glitch, on him) hooks the monitor and Kevin is pulled out like taffy
-  if (g != null && t >= g && t < g + 1.0) { const me = proj(s.x, s.y + 0.8), mx = x + w / 2, my = y + h / 2; tether(ctx, me.x, me.y, mx, my, t, Math.min(1, (t - g) / 0.12));
+  if (g != null && t >= g && t < g + 1.0 && !R.kevinAhead) { const me = proj(s.x, s.y + 0.8), mx = x + w / 2, my = y + h / 2; tether(ctx, me.x, me.y, mx, my, t, Math.min(1, (t - g) / 0.12));
     // (rework: he's dragged out backwards, feet first toward the crate, kicking ±0.25 rad at 8 Hz, his head lagging the pull: scared)
     if (t >= g + 0.38 && t < g + 0.75) { const k = ease((t - g - 0.38) / 0.35), ex = proj(s.x - 1.4, s.y).x, ey = proj(s.x - 1.4, s.y + 0.9).y, tx = lerp(mx, ex, k), ty = lerp(my, ey, k), st = 1 + Math.sin(k * Math.PI) * 0.6;
       const th = Math.atan2(-(ex - mx), ey - my) + 0.25 * Math.sin(t * 2 * Math.PI * 8);

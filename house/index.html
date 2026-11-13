@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head><script>/* HIS HOUSE is behind his door, like the kitchen (studio/index.html): a pass from the door (minutes old) lets you in, and you stay in for this tab. Local preview: open. */
+var __k=0,__in=false;try{__k=+sessionStorage.getItem('potato-key-pass')||0;__in=sessionStorage.getItem('potato-house-in')==='1'}catch(e){}
+if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname))__in=true;
+if(Date.now()-__k<120000){__in=true;try{sessionStorage.setItem('potato-house-in','1')}catch(e){}}
+if(!__in){location.replace('../?spud');throw 0}</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>pot△to™'s House</title><meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap">
+<!-- THE LAYERED HOUSE, first version (Chikin, Nov 12 2026: "the house is his house, we show that" / "we need the layered house today").
+     The whole house with the front wall off, painted by the same kit as the kitchen (studio/kitchen/kitchens.mjs), and the LIVING Potato inside it.
+     Pick him up and drop him in a room, or tap a room: its light comes up and it opens. No menus, no labels.
+     Not in this version: him walking through doors and up stairs by himself, and your own room (the dark one above the kitchen). Not live. -->
+<style>
+html,body{margin:0;height:100%;background:#030604;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+#sky,#house,#lights{position:fixed;inset:0;width:100vw;height:100vh;display:block}
+#room{position:fixed;inset:0;z-index:50;background:#030604;display:none}#room.on{display:block}
+#room iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+#back{all:unset;box-sizing:border-box;position:absolute;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:2;width:56px;height:56px;cursor:pointer;background:#0c1f14;border:3px solid #120a05;border-radius:9px 13px 8px 12px;box-shadow:0 0 0 2px #12301f,3px 4px 0 2px #120a05;display:grid;place-items:center}
+#back:focus-visible{outline:3px solid #2bff88;outline-offset:3px}#back svg{width:30px;height:30px}
+#rights{position:fixed;left:8px;bottom:4px;z-index:60;pointer-events:none;font:10px/1.3 system-ui,sans-serif;color:#fff;opacity:.5;text-shadow:0 0 2px #000,0 0 2px #000}
+</style></head><body>
+<canvas id="sky" aria-hidden="true"></canvas><canvas id="house" aria-label="Potato's house, seen with the front wall off"></canvas><canvas id="lights" aria-hidden="true"></canvas>
+<div id="room"><button id="back" type="button" aria-label="Back to the house"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M3 15 15 4l12 11" fill="none" stroke="#ffd9a0" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M7 14v12h16V14" fill="#5c3a18" stroke="#ffd9a0" stroke-width="3.5" stroke-linejoin="round"/><path d="M13 26v-7h4v7" fill="#ffd9a0"/></svg></button></div>
+<div id="rights">&copy; 2026 ChikinNuglet. pot&#9651;to&trade; and his look are trademarks of ChikinNuglet. All rights reserved.</div>
+<script type="module">
+import { STYLES, INK, HOUSE as HOUSE_KIT } from '../studio/kitchen/kitchens.mjs'; HOUSE_KIT.on = true;   // (the fridge note reads Thursday, no trapdoor: the same switch the rooms inside use)
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// ---------- the house, in its own units (2400 x 1660): three columns, an attic, a cave under the kitchen ----------
+const HW = 2400, HH = 1660, L = 250, T = 410, CW = [560, 780, 560], RH = 360, G = 16, FEET = 14;
+const X = [L, L + CW[0] + G, L + CW[0] + CW[1] + 2 * G], XR = X[2] + CW[2], Y = [T, T + RH + G, T + 2 * (RH + G)];
+const AW = 520, AH = 190, AX = (L + XR) / 2 - AW / 2, AY = T - G - AH;
+const GAME = '../arcade/run/?play=';
+const ROOMS = [   // HIS LAYOUT (Chikin, Nov 12 night), the same inside (studio/room.mjs): ground floor = living room -> Thursday Potato (the kitchen) -> Read The Terms;
+  // upstairs (by the living room's stairs) = Get Down -> Confidently Incorrect -> Cyborg; a ladder in Confidently's room -> the attic = Ghost. No basement for now.
+  { id: 'getdown', x: X[0], y: Y[0], w: CW[0], h: RH, paint: 'disco-legend', crop: [200, 1216], go: '../studio/?t&room=getdown' },
+  { id: 'factory', x: X[1], y: Y[0], w: CW[1], h: RH, paint: 'construction-crew', go: '../studio/?t&room=factory' },
+  { id: 'cyborg',  x: X[2], y: Y[0], w: CW[2], h: RH, paint: 'circuit-cyborg', crop: [200, 1216], go: '../studio/?t&room=cyborg' },
+  { id: 'living',  x: X[0], y: Y[1], w: CW[0], h: RH, paint: 'living', go: '../studio/?t&room=living' },
+  { id: 'kitchen', x: X[1], y: Y[1], w: CW[1], h: RH, paint: 'bare', go: '../studio/?t&room=kitchen' },
+  { id: 'terms',   x: X[2], y: Y[1], w: CW[2], h: RH, paint: 'suit-tie', crop: [200, 1216], go: '../studio/?t&room=terms' },
+  { id: 'ghost',   x: AX,   y: AY,   w: AW,    h: AH, paint: 'sheet-ghost', crop: [420, 1000], go: '../studio/?t&room=ghost' } ];
+const hc = document.getElementById('house'), lc = document.getElementById('lights');
+let W = 0, H = 0, S = 1, OX = 0, OY = 0, DPR = 1;
+const toScreen = (hx, hy) => [OX + hx * S, OY + hy * S], toHouse = (sx, sy) => [(sx - OX) / S, (sy - OY) / S];
+const roomAt = (hx, hy) => ROOMS.find(r => hx >= r.x && hx <= r.x + r.w && hy >= r.y - 4 && hy <= r.y + r.h + 4) || null;
+const rnd = (a, b) => { const v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return v - Math.floor(v); };
+
+function paintHouse() {   // once per size, into the page's own canvas
+  const big = document.createElement('canvas'); big.width = HW; big.height = HH; const x = big.getContext('2d'); x.lineJoin = 'round'; x.lineCap = 'round';
+  x.fillStyle = '#1d1309'; x.fillRect(0, Y[2] - 8, HW, HH); /* (no sky here: the 404 behind the house is painted on the page, below) */
+  x.fillStyle = '#16211a'; x.fillRect(0, Y[2] - 30, L, 30); x.lineWidth = 7; x.strokeStyle = INK;                      // the street: a lamp by the front door
+  x.fillStyle = '#20262b'; x.fillRect(96, Y[1] + 70, 14, RH - 100); x.strokeRect(96, Y[1] + 70, 14, RH - 100); x.fillStyle = '#ffd9a0'; x.beginPath(); x.arc(103, Y[1] + 62, 24, 0, 7); x.fill(); x.stroke();
+  x.fillStyle = 'rgba(255,217,160,.10)'; x.beginPath(); x.moveTo(103, Y[1] + 62); x.lineTo(-40, Y[2] - 30); x.lineTo(246, Y[2] - 30); x.fill();
+  x.fillStyle = INK; x.fillRect(L - G, T - G, XR - L + 2 * G, 2 * RH + 3 * G);                                          // the shell
+  x.fillStyle = '#5c3a18'; x.beginPath(); x.moveTo(L - 70, T - G + 2); x.lineTo((L + XR) / 2, T - 340); x.lineTo(XR + 70, T - G + 2); x.closePath(); x.fill(); x.lineWidth = 10; x.stroke();
+  x.fillStyle = '#7a3b1e'; x.fillRect(XR - 260, T - 200, 70, 140); x.lineWidth = 8; x.strokeRect(XR - 260, T - 200, 70, 140);
+  x.fillStyle = INK; x.fillRect(AX - G, AY - G, AW + 2 * G, AH + G); /* (the attic's shell; the basement is out for now) */
+  for (const r of ROOMS) {
+    if (!r.paint) { cave(x, r.x, r.y, r.w, r.h); continue; }
+    const t = document.createElement('canvas'); t.width = 1600; t.height = 900; const tx = t.getContext('2d'); tx.lineJoin = 'round'; tx.lineCap = 'round';
+    try { STYLES.find(s => s.id === r.paint).paint(tx, 3.2, 1, { beat: 0, open: 0, open2: 0, P: {}, near: -1 }); } catch (e) { tx.fillStyle = '#2a1a0c'; tx.fillRect(0, 0, 1600, 900); }
+    x.save(); x.beginPath(); x.rect(r.x, r.y, r.w, r.h); x.clip(); const [sx0, sw] = r.crop || [0, 1600]; x.drawImage(t, sx0, 60, sw, 780, r.x, r.y, r.w, r.h);
+    if (r.dark) { x.fillStyle = 'rgba(3,6,4,.82)'; x.fillRect(r.x, r.y, r.w, r.h);                                      // nobody lives here yet: dust sheets, one bare bulb, off
+      x.fillStyle = '#b9b3a4'; x.strokeStyle = INK; x.lineWidth = 6; for (const [a, b, c, d] of [[.16, .5, .3, .36], [.56, .58, .22, .28]]) { x.beginPath(); x.moveTo(r.x + r.w * a, r.y + r.h * (b + d)); x.quadraticCurveTo(r.x + r.w * (a + c * .1), r.y + r.h * b, r.x + r.w * (a + c * .5), r.y + r.h * b); x.quadraticCurveTo(r.x + r.w * (a + c * .9), r.y + r.h * b, r.x + r.w * (a + c), r.y + r.h * (b + d)); x.closePath(); x.globalAlpha = .5; x.fill(); x.globalAlpha = 1; x.stroke(); } }
+    x.restore(); }
+  // THE OUTSIDE WALLS (Chikin, Nov 12: "can you give the house an exterior wall" / "so he can be outside if you want"): boards down both sides,
+  // a doorway through each at ground level. Left = the front door, onto the street. Right = the back door, onto the yard.
+  const WT = 34, doorH = 178, doorTop = Y[1] + RH - doorH, wallTop = T - G, wallBot = Y[2];
+  for (const [wx, side] of [[L - G - WT + 6, -1], [XR + G - 6, 1]]) {
+    x.fillStyle = '#6b4a2a'; x.strokeStyle = INK; x.lineWidth = 7; x.fillRect(wx, wallTop, WT, wallBot - wallTop); x.strokeRect(wx, wallTop, WT, wallBot - wallTop);
+    x.lineWidth = 3; for (let yy = wallTop + 26; yy < wallBot; yy += 26) { x.beginPath(); x.moveTo(wx + 3, yy); x.lineTo(wx + WT - 3, yy); x.stroke(); }
+    x.fillStyle = '#4a321b'; x.fillRect(wx + (side < 0 ? WT - 9 : 0), wallTop, 9, wallBot - wallTop);                        // one cel-shade band
+    const dx = side < 0 ? wx - 4 : XR - 4, dw = side < 0 ? (L + 4) - (wx - 4) : (wx + WT + 4) - (XR - 4);                    // the doorway: through the boards and the ink shell
+    x.fillStyle = '#241509'; x.fillRect(dx, doorTop, dw, doorH + 2); x.lineWidth = 7; x.strokeStyle = INK; x.beginPath(); x.moveTo(dx, doorTop + doorH); x.lineTo(dx, doorTop); x.lineTo(dx + dw, doorTop); x.lineTo(dx + dw, doorTop + doorH); x.stroke();
+    x.fillStyle = 'rgba(255,217,160,.13)'; x.beginPath(); const ox = side < 0 ? dx : dx + dw; x.moveTo(ox, doorTop + 10); x.lineTo(ox + side * 230, Y[1] + RH + 6); x.lineTo(ox, Y[1] + RH + 6); x.closePath(); x.fill(); }   // his light on the ground outside
+  x.fillStyle = '#16211a'; x.fillRect(XR + G + WT - 6, Y[2] - 30, HW, 30);                                                   // the yard, level with the street
+  for (let i = 0; i < 5; i++) { const gx = XR + 120 + i * 62 + rnd(i, 9) * 30; x.strokeStyle = '#2b4a33'; x.lineWidth = 5; for (const k of [-1, 0, 1]) { x.beginPath(); x.moveTo(gx, Y[2] - 30); x.lineTo(gx + k * 9, Y[2] - 52 - rnd(i, k + 4) * 14); x.stroke(); } }
+  // the stairs up from the kitchen, and the ladders (cave; attic)
+  x.save(); x.lineWidth = 7; x.strokeStyle = INK; x.fillStyle = '#8a5a2c'; const sx0 = X[0] + CW[0] - 250, sx1 = X[0] + CW[0] - 20, sy0 = Y[1] + RH, sy1 = Y[1] - G; x.beginPath(); x.moveTo(sx0, sy0);
+  for (let i = 0; i < 9; i++) { const xa = sx0 + (sx1 - sx0) * (i / 9), xb = sx0 + (sx1 - sx0) * ((i + 1) / 9), yb = sy0 + (sy1 - sy0) * ((i + 1) / 9); x.lineTo(xa, yb); x.lineTo(xb, yb); } x.lineTo(sx1, sy0); x.closePath(); x.fill(); x.stroke(); x.restore();
+  x.lineWidth = 8; x.strokeStyle = INK;
+  for (const [lx, ya, yb] of [[X[1] + 150, Y[0] - G - 60, Y[0] + RH - 30]]) { /* (one ladder: Confidently's room up to the attic) */ for (const dx of [0, 46]) { x.beginPath(); x.moveTo(lx + dx, ya); x.lineTo(lx + dx, yb); x.stroke(); } for (let yy = ya + 24; yy < yb; yy += 40) { x.beginPath(); x.moveTo(lx, yy); x.lineTo(lx + 46, yy); x.stroke(); } }
+  const g = hc.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
+  // THE 404 (Chikin, Nov 12 night: "make the background of the exterior the 404" / "the 404 is binary rain" / "canon 404, not a number 404"):
+  // this canvas is left clear above the ground, and the rain falls on the canvas behind it (#sky, below).
+  g.clearRect(0, 0, W, H);
+  g.imageSmoothingQuality = 'high'; g.drawImage(big, OX, OY, HW * S, HH * S);
+  if (OY > 0) { g.fillStyle = '#1d1309'; g.fillRect(0, OY + HH * S - 2, W, H); }
+  if (OX > 0) { for (const [a, b] of [[0, OX + 2], [OX + HW * S - 2, W]]) { g.fillStyle = '#1d1309'; g.fillRect(a, OY + (Y[2] - 8) * S, b - a, H); } }
+}
+function cave(x, X0, Y0, Wd, Ht) { x.save(); x.beginPath(); x.rect(X0, Y0, Wd, Ht); x.clip(); x.fillStyle = '#2b1a0d'; x.fillRect(X0, Y0, Wd, Ht);
+  for (let i = 0; i < 46; i++) { x.beginPath(); x.ellipse(X0 + rnd(i, 1) * Wd, Y0 + rnd(i, 2) * Ht, 14 + rnd(i, 3) * 26, 9 + rnd(i, 4) * 14, rnd(i, 5), 0, 7); x.fillStyle = rnd(i, 6) > 0.5 ? '#3a2412' : '#1f1208'; x.fill(); }
+  x.fillStyle = 'rgba(255,207,138,.16)'; x.beginPath(); x.moveTo(X0 + Wd * .5 - 30, Y0); x.lineTo(X0 + Wd * .5 + 30, Y0); x.lineTo(X0 + Wd * .5 + 230, Y0 + Ht); x.lineTo(X0 + Wd * .5 - 230, Y0 + Ht); x.fill();
+  x.lineWidth = 7; x.strokeStyle = INK; x.fillStyle = '#7a4a22'; x.beginPath(); x.roundRect(X0 + Wd * .22, Y0 + Ht * .52, Wd * .34, Ht * .3, 22); x.fill(); x.stroke();
+  x.fillStyle = '#93602f'; x.beginPath(); x.roundRect(X0 + Wd * .24, Y0 + Ht * .66, Wd * .3, Ht * .14, 14); x.fill(); x.stroke();
+  x.fillStyle = '#20262b'; x.beginPath(); x.roundRect(X0 + Wd * .68, Y0 + Ht * .5, Wd * .17, Ht * .26, 12); x.fill(); x.stroke(); x.fillStyle = '#9fd6c8'; x.beginPath(); x.roundRect(X0 + Wd * .7, Y0 + Ht * .54, Wd * .13, Ht * .16, 8); x.fill(); x.stroke();
+  x.fillStyle = '#3a2412'; x.fillRect(X0 + Wd * .7, Y0 + Ht * .76, Wd * .13, Ht * .1); x.strokeRect(X0 + Wd * .7, Y0 + Ht * .76, Wd * .13, Ht * .1); x.restore(); }
+
+// ---------- the 404 behind the house: his binary rain (the word "potato " in bits, falling), stepped like the rest of him ----------
+const sky = document.getElementById('sky'), BITS = 'potato '.split('').map(c => ('0000000' + c.charCodeAt(0).toString(2)).slice(-8)).join(''); let drops = [], skyT = 0;
+function skySize() { sky.width = Math.round(W * DPR); sky.height = Math.round(H * DPR); const g = sky.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0); g.fillStyle = '#030604'; g.fillRect(0, 0, W, H);
+  const cols = Math.ceil(W / 18); drops = Array.from({ length: cols }, (_, i) => -rnd(i, 7) * 40);
+  if (REDUCED) { g.font = '400 15px "Major Mono Display", ui-monospace, Menlo, monospace'; for (let c = 0; c < cols; c++) for (let j = 1; j * 18 < H; j++) if ((c * 5 + j * 3) % 4 === 0) { g.fillStyle = 'rgba(77,255,154,' + (0.10 + 0.25 * rnd(c, j)) + ')'; g.fillText(BITS[(c * 7 + j) % BITS.length], c * 18 + 3, j * 18); } } }
+function rain(now) { requestAnimationFrame(rain); if (REDUCED || frame || now - skyT < 83) return; skyT = now; const g = sky.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
+  g.fillStyle = 'rgba(3,6,4,.16)'; g.fillRect(0, 0, W, H); g.font = '400 15px "Major Mono Display", ui-monospace, Menlo, monospace';
+  for (let i = 0; i < drops.length; i++) { const y = drops[i] * 18; g.fillStyle = (i * 7 + (drops[i] | 0)) % 11 === 0 ? '#b4ffd2' : 'rgba(77,255,154,.55)'; g.fillText(BITS[(i * 3 + (drops[i] | 0) + 800) % BITS.length], i * 18 + 3, y);
+    drops[i] = y > H && Math.random() > 0.94 ? -Math.random() * 8 : drops[i] + 1; } }
+requestAnimationFrame(rain);
+function fit() { W = innerWidth; H = innerHeight; DPR = Math.min(2, devicePixelRatio || 1);
+  // a tall phone shows the house body edge to edge; a wide screen shows the street and the sky too
+  const wide = innerWidth > innerHeight * 1.15, MARG = wide ? 560 : 230, bodyW = XR - L + MARG, bodyH = (Y[2] + RH + 40) - (T - 360); S = Math.min(W / bodyW, H / bodyH); S = Math.min(S, Math.max(W / HW, H / HH) * 1.0 || S);
+  OX = (W - bodyW * S) / 2 - (L - MARG / 2) * S; OY = (H - bodyH * S) / 2 - (T - 360) * S;
+  for (const c of [hc, lc]) { c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); } skySize(); paintHouse(); lit = null; lights(); }
+
+// ---------- the lights: the room he is in (or the one about to open) is bright; the rest wait ----------
+let lit = undefined, armed = null, armT = 0, here = null;
+function lights() { const key = (armed ? 'a' + armed.id + Math.floor((performance.now() - armT) / 90) : 'h' + (here ? here.id : '')); if (key === lit) return; lit = key;
+  const g = lc.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
+  for (const r of ROOMS) { const [x0, y0] = toScreen(r.x, r.y), w = r.w * S, h = r.h * S; const on = r === armed || (r === here && !armed);
+    if (!on) { g.fillStyle = 'rgba(3,6,4,.42)'; g.fillRect(x0, y0, w, h); } }
+  if (armed) { const [x0, y0] = toScreen(armed.x, armed.y), w = armed.w * S, h = armed.h * S, k = Math.min(1, (performance.now() - armT) / 1300), step = Math.floor(k * 8) / 8;
+    g.lineWidth = Math.max(3, 9 * S * 2); g.strokeStyle = '#120a05'; g.strokeRect(x0, y0, w, h); g.lineWidth = Math.max(2, 5 * S * 2); g.strokeStyle = '#2bff88'; g.setLineDash([w * step * 2 + h * step * 2, 99999]); g.strokeRect(x0, y0, w, h); g.setLineDash([]); } }
+
+// ---------- opening a room ----------
+const roomEl = document.getElementById('room'), back = document.getElementById('back'); let frame = null;
+function arm(r) { if (!r || !r.go || frame) { armed = null; return; } if (armed === r) return; armed = r; armT = performance.now(); }
+function open(r) { armed = null; try { sessionStorage.setItem('potato-key-pass', String(Date.now())); } catch (e) {}
+  frame = document.createElement('iframe'); frame.src = r.go; frame.allow = 'autoplay; fullscreen; gamepad'; frame.title = 'a room in his house'; roomEl.append(frame); roomEl.classList.add('on'); frame.focus(); }
+function close() { if (!frame) return; frame.remove(); frame = null; roomEl.classList.remove('on'); lit = null; }
+back.addEventListener('click', close); addEventListener('message', e => { if (e.data && e.data.potato === 'exit') close(); }); addEventListener('keydown', e => { if (e.code === 'Escape') close(); });
+
+// ---------- him: the living model, standing on the house's floors ----------
+let mine = false, pet = null, slot = 0, wasHeld = false, dropped = false;
+window.petHost = { load: () => ({ muted: true, px: Math.max(22, Math.min(150, 128 * S)) }), hit: v => { mine = v; } };
+// His engine only treats ONE floor as ground (its ledges are not finished), so the house hands it the storey he is over: the floor under his
+// feet is the floor, and the walls are that storey's walls. Lift him and let go over another storey and that one becomes the ground.
+const STOREYS = [ { y: AY + AH - 8, x0: AX, x1: AX + AW }, { y: Y[0] + RH - FEET, x0: L, x1: XR }, { y: Y[1] + RH - FEET, x0: -1e5, x1: 1e5 } ];   // (the ground runs out past both walls: he can be outside)
+let storey = STOREYS[2];
+function floors() { if (!pet) return; const PX = pet.PX, bh = hy => (H - (OY + hy * S)) / PX, bx = hx => (OX + hx * S) / PX;
+  pet.living.room.set({ left: Math.max(0, bx(storey.x0)), right: Math.min(W / PX, bx(storey.x1)), floor: bh(storey.y), ceiling: bh(storey === STOREYS[2] ? -2000 : AY + 6), ledges: [] }); }
+function whereIsHe() { if (!pet) return null; const b = pet.living.body, PX = pet.PX, sx = b.x[slot] * PX, [hx, hy] = toHouse(sx, H - b.y[slot] * PX), feet = toHouse(sx, H - (b.y[slot] - 0.53) * PX)[1]; return { b, hx, hy, feet, room: roomAt(hx, hy) }; }
+function tick() { requestAnimationFrame(tick); if (frame) return;
+  const w = whereIsHe();
+  if (w) { const held = w.b.mode[slot] === 1, air = w.b.mode[slot] === 2;
+    if (wasHeld && !held) dropped = true;
+    if (held) { armed = null; dropped = false; }
+    // which storey is under him: while he is HELD, the first floor at or below his feet (between that storey's walls; soil is not a storey).
+    // In the air he can only gain a floor, never lose one: thrown up past a floor and falling, the floor he clears catches him. (He squashes on
+    // landing, so "a little under the line" must never count as having fallen through.)
+    const inX = f => w.hx > f.x0 - 8 && w.hx < f.x1 + 8;
+    if (held) { const under = STOREYS.find(f => f.y >= w.feet - 16 && inX(f)) || STOREYS[2]; if (under !== storey) { storey = under; floors(); } }
+    else if (air && w.b.vy[slot] < 0) { const under = STOREYS.find(f => f.y >= w.feet + 6 && inX(f)); if (under && under.y < storey.y) { storey = under; floors(); } }
+    if (dropped && w.b.mode[slot] === 0) { dropped = false; if (w.room && w.room.go) arm(w.room); }
+    here = w.room; wasHeld = held; }
+  if (armed && performance.now() - armT > 1500) open(armed);
+  lights(); }
+// a tap on a room (not on him) opens it too: one thumb is enough
+let down = null;
+addEventListener('pointerdown', e => { if (frame || e.target === back) return; down = mine ? null : { x: e.clientX, y: e.clientY, t: performance.now() }; });
+addEventListener('pointerup', e => { if (frame || !down) return; const d = down; down = null; if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > 14 || performance.now() - d.t > 600) return;
+  const r = roomAt(...toHouse(e.clientX, e.clientY)); if (r && r.go) { if (armed === r) open(r); else arm(r); } else armed = null; });
+addEventListener('touchmove', e => { if (!frame) e.preventDefault(); }, { passive: false });
+
+fit(); requestAnimationFrame(tick);
+let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { fit(); if (pet && Math.abs(Math.max(22, Math.min(150, 128 * S)) - pet.PX) > 6) location.reload(); else floors(); }, 250); });   // (his size is set when he starts: a big change of screen starts him again)
+if (!REDUCED) import('../living/lm/engine/host-pet.mjs').then(m => { const keep = [document.documentElement.style.cssText, document.body.style.cssText]; return m.startPet().then(p => { document.documentElement.style.cssText = keep[0]; document.body.style.cssText = keep[1]; return p || window.pet; }); })
+  .then(p => { pet = p; slot = pet.living.potatoes[0].slot; floors(); const b = pet.living.body, PX = pet.PX;   // he starts in the kitchen
+    b.x[slot] = (OX + (X[1] + CW[1] * .4) * S) / PX; b.y[slot] = (H - (OY + (Y[1] + RH - FEET) * S)) / PX + 0.6; b.vx[slot] = 0; b.vy[slot] = 0; window.__houseUp = true; })
+  .catch(e => { window.__houseError = String(e && e.stack || e); console.error(e); });
+window.__house = { ROOMS, toScreen, toHouse, get pet() { return pet; }, arm, open, close };
+</script></body></html>

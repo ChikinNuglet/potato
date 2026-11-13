@@ -34,13 +34,20 @@
 //   243.6       The empty desk at dawn. Mom types "please", a letter a beat. The newspaper: LOCAL BOY, KEVIN, MISSING. FAMILY SAYS
 //               A.I. AGENT IS RESPONSIBLE. Black. The router blinks purple once (he is still out there).
 //
+// THE REBUILD (Nov 12, Quality Control's plan built by team Dry Stamp; switches: REBUILD in ci-factory.mjs; report:
+// levels/confidently-incorrect/REBUILD-REPORT.md). What the beat sheet above now means where the switches are on:
+//   13.4 → 41.2   the lesson, one move at a time: hop · step up onto a pallet · the belt stalls, Space · duck · the first vat.
+//   147.82        HE'S: Kevin drops straight down out of the monitor into an open crate waiting AHEAD of Potato on the far belt;
+//                 on DATA the lid shuts and his own sign-off slip is its label. It is never behind him, attached to him or opened.
+//   233.56        the one true thing is the only blank thing: no label, and it is the one jam Space does not clear.
+//
 // STAGE 1 (VIDEO in ci-factory.mjs): the whole song plays by itself (RUN.video). Floors + launches + chutes only, he can't die,
 // and onStep plays every press of the course itself, on the word, so the video shows what a clean run looks like.
 // STAGE 2 (VIDEO false): the course (COURSE) is laid on as real hazards and the player drives it (built Nov 2).
 import { parseWords as kitParse } from './kit.mjs';
 import { story, ciView } from './story-confidently-incorrect.mjs';
 import { makeCourse } from '../core.mjs';
-import { VIDEO, P, END, PREROLL, FLOORS, LEDGES, LAUNCHES, CHUTES, COURSE, UP_KINDS, SECTIONS, BOOSTS, RETRY, CUTS, KEYTICKS, FACES, LEDGER, GRAB, COSTUME_AT, PLACE, HOLES, STACK_H, STACK_AIR, STACK_MID, SUMMIT } from './ci-factory.mjs';
+import { VIDEO, P, END, PREROLL, FLOORS, LEDGES, LAUNCHES, CHUTES, COURSE, UP_KINDS, SECTIONS, BOOSTS, RETRY, CUTS, KEYTICKS, FACES, LEDGER, GRAB, COSTUME_AT, PLACE, HOLES, STACK_H, STACK_AIR, STACK_MID, SUMMIT, REBUILD } from './ci-factory.mjs';
 export { VIDEO };
 export const meta = { id: 'confidently-incorrect', n: 3, title: 'Confidently Incorrect', place: 'the fact factory', song: 'songs/confidently-incorrect.mp3',
   map: 'songs/confidently-incorrect.map.json', words: 'words/confidently-incorrect.json', viz: 'songs/confidently-incorrect.viz.json', power: null };
@@ -66,8 +73,8 @@ function onStep(s, inp, t, C) {
   for (const [lt, bl, how, face] of LEDGER) if (cross(lt)) { const [sfx, k, arg] = SFXK[how] || SFXK.glitch;
     s.blink = Math.max(s.blink, bl); s.blinkFrom = { x: s.x, y: s.y }; glitchFx(s, t, k, sfx, arg); if (face) s.react = { name: face, dur: 1.0, at: t }; }
   // his launches: the pad's shipment carries him up a floor (on the player's ↑ in the window; in the video, on the word)
-  for (const [lt, y0, y1, air] of LAUNCHES) {
-    const go = VIDEO ? cross(lt) && s.ground : s.jumpedAt === t && Math.abs(t - lt) <= 0.2 && s.jumpY != null && Math.abs(s.jumpY - y0) < 0.2;
+  for (const [lt, y0, y1, air, win] of LAUNCHES) {
+    const go = VIDEO ? cross(lt) && s.ground : s.jumpedAt === t && Math.abs(t - lt) <= (win ?? 0.2) && s.jumpY != null && Math.abs(s.jumpY - y0) < 0.2;
     if (go) { s.launchG = 8 * LAUNCH_H / (air * air); s.vy = 4 * LAUNCH_H / air; s.ground = false; s.on = null; s.launchAt = t; s.jumpedAt = t; s.airJumped = false; s.airUsed = 0;
       glitchFx(s, t, 0.3, 'tubeWhoosh'); } }
   // STAGE 2 (§3.5): a vat is a death 3 below the floor he left (the camera can't follow him down off an upper floor); the
@@ -91,7 +98,8 @@ function onStep(s, inp, t, C) {
   if (s.grabAt == null) { if (VIDEO ? t >= GRAB : (t > GRAB + 0.3 || (s.glitchAt != null && s.glitchAt > GRAB - 0.45 && s.glitchAt < GRAB + 0.35))) s.grabAt = VIDEO || t > GRAB + 0.3 ? GRAB : s.glitchAt; }
   // who is Kevin? he turns to the monitor; after Mom's first message he glances back at Kevin's crate after every jam
   s.facing = t >= 145.4 && t < 147.82 ? 0.95 : null;
-  if (t > 171.0) for (const r of COURSE) if (r[1] === 'wall' && t > r[0] + 0.25 && t < r[0] + 0.85) s.facing = -0.85;
+  if (t > 171.0 && !REBUILD.kevinAhead) for (const r of COURSE)   // (REBUILD: the crate is ahead of him now, so there is no turn back; the silent 'oh' stays)
+    if (r[1] === 'wall' && t > r[0] + 0.25 && t < r[0] + 0.85) s.facing = -0.85;
   if (cross(230.49)) s.react = { name: 'joy', dur: 1.6, at: t };
   // THE VIDEO plays the course's presses itself, on the word (stage 1: nothing to hit, so it shows a clean run)
   if (VIDEO) for (const r of COURSE) { const [pt, kind, , what, hold] = r; if (!cross(pt)) continue;
@@ -113,7 +121,8 @@ const EAGLES = [105.48, 106.19, 106.90], EAGLE_Y = 5.35;
 // (tp + duckFor/2) · gate: the middle of the glitch (tp + 0.25; glitchFor 0.5). Vats are carved from the floors; the chains
 // (loading wheels, paper bridge, fake belt, bots) put one piece under each landing.
 const MID = { low: P / 2, hurdle: P / 2, high: DUCKF / 2, wall: GLITCHF / 2, stack: STACK_MID };
-const W_OF = { low: 0.6, hurdle: 0.6, high: 0.95, wall: 0.25, stack: 0.6 };   // (stack: the rework's two-crate pile, ↑ then ↑ in the air)
+const CRATE_W = REBUILD.bigCrates ? 0.9 : 0.6, CRATE_H = REBUILD.bigCrates ? 0.72 : 0.55;   // REBUILD: the crate at body size (he is 0.8 x 1.25)
+const W_OF = { low: CRATE_W, hurdle: CRATE_W, high: 0.95, wall: 0.25, stack: 0.6 };   // (stack: the rework's two-crate pile, ↑ then ↑ in the air)
 export const AIRLESS = [95.5, 97.1];                              // C36: no air jump over the professor's pit (only the invented source gets you over)
 function stage2(objs, map) {
   const K = makeCourse({ speed: 10.5, sections: SECTIONS, boosts: BOOSTS.map(({ t0, t1, k }) => ({ t0, t1, k })), objs: [], end: END, outro: false }, map), X = K.X;
@@ -128,7 +137,7 @@ function stage2(objs, map) {
     if (last && last.kind === r[1] && last.what === r[3] && r[0] - last.ps[last.ps.length - 1] < 1.0) last.ps.push(r[0]); else chains.push({ kind: r[1], what: r[3], ps: [r[0]] }); });
   for (const ch of chains) { const ps = ch.ps; carve(ps[0] + 0.10, ps[ps.length - 1] + 0.45, ch.what);
     for (let k = 0; k + 1 < ps.length; k++) tiles.push({ t0: ps[k] + 0.45, t1: ps[k + 1] + 0.18, kind: ch.kind, what: ch.what }); }
-  for (const r of COURSE) { if (r[1] === 'hole') carve(r[0] + 0.08, r[0] + 0.35, r[3]); if (r[1] === 'dbl') carve(91.80, 92.55, 'vat'); }
+  for (const r of COURSE) { if (r[1] === 'hole') carve(r[0] + 0.08, r[0] + 0.08 + (r[4] ?? 0.27), r[3]); if (r[1] === 'dbl') carve(91.80, 92.55, 'vat'); }
   carve(96.20, 97.05, 'professor');                                 // C36: the pit the invented source fills
   carve(105.30, 107.40, 'eagles');                                  // C42: the long vat the eagles carry him over
   for (const [a, b, y] of ground) objs.push({ k: 'block', t: a, tEnd: b, y, h: 0.6 });
@@ -140,13 +149,16 @@ function stage2(objs, map) {
   for (let i = 0; i + 1 < FLOORS.length; i++) { const [, b, y] = FLOORS[i], [a2, , y2] = FLOORS[i + 1]; if (a2 > b + 0.01 && y2 >= y) HOLES.push({ x0: X(b), x1: X(a2), gy: y, what: 'launch', t0: b, t1: a2 }); }
   // the hazards
   PLACE.length = 0;
+  // (REBUILD: a crate pressed under 0.72 s after another ↑ keeps the old forgiving middle: he may still be in the air when an early
+  //  press comes, and at full size that left 0.06 to 0.09 s of room on the early side of four crates: 113.89, 142.54, 162.07, 197.06. Measured, not guessed.)
+  const ups = COURSE.filter(r => UP_KINDS.has(r[1])).map(r => r[0]), soon = tp => ups.some(u => u < tp && tp - u < 0.72) || BOOSTS.some(b => tp + P > b.t0 && tp < b.t1);   // (…or one whose hop comes down inside a crawl: 113.89)
   COURSE.forEach((r, i) => { const [tp, kind0, label, what, hold] = r, kind = kind0 === 'hurdle' ? 'low' : kind0;
     if (!MID[kind]) return;
     const gy = floorAt(tp + MID[kind]); let x0 = X(tp + MID[kind]) - W_OF[kind] / 2, x1 = x0 + W_OF[kind];
     if (kind === 'high' && hold) { const e = 0.14; x0 = X(tp + e) + 0.28 - 0.2 + 0.0; x1 = X(tp + DUCKF - e) - 0.28 + 0.2; }   // C50 HOB-GOB-LIN: one long head, one duck (±0.14 s; duckFor 0.72)
     PLACE[i] = { x0, x1, gy };
     const t = Xinv(x0), w = x1 - x0, text = label || '';
-    if (kind === 'low') objs.push({ k: 'word', t, wk: 'low', w, y0: gy, y1: gy + 0.55, text, obj: 'grid' });
+    if (kind === 'low') objs.push({ k: 'word', t, wk: 'low', w, y0: gy, y1: gy + CRATE_H, text, obj: 'grid', long: REBUILD.bigCrates && REBUILD.solidCrates && !soon(tp) });   // (long: solid at its real size; without it core.mjs only kills in a 0.48 x 0.48 middle, so a bigger crate would play exactly like the small one)
     if (kind === 'stack') objs.push({ k: 'word', t, wk: 'low', w, y0: gy, y1: gy + STACK_H, text, obj: 'grid', long: true });   // (long: the whole pile is solid, no fair-hitbox trim)
     if (kind === 'high') objs.push({ k: 'word', t, wk: 'high', w, y0: gy + 0.9, y1: gy + 2.6, text, obj: 'grid', long: !!hold });
     if (kind === 'wall') objs.push({ k: 'word', t, wk: 'wall', w, y0: gy, y1: gy + 3.0, text, obj: 'grid' }); });
@@ -169,7 +181,7 @@ export function build(words, map) {
     fakeOnBeat: true, dropPhysical: true, noV: true, softCuts: true, outro: false, preroll: PREROLL, keyTicks: KEYTICKS,
     invincible: VIDEO, costume: 'construction-crew', costumeAt: COSTUME_AT,   // E6 (main.mjs): bare until the drop, one flick of the hard hat, then pinned
     airJumpsAt: t => (t > AIRLESS[0] && t < AIRLESS[1] ? 0 : 1),
-    retryAt: t => { let r = RETRY[0]; for (const a of RETRY) if (a <= t - 1.5) r = a; return r; },
+    retryAt: t => { let r = RETRY[0]; for (const a of RETRY) if (a <= t - (REBUILD.retry ? 1.0 : 1.5)) r = a; return r; },
     deathText: () => '',
     story, modeView: ciView, onStep, faces: FACES,
     hideAt: t => t >= 243.4,

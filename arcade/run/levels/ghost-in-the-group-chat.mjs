@@ -119,6 +119,77 @@ export { parseWords };
 export const meta = { id: 'ghost-in-the-group-chat', n: 6, title: 'Ghost in the Group Chat', place: 'the group chat', song: 'songs/ghost-in-the-group-chat.mp3',
   map: 'songs/ghost-in-the-group-chat.map.json', words: 'words/ghost-in-the-group-chat.tsv', viz: 'songs/ghost-in-the-group-chat.viz.json' };   // (no download any more: Space is the only button)
 export const BLOCK = { t0: 36.95, slam: 36.30, wallT: 37.96 };
+
+// ---- THE CARRY-OVER (Nov 12 night). Chikin, Nov 11: "more potato having to dodge what is coming from the right" · "the chat moves by
+// too fast" · "the picture of 'biscuit' needs to be put in". Team Walkies planned those three notes and the builder Saw It Run built
+// and measured them, on the many-phones staircase (levels/ghost-stairs/, REBUILD-REPORT.md). Chikin, Nov 12 (D-20261112-29): "we said
+// we were going scrolling down one phone, that was the best way". So this is their work carried onto THIS level, the one phone.
+// The game here is untouched (D-20261103-21: "the gameplay for ghost stays"): every part is ONE SWITCH, and with all three off the
+// level builds and plays exactly as it did (proved in levels/ghost-in-the-group-chat/REBUILD-REPORT.md).
+// To try one off without an edit: the page takes ?ghost_off=chat,right,biscuit (or ?ghost_off=all), the tools take GHOST_OFF=chat,right.
+const RB_Q = (k) => { try { if (typeof process !== 'undefined' && process.env && process.env['GHOST_' + k.toUpperCase()]) return process.env['GHOST_' + k.toUpperCase()].split(',');
+  if (typeof location !== 'undefined') return (new URLSearchParams(location.search).get('ghost_' + k) || '').split(','); } catch (e) {} return []; };
+const RB_OFF = RB_Q('off'), sw = (name, dflt = true) => RB_OFF.includes('all') || RB_OFF.includes(name) ? false : dflt;
+export const REBUILD = {
+  chat: sw('chat'),         // THE CHAT CAN BE READ: the lines in CUT below come out, and no ordinary line lands closer than one beat to the one before it (it was a quarter beat)
+  right: sw('right'),       // MORE TO DODGE FROM THE RIGHT: the phone's jolts also knock JAMES's own lines loose (JOLTS_RIGHT below). His bubbles sit on the right, so they come at him from the right
+  biscuit: sw('biscuit'),   // BISCUIT'S PICTURE IS IN: the three dog photos are Chikin's own pictures (PICS below); THE picture fills in from the top, ears first, and Potato's glitch never touches it
+};
+// (chat) the lines that come out, by their time in THREAD and their words. All are echoes or second answers: no moment of Potato's,
+// no line a tapback, a jolt or the BLOCKED banner needs, nothing sung. One edit puts any of them back: delete its row here.
+export const CUT = [
+  [11.29, "quick q"], [11.91, "hit me"], [16.2, "sorry, typo"], [19.27, "james."], [21.11, "don't bring carol"], [26.02, "we both are"], [26.64, "ok you're forgiven"],
+  [29.71, "TIRED. sorry. long day"],
+  [33.08, "okay what is going on with you tonight"],   // (this one makes the room Biscuit's picture is read in)
+  [37.07, "please don't"], [41.36, "ok wait"], [44.43, "not the wifi!!"], [46.27, "i'm going back in"], [46.89, "wait don't go"], [49.96, "there WHERE"],
+  [54.25, "you have a car"], [56.71, "no. stay there"], [58.55, "no it's not a language"], [61.0, "can i call you?"], [62.84, "what does that mean"],
+  [67.14, "i'm so sorry ❤"], [70.52, "don't you dare"], [71.83, "i didn't rename it!"], [75.73, "no no no. yes"],
+  [76.96, "i want saturday!! i want you"], [80.03, "you there?"], [81.87, "too late"], [84.94, "i love you. it's us"], [86.78, "tell jess i'm sorry"], [89.23, "just me, i swear. look"],
+  [94.14, "i'm not typing!!"], [97.83, "there's no group chat"], [98.44, "there better not be"], [103.35, "i'll fix it!!"],
+  [106.11, "why is my mum asking if we broke up"], [109.49, "none of that was me"], [111.33, "i think so??"],
+];
+// (chat) the lines that move, [old time, words, new time]: each one was landing on top of the line before it (or, the two Biscuit ones, is
+// pulled up into the room the cut left). None is one of Potato's moments and none sits on a sung word.
+export const MOVE = [
+  [12.52, "still on for luca's sat?", 11.91],   // (into the room "quick q" and "hit me" left: the first text he can rewrite then has 1.8 s on screen, not 1.2)
+  [18.66, "that's not what i typed!!", 19.19],
+  [23.57, "how was your shift?", 24.09], [24.18, "long. how's biscuit", 24.70], [24.8, "missing you", 25.31], [25.41, "aw 🥺", 25.93],
+  [33.39, "it's biscuit! i promise", 32.66], [34.0, "that is a POTATO james", 33.27],
+  [36.6, "it's me, james!!", 36.95], [43.82, "my wifi??", 44.29], [56.09, "i know!! getting my keys", 56.84], [60.23, "you're kind of scaring me", 60.52],
+  [75.27, "MAYBE?? i booked in march", 75.52], [87.39, "james i'm scared", 86.85], [102.89, "CAROL IS TYPING", 103.38], [112.1, "omg. carol was right", 112.56],
+];
+// (right) the phone knocks JAMES's own lines loose too. Same rules as JOLTS (a spark on the frame a beat early, the bubble shakes, it is
+// thrown at where he stood; a knock costs his bubble, never the run; glitch and it passes through him). side 'J' = one of James's own
+// lines that Potato did not rewrite, to the right of him: the spark builds on the RIGHT edge of the glass. James can't see Potato: it is
+// his own panic coming loose, not aimed by him. Each t is a sung word Chikin tapped (words/ghost-in-the-group-chat.tsv, Oct 10).
+// Which words get one is this pass's choice, not a Tapper story mark: ESTIMATED as story moments, for Chikin to move.
+export const JOLTS_RIGHT = [
+  { t: 20.06, lead: 2, kind: 'throw', side: 'J', pick: 'above', word: 'design' },     // "into a whole DESIGN": the first one from the right, in the teaching verse: it can only make him flinch
+  { t: 44.86, lead: 1.5, kind: 'throw', side: 'J', pick: 'above', word: 'trace' },    // "with a grin i don't TRACE"
+  { t: 61.40, lead: 1.5, kind: 'throw', side: 'J', pick: 'above', word: 'real' },     // "they ask are you REAL?": his "i'm fine!!! really", flung
+  { t: 84.54, lead: 1.5, kind: 'throw', side: 'J', pick: 'above', word: 'boys' },     // "i'm one of the BOYS": his "please don't!", flung
+  { t: 103.62, lead: 1.5, kind: 'throw', side: 'J', pick: 'above', word: 'trace' },   // "with a grin i don't TRACE" (again): his "STOP ADDING PEOPLE", flung
+];
+// (biscuit) Chikin's own pictures of Biscuit (levels/ghost-runner/biscuit/, logged in ASSET-CREDITS.md; never the ones in maybe/ or not-him/).
+// key = the photo it stands in for · crop = [x, y, w, h] of the picture (0-1) · load = seconds it takes to fill in, top first (ears first) ·
+// keep = Potato's glitch never changes it (the other two still turn into the drawn potato pictures they always did).
+// THE picture is first (30.86, the sung "ghost"), cropped as Saw It Run cropped it: his face as tall as Potato, his ears at the top.
+export const PICS = {
+  'dog-mat': { src: 'levels/ghost-runner/biscuit/biscuit-04-WHINY-the-one.webp', crop: [0.3345, 0.17, 0.351, 0.484], load: 0.3, keep: true },
+  'dog-face': { src: 'levels/ghost-runner/biscuit/biscuit-07-happy.webp', crop: [0.31, 0.16, 0.39, 0.52] },
+  'dog-slipper': { src: 'levels/ghost-runner/biscuit/biscuit-05-ice-cream.webp', crop: [0.29, 0.1, 0.42, 0.56] },
+};
+export const ALT_REBUILD = { '30.86': "my baby 😭" };   // (biscuit: there is no slipper in Chikin's pictures. The old line: "my baby 😭 the SLIPPER")
+// (chat) one of the old jolts gets half a beat more warning: with fewer lines above him the "no, no" throw (109.19) can find its bubble
+// below him, and then it only drops, on a throw's one beat of warning (0.76 s, under the mode's own 1.0 s rule; fair.mjs caught it)
+export const LEAD_REBUILD = { 109.19: 1.5 };
+// the thread this run is built from: THREAD as written, or (chat) with CUT out and MOVE applied
+export function threadOf() {
+  if (!REBUILD.chat) return THREAD;
+  const has = (list, r) => list.find(c => Math.abs(c[0] - r.t) < 1e-6 && c[1] === r.x);
+  for (const c of [...CUT, ...MOVE]) if (!THREAD.some(r => Math.abs(c[0] - r.t) < 1e-6 && c[1] === r.x)) throw new Error('ghost: no line "' + c[1] + '" at ' + c[0] + ' in THREAD');
+  return THREAD.filter(r => !has(CUT, r)).map(r => { const m = has(MOVE, r); return m ? { ...r, t: m[2] } : r; });
+}
 // the phone's jolts (Nov 3; 9 since the fix pass): t = the sung word (snapped to the real grid's half beat) · lead = beats of warning (a drop: 1.5+) · kind: drop (straight
 // down the left) | throw (at where he was at the warning) · pick: 'above' (her nearest bubble above him) | 'row:<her text>' (that one if
 // it's in this run's thread, else 'above') · word: what's sung on it
@@ -390,14 +461,16 @@ export function build(words, map) {
     deathText: s => `the video stopped at ${Math.floor(s.t / 60)}:${String(Math.floor(s.t % 60)).padStart(2, '0')} · ${s.why || 'lost'} · potato rewrote ${s.glitched || 0} texts`,
     fair: { jolts: fairJolts },   // (fair.mjs: the phone's jolts — warning, reach, a knock never ends the run, they never decide it)
     mode, modeView, speed: 1, sections, retry: 'section', objs: [], boosts: [], outro: false, cutscenes: [], touchMode: 'tapdrag', stickPress: true,   // (a phone: drag = ← → ↑ ↓ held, the first push up / down is a hop / a drop; a tap = Space — main.mjs 'tapdrag')
-    phone: { thread: THREAD, fail: FAIL_LINES, alt: ALT,
+    phone: { thread: threadOf(), fail: FAIL_LINES, alt: REBUILD.biscuit ? { ...ALT, ...ALT_REBUILD } : ALT,
+      ...(REBUILD.chat ? { sep: 1 } : {}),   // (chat: beats between two ordinary arrivals; without it the mode keeps its quarter beat)
+      ...(REBUILD.biscuit ? { pics: PICS } : {}),
       open: { lit: 0.65, glitch0: 2.3, appear: 3.1, zoom0: 2.3, notify: 5.15, zoom1: 7.6, wake: 7.88, end: 7.9, wide0: 8.2, wide1: 8.85, ctl: 8.9 },   // the table (the phone upright) → in as the screen glitches → he's on it → her text comes in → in until the phone fills the screen → her notification opens into the thread → the screen grows to fill the screen → he's on her first text
       grid: { P: 0.61227, OFF: 0.21 },   // the song's real beat (its snares + hats, measured off the mp3 — music.json's snares and hats sit on 0.21 + n·0.306 all song long; map.json's 0.61372 / 0.2445 drifts ~0.3 s off by the end). Every THREAD row lands on this grid's nearest half beat (the mode's prep)
       hint0: [9.2, 12.3],   // the first sticker: ↓ drop down, stay with the newest text (then the first glitchable texts carry "SPACE before it says READ")
       grace: 23.0,   // the teaching verse: before this the header only bonks him back down (it can't lose him), and a text she reads first costs nothing
       lead: 1.3,     // James's glitchable texts come in up to this early (just after the row before): time for Sent → Delivered → Read
       block: BLOCK, depEnd: 108.0,
-      jolts: JOLTS,   // the phone glitching because he's in it (Nov 3): her bubbles knocked loose on these words ([] = off)
+      jolts: (REBUILD.right ? [...JOLTS, ...JOLTS_RIGHT].sort((a, b) => a.t - b.t) : JOLTS).map(j => REBUILD.chat && LEAD_REBUILD[j.t] ? { ...j, lead: LEAD_REBUILD[j.t] } : j),   // the phone glitching because he's in it (Nov 3): her bubbles knocked loose on these words ([] = off) · (right) and James's own, from the right
       end: { lock: 115.62, slider: 115.62, steps: [118.08, 118.69, 119.31, 119.92], see: 118.08, leap: 119.92, out: 120.05, black: 120.2 } },
     keyTicks: BUZZ,   // the phone buzzing on the table as Sheila's text lands (main.mjs plays these as low key-clicks)
     looks, glows: looks.map(l => l[0]),   // (each change starts with his purple ghost-glow round him on the phone: modes/ghost LOOKT)

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>a sealed potato</title>
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">   <!-- nothing on this page can load from another site or send anything out: no outside font, no network calls; pictures only from this same folder's host -->
+<!-- Built by tools/potatocode_room.py. A proof of concept (Chikin, Nov 12 2026: "can we encrypt thursday potato" / "as proof of concept").
+     Everything below the key slot is one locked file. The page holds no key. The locks are the browser's own (WebCrypto: PBKDF2, AES-256-GCM).
+     Nobody outside has reviewed this build, so this page never calls itself secure. -->
+<style>
+:root{--bg:#030604;--plate:#0c1f14;--plate2:#12062e;--line:#12301f;--ink:#120a05;--text:#e8f5ec;--muted:#7fa48c;--warm:#ffd9a0;--soil:#5c3a18;--green:#2bff88;--bits:#4dff9a;
+--glitch:#9a52ff;--magenta:#e03ccf;--deep:#2a0f63;--lilac:#c9a7ff;--his:"Major Mono Display",ui-monospace,monospace;--body:"Inter",system-ui,sans-serif;--split:2px 0 var(--magenta),-2px 0 var(--deep);--ring:0 0 0 2px var(--line);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--text);font:400 17px/1.55 var(--body);padding:28px max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:22px}
+h1{font:400 clamp(1.7rem,8vw,2.6rem)/1.05 var(--his);color:var(--warm);text-shadow:var(--split);margin:0}
+h2{font:400 1.2rem/1.2 var(--his);color:var(--warm);margin:0 0 10px}
+p{margin:0 0 12px}.small{font-size:.86rem;color:var(--muted)}a{color:var(--bits)}
+.plate{background:var(--plate);border:3px solid var(--ink);border-radius:9px 13px 8px 12px;box-shadow:var(--ring),4px 5px 0 2px var(--ink);padding:18px 16px}
+#door{position:relative;margin:0 auto;width:150px;height:190px;background:#101812;border:5px solid var(--ink);border-radius:14px 14px 6px 6px;box-shadow:var(--ring);overflow:hidden}
+#door::after{content:"";position:absolute;right:16px;top:52%;width:9px;height:9px;border-radius:50%;background:var(--warm)}
+#door i{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--warm);transition:height .3s steps(3)}
+#door.lit i{height:7px}
+#door.open{background:var(--soil);transform:perspective(400px) rotateY(-28deg);transform-origin:left center;transition:transform .4s steps(4)}
+form{display:grid;gap:12px}
+label{font:400 .8rem var(--his);color:var(--muted)}
+input{width:100%;font:700 1.05rem/1 var(--body);letter-spacing:.06em;color:var(--text);background:var(--bg);border:3px solid var(--ink);border-radius:8px 12px 9px 11px;padding:14px;box-shadow:var(--ring);text-transform:uppercase}
+input::placeholder{color:var(--line)}
+.key{height:56px;font:400 1.05rem/1 var(--his);color:var(--lilac);background:var(--plate2);border:3px solid var(--glitch);border-radius:9px 7px 10px 6px;box-shadow:-3px 0 0 var(--deep),3px 0 0 var(--magenta),0 5px 0 2px var(--ink);cursor:pointer;transition:transform 80ms steps(2)}
+.key:active{transform:translateY(4px)}.key[disabled]{color:var(--line);border-color:var(--line);box-shadow:var(--ring);cursor:default}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+#say{min-height:1.4em;font:400 .95rem var(--his);color:var(--bits);margin:0}
+#say.no{color:var(--magenta)}
+#room{display:none}#room.on{display:block}
+@media (prefers-reduced-motion:reduce){#door,#door i,.key{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>seAled</h1>
+  </header>
+  <div id="door" aria-hidden="true"><i></i></div>
+  <section class="plate" id="lock">
+    <p>This room is one locked file. It was locked with Potatocode, and this page does not hold the key.</p>
+    <form id="f" novalidate>
+      <label for="k">yOur key</label>
+      <input id="k" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" aria-describedby="say">
+      <button class="key" id="go" type="submit">Open</button>
+      <p id="say" role="status"></p>
+    </form>
+    <p class="small" style="margin-top:8px">Nobody has this key. It was thrown away. <a href="../../">Read how it works</a>, then try.</p>
+  </section>
+  <section class="plate" id="room" aria-live="polite"></section>
+  <p class="small">A proof of concept. The locks are standard ones built into your browser. Our build has not been reviewed by an outside expert, so we do not call it secure.</p>
+</div>
+<script>
+const ROOM={"v": 1, "rounds": 600000, "salt": "nEqrGtynAWMZeVCF2JNMaQ==", "iv": "CM9MjxZkmraegOAG", "blob": "eOZFETL1jBKxzHEUy84qnTR1eXEiaP+FEF+8azMTSk6pZVNvDNZREJ9Cb2xt3xTc5LWtIci2BmzIdTzx2pV2XqigSdQNXMQNebT4C1gTOF/scM7UxtOV0WlVQjIiEdyispCcHGWXO7hrxK1CPpQ6q+hSL7rhDwtjoqRx7UQm8frGRozU3fBxAhVhT8Q6EPTkiGLV/hRTD8ko4iH5/lu5e4ZGbGXg1pYtMBMpwV300T+QGpLYMZUO/ZGKhwxmpmCRDCm5bB44a5bT/qgBt517OUIiHIaDB1ulY/JJYjZ1WPcqcHTvVqYe8muyyd3XxdmnM8ZAl66B3grSy0mZiqfzcmVL0x0Qc3ZpbJDT5/3Q5KJynPF3TCdtA07jrlZCsQ0GPfsbJz38orITwXS0Su2PYlFzvK8JWzZ+gPf+bvZQOdUKWEu1QGyR+m+CyWGKM+k4gWSHWo6MQ2Hw75KkzQ5bhw6ied8VP375QEZtfxsMwZfB6BgPlw3JrOQGrc2h23+mMS7f6KsFvvbFpeikO1z4BxgFotKzSNbSNzmYtU+44PL/JrIvDmd6cJY0STWhAF3Dxj+I+yAJw6qmWL2h5G3fvYR2kg42XHrwkffVRGToADC18wLaK6MCo8udEfoe/yp1dkN4cTHaZ3HjtqHAkXVtlKmE7vNSR5q5h+EnZBpsNi0TfhtFT7AN0uQzGd13koqowoqPBoM6YktDKETGZn33n4d+NGvEUmx3EFB1kC0HgSxWOikHzSUz1t7m/oPJJrJOkI76NamZItRRbD6UZkla6uzK5LfKWn7ILXHcQVvBVPQrgltNAaCjCRIJPPpPkDMvw20xzdTwa1k3p3+wsaNHU31SPjgpAMHxYbfaa+3HnaWv5uJIOGX5dR/taDQjHXgZuisYghobmusvhTHqjL7m230tHVAaNeB8cYIPhPPH4lQ541JocD5gQjnyOdoYgkIYcutS4TKMrApWfNLBNU/oAzxJza82HkRH3zBaZUr5ScYcKqwbgiZd7wED4BJN/W9h6Wwim8FXx2DjXnpwFRNS7Qsrvv+cPeK8r0CWFBPTOsweIrnadhEHfixLj+SYjJYZVMaKtlGKnqEBo57iv3+RuRy1uGBDDEgsCFBhfcOGhA564ge7D0Qbor3O33/ojd7Fe43ZqbGdS7HGZdPjmOEJHIZmKutt/EnK8bFA9RuRUs0+lRe79twrIxGK/YsUGM8uQ88THdbOd8q6VS0JtQeOQ03KWURjQzZBxNfSl8brcG0R3o8z/NbZeeapVI8kfxDATrg4thBKyaskcnGAxB6flfVmLk0GD/JyDhgUAOTOwSyx/Gh9IfMohBfSlD2+gNBkeHztIrggsBtTOI8L046L6QEDDkusKTbpuzDaJLWVfLSsSrP8Px+X5WFdsuhA0DrBm35WogoDys44yKqcacbOKUVt5YPBPUYTzsvwurz8yzbj/FMdlzsklxkhBT30/YZGp0coc/Y20zPNA2Kb5mVAF5i35hpcOUvYn8Ke/tftd9TzEQxGxvAgia4fh2pwogLTVbzKHfUQIF9q0pvTAz9+jEd7go5dNOLvk7KONIDsC55lMkMwl9lEYxl3QrXqJOp0jfoTq4I611GQaDFLlg7JE0m9IJI=", "words": ["!?%~", "!?_##", "#%?!", "#//?!", "#:#?!", "#~!?", "%%/?!", "%_?!%", "//_?!", "0007?!", "007—x", "00:08:??", "03—99—", "0NE_TR1CK_l0se_ALL_TABS?!", "0k@—y", "0ne_weird_TR1CK//d0uble_RAM?!", "0x00__?", "0x0B__", "0x10_??", "0x404_FF", "0xA11CE?", "0xABAD//", "0xAC1D?!", "0xB00_7", "0xBABE~", "0xBAD_01", "0xBEEF//bzz", "0xBEEF?!", "0xC0FFEE~", "0xCAFE?!", "0xD00D?", "0xDEAD_7", "0xF00D//", "0xF00D—pffzzt", "0xFADE_?", "0xFEED%", "0—1—0—?", "101_?!", "12::x", "13?37!", "2x_09", "30_B0NUS_L1VES//damage_N0T_included", "31//31?", "3_b0ts_VIEWED_y0u//t0aster?!", "3_unr3ad_0ffers_fr0m_th3_v0id//", "404_7?!", "418?!_tzz", "42//0", "4_04_4", "6/6/?", "7/0/7?", "73%??", "7x?!—krr", "88::13", "8_8_00", "909_?!", "9x9_#", "9x9—m@yb_e", "::#@", "::?!::", ":_:#", "<404:CHILL_NOT_FOUND>", "<COMMON_SENSE_TIMEOUT>", "<DELETE_KEY_FLIRT>", "<SASS_STACK_FAULT>", ">?!<", "@#/_", "@#_y3a—h", "@_@?!", "AA_09_FF", "ADBL0CKER_requires_ADBL0CKER//", "ANT1V1RUS_bec@me_V1RUS_0xFF", "ATTITUDE_CHECKSUM?!", "AUR@_driver_c0nflict?!_upgr@de", "BR@1N_CELL//fr33_sh1pping_503", "BUY_1_CR1SIS_GET_1_FR33?!", "CL0SE_popup//0PEN_popup_418", "CONGR@TS_1000000th_hallu%cinati0n", "D0CT0RS_H@TE_TH1S_P0TAT0?!", "EAGAIN//kzzt", "EAGAIN?!", "EARN_6_FIGUR3S__compute_NOT_F0UND", "EBUSY_?", "ECONNRESET…", "EFAULT//", "EHOSTUNREACH?", "EILSEQ::", "EINVAL…", "EIO::?", "ERR:418", "E_CONFIDENCE_LEAK", "FF::00::?", "FR33_TR1AL//b@d_decisi0ns", "MOOD_DRIVER_MISSING?", "PERSONALITY_SEGFAULT?", "PREM1UM_P0TAT0_upgrade_0xBAD", "R1CH_0VERN1GHT?!_results_im@ginary", "SARCASM_RATE_LIMIT?!", "THOUGHT_PACKET_LOST", "Y0U_W0N_MORE_ACC0UNTS_404", "[404:THOUGHT_MISSING]", "[BUFFER_FULL_OF_BULLSHIT]", "[ECONNABORTED]", "[EINTR]", "[ENETDOWN]", "[ENOBUFS]", "[ENOENT]", "[ENOMEM]", "[EOVERFLOW]", "[EPIPE]", "[ETIMEDOUT]", "[E_AUDACITY_OVERFLOW]", "[E_COMEBACK_DROPPED]", "[E_DIGNITY_UNALLOCATED]", "[E_EGO_CACHE_STALE]", "[E_POTATO_NOT_RESPONDING]", "[E_REALITY_DESYNC]", "[E_SNARK_OVERRUN]", "[E_VIBES_UNVERIFIED]", "[HTTP_404]", "^^::#", "__%__", "al—loc?", "anyw@y%", "anyway—way#", "b0ot…?", "brrk-t", "brzzk", "buff%ring", "bzz_[E_SNARK_OVERRUN]", "bzzrpt", "cach_e?!", "ch@tb0t_REMEMBERS_y0u//trial_EXPIRED", "chk-krr", "chk//[EPIPE]", "cl0ud_st0rage_m1sses_y0u_503", "cl@im_PR1ZE//l0ading…l0ading", "cli%ck-Here59&to_m765_error404_local/w0m3n//.", "cycl_e//", "d0wnl0ad_c0nfidence_99%?!", "dec0d—", "f1n—e", "fine—ine#", "flus—h//", "fr33_p3rsonality_UPGR@DE_0x00", "fzzt…", "g0t_it?", "got—ot_7", "grrkzt", "h0ld—", "h0t_GPUs//n3ar_y0u?!", "h@ndsh—", "hmm_0x", "hmm_73?!", "hmm—mm//", "hold—old//", "inv0ice_0V3RDUE//imaginary_7", "krk—pt", "krrzzt", "krzz—404_?!", "kzzt?!", "l0cal_g0blins_request_L0CATI0N?!", "l0cal_s1ngles_in_y0ur_c@che", "l0ok…k", "loadi—404?", "loadi—zz", "look—ook…", "m33t_em0tional_err0r_l0gs_t0night", "m@ke_M0NEY_while_y0u_buff%r", "m@ture_alg0rithms_in_y0ur_area404", "m@yb_e", "maybe—aybe%", "merg_e#", "n0p%", "n0p%_[E_SYNC_LOST]", "nah—ah?!", "no—n—0", "okay—kay_0", "p1ng—?", "p@ckage_HELD//wr0ng_dimensi0n?!", "p@cket_0xBAD?!", "p@cket…?", "p@rsing%", "pffzzt", "prem1um_AUD@CITY//0_accountability", "prrkz", "que—ue_7", "r1gh—0x00", "r1gh—t", "recon%ct", "recov%r", "resu—me", "ret_r_y", "ret_r_y#418", "right—ight?", "rout—e?", "s0__", "s0__FF?!", "s0r—t@", "s1ngle_FIREW@LLS_n3ar_y0u//", "s_u_r%", "sarc@sm_SUBSCR1PTI0N_overdue_7", "sent3nce_w@rranty_EXPIRED404", "skrzz", "so—so_7", "sszzt", "sure—ure?", "syn—c?!", "th1nk…k", "think—ink…", "tk—zz—tk", "tzzk", "uhh_7", "uh—uh_00", "un1nstall_sh@me_step_3_FAILED", "unl0ck_F0RBIDDEN_d0wnload.pdf?!", "upd@te_REQUIR3D//delete_updates?", "v3rify_HUM@NITY_403_continue", "vrkkt", "vrkkt_[CACHE_MISS]", "vrrzt", "w3ird?!", "w3ll//", "w@1t//", "wait—ait—", "weird—eird?!", "well—ell?!", "wh@t?!", "wh@t—EIO::", "y3a—h", "yeah—eah%", "yep—ep—", "zrrk", "zzk—tk", "zzrrp", "zzrrp::<EGO?>", "~//~", "~^~?!", "—%—"]};
+const enc=new TextEncoder(),b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),cat=(a,b)=>{const o=new Uint8Array(a.length+b.length);o.set(a);o.set(b,a.length);return o};
+const sha=async(alg,u8)=>new Uint8Array(await crypto.subtle.digest(alg,u8));
+// the same number stream the builder uses: SHA-256(seed + counter), four bytes at a time
+function stream(seed){let n=0,buf=new Uint8Array(0);
+  const u32=async()=>{if(buf.length<4){const c=new Uint8Array(4);new DataView(c.buffer).setUint32(0,n++);buf=cat(buf,await sha('SHA-256',cat(seed,c)))}const v=new DataView(buf.buffer,buf.byteOffset,4).getUint32(0);buf=buf.slice(4);return v};
+  const below=async m=>{const lim=Math.floor(4294967296/m)*m;for(;;){const x=await u32();if(x<lim)return x%m}};
+  return{async shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=await below(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}}}
+const norm=k=>k.toUpperCase().replace(/[^A-Z0-9]/g,'');
+async function arrangement(words,key){const k=enc.encode(norm(key));
+  // the sheet as it starts: every square numbered left to right as one line (the spaces between words are squares too)
+  const byword=[],spaces=[];let n=0;
+  words.forEach((w,wi)=>{byword[wi]=Array.from(w).map(ch=>[ch,++n]);if(wi<words.length-1)spaces.push(++n)});
+  // the words move, whole
+  const order=await stream(await sha('SHA-256',cat(enc.encode('potatocode-room/words|'),k))).shuffle(words.map((_,i)=>i));
+  const cells=[];let sp=0;order.forEach((wi,pos)=>{for(const c of byword[wi])cells.push([c[0],c[1]]);if(pos<order.length-1)cells.push([' ',spaces[sp++]])});
+  // the twins trade places: the sheet reads the same, the numbers underneath move
+  const st=stream(await sha('SHA-256',cat(enc.encode('potatocode-room/twins|'),k))),where=new Map();
+  cells.forEach((c,i)=>{if(c[0]!==' '){if(!where.has(c[0]))where.set(c[0],[]);where.get(c[0]).push(i)}});
+  for(const ch of [...where.keys()].sort((a,b)=>a.codePointAt(0)-b.codePointAt(0))){const idx=where.get(ch);if(idx.length<2)continue;
+    const nums=await st.shuffle(idx.map(i=>cells[i][1]));idx.forEach((i,j)=>{cells[i][1]=nums[j]})}
+  return cells.map(c=>c[1]).join(' ')}
+async function unlock(key){
+  const line=await arrangement(ROOM.words,key),mat=await sha('SHA-512',enc.encode(line));
+  const base=await crypto.subtle.importKey('raw',mat,'PBKDF2',false,['deriveKey']);
+  const k=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(ROOM.salt),iterations:ROOM.rounds,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(ROOM.iv),additionalData:enc.encode('potatocode-room-v1')},k,b64(ROOM.blob));
+  return new TextDecoder().decode(plain)}
+const f=document.getElementById('f'),say=document.getElementById('say'),go=document.getElementById('go'),door=document.getElementById('door');
+f.addEventListener('submit',async e=>{e.preventDefault();const v=document.getElementById('k').value;
+  if(!norm(v).length)return;   /* a blank door: every wrong answer gets the same reply after the same wait, whatever its length or shape */
+  go.disabled=true;say.className='';say.textContent='ArrAnging the sheet…';door.classList.remove('lit');
+  try{const html=await unlock(v);door.classList.add('lit');say.textContent='0pen.';
+    setTimeout(()=>{door.classList.add('open');document.getElementById('lock').style.display='none';const r=document.getElementById('room');r.innerHTML=html;r.classList.add('on')},500)}
+  catch(err){go.disabled=false;say.className='no';say.textContent=(window.crypto&&crypto.subtle)?'n0pe. the rOOm stAys shut.':'this brOwser cAnnOt Open lOcks here.'}});
+</script>
+</body>
+</html>

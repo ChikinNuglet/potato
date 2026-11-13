@@ -24,7 +24,7 @@ const out = [], say = s => out.push(s);
 
 // ======== 1. read SCRIPT.md §5 ========
 const md = fs.readFileSync(HERE + 'SCRIPT.md', 'utf8'), sec = md.slice(md.indexOf('## 5. '), md.indexOf('## 6. '));
-const WHO = { James: 'J', Sheila: 'S', Jess: 'E', Carol: 'C', Mum: 'M', taticat: 'T', '(the phone)': 'X' };
+const WHO = { James: 'J', Sheila: 'S', Jess: 'E', Carol: 'C', Mum: 'M', 'unknown number': 'T', '(the phone)': 'X' };
 const story = [], rows = [];
 for (const line of sec.split('\n')) {
   if (!line.startsWith('|') || line.startsWith('|---') || line.startsWith('| phone')) continue;
@@ -49,11 +49,11 @@ fix('105.80 "i\'m james!!!" sits in P45 (before Mum\'s door), not P46', () => { 
 fix('18.05 "NOT what i typed" gets the ALT "phone\'s being weird" (if 13.75 and 16.20 both go Read)', () => { row(18.05).altIfNone = { of: [13.75, 16.20], text: "phone's being weird" }; });
 fix('call 3: 32.66 "who is THIS" is a DROP, and the first drop is soft (it knocks him back instead of squishing him)', () => { const r = row(32.66); r.role = 'drop'; r.soft = true; });
 fix('call 4/5: no 16.74 teaching drop, no 109.19 throw (neither is in the script rows)', () => {});
-fix('call 6/7: the ducks are the 26.36 header sag, 👍 48.11, the 58.99 throw, ❤️ 69.30, taticat\'s 🥔 102.58 thrown; ❓ 21.73, ‼️ 72.80, 😂 92.30 and the add banners are pictures', () => {
+fix('call 6/7: the ducks are the 26.36 header sag, 👍 48.11, the 58.99 throw, ❤️ 69.30, unknown number\'s 🥔 102.58 thrown; ❓ 21.73, ‼️ 72.80, 😂 92.30 and the add banners are pictures', () => {
   row(102.58).role = 'throw'; row(102.58).thrown = '🥔'; row(102.58).t = 102.28; for (const t of [21.73, 72.80, 92.30]) row(t).picture = true; });
 fix('❤️ 69.30 is a picture this pass: it sits 0.15 beat before the cascade\'s first wall (b113, fixed by the bus tipper + 4 steps down); a duck there is two things at once', () => { row(69.30).picture = true; });
-fix('taticat\'s 🥔 reaches his head at 102.28 (half a beat earlier than 102.58), so it stays a beat clear of the wall out of Carol\'s phone (b168)', () => {});
-fix('Carol\'s typing dots (102.89) are a picture in the chat, not a jump: 0.5 beat after taticat\'s 🥔 is two things at once (DESIGN-v3 §10)', () => { row(102.89).picture = true; });
+fix('unknown number\'s 🥔 reaches his head at 102.28 (half a beat earlier than 102.58), so it stays a beat clear of the wall out of Carol\'s phone (b168)', () => {});
+fix('Carol\'s typing dots (102.89) are a picture in the chat, not a jump: 0.5 beat after unknown number\'s 🥔 is two things at once (DESIGN-v3 §10)', () => { row(102.89).picture = true; });
 fix('Petunia 1 + 2 share one step (designer3); Petunia 3 is a plain step down, not a step up: it is the door 0.8 beat before the wall, and a jump + a Space inside one beat breaks §10', () => {});
 fix('the bus jolt: "are you listening" (72.05) lands, shakes, and drops on the jolt 72.46', () => { const r = row(72.05); r.dropAt = 72.46; });
 fix('111.95: the falling text is her "are you hacked??" (writer B #4: the question he rode in on falls out of the chat after he\'s through)', () => { row(111.95).text = 'are you hacked??'; });
