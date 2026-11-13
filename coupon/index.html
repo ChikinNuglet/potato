@@ -18,7 +18,7 @@ var MAIL='https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc
 var K='potato-coupon-key',key='';try{key=localStorage.getItem(K)||''}catch(e){}
 var m=location.hash.match(/^#k=(.+)$/);if(m){key=decodeURIComponent(m[1]);try{localStorage.setItem(K,key)}catch(e){}}
 var spud=document.getElementById('spud'),say=document.getElementById('say'),c=document.getElementById('c'),acts=document.getElementById('acts'),x=c.getContext('2d'),base=new Image(),file=null,text='';base.src='base.png';
-if(!key){spud.disabled=true;say.textContent='locked. this one only opens for its owner.'}
+// (Nov 13 2026: no owner's key needed any more. The button used to mint a one-time code from the mail room, which needed the key. Now it only hands out the site's address, which is public, so anyone may press it.)
 function draw(code){x.drawImage(base,0,0,1200,675);x.fillStyle='#120a05';x.font='400 50px "Major Mono Display",monospace';x.textBaseline='middle';x.textAlign='left';var t=code.toLowerCase(),sp=2,w=0,i;for(i=0;i<t.length;i++)w+=x.measureText(t[i]).width+sp;var px=420+(700-w)/2+sp/2;for(i=0;i<t.length;i++){x.fillText(t[i],px,412);px+=x.measureText(t[i]).width+sp}}
 spud.addEventListener('click',function(){spud.disabled=true;acts.classList.remove('on');say.textContent='krrzzt...';
  Promise.all([Promise.resolve({ok:true,codes:["I'M POTATO BABY"]}),base.decode(),document.fonts.load('50px "Major Mono Display"')]).then(function(a){
