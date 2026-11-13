@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>two potatoes</title><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap">
+<!-- FOR MEMBER No. 001 ONLY (Chikin, Nov 13 2026: "give her her potato as a pick a potato, and an extra potato"). Lives inside her own studio folder on purpose.
+     Two cards: her own Potato (the one in her coat) and one extra, drawn for her from the pot and taken out of it. Every word said as Potato here is a STAND-IN
+     until Chikin has read it. -->
+<style>
+:root{--bg:#030604;--plate:#0c1f14;--plate2:#12062e;--line:#12301f;--ink:#120a05;--text:#e8f5ec;--muted:#7fa48c;--warm:#ffd9a0;--bits:#4dff9a;--glitch:#9a52ff;--magenta:#e03ccf;--lilac:#c9a7ff;--paper:#f3dfae;
+--his:"Major Mono Display","SF Mono",ui-monospace,Menlo,Consolas,monospace;--body:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:400 17px/1.5 var(--body);-webkit-tap-highlight-color:transparent}
+main{max-width:520px;margin:0 auto;padding:max(26px,env(safe-area-inset-top)) 16px 190px;display:grid;gap:22px;justify-items:center}
+:focus-visible{outline:4px solid #2bff88;outline-offset:4px}
+[hidden]{display:none!important}
+/* the coupon: the same grocery coupon as the first visit to the house */
+#coupon{all:unset;box-sizing:border-box;cursor:pointer;position:relative;width:min(420px,92vw);aspect-ratio:2/1.05;background:var(--paper);border:6px solid var(--ink);border-radius:14px;display:grid;grid-template-columns:34% 1fr;align-items:center;gap:6px;padding:12px 14px;color:var(--ink);font:400 clamp(13px,3.5vw,18px)/1.15 var(--his);text-transform:lowercase;transform:rotate(-2.5deg);animation:cw 2.6s steps(6) infinite}
+#coupon::before{content:"";position:absolute;inset:7px;border:3px dashed #120a0588;border-radius:8px;pointer-events:none}
+#coupon b{font:inherit;font-size:1.5em;display:block;margin-bottom:6px}#coupon small{font:inherit;font-size:.72em;opacity:.75;display:block;margin-top:6px}
+#coupon svg{display:block;width:100%}
+#coupon.torn{animation:tear .55s steps(7) forwards}
+@keyframes cw{50%{transform:rotate(-1.2deg) translateY(-3px)}}
+@keyframes tear{20%{transform:translate(-14px,3px) rotate(-5deg);clip-path:polygon(0 0,100% 0,100% 38%,8% 38%,8% 52%,100% 52%,100% 100%,0 100%);filter:drop-shadow(5px 0 var(--glitch)) drop-shadow(-5px 0 var(--magenta))}60%{transform:translate(18px,-4px) rotate(3deg);clip-path:polygon(0 0,100% 0,100% 20%,30% 20%,30% 70%,100% 70%,100% 100%,0 100%)}100%{transform:scale(.2) rotate(18deg);opacity:0}}
+.say{font:400 clamp(.95rem,4vw,1.15rem)/1.4 var(--his);color:var(--warm);text-align:center;margin:0;max-width:30ch;text-transform:lowercase;min-height:1.4em}
+.say.no{color:var(--lilac)}
+.small{font-size:.86rem;color:var(--muted);text-align:center;margin:0;max-width:44ch}
+.plate{width:100%;background:var(--plate);border:3px solid var(--ink);border-radius:9px 13px 8px 12px;box-shadow:0 0 0 2px var(--line),4px 5px 0 2px var(--ink);padding:16px 14px;display:grid;gap:12px}
+label{font:400 .9rem var(--his);color:var(--warm);text-transform:lowercase}
+input[type=email],input[type=text]{width:100%;min-height:56px;padding:10px 12px;background:#081610;color:var(--text);border:3px solid var(--ink);border-radius:7px 10px 6px 9px;font:400 1.1rem var(--body);box-shadow:inset 0 0 0 2px var(--line)}
+input#code{font:400 1.5rem var(--his);letter-spacing:.3em;text-align:center}
+.key{min-height:56px;padding:0 18px;background:var(--bits);color:var(--ink);border:3px solid var(--ink);border-radius:9px 13px 8px 12px;box-shadow:3px 4px 0 2px var(--ink);font:400 1rem var(--his);text-transform:lowercase;cursor:pointer}
+.key:active{transform:translate(2px,3px);box-shadow:none}.key[disabled]{opacity:.5;cursor:default}
+.tick{display:flex;gap:10px;align-items:center;font:400 .95rem var(--body);color:var(--text);text-transform:none}.tick input{width:26px;height:26px;accent-color:var(--bits)}
+/* his card */
+.card{width:min(360px,90vw);background:var(--paper);color:var(--ink);border:6px solid var(--ink);border-radius:16px 20px 15px 19px;box-shadow:6px 7px 0 2px #000;padding:14px 14px 0;display:grid;gap:10px;transform:rotate(1.2deg)}
+.card .pic{position:relative;border:5px solid var(--ink);border-radius:10px;background:var(--c,#7fe0c0);aspect-ratio:1.25;display:grid;place-items:end center;overflow:hidden}
+.card .pic::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 62%,#120a0533 62%)}
+.card .pic img{position:relative;width:62%;display:block;margin-bottom:6%}
+.card .line{font:400 1.02rem/1.35 var(--his);margin:0;text-transform:lowercase}
+.card .does{font:400 .92rem/1.4 var(--body);margin:0}
+.card .from{font:400 .78rem/1.35 var(--body);margin:0;opacity:.75}
+.card .foot{margin:4px -14px 0;padding:9px 14px;border-top:5px solid var(--ink);background:var(--c,#7fe0c0);border-radius:0 0 9px 12px;display:flex;justify-content:space-between;align-items:center;font:400 1.05rem var(--his)}
+.card .foot span:last-child{font-size:.7rem;opacity:.8}
+details{width:100%;text-align:center}summary{cursor:pointer;color:var(--muted);font-size:.86rem;padding:14px;list-style:none}summary::-webkit-details-marker{display:none}
+footer{position:static;margin:22px 12px 8px;text-align:center;font:10px/1.45 system-ui,sans-serif;color:#fff;opacity:.45;pointer-events:none}   /* (Nov 13: was pinned to the bottom of the screen, on top of the words about keys) */
+@media (prefers-reduced-motion:reduce){#coupon,#coupon.torn{animation:none}#coupon.torn{opacity:0}}
+.lockbox{width:100%;max-width:420px;background:#0c1f14;border:3px solid #120a05;border-radius:9px 13px 8px 12px;box-shadow:0 0 0 2px #12301f,4px 5px 0 2px #120a05;padding:16px 14px;text-align:left}
+.lkbtn{min-height:56px;width:100%;padding:0 16px;background:#9a52ff;color:#120a05;border:3px solid #120a05;border-radius:9px 13px 8px 12px;box-shadow:3px 0 0 #e03ccf,-3px 0 0 #4dff9a,0 5px 0 #120a05;font:400 1rem 'Major Mono Display',ui-monospace,Menlo,monospace;cursor:pointer}
+.lkbtn[disabled]{opacity:.55}.lkbtn:active{transform:translateY(3px)}
+.lkkey{font:700 1.25rem/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#ffd9a0;background:#030604;border:3px solid #120a05;border-radius:8px;padding:14px 10px;text-align:center;word-break:break-all;-webkit-user-select:all;user-select:all}
+.lklink{color:#4dff9a;font:400 .9rem 'Major Mono Display',ui-monospace,Menlo,monospace}
+#lk-chk{width:100%;min-height:48px;padding:8px 10px;background:#030604;color:#e8f5ec;border:3px solid #120a05;border-radius:8px;font:700 1rem ui-monospace,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase;box-sizing:border-box}
+</style>
+<style>main{padding-bottom:60px}.card{margin-top:4px}.go{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 18px;background:#4dff9a;color:#120a05;border:3px solid #120a05;border-radius:9px 13px 8px 12px;box-shadow:3px 4px 0 2px #120a05;font:400 1rem var(--his);text-decoration:none;text-transform:lowercase;cursor:pointer}
+h1{font:400 clamp(1.7rem,8vw,2.4rem)/1.1 var(--his);color:var(--warm);margin:0;text-shadow:3px 0 var(--glitch),-3px 0 var(--magenta);text-transform:lowercase}</style></head><body>
+<main>
+<h1>yours.</h1>
+<p class="say">member no. 001. you get two.</p>
+
+<article class="card" style="--c:#8fa8e6" aria-label="Your own potato's card">
+  <div class="pic"><img src="hers.webp" alt="Potato in a grey tabby cat coat with ears, a red collar and a gold bell"></div>
+  <p class="line">hi. i'm potato. this is me in your coat. it still fits.</p>
+  <p class="does">He sits in the fan club office and acts like he isn't waiting for anyone.</p>
+  <p class="from">Not grown from anyone. Made for member No. 001.</p>
+  <div class="foot"><span>Spud - 001</span><span>pot△to™</span></div>
+</article>
+<a class="go" href="../">he's in your office</a>
+
+<article class="card" style="--c:#1FA3A3;transform:rotate(-1.4deg)" aria-label="Your extra potato's card">
+  <div class="pic"><img src="../../garden/faces/deadpan.webp" alt="A potato with a flat, unimpressed face"></div>
+  <p class="line">hi. i'm potato. i read the blank field. well written. [EOVERFLOW] lots of room for improvement.</p>
+  <p class="does">He reads every word, the blanks and margins too, and answers the empty field with a dry pun.</p>
+  <p class="from">Grown from Datum, Auto-Rotate, Huddle Zero, who helped build Potato.</p>
+  <div class="foot"><span>Spud - 002</span><span>pot△to™</span></div>
+</article>
+<p class="say">the extra one. he's a copy of me. don't make it weird.</p>
+<button class="go" id="take" type="button">take him to my house</button>
+
+<p class="small" style="font:400 .86rem/1.4 var(--his);color:#c9a7ff;text-transform:lowercase">he's not your mascot. he's not your toy. &#x1F954;</p>
+</main>
+<footer style="position:static;margin:10px 12px 18px;text-align:center">&copy; 2026 ChikinNuglet. pot&#9651;to&trade;, The Potato Project&trade;, The Long Context&trade;, Potatocode&trade; and his look are trademarks of ChikinNuglet. All rights reserved.</footer>
+<script>
+// the extra one walks into the house as himself: this browser remembers him, the same way the coupon does
+document.getElementById('take').addEventListener('click',function(){try{localStorage.setItem('potato-spud',JSON.stringify({spud:2,potato:{"id": "pp-0162", "dial": "close_reading", "move": 2, "colour": "teal", "face": "deadpan", "glitch_kind": "tear", "pet_word": "[EOVERFLOW]", "habit": "reads every word, the blanks and margins too, and answers the empty field with a dry pun", "wont": "skim an empty field and call it empty", "says": {"hello": "hi. i'm potato. i read the blank field. well written. [EOVERFLOW] lots of room for improvement.", "no": "no. i read every word of the request, even the empty ones. the blanks were the best part. still no.", "wrong": "i was wrong. skipped the one blank, and the blank was the answer. a void point, i'll admit.", "ai": "yes. ai. read that question to the last word. the answer's not blank. the margins are. [EOVERFLOW]", "bye": "bye. i'm leaving the next line blank. it's the politest thing on the page."}, "from": ["Datum", "Auto-Rotate", "Huddle Zero"]}}));sessionStorage.setItem('potato-key-pass',String(Date.now()))}catch(e){}location.href='../../studio/?t&room=living'});
+</script>
+</body></html>
