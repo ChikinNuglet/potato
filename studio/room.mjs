@@ -208,7 +208,7 @@ async function main() {
   // ---- keys: the game's, plus Esc for costumes, Space for a glitch, a double tap on an arrow for a spin
   const KEY = { ArrowUp: 'J', KeyW: 'J', ArrowDown: 'D', KeyS: 'D', ArrowLeft: 'L', KeyA: 'L', ArrowRight: 'R', KeyD: 'R' }, lastTap = { k: null, t: 0 };
   const spin = d => { initS(); intro.spinBy(d); };
-  const press = (k, down) => { if (down && (k === 'L' || k === 'R')) { const now = performance.now(); if (lastTap.k === k && now - lastTap.t < 300) { spin(k === 'L' ? -1 : 1); lastTap.k = null; } else { lastTap.k = k; lastTap.t = now; } } initS(); intro.key(k, down); };
+  const press = (k, down) => { if (down && (k === 'L' || k === 'R')) { const now = performance.now(); if (lastTap.k === k && now - lastTap.t < 480) { spin(k === 'L' ? -1 : 1); lastTap.k = null; } else { lastTap.k = k; lastTap.t = now; } } initS(); intro.key(k, down); };
   addEventListener('keydown', e => { if (e.metaKey || e.ctrlKey || e.altKey || document.getElementById('p404') || document.getElementById('bth') || document.getElementById('cave') || document.getElementById('arc')) return;   /* (a game / demo open: its own Esc) */ if (e.key === 'Escape') { e.preventDefault(); if (!e.repeat) pick(step(room, 1)); return; } if (e.code === 'KeyT') { if (!e.repeat) speak(nextLine()); return; }
     if (e.code === 'Space') { if (e.target.closest && e.target.closest('button,select')) return; e.preventDefault(); if (!e.repeat) { glitchOnly(); if (intro.props().near >= 0) intro.use(); } return; } if (e.code === 'KeyE') { e.preventDefault(); if (!e.repeat) { initS(); intro.use(); } return; }
     const k = KEY[e.code]; if (!k) return; e.preventDefault(); if (!e.repeat || k === 'D') press(k, true); });
