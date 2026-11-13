@@ -3,7 +3,7 @@
 // option for machine learning". Play = the real level (the game ships with the site under /arcade/); Machine Learning = the binary
 // Potato beating it on his own (the recorded demo). room.mjs calls start() when the console is glitched.
 const ML_VIDEO = 'demo/read-the-terms-ml.mp4', GAME = '../arcade/run/?play=read-the-terms';
-const css = `
+const css = `#arc .menu button.lock{opacity:.5;border-style:dashed}#arc .menu button.err{opacity:1;color:#e03ccf;border-color:#e03ccf;animation:arcerr .24s steps(4)}@keyframes arcerr{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}\n
 #arc-pad{position:fixed;z-index:9;width:64px;height:30px;pointer-events:none;transition:none}
 #arc-pad svg{width:100%;height:100%;overflow:visible}
 #arc{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#05070a;color:#b4ffd2;font:400 16px/1.4 Inter,system-ui,sans-serif;opacity:0;transition:opacity .25s}
@@ -22,7 +22,10 @@ const css = `
 #arc .full .wipbar{position:absolute;left:16px;top:16px;z-index:2;margin:0;padding:6px 10px;border-radius:8px;background:#0b0710d0;color:#c9a7ff;font:400 13px Inter,system-ui,sans-serif}
 #arc .full{position:fixed;inset:0;background:#000;display:grid;place-items:center}
 #arc .full iframe,#arc .full video{width:100%;height:100%;border:0;object-fit:contain;background:#000}
-#arc .full .x{position:absolute;right:16px;top:16px;z-index:2;background:#0b0710d0;color:#c9a7ff;border:1px solid #c9a7ff66;font-weight:400}`;
+#arc .full .x{position:absolute;right:16px;top:16px;z-index:2;background:#0b0710d0;color:#c9a7ff;border:1px solid #c9a7ff66;font-weight:400}
+/* Nov 13 (the visitor's walk): while a level is up, the house's own things get off it (the yellow banner, the costume button), and on a narrow screen the two labels stop running into each other */
+body:has(#arc .full) #wip,body:has(#arc .full) #cosb,body:has(#arc .full) #pads{display:none!important}
+@media (max-width:560px){#arc .full .wipbar{top:auto;bottom:calc(44px + env(safe-area-inset-bottom,0px))}}`;
 
 export function installArcade({ intro, glitch, music }) {
   const st = document.createElement('style'); st.textContent = css; document.head.append(st);
@@ -61,7 +64,7 @@ export function installArcade({ intro, glitch, music }) {
   function close(o, pad) { o.classList.remove('on'); setTimeout(() => o.remove(), 260); if (pad) pad.remove(); intro.propOff && intro.propOff('console'); music(true); glitch(); busy = false; }
 
   function full(o, html) {
-    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = html + '<button type="button" class="x">Back</button>'; o.append(f);
+    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = html + '<button type="button" class="x">ok, back</button>'; o.append(f);
     const v = f.querySelector('video'); if (v) v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
     f.querySelector('.x').onclick = () => { if (v) v.pause(); f.remove(); o.querySelector('.menu button.play').focus(); };
   }
@@ -81,34 +84,37 @@ export function installArcade({ intro, glitch, music }) {
   async function shell(title, inner, label) {
     if (busy) return; busy = true; glitch(); music(false);
     const o = document.createElement('div'); o.id = 'arc'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', label);
-    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">loading</span><h2>${title}</h2><p class="wip">work in progress: the finished game may be different.</p></div>`;
+    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">hold on</span><h2>${title}</h2><p class="wip">still cooking. it will change.</p></div>`;
     document.body.append(o); requestAnimationFrame(() => o.classList.add('on'));
     const stop = binary(o.querySelector('canvas'));
     await wait(1500); o.classList.add('ready'); await wait(1300);
-    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = inner + '<p class="wipbar">work in progress: the finished game may be different.</p><button type="button" class="x">Back to the house</button>'; o.append(f);
+    const f = document.createElement('div'); f.className = 'full'; f.innerHTML = inner + '<p class="wipbar">still cooking. it will change.</p><button type="button" class="x">ok, back to my house</button>'; o.append(f);
     const v = f.querySelector('video'); if (v) v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
     const shut = () => { if (!o.isConnected) return; if (v) v.pause(); stop(); close(o, null); removeEventListener('keydown', esc); };
     function esc(e) { if (e.key === 'Escape') shut(); }
     function msg(e) { if (e.data && e.data.potato === 'exit') { removeEventListener('message', msg); shut(); } }   // (Esc inside the game's frame)
-    f.querySelector('.x').onclick = shut; addEventListener('keydown', esc); addEventListener('message', msg); f.querySelector('.x').focus();
+    f.querySelector('.x').onclick = shut; addEventListener('keydown', esc); addEventListener('message', msg);
+    // Nov 13 (the visitor's walk): the keys go to the GAME, not the back button. Space on the button used to throw you out at "knock."
+    { const fr = f.querySelector('iframe'); if (fr) { fr.tabIndex = 0; const grab = () => { try { fr.focus(); fr.contentWindow.focus(); } catch (e) {} }; fr.addEventListener('load', grab); grab(); } else f.querySelector('.x').focus(); }
     return o;
   }
   const play = (id, title) => shell(title, `<iframe src="../arcade/run/?play=${id}" allow="autoplay; fullscreen" title="${title}"></iframe>`, title);
+  const demo = (id, title) => shell(title, `<iframe src="../arcade/run/?play=${id}&demo" allow="autoplay; fullscreen" title="${title}"></iframe>`, title);   // (the level plays itself: machine learning, live. Nov 12 night)
   const watch = (src, title) => shell(title, `<video src="${src}" controls playsinline></video>`, title);
   // MACHINE LEARNING (the cyborg room's ring light): after the wipe, pick which run to watch: Read the Terms or Ghost in the Group Chat
   async function learn(list) {
     if (busy) return; busy = true; glitch(); music(false);
     const o = document.createElement('div'); o.id = 'arc'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'machine learning');
-    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">machine learning</span><h2>watch him learn</h2><div class="row">${list.map((d, i) => `<button type="button" class="${i ? 'ml' : 'play'}" data-i="${i}">${d.title}</button>`).join('')}</div><p class="wip">work in progress: the finished game may be different.</p><button type="button" class="back">Back to the house</button></div>`;
+    o.innerHTML = `<canvas class="bin" aria-hidden="true"></canvas><div class="menu"><span class="k">machine learning</span><h2>watch me learn</h2><div class="row">${list.map((d, i) => `<button type="button" class="${d.locked ? 'ml lock' : i ? 'ml' : 'play'}" data-i="${i}"${d.locked ? ' aria-disabled="true"' : ''}>${d.title}</button>`).join('')}</div><p class="wip">still cooking. it will change.</p><button type="button" class="back">ok, back to my house</button></div>`;
     document.body.append(o); requestAnimationFrame(() => o.classList.add('on'));
     const stop = binary(o.querySelector('canvas'));
     await wait(1300); o.classList.add('ready'); o.querySelector('[data-i="0"]').focus();
     const shut = () => { if (!o.isConnected) return; stop(); close(o, null); removeEventListener('keydown', esc); };
     function esc(e) { if (e.key === 'Escape') shut(); }   // (Esc: out of the video and back to the house in one go)
     addEventListener('keydown', esc); o.querySelector('.back').onclick = shut;
-    o.querySelectorAll('[data-i]').forEach(b => { b.onclick = () => full(o, `<video src="${list[+b.dataset.i].src}" controls playsinline></video><p class="wipbar">work in progress: the finished game may be different.</p>`); });
+    o.querySelectorAll('[data-i]').forEach(b => { b.onclick = () => { if (list[+b.dataset.i].locked) { glitch(); b.classList.remove('err'); void b.offsetWidth; b.classList.add('err'); b.dataset.t = b.dataset.t || b.textContent; b.textContent = 'err: r00m n0t f0und'; clearTimeout(b._t); b._t = setTimeout(() => { b.textContent = b.dataset.t; b.classList.remove('err'); }, 1400); return; } full(o, (list[+b.dataset.i].live ? `<iframe src="../arcade/run/?play=${list[+b.dataset.i].live}&demo" allow="autoplay; fullscreen" title="${list[+b.dataset.i].title}"></iframe>` : `<video src="${list[+b.dataset.i].src}" controls playsinline></video>`) + `<p class="wipbar">still cooking. it will change.</p>`); } });
   }
   async function select() { return play('read-the-terms', 'read the terms'); }   // (the paper: straight into the level; Machine Learning is its own thing now: the living-room TV)
   async function menu() { return select(); }
-  return { start, select, play, watch, learn };
+  return { start, select, play, watch, learn, demo };
 }

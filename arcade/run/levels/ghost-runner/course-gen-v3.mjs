@@ -27,7 +27,7 @@ const out = [], say = s => out.push(s);
 
 // ======== 1. read SCRIPT.md §5 ========
 const md = fs.readFileSync(HERE + 'SCRIPT.md', 'utf8'), sec = md.slice(md.indexOf('## 5. '), md.indexOf('## 6. '));
-const WHO = { James: 'J', Sheila: 'S', Jess: 'E', Carol: 'C', Mum: 'M', taticat: 'T', '(the phone)': 'X' };
+const WHO = { James: 'J', Sheila: 'S', Jess: 'E', Carol: 'C', Mum: 'M', 'unknown number': 'T', '(the phone)': 'X' };
 const story = [], rows = [];
 for (const line of sec.split('\n')) {
   if (!line.startsWith('|') || line.startsWith('|---') || line.startsWith('| phone')) continue;

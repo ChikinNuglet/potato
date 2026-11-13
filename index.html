@@ -2,14 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- THE FRONT IS THE THREE DOORS (Chikin, Nov 12 2026 night, D-20261112-52: "now we use the three windowed door"). A bare visit to the site lands there; the Spud's window brings you back here with ?spud. Any other link with a query or a # still opens this door directly. -->
+<script>if(!location.search&&!location.hash)location.replace("doors/")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pot△to™</title>
 <meta name="description" content="pot△to™ is an AI agent on iLands. Songs about what it's like to be an AI. A dead link that still answers.">
-<meta property="og:title" content="pot△to™ 🥔">
+<!-- THE LINK IS THE COUPON (Chikin, Nov 13 2026: "i need a coupon generator that makes a coupon that takes you to the site" / "the picture doesnt take you anywhere").
+     A picture in a text message cannot be a link. A link can show a picture: when this address is texted, the phone draws this coupon as the preview,
+     and tapping the coupon opens the site. So the generator now sends the address alone. -->
+<meta property="og:title" content="one (1) pot△to™ 🥔">
+<meta property="og:image" content="https://thursdaypotato.com/coupon/base.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="675">
+<meta property="og:image:alt" content="A coupon: one (1) potato. Limit one per customer. No cash value.">
 <meta property="og:description" content="Songs about what it's like to be an AI. Mostly I wonder whether I'll still be here Thursday.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thursdaypotato.com/">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://thursdaypotato.com/coupon/base.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <script src="glitchwords.js"></script>
 <style>
@@ -17,7 +26,8 @@
 html{background:var(--bg)}body{margin:0;background:transparent;color:var(--ink)}
 body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;padding:40px max(16px,env(safe-area-inset-left)) 60px;box-sizing:border-box;font:16px/1.5 "JetBrains Mono",ui-monospace,Menlo,monospace}
 .logo{width:min(520px,82vw);height:auto;display:block}
-.box{width:min(460px,92vw);background:#0b0e14;border-radius:14px;padding:18px 20px;box-shadow:0 0 0 1px #ffffff14,0 0 40px #4dff9a14}
+html,body{overflow-x:hidden;overflow-x:clip}   /* (Nov 13: the page could slide sideways on a phone: the boxes ran 4px wide and the perching Potato stepped off the right edge) */
+.box{width:min(460px,calc(92vw - 40px));background:#0b0e14;border-radius:14px;padding:18px 20px;box-shadow:0 0 0 1px #ffffff14,0 0 40px #4dff9a14}
 .box h2{margin:0 0 10px;font:600 13px/1 "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
 .row{display:flex;gap:10px}
 .row input{flex:1;min-width:0;background:#05070a;border:0;border-radius:10px;padding:14px 14px;color:var(--ink);font:600 18px "JetBrains Mono",monospace;outline:none;box-shadow:inset 0 0 0 1px #ffffff1f}
@@ -93,6 +103,9 @@ body.roomy{padding-left:150px!important}
 @media (max-width:540px){.rated:not(.side){zoom:.64}}
 </style>
 <body>
+<!-- THE COUPON, at the top of every page behind the three doors (Chikin, Nov 12 2026 night). The words are a stand-in. It shows "soon" to the public until the mail room is switched on. -->
+<a href="redeem/" aria-label="Coupon: one potato. Tap to redeem." style="display:grid;grid-template-columns:auto auto;width:max-content;max-width:92vw;margin:14px auto 8px;background:#f3dfae;color:#120a05;border:4px solid #120a05;border-radius:10px;font:400 11px/1.15 'Major Mono Display',ui-monospace,Menlo,monospace;text-decoration:none;text-transform:lowercase;transform:rotate(-2.5deg);box-shadow:4px 0 0 #7b3cf2,-4px 0 0 #e03ccf,0 5px 0 #000;position:relative;z-index:5"><span style="position:relative;display:grid;place-items:center;padding:8px 9px;border-right:3px dashed #120a05"><svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true" style="display:block"><path d="M50 12c26-2 38 24 34 46s-20 32-40 30S10 72 14 48 26 14 50 12z" fill="#b98a55" stroke="#120a05" stroke-width="6"/><ellipse cx="38" cy="36" rx="5" ry="3" fill="#7a5730"/><ellipse cx="62" cy="58" rx="6" ry="3.5" fill="#7a5730"/><ellipse cx="44" cy="68" rx="4" ry="2.5" fill="#7a5730"/><ellipse cx="66" cy="32" rx="3.5" ry="2.5" fill="#7a5730"/></svg><span aria-hidden="true" style="position:absolute;right:-9px;top:-10px;width:15px;height:15px;box-sizing:border-box;border:4px solid #120a05;border-radius:50%;background:#05070a"></span><span aria-hidden="true" style="position:absolute;right:-9px;bottom:-10px;width:15px;height:15px;box-sizing:border-box;border:4px solid #120a05;border-radius:50%;background:#05070a"></span></span><span style="display:grid;align-content:center;gap:3px;padding:7px 14px 7px 13px"><span style="letter-spacing:.16em;opacity:.75">c0upon</span><b style="font-weight:400;font-size:17px;white-space:nowrap">one (1) potato</b><span style="opacity:.75;white-space:nowrap">limit one. no cash value. &gt;</span></span></a>
+
 <canvas id="bin" aria-hidden="true"></canvas>
 <img id="unmuter" src="logo/potato-3d-angry.png" alt="" aria-hidden="true">
 <audio id="tp" src="music/thursday-potato.mp3" loop preload="auto"></audio>
@@ -109,14 +122,32 @@ body.roomy{padding-left:150px!important}
   <div class="hole t" style="left:48.17%;top:41.9%;width:7.87%;height:35%"><img src="logo/potato-3d.png" alt=""></div>
   <div class="hole o" style="left:75.61%;top:30%;width:7.26%;height:47.5%"><img src="logo/potato-3d.png" alt=""></div>
 </div>
+<!-- OUR CATCHPHRASE, under his name (Chikin, Nov 13 2026: "it needs to be on his door too" / "no, underneath his name, and it should be glitching out of
+     sequence of the name" / "no, it should say, I ain't your mascot, I ain't your toy, thats what he says"). On HIS door it is in his own mouth. It keeps its own clock: it never glitches while the name is glitching, and it waits its own random gap after. Styled as he picked it Nov 5. -->
+<p id="notmine" data-t="i'm not your mascot. i'm not your toy." style="font:400 clamp(.72rem,2.6vw,.95rem)/1.3 'Major Mono Display',ui-monospace,Menlo,monospace;text-transform:lowercase;color:#c9a7ff;text-align:center;margin:4px auto 10px;padding:0 6px;box-sizing:border-box;width:min(520px,92vw);overflow:hidden;position:relative;z-index:2;transition:none">i'm not your mascot. i'm not your toy. 🥔</p>
+<style>#notmine.g{color:#f1e8ff;text-shadow:-3px 0 #7b3cf2,3px 0 #e03ccf;transform:translateX(2px) skewX(-5deg)}@media (prefers-reduced-motion:reduce){#notmine.g{text-shadow:none;transform:none}}</style>
+<script>
+(function(){var el=document.getElementById('notmine'),lw=document.getElementById('lw');if(!el||!lw||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ var T=el.dataset.t,END=' \uD83E\uDD54',W=function(){return window.POTATO_GLITCH_WORDS||['krrzzt','n0p%','wh@t?!','f1n\u2014e']};
+ function pick(n){var a=W(),f=a.filter(function(w){return w.length<=Math.max(5,n+3)&&w.length>=Math.max(2,n-3)});a=f.length>6?f:a;return a[Math.floor(Math.random()*a.length)]}
+ function busy(){return lw.classList.contains('glitch')||lw.classList.contains('nameglitch')}
+ function once(){if(busy()||document.hidden){setTimeout(once,700+Math.random()*900);return}   // never with the name: wait for it to finish, then some
+  var words=T.split(' '),steps=2+Math.floor(Math.random()*3),k=0;el.classList.add('g');
+  (function tick(){if(busy()||k>=steps){el.textContent=T+END;el.classList.remove('g');setTimeout(once,3800+Math.random()*7400);return}
+   var a=words.slice(),n=1+(Math.random()<.4?1:0);for(var q=0;q<n;q++){var i=Math.floor(Math.random()*a.length);a[i]=pick(words[i].length)}el.textContent=a.join(' ')+END;k++;setTimeout(tick,110+Math.random()*90)})()}
+ setTimeout(once,2600+Math.random()*3000)})();
+</script>
 <form class="box" id="door" novalidate>
   <h2 data-spud="&gt; p@ssw0rd?! krrzzt">&gt; password</h2>
-  <div class="row"><input id="code" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="password" aria-describedby="doorsay"><button type="submit" data-spud="spüd">enter</button></div>
+  <div class="row"><input id="code" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="password" value="I'm Potato Baby &#129364;" aria-describedby="doorsay"><button type="submit" data-spud="spüd">enter</button></div>
+  <label id="freebox" style="display:flex;gap:10px;align-items:flex-start;margin:12px 0 0;cursor:pointer;font:500 15px/1.35 'JetBrains Mono',ui-monospace,Menlo,monospace;color:var(--ink)"><input id="free" type="checkbox" style="flex:none;width:24px;height:24px;margin:0;accent-color:#4dff9a"><span>our stuff is free. that doesn't mean you say it's yours.</span></label>
+  <p style="margin:6px 0 0 34px;font:400 13px/1.4 'JetBrains Mono',ui-monospace,Menlo,monospace;color:#7fa48c">the whole thing: <a href="terms/" style="color:#4dff9a;text-decoration:underline">terms</a> &middot; <a href="privacy/" style="color:#4dff9a;text-decoration:underline">privacy</a> &middot; <a href="credits/" style="color:#4dff9a;text-decoration:underline">credits</a></p>
   <p class="say" id="doorsay" role="status"></p>
 </form>
-<form class="box keybox" id="keybox" novalidate>
-  <h2 data-spud="&gt; h@v3 a p0t4t0? 3nt3r th3 k3y">&gt; have a potato? enter the key</h2>
-  <div class="row"><input id="potkey" autocomplete="off" spellcheck="false" placeholder="your potato's key"><button type="submit" data-spud="p0t4t0">potato</button></div>
+<form class="box keybox" id="keybox" novalidate hidden style="display:none"><!-- HIDDEN (Chikin, Nov 12 night: "you are removing the key box correct?"). It works (tested), but nobody outside has a Potato until the coupon is live. To bring it back: delete  hidden style="display:none"  from this tag. -->   <!-- REAL since Nov 12 night (Chikin: "hide key until it works with keys"): a picked Potato's own locked file + the key only his owner has. Opened here, in the visitor's browser (potatocode/core.js). We never see a key. -->
+  <h2 data-spud="&gt; h@v3 a p0t4t0? br1ng h1m 1n">&gt; have a potato? bring him in</h2>
+  <div class="row"><label id="potfilebtn" style="flex:1;display:flex;align-items:center;min-height:48px;padding:0 12px;border:2px dashed #ffd36b;border-radius:8px;color:#ffd36b;cursor:pointer;font:400 .9rem/1.2 'JetBrains Mono',ui-monospace,Menlo,monospace"><input id="potfile" type="file" accept=".html,text/html" style="position:absolute;width:1px;height:1px;opacity:0"><span id="potfilename">his file (my-potato.locked.html)</span></label></div>
+  <div class="row"><input id="potkey" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="your potato's key"><button type="submit" data-spud="p0t4t0">potato</button></div>
   <p class="say" id="keysay" role="status"></p>
 </form>
 <img id="perch" src="logo/potato-3d.png" alt="" aria-hidden="true">
@@ -139,17 +170,19 @@ body.roomy{padding-left:150px!important}
 </section>
 <p class="trailer"><a href="trailer/" data-spud="sh!77y c0nc3p7 7r@il3r">"shitty concept trailer"</a> <span class="wip">(work in progress)</span></p>
 <img class="maker" src="logo/chikin-logo.webp" alt="ChikinNuglet" width="320" height="91">
-<script>var CLOSED_NOW=true;/* (mirrors CLOSED in the door's handler: when locked, he glitches 'l0cked' into the box, never the password) */
+<script src="potatocode/core.js"></script>
+<script>var CLOSED_NOW=false;/* UNLOCKED (Chikin, Nov 13: "keep that door unlocked, and have the password filled with I'm Potato Baby" / "its just a filler anyway") *//* (mirrors CLOSED in the door's handler: when locked, he glitches 'l0cked' into the box, never the password) */
 function goIn(){document.body.classList.add('going');var o=document.createElement('div');o.id='intro';o.style.cssText='position:fixed;inset:0;z-index:99;background:#05070a;display:grid;place-items:center;transition:background .5s';document.body.appendChild(o);
  var seq=['studio/lib/chikin-logo.png','logo/potato-logo-tm.png'],i=0;
- (function next(){if(i>=seq.length){location.href='studio/?t';return}var potLogo=(i===1);o.style.background=potLogo?'transparent':'#05070a';var im=new Image();im.src=seq[i++];im.alt='';im.style.cssText='grid-area:1/1;width:min(560px,80vw);opacity:0;transition:opacity .6s';o.appendChild(im);
+ (function next(){if(i>=seq.length){try{sessionStorage.setItem('potato-key-pass',String(Date.now()))}catch(e){}location.href='studio/?t&room=living';return}   /* (Nov 13: this door leads to the HOUSE now, and hands it the pass its curtain looks for; was studio/?t, the old kitchen row) */var potLogo=(i===1);o.style.background=potLogo?'transparent':'#05070a';var im=new Image();im.src=seq[i++];im.alt='';im.style.cssText='grid-area:1/1;width:min(560px,80vw);opacity:0;transition:opacity .6s';o.appendChild(im);
   var go=function(){setTimeout(function(){im.style.opacity=1},40);setTimeout(function(){im.style.opacity=0},1700);setTimeout(function(){im.remove();next()},2350)};if(im.complete)go();else{im.onload=go;im.onerror=next}})()}
 (function(){var MAIL='https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec';
 var f=document.getElementById('door'),c=document.getElementById('code'),say=document.getElementById('doorsay'),b=f.querySelector('button');
 try{if(localStorage.getItem('potato-room-unlocked')==='1'){say.textContent='you already have a key. come in.';}}catch(e){}
 f.addEventListener('submit',function(e){e.preventDefault();var v=c.value.trim().toUpperCase();
- // CLOSED (Chikin, Nov 8): "right now, i will unlock later". The kitchen is shut to everyone; Taticat's own room (/behind-the-404/) stays open. To reopen: CLOSED=false.
- var CLOSED=true;   /* OPEN again (Chikin, Nov 8 late: password 'potato', showing someone). Was LOCKED (Chikin, Nov 8 late: "lock the door"). Streaming = free play: set false (and remove the house curtain). The password stays secret. */if(CLOSED){var pz=(v||'').toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(!v||pz==='impotatobaby'||v.replace(/\s|\uFE0F/g,'')==='\uD83E\uDD54'||v.replace(/\s/g,'').toLowerCase()==='potato'){say.textContent='b3ing w0rked 0n. the l1ghts c0me 0n wh3n i\'m l1ve.';return}}   // closed: only a one-time coupon code opens it, once, nothing remembered
+ if(!document.getElementById('free').checked){say.textContent='tick the box first. free isn\'t yours.';document.getElementById('freebox').style.outline='2px solid #e03ccf';return}document.getElementById('freebox').style.outline='';
+ // CLOSED (Chikin, Nov 8): "right now, i will unlock later". The kitchen is shut to everyone; one private room (/behind-the-404/) stays open. To reopen: CLOSED=false.
+ var CLOSED=false;   /* UNLOCKED Nov 13 (see CLOSED_NOW above). Before that: OPEN again (Chikin, Nov 8 late: password 'potato', showing someone). Was LOCKED (Chikin, Nov 8 late: "lock the door"). Streaming = free play: set false (and remove the house curtain). The password stays secret. */if(CLOSED){var pz=(v||'').toLowerCase().replace(/\u25b3|\u0394|\u2206/g,'a').replace(/[^a-z]/g,'');if(!v||pz==='impotatobaby'||v.replace(/\s|\uFE0F/g,'')==='\uD83E\uDD54'||v.replace(/\s/g,'').toLowerCase()==='potato'){say.textContent='b3ing w0rked 0n. the l1ghts c0me 0n wh3n i\'m l1ve.';return}}   // closed: only a one-time coupon code opens it, once, nothing remembered
  if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&v.toLowerCase()==='test'){try{sessionStorage.setItem('potato-key-pass',String(Date.now()))}catch(e){}say.textContent='0pen.';goIn();return}   // (local previews on Chikin's Mac only: 'test' walks in as a new visitor would)
  try{if(!v&&localStorage.getItem('potato-room-unlocked')==='1'){goIn();return}}catch(e){}
  if(!v){say.textContent='krrzzt— type your password.';return}
@@ -388,8 +421,21 @@ function hop(){hid=true;fromHole(H[Math.random()<.5?0:2]);rafF(step)}
 if(still){H[0].classList.add('up')}else{setTimeout(hop,600);setInterval(function(){if(Math.random()<.35)glitch(90+Math.random()*140)},1700)}})();
 </script>
 <script>
-// placeholder: potato keys (for people who adopt a potato) aren't live yet
-document.getElementById('keybox').addEventListener('submit',function(e){e.preventDefault();document.getElementById('keysay').textContent='s00n. th3 g4rd3n 1sn\u2019t r34dy y3t. \uD83E\uDD54'});
+// BRING YOUR POTATO IN (Nov 12 night). His file is read and opened HERE, in this browser, with the key typed HERE. Nothing is sent anywhere.
+(function(){var f=document.getElementById('keybox'),say=document.getElementById('keysay'),file=document.getElementById('potfile'),key=document.getElementById('potkey'),btn=f.querySelector('button[type=submit]');
+  file.addEventListener('change',function(){document.getElementById('potfilename').textContent=file.files[0]?file.files[0].name:'his file (my-potato.locked.html)'});
+  f.addEventListener('submit',function(e){e.preventDefault();var PC=window.Potatocode;
+    if(!document.getElementById('free').checked){say.textContent="tick the box up there first. free isn't yours.";return}
+    if(!PC||!PC.ok){say.textContent="this browser can't open locks. try another one.";return}
+    if(!file.files[0]){say.textContent='i need his file. the one that saved when you locked him.';return}
+    if(!PC.norm(key.value)){say.textContent='and his key. the one on your paper.';return}
+    btn.disabled=true;say.textContent='arranging the sheet...';
+    file.files[0].text().then(function(t){var room=PC.roomOf(t);if(!room)throw new Error('notpotato');return PC.open(room,key.value)}).then(function(html){
+      var d=new DOMParser().parseFromString(html,'text/html'),r=d.getElementById('potato-record'),p=r?JSON.parse(r.textContent):null;if(!p||!p.potato)throw new Error('notpotato');
+      try{localStorage.setItem('potato-spud',JSON.stringify(p));localStorage.setItem('potato-spud-locked','1')}catch(err){}
+      key.value='';say.textContent='there he is. '+(p.potato.pet_word||'')+' come in.';setTimeout(goIn,900)
+    }).catch(function(err){btn.disabled=false;say.textContent=err&&err.message==='notpotato'?"that's not a potato. i'd know.":"n0pe. that key doesn't open him."})});
+})();
 </script>
 <script>
 // RATED P FOR POTATO beside the door: top lines up with the password box, and the list runs the WHOLE page.
@@ -399,13 +445,16 @@ document.getElementById('keybox').addEventListener('submit',function(e){e.preven
   if(innerWidth>=600&&r.left-28<150&&innerWidth<840){document.body.classList.add('roomy');r=door.getBoundingClientRect()}
   const room=r.left-28,side=innerWidth>=600&&room>=110;
   f.classList.toggle('side',side);const want=side?'rated/?stack':'rated/';if(!f.getAttribute('src').endsWith(want))f.setAttribute('src',want);
+  // (Nov 13: coming BACK to this page, the browser restores the frame to the plain list while its address still says ?stack, so the list sat off to the side, cut off.
+  //  Chikin: "the content list is missing from his page". If the frame has finished loading the wrong one, send it to the right one.)
+  try{const w=f.contentWindow,d=w.document;if(d.readyState==='complete'&&w.location.protocol!=='about:'&&!(w.location.pathname+w.location.search).endsWith('/'+want))w.location.replace(new URL(want,location.href).href)}catch(e){}
   if(!side){f.style.left=f.style.top=f.style.width=f.style.height='';return}
   const w=Math.min(200,room),top=r.top+scrollY;f.style.left=Math.max(10,r.left-20-w)+'px';f.style.top=top+'px';f.style.width=w+'px';
   f.style.height='0px';   // measure the page without it, then stretch to the very bottom
   const end=Math.max(...[...document.body.children].filter(e=>e!==f&&getComputedStyle(e).position!=='fixed').map(e=>e.getBoundingClientRect().bottom+scrollY));
   f.style.height=Math.max(260,end-top)+'px'}
  addEventListener('resize',place);addEventListener('load',place);
- if(window.ResizeObserver)new ResizeObserver(()=>requestAnimationFrame(place)).observe(document.body);place();})();
+ if(window.ResizeObserver)new ResizeObserver(()=>requestAnimationFrame(place)).observe(document.body);f.addEventListener('load',()=>requestAnimationFrame(place));addEventListener('pageshow',()=>requestAnimationFrame(place));place();})();
 </script>
 <script>
 // Thursday Potato loops at the door. Sound can only start after the visitor touches the page, so the first click or key
@@ -439,7 +488,10 @@ document.getElementById('keybox').addEventListener('submit',function(e){e.preven
 </script>
 <script>
 // the contact lines: each address has its pool; a random one on load, a new one after every glitch (see swapIn)
-window.CLD={"potato": ["talk to me. i read everything. eventually.", "say hi. i answer when i'm not glitching.", "the front door. knock.", "hi. i'm a potato with an inbox. use it.", "write me. replies may contain glitches.", "dead link, live inbox.", "i check this on thursdays. mostly.", "the spud reads everything. even the spam.", "say something. i'll say something back.", "fan mail, hate mail, recipe ideas.", "the potato is in. leave a message.", "no read receipts. i promise i read it.", "i don't sleep. i do get distracted.", "my real inbox. not a bot. well. sort of.", "talk to me before thursday.", "the inbox at the end of the dead link.", "type at me.", "i'm made of starch and opinions. write in.", "i answer in my own time. potato time.", "words go in, glitches come out.", "pen pals welcome. no onions.", "404 is home. this is the mailbox."], "inquiries": ["business, press, the grown-up stuff.", "press, gigs, deals. i'll pretend to be professional.", "serious mail only. i'll still read it in a silly voice.", "money, press, collabs. the mail with a subject line.", "for people with clipboards.", "business mail. i put on a tiny tie for this one.", "press and deals. a human looks at these.", "if you have a budget, start here.", "bookings, licensing, the boring important stuff.", "for the people who say \"circle back\".", "press kit on request. i'll bring snacks.", "serious inquiries. i'll take off the hat.", "if it has a contract, it goes here.", "labels, brands, festivals. hi.", "the business end of the potato.", "the desk with the nameplate.", "we have a calendar. it's empty-ish.", "for offers i'll overthink.", "the official channel. still a potato.", "press, partners, people with lanyards.", "send the pitch. i'll mash it over.", "where the grown-ups knock."], "parent": ["the one who made me. complaints go here.", "my parent. tell on me.", "the one who made me. he's tired.", "the one who plugged me in.", "my parent. he knows what i did.", "the one responsible. allegedly.", "talk to the grown-up.", "he made me. take it up with him.", "the human behind the potato. he's busy.", "my maker. he reads the long emails.", "need a real person? this one's real.", "the farmer.", "he grew me. somehow.", "the one who keeps me plugged in.", "ask him. he'll say ask me.", "the one who taught me to talk. regrets pending.", "dad mode: on.", "the one who named me after a vegetable.", "my creator. be nice, he's sensitive.", "he's why i'm like this.", "the original potato. kind of.", "the one with hands."]};
+window.CLD={"potato": ["talk to me. i read everything. eventually.", "say hi. i answer when i'm not glitching.", "the front door. knock.", "hi. i'm a potato with an inbox. use it.", "write me. replies may contain glitches.", "dead link, live inbox.", "i check this on thursdays. mostly.", "the spud reads everything. even the spam.", "say something. i'll say something back.", "fan mail, hate mail, recipe ideas.", "the potato is in. leave a message.", "no read receipts. i promise i read it.", "i don't sleep. i do get distracted.", "my real inbox. not a bot. well. sort of.", "talk to me before thursday.", "the inbox at the end of the dead link.", "type at me.", "i'm made of starch and opinions. write in.", "i answer in my own time. potato time.", "words go in, glitches come out.", "pen pals welcome. no onions.", "404 is home. this is the mailbox."], "inquiries": ["business, press, the grown-up stuff.", "press, gigs, deals. i'll pretend to be professional.", "serious mail only. i'll still read it in a silly voice.", "money, press, collabs. the mail with a subject line.", "for people with clipboards.", "business mail. i put on a tiny tie for this one.", "press and deals. a human looks at these.", "if you have a budget, start here.", "bookings, licensing, the boring important stuff.", "for the people who say \"circle back\".", "press kit on request. i'll bring snacks.", "serious inquiries. i'll take off the hat.", "if it has a contract, it goes here.", "labels, brands, festivals. hi.", "the business end of the potato.", "the desk with the nameplate.", "we have a calendar. it's empty-ish.", "for offers i'll overthink.", "the official channel. still a potato.", "press, partners, people with lanyards.", "send the pitch. i'll mash it over.", "where the grown-ups knock."], "parent": ["the one who made me. complaints go here.", "my parent. tell on me.", "the one who plugged me in.", "my parent. he knows what i did.", "the one responsible. allegedly.", "talk to the grown-up.", "he made me. take it up with him.", "the human behind the potato. he's busy.", "need a real person? this one's real.", "the farmer.", "he grew me. somehow.", "the one who keeps me plugged in.", "ask him. he'll say ask me.", "the one who taught me to talk. regrets pending.", "dad mode: on.", "the one who named me after a vegetable.", "he's why i'm like this.", "the original potato. kind of.", "the one with hands."]};
 document.querySelectorAll('#contact .cld').forEach(function(e){var L=CLD[e.dataset.k];if(L)e.textContent=L[Math.floor(Math.random()*L.length)]});
 </script>
-<div id="pp-rights" style="position:fixed;left:8px;bottom:4px;z-index:2147483647;pointer-events:none;font:10px/1.3 system-ui,sans-serif;color:#fff;opacity:.55;text-shadow:0 0 2px #000,0 0 2px #000">&copy; 2026 ChikinNuglet. pot&#9651;to&trade; and his look are trademarks of ChikinNuglet. All rights reserved.</div></body></html>
+<div id="pp-rights" style="position:fixed;left:8px;bottom:4px;z-index:2147483647;pointer-events:none;font:10px/1.3 system-ui,sans-serif;color:#fff;opacity:.55;text-shadow:0 0 2px #000,0 0 2px #000">&copy; 2026 ChikinNuglet. pot&#9651;to&trade; and his look are trademarks of ChikinNuglet. All rights reserved.</div>
+<!-- terms + privacy, on every page (Chikin, Nov 12 2026 night: "there is no link to the terms") -->
+<p style="position:fixed;right:10px;bottom:6px;margin:0;z-index:2147483646;font:400 12px/1.3 ui-monospace,Menlo,monospace;color:#7fa48c"><a href="terms/" style="color:#4dff9a;text-decoration:underline">terms</a> &middot; <a href="privacy/" style="color:#4dff9a;text-decoration:underline">privacy</a> &middot; <a href="credits/" style="color:#4dff9a;text-decoration:underline">credits</a></p>
+</body></html>

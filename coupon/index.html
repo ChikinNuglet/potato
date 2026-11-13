@@ -11,22 +11,23 @@ h1{font-weight:400;font-size:44px;margin:0;color:#f2fff6;text-shadow:3px 0 #e03c
 </style></head><body><main><h1>potAto</h1>
 <button id="spud" type="button" aria-label="make a coupon"><img src="potato.png" alt=""></button><p id="say">press for one (1) coupon</p>
 <canvas id="c" width="1200" height="675" hidden></canvas>
-<div class="acts" id="acts"><button class="go" id="send" type="button">send it</button><a id="sms">text the code</a><a id="mail">email the code</a></div></main>
+<div class="acts" id="acts"><button class="go" id="send" type="button">send it</button><a id="sms">text it</a><a id="mail">email it</a></div></main>
 <script>
 (function(){
-var MAIL='https://script.google.com/macros/s/AKfycbyb8YhT3hFSJraHMtuP67eqFd9tPGQ7OSMp20diwlEE_jCstwtS9A-VyepPermUgzC_/exec',LINK='https://thursdaypotato.com';
+var MAIL='https://script.google.com/macros/s/AKfycbymHbfDd8XfM6lMGCLsopaDPH7I5Dc2_C2WtiRDMUvQRiVNhsLavhw_8Hs34dahfItgug/exec',LINK='https://thursdaypotato.com';
 var K='potato-coupon-key',key='';try{key=localStorage.getItem(K)||''}catch(e){}
 var m=location.hash.match(/^#k=(.+)$/);if(m){key=decodeURIComponent(m[1]);try{localStorage.setItem(K,key)}catch(e){}}
 var spud=document.getElementById('spud'),say=document.getElementById('say'),c=document.getElementById('c'),acts=document.getElementById('acts'),x=c.getContext('2d'),base=new Image(),file=null,text='';base.src='base.png';
 if(!key){spud.disabled=true;say.textContent='locked. this one only opens for its owner.'}
 function draw(code){x.drawImage(base,0,0,1200,675);x.fillStyle='#120a05';x.font='400 50px "Major Mono Display",monospace';x.textBaseline='middle';x.textAlign='left';var t=code.toLowerCase(),sp=2,w=0,i;for(i=0;i<t.length;i++)w+=x.measureText(t[i]).width+sp;var px=420+(700-w)/2+sp/2;for(i=0;i<t.length;i++){x.fillText(t[i],px,412);px+=x.measureText(t[i]).width+sp}}
 spud.addEventListener('click',function(){spud.disabled=true;acts.classList.remove('on');say.textContent='krrzzt...';
- Promise.all([fetch(MAIL,{method:'POST',body:JSON.stringify({action:'mint',secret:key,count:1,note:'phone coupon'})}).then(function(r){return r.json()}),base.decode(),document.fonts.load('50px "Major Mono Display"')]).then(function(a){   // Nov 8: a fresh ONE-TIME key from Potato's mail room (the password no longer opens the door)
-  var j=a[0];if(!j.ok||!j.codes||!j.codes[0])throw 0;var code=j.codes[0];draw(code);c.hidden=false;text='one (1) potato. your one-time key: '+code+' \uD83E\uDD54  '+LINK;
+ Promise.all([Promise.resolve({ok:true,codes:["I'M POTATO BABY"]}),base.decode(),document.fonts.load('50px "Major Mono Display"')]).then(function(a){
+  var j=a[0];if(!j.ok||!j.codes||!j.codes[0])throw 0;var code=j.codes[0];x.drawImage(base,0,0,1200,675);c.hidden=false;   // (the address is already printed on the coupon: nothing is drawn into the box any more)
+  text=LINK;   // (Nov 13, Chikin: "just a potato coupon" / "no text link below it, no explanation")
   document.getElementById('sms').href='sms:?&body='+encodeURIComponent(text);document.getElementById('mail').href='mailto:?subject='+encodeURIComponent('one (1) potato')+'&body='+encodeURIComponent(text);
-  c.toBlob(function(b){file=new File([b],'potato coupon '+code+'.png',{type:'image/png'});acts.classList.add('on');say.textContent='fresh code. '+code.toLowerCase();spud.disabled=false},'image/png');
+  c.toBlob(function(b){file=new File([b],'potato coupon.png',{type:'image/png'});acts.classList.add('on');say.textContent='one (1) coupon.';spud.disabled=false},'image/png');
  }).catch(function(){say.textContent="that one didn't land. try again?";spud.disabled=false})});
-document.getElementById('send').addEventListener('click',function(){var d={files:[file],text:text};
- if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share(d).catch(function(){})}else{var a=document.createElement('a');a.href=c.toDataURL('image/png');a.download=file.name;a.click();say.textContent='saved. use text the code to send it.'}});
+document.getElementById('send').addEventListener('click',function(){var d={url:LINK};   // (the address alone: the phone draws it as the coupon, and tapping the coupon opens the site)
+ if(navigator.share){navigator.share(d).catch(function(){})}else{var a=document.createElement('a');a.href=c.toDataURL('image/png');a.download=file.name;a.click();say.textContent='saved.'}});
 })();
-</script><div id="pp-rights" style="position:fixed;left:8px;bottom:4px;z-index:2147483647;pointer-events:none;font:10px/1.3 system-ui,sans-serif;color:#fff;opacity:.55;text-shadow:0 0 2px #000,0 0 2px #000">&copy; 2026 ChikinNuglet. pot&#9651;to&trade; and his look are trademarks of ChikinNuglet. All rights reserved.</div></body></html>
+</script></body></html>

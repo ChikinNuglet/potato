@@ -127,6 +127,7 @@ async function openLevel(id) {
 // ---------- the song clock ----------
 let studioHold = false;   // the Level Studio (studio.mjs, ?studio) holds the song clock while Chikin builds
 let mode = 'title', sim = null, practice = false, demoing = false, attempts = 0, flag = 0, fakeT = 0, muted = false, calm = false;
+let spinAlt = 1;   // (Get Down's rebuild: which way Space turns him next)
 let dying = 0, arrive = 0, presses = [], pi = 0, lastGone = null, lastReborn = null, lastKeyT = 0;
 let pre = null;   // the pre-roll clock (before the song starts)
 const TAP = { on: false, paused: false };   // the tapper (tapper.mjs) — see window.RUN.tap
@@ -321,8 +322,9 @@ function loop(ms) {
         if (s.fxEv && s.fxEv.at === s.t) { arrive = Math.max(arrive, s.fxEv.k || 0); if (s.fxEv.sfx && SFX[s.fxEv.sfx]) SFX[s.fxEv.sfx](s.fxEv.arg); }   // E5: a level's scripted glitch (s.fxEv = { at, k, sfx, arg }): his glitch fx + its sound, with no press (Confidently Incorrect's intro, Mom)
         if (C.def.faces) for (const [ft, fn, fd] of C.def.faces) if (s.t - DT < ft && s.t >= ft) react(fn, fd || 1);   // a level's faces on song moments: faces: [[t, name, dur]]   // a mode asks for a face: s.react = { name, dur, at: s.t }
         if (demoing) for (const k of Object.keys(inp)) callout(k);
+        if (C.def.party && C.def.party.oneVerb && inp.G && !inp.L && !inp.R) { view.spinReq = (view.spinReq || 0) + (spinAlt = -spinAlt); }   // (Get Down's rebuild, one verb: Space turns him too, a different way each time)
         if ((inp.L || inp.R) && !C.def.shooter && (!C.def.mode || (typeof C.def.spin === 'function' ? C.def.spin(s) : C.def.spin))) {   /* (def.spin can be a test: Last Lights spins him only when its rules counted one) */   /* (the shooter's opener walks on ←/→; ↑ hops + spins there) */   /* (a mode level can ask for the spin: def.spin) */   // (the shooter's opening too: normal rules till he's in space)   // ← / → : he spins on the spot, happy or surprised (Chikin: "that would be fun")
-          view.spinReq = (view.spinReq || 0) + (inp.L ? -1 : 1); react(['laugh', 'smirk', 'wide', 'shock', 'startled'][Math.floor(Math.random() * 5)], 0.7); }
+          view.spinReq = (view.spinReq || 0) + (inp.L ? -1 : 1); if (!C.def.grinLock) react(['laugh', 'smirk', 'wide', 'shock', 'startled'][Math.floor(Math.random() * 5)], 0.7); }   // (def.grinLock: Get Down keeps his face for the drop)
         if (C.def.hints) for (const h of C.def.hints) if (!h.shown && s.t >= h.t) { h.shown = true; flash(h.text); }   // the first time each move shows up
         if (practice) { const si = C.secAt(s.t); if (C.secs[si].t > flag) { flag = C.secs[si].t; flash('flag: ' + C.secs[si].name); } }
       }
@@ -499,7 +501,17 @@ window.RUN = { get sim() { return sim; }, get C() { return C; }, open: openLevel
 requestAnimationFrame(loop);
 import('./tapper.mjs').then(m => m.createTapper(window.RUN, { initSfx })).catch(e => console.warn('tapper', e));   // (a tapper that fails never stops the game)
 $('boot').hidden = true; show('title');
-if (PLAY_ONLY) window.RUN.start(PLAY_ONLY, 0).catch(e => console.error('play', e));
+if (PLAY_ONLY) (async () => {   // (?play=<id>: one level. ?play=<id>&demo: it plays itself. Chikin Nov 12: he stood spinning at 0:00, because a browser won't start a song before the first touch.
+  // So: the crew's loading screen. He waits at the door; light under it = the level is loaded; a tap or any key opens it and the song starts.)
+  const L = LEVELS.find(l => l.id === PLAY_ONLY || l.was === PLAY_ONLY), W = !SILENT && !BLANK_Q && window.PotatoWait;
+  const w = W ? W.open({ kind: 'game', name: (L && L.title) || PLAY_ONLY, still: location.pathname.indexOf('/arcade/run/') >= 0 ? '../../logo/potato-3d.png' : '../../pushwork/potato-site/logo/potato-3d.png',   /* (the site's copy of the game sits at /arcade/run/) */ say: { long: "you're on." }, stage: true }) : null;   /* (stage: the 404 curtain he walks through; Chikin, Nov 13, replacing the door and the knock) */
+  await openLevel(PLAY_ONLY);
+  if (w) { await w.answered();
+    { w.line("you're on.");   // (always: this is the start button, and the touch is what lets the browser play the song. Stand-in words for his read.)
+      await new Promise(res => { const go = () => { for (const ev of ['keydown', 'pointerdown', 'touchstart']) removeEventListener(ev, go, true); res(); }; for (const ev of ['keydown', 'pointerdown', 'touchstart']) addEventListener(ev, go, true); }); w.line(''); }
+    initSfx(); await w.ready(); }
+  practice = false; demoing = Q.has('demo'); view.videoMode = false; attempts = 0; flag = 0; start(0);
+})().catch(e => console.error('play', e));
 if (PLAY_ONLY) { const on = () => initSfx(); for (const ev of ['keydown', 'pointerdown', 'touchstart']) addEventListener(ev, on, { capture: true, once: true }); }   // (?play: no kitchen to start the sound effects, so the first touch does; Chikin Nov 8: deaths + glitches were silent)
 if (Q.has('studio')) import('./studio.mjs').catch(e => console.error('studio', e));   // the LEVEL STUDIO (?studio): Chikin builds on the levels (studio.mjs)
 import './dev.mjs';   // DEV MODE (` or #dev): pick a level and where in the song (Chikin, Nov 2)

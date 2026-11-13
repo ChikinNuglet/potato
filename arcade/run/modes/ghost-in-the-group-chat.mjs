@@ -120,7 +120,7 @@ export const F = { WALK: 7.2, ACCG: 70, ACCA: 42, GRAV: 44, HOP: 2.15, FALL: 20,
 // a knocked-out slot takes when he lands on it (fix, Nov 3: no invisible floor — his glitch holds her bubble up under him, on screen))
 // (MINWARN also covers drops now: lead beats · P + SHAKE must reach it, checked in prep — a drop gets 1.5 beats, a throw lobs higher)
 export const J = { POP: 2.6, DROP_POP: 1.5, G: 18, VXMAX: 12, SHAKE: 0.15, LIFE: 2.6, MINWARN: 1.0, KNOCK_VY: -5, ABOVE: [0.5, 7], AGE: 0.8, ROWAGE: 0.08, HOLE: 2,
-  KNOCKSAFE: 2.5, MEND: 0.25 };
+  KNOCKSAFE: 2.5, MEND: 0.25, RIGHT: 1.5, FLING: 5 };
 const STORYQ = typeof location !== 'undefined' && /[?&]story(=|&|$)/.test(location.search || '');
 export const storyOn = C => !!C.def.storyRun || STORYQ;   // (the story run: the jolts show in full, but never touch the game)
 // text widths without a canvas (the sim and the bot need them): Helvetica-ish advance widths in em
@@ -154,9 +154,13 @@ export function prep(C) {
   const hb = t => R.tOfBeat(Math.round(R.beatOf(t) * 2) / 2), upHB = t => R.tOfBeat(Math.ceil(R.beatOf(t) * 2 - 1e-6) / 2), upQ = t => R.tOfBeat(Math.ceil(R.beatOf(t) * 4 - 1e-6) / 4), Q = P / 4;
   const TH = D.thread.map(r => ({ ...r, t0: r.t, t: hb(r.t), ...(r.from != null ? { from: hb(r.from) } : {}) })).sort((a, b) => a.t - b.t || a.t0 - b.t0);
   for (let k = 1; k < TH.length; k++) if (TH[k].t < TH[k - 1].t + 0.1) TH[k].t = TH[k - 1].t + Q;
+  // THE CARRY-OVER (Nov 12, Chikin: "the chat moves by too fast"): with def.phone.sep (beats) no ordinary line lands closer than that to the
+  // line before it when the level's own times allow: one of his moments comes in a full sep after the row before it, not a quarter beat
+  // (never later than its own sung word). Without it (SEP 0) every number below is the old one.
+  const SEP = (D.sep || 0) * P;
   // James's single texts that Potato can glitch come in EARLY: on the quarter beat just after the row before them (up to `lead` s
   // before their time), so the receipt has time to run (Sent → Delivered → Read) before Sheila answers
-  for (let k = 1; k < TH.length; k++) { const r = TH[k]; if (r.w !== 'J' || !r.tg || r.ph || r.bu || r.tb) continue; r.t = Math.min(r.t, Math.max(upQ(TH[k - 1].t + 0.1), upQ(r.t - (D.lead ?? 1.3)))); }
+  for (let k = 1; k < TH.length; k++) { const r = TH[k]; if (r.w !== 'J' || !r.tg || r.ph || r.bu || r.tb) continue; r.t = Math.min(r.t, Math.max(upQ(TH[k - 1].t + (SEP || 0.1)), upQ(r.t - (D.lead ?? 1.3)))); }
   // ... and nothing lands straight after one of his moments for at least MINW s (her answer waits for the next half beat after that —
   // never more than two half beats late; the rows after it shuffle down with it, a quarter beat apart)
   { const MINW = D.minWin ?? 0.95, bs = bursts(TH);
@@ -164,6 +168,13 @@ export function prep(C) {
       const rows = b ? b.rows : [r], her = r.tb ? [...TH.slice(0, k)].reverse().find(q => q.w === 'S' && q.x === r.on) : null, A = her ? her.t : rows[0].t;
       let j = TH.indexOf(rows[rows.length - 1]) + 1; if (j >= TH.length) continue; const need = upHB(Math.min(A + MINW, Math.max(TH[j].t + 0.6, A + 0.9)));   // (A + 0.9: when his text was itself pushed down by an earlier wait)
       for (let m = j; m < TH.length; m++) { const want = m === j ? need : TH[m - 1].t + Q; if (TH[m].t >= want - 1e-6) break; TH[m].t = want; } } }
+  // (SEP only: a wait can leave one of his single texts a quarter beat behind the answer that waited. It comes in a full sep after that
+  // line instead, never later than its own sung half beat, and what follows it waits for it in the same way. Rows only ever move later)
+  if (SEP) for (let pass = 0; pass < 6; pass++) { let moved = false;
+    for (let k = 1; k < TH.length; k++) { const r = TH[k]; if (r.w !== 'J' || !r.tg || r.ph || r.bu || r.tb) continue; const floor = upQ(TH[k - 1].t + SEP), cap = hb(r.t0);
+      if (r.t >= floor - 1e-6 || r.t >= cap - 1e-6) continue; r.t = Math.min(floor, cap); moved = true;
+      for (let m = k + 1; m < TH.length; m++) { const want = m === k + 1 ? upHB(r.t + 0.9) : TH[m - 1].t + Q; if (TH[m].t >= want - 1e-6) break; TH[m].t = want; } }
+    if (!moved) break; }
   // the events (Potato's moments), in thread order: a text · a burst (photos, or a double/triple text) · a tapback
   const rowEv = new Map(); { const bs = bursts(TH), seen = new Set();
     for (const r of TH) { if (r.w !== 'J' || !r.tg) continue;
@@ -177,7 +188,8 @@ export function prep(C) {
   events.forEach((e, k) => { const nx = events[k + 1], until = nx ? nx.T - 0.05 : (D.depEnd ?? 108.0);
     const dep = TH.filter(r => r.t > e.end + 1e-3 && r.t < until && !(r.w === 'J' && r.tg) && r.re == null);
     for (const r of dep) depOf.set(r, e.i);
-    const a = alt[e.T0.toFixed(2)]; if (a) { const first = dep.find(r => r.w === 'S') || TH.find(r => r.w === 'S' && r.re && r.re.includes(e.T0) && r.t > e.end && r.t < e.end + 1.6); altItems.push({ t: first ? first.t : Math.max(e.end, e.T0) + P, x: a, ev: e.i }); } });
+    const a = alt[e.T0.toFixed(2)]; if (a) { const first = dep.find(r => r.w === 'S') || TH.find(r => r.w === 'S' && r.re && r.re.includes(e.T0) && r.t > e.end && r.t < e.end + 1.6); const base = Math.max(e.end, e.T0) + P;   // (SEP: with no line of hers to stand in for, her other answer waits for his moment like any answer does, so it can't close his window early)
+      altItems.push({ t: first ? first.t : SEP ? Math.max(base, upHB(e.end + (D.minWin ?? 0.95))) : base, x: a, ev: e.i }); } });
   for (const e of events) if (e.row.re) e.re = e.row.re.map(evOf);   // (one of his own moments can be a reaction too: it's void if what it answers never happened)
   const reOf = r => r.re ? { re: r.re.map(evOf) } : {}, rowOfT = T => TH.find(q => Math.abs(q.t0 - T) < 0.005);
   const reRowOf = r => r.reRow != null ? { reRow: rowOfT(r.reRow).t.toFixed(3), reRowT: rowOfT(r.reRow).t } : {};
@@ -275,8 +287,15 @@ export const platsOf = st => st.filter(r => !r.grey && r.y1 > S.BAR + 0.05 && !(
 export function joltPick(P, s, st, t, j) {
   const top = histTop(s, t), taken = new Set(Object.values(s.jolt || {}).map(o => o.id).filter(v => v != null)), row = j.pick && j.pick.startsWith('row:') ? j.pick.slice(4) : null;
   const mine = s.ground && typeof s.onId === 'number' ? s.onId : null;   // (never the bubble he's standing on: the phone knocks her texts AT him, not his floor out from under him)
-  const ok = (r, age) => r.q.who === 'S' && !r.dots && !r.grey && !r.q.photo && r.q.text && !r.q.tapped && !r.hole && !taken.has(r.q.id) && r.q.id !== mine && t - r.q.a >= age
+  // (THE CARRY-OVER, Nov 12: j.side 'J' = one of JAMES's own lines, one Potato did not rewrite and can't any more. First choice: one whose
+  // middle is at least J.RIGHT to the right of him, so it comes at him from the right; else any of them. None on screen = this jolt doesn't
+  // happen. Default: hers, as before)
+  const side = j.side || 'S';
+  const ok = (r, age) => r.q.who === side && !(side === 'J' && r.mine) && !r.dots && !r.grey && !r.q.photo && r.q.text && !r.q.tapped && !r.hole && !taken.has(r.q.id) && r.q.id !== mine && t - r.q.a >= age
     && r.y1 < top - 0.3 && r.y0 > S.BAR + 0.1 && !glitchEv(P, s, r.q, t);
+  if (side === 'J') { const all = st.filter(r => ok(r, J.ROWAGE)), rt = all.filter(r => (r.x0 + r.x1) / 2 - s.lx >= J.RIGHT), pool = rt.length ? rt : all; let best = null, bc = 1e9;
+    for (const r of pool) { const d = Math.abs((r.y0 + r.y1) / 2 - (s.ly + 2.5)); if (d < bc) { bc = d; best = r; } }   // (the one nearest to a little above his head: a flat throw)
+    return best; }
   if (row) { const r = st.find(r => r.q.text === row && ok(r, J.ROWAGE)); if (r) return r; }
   let cand = st.filter(r => ok(r, J.AGE)), best = null, bc = 1e9; if (!cand.length) cand = st.filter(r => ok(r, J.ROWAGE));   // (nothing she sent a while ago: one she's only just sent)
   for (const r of cand) { const d = r.y0 - s.ly; if (d < J.ABOVE[0] || r.y1 - s.ly > J.ABOVE[1]) continue; if (d < bc) { bc = d; best = r; } }
@@ -289,8 +308,20 @@ export function joltPick(P, s, st, t, j) {
 // would have to fly faster than VXMAX across (so it always comes down on the mark); aimed above itself it just drops. It ends when its top passes the bar, it leaves the column, or after LIFE.
 export function joltLaunch(j, box, aim, t0, warn) {
   const w = box.x1 - box.x0, h = box.y1 - box.y0, cx = (box.x0 + box.x1) / 2, cy = (box.y0 + box.y1) / 2;
-  let vx = 0, vy = J.DROP_POP, kind = 'drop';
-  if (j.kind === 'throw' && aim && aim[1] - cy < J.POP * J.POP / (2 * J.G) - 0.05) {
+  let vx = 0, vy = J.DROP_POP, kind = 'drop', tgt = null;
+  if (j.side === 'J' && j.kind === 'throw' && aim) {
+    // THE CARRY-OVER (Nov 12): one of JAMES's lines, flung LEFT off his side of the thread. He can't see Potato, so it isn't aimed by him: it
+    // comes down on Potato only if he is well to its left (J.FLING or more); otherwise it comes down J.FLING to its left, at his height,
+    // and only catches him if he is in its way. Either way it travels right to left. Same pop, gravity, lob and MINWARN as her throws
+    // (MINWARN is still counted to the first touch of his body where he stood).
+    tgt = [Math.min(aim[0], cx - J.FLING), Math.min(aim[1], cy + J.POP * J.POP / (2 * J.G) - 0.1)];
+    let tau = (J.POP + Math.sqrt(J.POP * J.POP - 2 * J.G * (tgt[1] - cy))) / J.G; vy = J.POP;
+    const need = Math.max(J.MINWARN - (t0 - warn), Math.abs(tgt[0] - cx) / J.VXMAX); if (tau < need) { tau = need; vy = (tgt[1] - cy + J.G / 2 * tau * tau) / tau; }
+    const touch = (tt, v) => { const ux = (tgt[0] - cx) / tt; for (let d = 0; d < tt + 0.05; d += 1 / 120) { const x = cx + ux * d, y = cy + v * d - J.G / 2 * d * d, ly = aim[1] - 0.75;
+      if (!(aim[0] + 0.6 < x - w / 2 || aim[0] - 0.6 > x + w / 2 || ly + 1.5 < y - h / 2 || ly >= y + h / 2 - 0.08)) return d; } return 1e9; };
+    for (let n = 0; n < 12 && touch(tau, vy) + (t0 - warn) < J.MINWARN; n++) { tau += 0.05; vy = (tgt[1] - cy + J.G / 2 * tau * tau) / tau; }
+    vx = (tgt[0] - cx) / tau; kind = 'throw'; }
+  else if (j.kind === 'throw' && aim && aim[1] - cy < J.POP * J.POP / (2 * J.G) - 0.05) {
     let tau = (J.POP + Math.sqrt(J.POP * J.POP - 2 * J.G * (aim[1] - cy))) / J.G; vy = J.POP;
     const need = Math.max(J.MINWARN - (t0 - warn), Math.abs(aim[0] - cx) / J.VXMAX); if (tau < need) { tau = need; vy = (aim[1] - cy + J.G / 2 * tau * tau) / tau; }   // (a long way across: a higher lob, so it still lands on the mark)
     // (fix, Nov 3: MINWARN counts to the first touch of his body where he stood, not to his middle — lob higher till it does)
@@ -299,7 +330,7 @@ export function joltLaunch(j, box, aim, t0, warn) {
     for (let n = 0; n < 12 && touch(tau, vy) + (t0 - warn) < J.MINWARN; n++) { tau += 0.05; vy = (aim[1] - cy + J.G / 2 * tau * tau) / tau; }
     vx = (aim[0] - cx) / tau; kind = 'throw'; }
   const yEnd = S.BAR + 0.2 - h / 2, tb = (vy + Math.sqrt(vy * vy + 2 * J.G * Math.max(0, cy - yEnd))) / J.G, tx = vx ? (Math.sign(vx) * (F.X + w / 2) - cx) / vx : 1e9;
-  return { j: j.i, t0, w, h, cx, cy, vx, vy, kind, aim, dir: vx ? Math.sign(vx) : j.i % 2 ? 1 : -1, end: t0 + Math.min(J.LIFE, tb, tx) };
+  return { j: j.i, t0, w, h, cx, cy, vx, vy, kind, aim, ...(tgt ? { tgt } : {}), dir: vx ? Math.sign(vx) : j.i % 2 ? 1 : -1, end: t0 + Math.min(J.LIFE, tb, tx) };
 }
 // where it is at t: { x0, x1, y0, y1, cx, cy, vy, rot } — null before it's loose or once it's gone
 export function joltBox(L, t) {
@@ -587,6 +618,14 @@ export const modeView = ({ T, world, C, cam }) => {
   const petPic = (W, H) => { if (petunia.cv) return petunia.cv; const c = document.createElement('canvas'); c.width = Math.round(W); c.height = Math.round(H); const g = c.getContext('2d'), im = petunia.im;
     const sc = Math.max(c.width / im.naturalWidth, c.height / im.naturalHeight), w = im.naturalWidth * sc, h = im.naturalHeight * sc; g.drawImage(im, (c.width - w) / 2, (c.height - h) * 0.35, w, h);
     return (petunia.cv = c); };
+  // THE CARRY-OVER (Nov 12, Chikin: "the picture of 'biscuit' needs to be put in"): def.phone.pics = { photo key: { src, crop, load, keep } }: a
+  // real picture stands in for that drawn photo. crop [x, y, w, h] (0-1) fills the frame · load: it fills in from the top over that many
+  // seconds once its frame is in (ears first) · keep: his glitch never changes it (no purple on it, ever). One without keep still glitches
+  // into the drawn potato picture it always did. A picture that fails to load leaves the drawn photo in its place.
+  const pics = {}; if (D.pics && typeof Image !== 'undefined') for (const k in D.pics) { const p = { ...D.pics[k], ok: false, cv: null, im: new Image() }; p.im.onload = () => { p.ok = true; }; p.im.src = new URL('../' + p.src, import.meta.url).href; pics[k] = p; }
+  const realPic = (p, W, H) => { if (p.cv) return p.cv; const c = document.createElement('canvas'); c.width = Math.round(W); c.height = Math.round(H); const g = c.getContext('2d'), im = p.im, cr = p.crop || [0, 0, 1, 1];
+    const sw = im.naturalWidth * cr[2], sh = im.naturalHeight * cr[3], sc = Math.max(c.width / sw, c.height / sh); g.imageSmoothingQuality = 'high';
+    g.drawImage(im, im.naturalWidth * cr[0], im.naturalHeight * cr[1], sw, sh, (c.width - sw * sc) / 2, (c.height - sh * sc) / 2, sw * sc, sh * sc); return (p.cv = c); };
   const screenOn = t => t < O.lit ? 0 : t < (end.black ?? 1e9) ? clamp((t - O.lit) / 0.45) : Math.max(0, 1 - (t - end.black) / 0.12);
   // ---- the camera: wide over the table, in to the phone (until it fills the screen's height), then the phone's screen fills the
   // whole screen (the camera just settles: the screen grows to meet it); a punch on a rewrite, a shake on a fail; at the end the rush
@@ -761,7 +800,7 @@ export const modeView = ({ T, world, C, cam }) => {
   }
   // ---------- the phone's jolts: it's glitching because he's in it (Nov 3). All on the phone, all local, his purples only ----------
   const jRow = (st, o) => st.find(r => r.q.id === o.id);
-  const jFrameX = () => XI(-HW + S.FRAME * 0.5);   // (the left edge of the glass: the frame's inner side)
+  const jFrameX = j => XI((j && j.side === 'J' ? 1 : -1) * (HW - S.FRAME * 0.5));   // (the left edge of the glass: the frame's inner side · one of James's lines: the RIGHT edge, his side)
   function drawJoltFrame(s, t) {   // the knot of purple pixels building on the frame at the bubble's height (the warning), flaring on the hit
     const st = stack(C, t, s);
     for (const j of P.jolts) { const o = s.jolt[j.i]; if (!o || o.id == null || t < j.warn || t > (o.hitT ?? j.hit) + 0.25) continue; const r = jRow(st, o); if (!r && o.st !== 'fly') continue;
@@ -769,22 +808,22 @@ export const modeView = ({ T, world, C, cam }) => {
       const half = Math.floor(RG.beatOf(t) * 2), n = hit ? 22 : 4 + Math.round(10 * k), st8 = Math.max(4, Math.round(0.12 * U)), x0 = XI(-HW), f = Math.floor(t * 20);
       g.save(); for (let i = 0; i < n; i++) { const a = hash(i + j.i * 17, half) * 6.283, rad = (0.1 + (0.25 + 0.3 * k) * hash(i, f + j.i)) * U * (hit ? 1.6 : 1);
         g.globalAlpha = Math.min(1, 0.35 + 0.65 * k) * (0.6 + 0.4 * (half % 2)); g.fillStyle = i % 7 === 0 ? '#f3ecff' : PURP[i % 4];
-        g.fillRect(Math.round((x0 + S.FRAME * 0.5 * U + Math.cos(a) * rad * 0.6) / st8) * st8, Math.round((y + Math.sin(a) * rad * 1.3) / st8) * st8, st8, st8); }
+        g.fillRect(Math.round(((j.side === 'J' ? XI(HW) - S.FRAME * 0.5 * U : x0 + S.FRAME * 0.5 * U) + Math.cos(a) * rad * 0.6) / st8) * st8, Math.round((y + Math.sin(a) * rad * 1.3) / st8) * st8, st8, st8); }
       g.restore(); }
   }
   function drawJolts(s, t, tr, st) {
     for (const j of P.jolts) { const o = s.jolt[j.i]; if (!o || o.id == null || t < j.warn) continue; const q = P.items[o.id], r = jRow(st, o);
-      const R0 = r ? { x: XI(r.x0), y: YI(r.y1), w: r.ww * U, h: r.hh * U, r: Math.min(r.hh * U / 2, 0.42 * U) } : null, fx = jFrameX();
+      const R0 = r ? { x: XI(r.x0), y: YI(r.y1), w: r.ww * U, h: r.hh * U, r: Math.min(r.hh * U / 2, 0.42 * U) } : null, fx = jFrameX(j), jr = j.side === 'J';   // (jr: the spark reaches his line's right end)
       // the warning: her bubble crackles, little zigzags flicker between the frame and it; a throw draws its dotted arc to where it'll land
       if (o.st === 'warn' && r) { const k = clamp((tr - o.warnT) / Math.max(0.1, j.hit - o.warnT)), cy = YI((r.y0 + r.y1) / 2);
         drawCrackle(g, R0, { t, u: U, k: 0.4 + 0.6 * k, seed: j.i });
-        const half = Math.floor(RG.beatOf(t) * 2); for (let z = 0; z < 1 + Math.round(2 * k); z++) if (hash(z + j.i, Math.floor(t * 15)) < 0.55 + 0.4 * k) drawSpark(g, [fx, cy + (hash(z, half) - 0.5) * 0.5 * U], [R0.x, cy + (hash(z + 3, half) - 0.5) * R0.h * 0.6], { t, u: U, k: 0.35 + 0.35 * k, seed: z + j.i * 5, amp: 0.3, n: 5 });
+        const half = Math.floor(RG.beatOf(t) * 2); for (let z = 0; z < 1 + Math.round(2 * k); z++) if (hash(z + j.i, Math.floor(t * 15)) < 0.55 + 0.4 * k) drawSpark(g, [fx, cy + (hash(z, half) - 0.5) * 0.5 * U], [jr ? R0.x + R0.w : R0.x, cy + (hash(z + 3, half) - 0.5) * R0.h * 0.6], { t, u: U, k: 0.35 + 0.35 * k, seed: z + j.i * 5, amp: 0.3, n: 5 });
         if (j.kind === 'throw') { const Lp = joltLaunch(j, r, o.aim, j.hit + J.SHAKE, o.warnT);
-          if (Lp.kind === 'throw') { const tau = Math.min(Lp.end - Lp.t0, Math.abs(Lp.vx) > 0.01 ? (o.aim[0] - Lp.cx) / Lp.vx : 1), nd = 24, show = Math.ceil(nd * ease(k * 1.4)), st8 = Math.max(5, Math.round(0.15 * U));
+          if (Lp.kind === 'throw') { const mark = Lp.tgt || o.aim, tau = Math.min(Lp.end - Lp.t0, Math.abs(Lp.vx) > 0.01 ? (mark[0] - Lp.cx) / Lp.vx : 1), nd = 24, show = Math.ceil(nd * ease(k * 1.4)), st8 = Math.max(5, Math.round(0.15 * U));
             g.save(); g.fillStyle = PURP[3]; for (let i = 1; i <= Math.min(nd, show); i++) { const b = joltBox(Lp, Lp.t0 + tau * i / nd); if (!b) break; g.globalAlpha = 0.85 * (0.5 + 0.5 * ((i + Math.floor(t * 8)) % 2));
               g.fillRect(Math.round(XI(b.cx) / st8) * st8 - st8 / 2, Math.round(YI(b.cy) / st8) * st8 - st8 / 2, st8, st8); }
             if (show >= nd) { const pu = 1 + 0.12 * beatPulse(t); g.globalAlpha = 0.9; g.strokeStyle = PURP[3]; g.lineWidth = Math.max(3, 0.07 * U); g.setLineDash([0.12 * U, 0.08 * U]);
-              g.beginPath(); g.ellipse(XI(o.aim[0]), YI(o.aim[1]), 0.62 * U * pu, 0.62 * U * pu, 0, 0, 7); g.stroke(); }
+              g.beginPath(); g.ellipse(XI(mark[0]), YI(mark[1]), 0.62 * U * pu, 0.62 * U * pu, 0, 0, 7); g.stroke(); }
             g.restore(); } }
         else { // a drop: its fall lane, dotted lilac straight down from her bubble to the bar (drawing in over the warning) — the drop's "it lands HERE"
           const show = ease(k * 1.4), st8 = Math.max(5, Math.round(0.15 * U)), yb = YI(S.BAR + 0.1), yt = YI(r.y0), ys = yt + (yb - yt) * show;
@@ -793,9 +832,9 @@ export const modeView = ({ T, world, C, cam }) => {
           g.restore(); } }
       // the hit: a bright bolt from the frame for a few frames, a burst of his glitch on her bubble, a word of his glitch language
       if (o.hitT != null && t >= o.hitT && t - o.hitT < 0.45) { const a = t - o.hitT, by = r ? YI((r.y0 + r.y1) / 2) : o.L ? YI(o.L.cy) : null;
-        if (by != null && a < 0.09) drawSpark(g, [fx, by], [r ? R0.x + 0.2 * U : XI(o.L.cx - o.L.w / 2), by], { t, u: U, k: 1, seed: j.i + 40, amp: 0.55, n: 7 });
+        if (by != null && a < 0.09) drawSpark(g, [fx, by], [r ? (jr ? R0.x + R0.w - 0.2 * U : R0.x + 0.2 * U) : XI(o.L.cx + (jr ? 1 : -1) * o.L.w / 2), by], { t, u: U, k: 1, seed: j.i + 40, amp: 0.55, n: 7 });
         if (R0 && a < 0.3) glitchBlocks(g, R0.x, R0.y, R0.w, R0.h, t, q.id + 11, 1 - a / 0.3);
-        if (by != null && GWORDS.length && a < 0.4) { const w = GWORDS[Math.floor(hash(j.i, 77) * GWORDS.length)], gx = (r ? R0.x + R0.w : fx) + 0.35 * U, gy = by - 0.6 * a * U, jx = (hash(j.i, Math.floor(t * 30)) - 0.5) * 8;
+        if (by != null && GWORDS.length && a < 0.4) { const w = GWORDS[Math.floor(hash(j.i, 77) * GWORDS.length)], gx = jr ? (r ? R0.x : fx) - 2.2 * U : (r ? R0.x + R0.w : fx) + 0.35 * U, gy = by - 0.6 * a * U, jx = (hash(j.i, Math.floor(t * 30)) - 0.5) * 8;
           g.save(); g.globalAlpha = 1 - a / 0.4; g.font = LFONT(Math.round(0.4 * U)); g.textAlign = 'left'; g.textBaseline = 'middle'; g.lineWidth = 5; g.strokeStyle = 'rgba(0,0,0,.75)'; g.strokeText(w, gx + jx, gy);
           g.fillStyle = SPLIT[0]; g.fillText(w, gx + jx - 3, gy); g.fillStyle = SPLIT[1]; g.fillText(w, gx + jx + 3, gy); g.fillStyle = PURP[3]; g.fillText(w, gx + jx, gy); g.restore(); } }
       // the fall: the same bubble (her words readable all the way), tipping, shedding purple pixels; through him = his glitch on it
@@ -831,9 +870,12 @@ export const modeView = ({ T, world, C, cam }) => {
         for (let i = 0; i < 3; i++) { const ph = (t * 2.4 - i * 0.22) % 1, a = 0.35 + 0.5 * Math.max(0, Math.sin(ph * Math.PI)); g.fillStyle = `rgba(120,120,128,${a})`; g.beginPath(); g.arc(X0 + W * (0.3 + 0.2 * i), Yt + H / 2, 0.1 * U, 0, 7); g.fill(); }
         continue; }
       if (q.photo) {   // a photo: rounded, no tail; his = a potato in it; the last one glitches AGAIN, a beat later: Petunia
-        const hit = isP(s, q), pT = hit ? s.rowP[q.row.t.toFixed(3)] : null, Rr = 0.32 * U, p2 = hit && q.ph2 && petunia.ok ? t - Math.max(q.a, pT) - RG.P : -1, sc = 0.85 + 0.15 * ease(r.pop);
+        const rp = pics[q.photo] && pics[q.photo].ok ? pics[q.photo] : null, hit = isP(s, q) && !(rp && rp.keep), pT = hit ? s.rowP[q.row.t.toFixed(3)] : null, Rr = 0.32 * U, p2 = hit && q.ph2 && petunia.ok ? t - Math.max(q.a, pT) - RG.P : -1, sc = 0.85 + 0.15 * ease(r.pop);
         g.save(); g.translate(X0 + W / 2, Yt + H / 2); g.scale(sc, sc); g.translate(-(X0 + W / 2), -(Yt + H / 2)); rr(g, X0, Yt, W, H, Rr); g.clip();
-        g.drawImage(p2 > 0.12 ? petPic(W, H) : photo(q.photo, hit), X0, Yt, W, H);
+        const ld = rp && rp.load && !hit ? clamp((t - q.a - S.ANIM) / rp.load) : 1;   // (a real picture loading: its grey frame first, then the picture from the top down)
+        if (ld < 1) { g.fillStyle = GREY; g.fillRect(X0, Yt, W, H); g.save(); g.beginPath(); g.rect(X0, Yt, W, H * ld); g.clip(); }
+        g.drawImage(p2 > 0.12 ? petPic(W, H) : rp && !hit ? realPic(rp, W, H) : photo(q.photo, hit), X0, Yt, W, H);
+        if (ld < 1) g.restore();
         if (hit && t - pT < 0.6) glitchBlocks(g, X0, Yt, W, H, t, q.id, 1 - (t - pT) / 0.6);
         if (p2 >= 0 && p2 < 0.45) glitchBlocks(g, X0, Yt, W, H, t, q.id + 7, 1 - Math.abs(p2 - 0.12) / 0.33);
         g.restore(); if (hit) { g.strokeStyle = PURP[0]; g.lineWidth = 4; rr(g, X0 - 2, Yt - 2, W + 4, H + 4, Rr + 2); g.stroke(); }
@@ -862,7 +904,7 @@ export const modeView = ({ T, world, C, cam }) => {
     }
     // the light: ONLY James's texts he can still glitch (never hers, never a Read one) — a steady purple rim with a pixel crawl; the
     // one he's standing on is digital glitching water round his feet
-    for (const r of st) { if (r.dots || r.grey || r.q.ev == null) continue; const ge = glitchEv(P, s, r.q, tr); if (!ge) continue; const R0 = { x: XI(r.x0), y: YI(r.y1), w: r.ww * U, h: r.hh * U, r: Math.min(r.hh * U / 2, (r.q.photo ? 0.32 : 0.42) * U) };
+    for (const r of st) { if (r.dots || r.grey || r.q.ev == null) continue; const ge = glitchEv(P, s, r.q, tr); if (!ge) continue; if (r.q.photo && pics[r.q.photo] && pics[r.q.photo].ok && pics[r.q.photo].keep) continue;   /* (a kept real picture: no purple on it, ever; the two beside it carry the light) */ const R0 = { x: XI(r.x0), y: YI(r.y1), w: r.ww * U, h: r.hh * U, r: Math.min(r.hh * U / 2, (r.q.photo ? 0.32 : 0.42) * U) };
       const left = clamp((ge.R - tr) / Math.max(0.1, ge.R - ge.A));
       if (on && on.q.id === r.q.id) drawWater(g, R0, { fx: XI(s.lx), t, land: t - s.landAt, beats: beatsAgo(t), u: U, seed: r.q.id, k: 1 });
       else drawShimmer(g, R0, { t, u: U, k: 1, left, pulse: beatPulse(t) }); }

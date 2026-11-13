@@ -1,0 +1,7475 @@
+{
+ "what": "How Potato MOVES, as data. Character Animator, Design round, team Not A Screensaver. The page that explains it: design/MOTION.md. Checked by tools/pencil_test.py (parses, plays every keyed track, runs the director's thresholds). BUILD ROUND (seat 2, carried from One Overshoot): played on the real model by engine/moves/player.mjs + engine/moves/face.mjs; proof in strips/animator/ (tools/animator_strips.py).",
+ "version": 3,
+ "fps": 60,
+ "units": {
+  "f": "frames at 60 fps",
+  "H": "his body height (1 model unit in spud3d; feet add 0.075 below)",
+  "rad": "radians",
+  "speed": "H per second"
+ },
+ "flags": {
+  "carry": true,
+  "carry_note": "BOLD CHOICE (Character Animator). true = a big hit leaves a mark on how he moves for a while (see the carry block). false = he resets clean after every move.",
+  "cancel_model_breath": true,
+  "cancel_model_breath_note": "true = the rig divides out the read-only model's fixed breath sine so only our uneven breath shows. false = both run.",
+  "brace": true,
+  "brace_note": "BOLD CHOICE (Character Animator, Build round). true = a hand that has thrown him comes in fast and he leans a hair away before it lands (see the brace block). false = he stands as if it never happened.",
+  "fast_404": false,
+  "fast_404_note": "test aid only: true = he walks back in 90 f after going through, instead of 4 to 9 s.",
+  "knows": true,
+  "knows_note": "HE KNOWS (Potato seat's bold choice, built round 3). true = whenever he is upside down and not flying his lids drop, the arc over his eye goes flat and his eyes stay on you until he is the right way up. Mirrors flags.knows in data/potato-calls.json (that file is not loaded by the engine). false = off.",
+  "stance_look": true,
+  "stance_look_note": "THE SIDE-EYE IS A STANCE (Animation Director's bold choice), built into the look after only: on the look at you his body turns stance_look.turn rad AWAY and the eyes stay on you. The Potato seat has not signed a still yet (strips/animator/stance-still-r3.png is the still). false = the look at you is eyes only, facing front.",
+  "replant": true,
+  "replant_note": "BOLD CHOICE (character animator, round 3): RE-PLANT. After a look at you he does not go back to where he was standing: a small shuffle (0.05 to 0.11 of his height, either way), a dip, and his weight comes down on the other side. He never ends a gag in the pose or on the spot he began it. false = he returns to exactly where he was."
+ },
+ "key_format": {
+  "key": "[frame, value, ease]  ease describes the segment ARRIVING at this key; first key has none",
+  "eases": {
+   "lin": "straight line",
+   "in": "t*t (starts slow)",
+   "out": "1-(1-t)^2 (ends slow)",
+   "io": "smoothstep 3t^2-2t^3 (slow both ends); the default",
+   "in3": "t^3 (a wind-up that hangs, then goes)",
+   "out3": "1-(1-t)^3 (arrives hard, bleeds off)",
+   "hold": "stays at the previous value, then steps on this frame. ONLY legal on channels listed in blend.never_blend",
+   "spring": "from the previous key the channel is handed to its rig spring (rig.springs) with this value as target, keeping its speed. The spring makes the ONE overshoot. Nothing keys a settle by hand."
+  },
+  "relative": "dx, dy are offsets from where the move started, in his FACING direction (+dx = the way he faces or travels). Everything else is absolute.",
+  "tags": "contacts: frames where he touches or leaves something. Each contact exempts 2 frames (the frame itself and the next) from the judge thresholds, as direction.json allows."
+ },
+ "channels": {
+  "dx": {
+   "owner": "rig",
+   "unit": "H",
+   "rest": 0,
+   "what": "root travel along his facing"
+  },
+  "dy": {
+   "owner": "rig",
+   "unit": "H",
+   "rest": 0,
+   "what": "root height off the ground"
+  },
+  "sy": {
+   "owner": "rig",
+   "unit": "x",
+   "rest": 1,
+   "range": [
+    0.3,
+    1.25
+   ],
+   "what": "squash (below 1) and stretch (above 1) about the pivot. Width follows: sx = sz = 1/sqrt(sy), volume kept, unless sx is keyed"
+  },
+  "sx": {
+   "owner": "rig",
+   "unit": "x",
+   "rest": null,
+   "what": "width override, only for splats (a pancake is wider than volume allows)"
+  },
+  "roll": {
+   "owner": "rig",
+   "unit": "rad",
+   "rest": 0,
+   "what": "rotation in the screen plane about the pivot, + = anticlockwise"
+  },
+  "pitch": {
+   "owner": "rig",
+   "unit": "rad",
+   "rest": 0,
+   "what": "tip toward the camera (+) or away (-) about the pivot"
+  },
+  "shear": {
+   "owner": "rig",
+   "unit": "H",
+   "rest": 0,
+   "range": [
+    -0.14,
+    0.14
+   ],
+   "what": "how far his top sits behind his feet (the lag). Mostly driven by secondary.top_lag, keyed only for held leans"
+  },
+  "pivot": {
+   "owner": "rig",
+   "unit": "name",
+   "rest": "feet",
+   "values": [
+    "feet",
+    "centre",
+    "grab",
+    "contact"
+   ],
+   "what": "what the rig scales and turns about"
+  },
+  "yaw": {
+   "owner": "model",
+   "unit": "rad",
+   "rest": 0,
+   "what": "value given to turnTo(); the model's own yaw spring (k 60, c 11) does the easing and its single 3% overshoot. + = turned to screen right"
+  },
+  "lidL": {
+   "owner": "face",
+   "unit": "0..1",
+   "rest": 0,
+   "range": [
+    -1,
+    1
+   ],
+   "what": "screen-left eye lid: 0 = canon half-lid, 1 = shut, -1 = wide open"
+  },
+  "lidR": {
+   "owner": "face",
+   "unit": "0..1",
+   "rest": 0,
+   "range": [
+    -1,
+    1
+   ],
+   "what": "screen-right eye lid, same scale"
+  },
+  "gx": {
+   "owner": "face",
+   "unit": "eye",
+   "rest": 0,
+   "range": [
+    -1,
+    0
+   ],
+   "what": "pupils: 0 = canon side-eye (hard against the screen-right corner), -0.5 = straight at you, -1 = the far corner. He cannot look further right than home: to see that side he turns"
+  },
+  "gy": {
+   "owner": "face",
+   "unit": "eye",
+   "rest": 0,
+   "range": [
+    -0.3,
+    0.5
+   ],
+   "what": "pupils down (+) or up (-), in eye heights"
+  },
+  "browL": {
+   "owner": "face",
+   "unit": "eye",
+   "rest": 0,
+   "range": [
+    -0.4,
+    0.8
+   ],
+   "what": "screen-left brow raise, in eye heights (+ = up)"
+  },
+  "browR": {
+   "owner": "face",
+   "unit": "eye",
+   "rest": 0,
+   "range": [
+    -0.4,
+    0.8
+   ],
+   "what": "screen-right brow (the high one in canon), same scale"
+  },
+  "jaw": {
+   "owner": "face",
+   "unit": "0..1",
+   "rest": 0,
+   "what": "chew: the mouth line rides down and the lower face bulges"
+  },
+  "expr": {
+   "owner": "face",
+   "unit": "name",
+   "rest": "canon",
+   "what": "one of the 26 drawn faces in play/faces. Swapped whole, never cross-faded: see blend.never_blend"
+  },
+  "arms": {
+   "owner": "model",
+   "unit": "name",
+   "rest": "none",
+   "what": "arms(pose, blend seconds). Off unless a move names them"
+  },
+  "glitch": {
+   "owner": "model",
+   "unit": "0..1",
+   "rest": 0,
+   "what": "glitch(k). Always stepped on the 12 fps clock (held 5 frames), never eased"
+  }
+ },
+ "model_springs_measured": {
+  "note": "the read-only model's own springs, simulated at 1/60 (tools/pencil_test.py --springs). peak = how far 1 unit of kick moves it; ring = frames per wobble; settle = frames until under 5% of the peak.",
+  "squash": {
+   "k": 260,
+   "c": 9,
+   "zeta": 0.28,
+   "peak_per_kick": 0.0376,
+   "peak_at_f": 5,
+   "ring_f": 24,
+   "settle_f": 41
+  },
+  "leanX": {
+   "k": 140,
+   "c": 7,
+   "zeta": 0.3,
+   "peak_per_kick": 0.0514,
+   "peak_at_f": 7,
+   "ring_f": 33,
+   "settle_f": 45
+  },
+  "wob": {
+   "k": 300,
+   "c": 6,
+   "zeta": 0.17,
+   "peak_per_kick": 0.0419,
+   "peak_at_f": 5,
+   "ring_f": 22,
+   "settle_f": 60
+  },
+  "yaw": {
+   "k": 60,
+   "c": 11,
+   "zeta": 0.71,
+   "turn_50pct_f": 11,
+   "turn_90pct_f": 20,
+   "overshoot": 0.03,
+   "overshoot_at_f": 34,
+   "max_step_per_rad": 0.06
+  },
+  "dent": {
+   "k": 90,
+   "c": 5,
+   "zeta": 0.26,
+   "peak_per_kick": 0.0688,
+   "peak_at_f": 8,
+   "settle_f": 74
+  },
+  "meaning": "every one of them rings three times or more. They are his FLESH. They must never carry a move, only follow one: kicks stay small (see secondary.jiggle)."
+ },
+ "rig": {
+  "what": "our parent group around the model: the MASS. One overshoot, as the director asked (damping 0.5 to 0.65).",
+  "springs": {
+   "sy": {
+    "omega": 13,
+    "zeta": 0.58,
+    "overshoot": 0.107,
+    "settle_f": 26,
+    "slew_cap_per_f": 0.03,
+    "what": "squash and stretch settle. slew_cap: outside contact frames the rig never moves sy more than this in one frame (the director's scale threshold); a deep squash therefore comes back in a straight climb, then eases. Raise both together or not at all."
+   },
+   "roll": {
+    "omega": 11,
+    "zeta": 0.55,
+    "overshoot": 0.126,
+    "settle_f": 32,
+    "what": "rocking back upright"
+   },
+   "pitch": {
+    "omega": 11,
+    "zeta": 0.6,
+    "overshoot": 0.095,
+    "settle_f": 30
+   },
+   "shear": {
+    "omega": 14,
+    "zeta": 0.5,
+    "overshoot": 0.163,
+    "settle_f": 26,
+    "what": "his top catching up with his feet"
+   },
+   "dx": {
+    "omega": 16,
+    "zeta": 0.8,
+    "overshoot": 0.015,
+    "settle_f": 18,
+    "what": "feet do not bounce sideways: nearly dead"
+   },
+   "dy": {
+    "omega": 16,
+    "zeta": 1.0,
+    "overshoot": 0,
+    "settle_f": 18
+   },
+   "lid": {
+    "omega": 40,
+    "zeta": 0.75,
+    "settle_f": 7
+   },
+   "gaze": {
+    "omega": 55,
+    "zeta": 0.85,
+    "settle_f": 5,
+    "what": "eyes are the fastest thing on him"
+   },
+   "brow": {
+    "omega": 24,
+    "zeta": 0.5,
+    "overshoot": 0.163,
+    "settle_f": 15,
+    "what": "brows overshoot more than anything else on his face"
+   }
+  },
+  "mood_scaling": {
+   "note": "direction.json moods.list[*].stiffness multiplies every omega above; zeta is untouched so it is still one overshoot. tempo multiplies anticipation and hold lengths.",
+   "tempo": {
+    "unbothered": 1.0,
+    "nosy": 0.85,
+    "smug": 1.15,
+    "fed_up": 0.7,
+    "rattled": 0.55,
+    "low_power": 1.6
+   },
+   "amplitude": {
+    "unbothered": 1.0,
+    "nosy": 1.0,
+    "smug": 0.9,
+    "fed_up": 1.15,
+    "rattled": 1.25,
+    "low_power": 0.7
+   }
+  },
+  "cancel_model_breath": "sy_rig *= 1 / (1 + 0.0122 * sin(2.2 * time - 0.077)); the 0.077 rad is the model squash spring's lag at that frequency. Leaves under 0.1% of the old sine."
+ },
+ "secondary": {
+  "top_lag": {
+   "what": "his top arrives late. shear target = -(root speed along x in H/s) * lag_s, through rig.springs.shear",
+   "lag_s": 0.085,
+   "cap_H": 0.12,
+   "on_stop": "when the feet stop the top carries on past them by up to 0.05 H, comes back once"
+  },
+  "jiggle": {
+   "what": "the flesh after the mass has stopped. Kicks into the MODEL's springs, fired on the contact frame. v = speed into the contact in H/s.",
+   "squash_kick": "-min(2.2, 0.45 * v)   (at most 8% extra dip; the rig carries the real squash)",
+   "wob_kick": "min(3.5, 0.7 * v)        (the side-to-side shiver, up to 15%, rings ~3 times over 60 f)",
+   "leanX_kick": "0.9 * (sideways speed at contact), capped at 2.5",
+   "delay_f": 2,
+   "why_delay": "flesh moves after bone: the jiggle starts 2 frames after the rig squash, so the two never peak together",
+   "do_not_call": "spud.land(speed): it kicks squash by up to -7 (26% on a spring that rings 3 times). Kick the springs directly with the numbers above."
+  },
+  "turn_lag": "already in the model: every yaw step kicks leanX by -0.02 * turn speed. A 1 rad turn peaks near 0.03 H of shear. Leave it alone; do not add ours on top.",
+  "eye_lag": "after any body move over 0.1 H or 0.3 rad the pupils overshoot their target by 8% and return (gaze spring). Lids dip 0.15 on every landing (a wince), 3 f after contact.",
+  "brow_lag": "brows follow lids by 2 f and overshoot (brow spring).",
+  "arm_lag": "the model's arms already trail (jumped(), armsMotion(vn)). Call armsMotion every airborne frame with vn = vy / 2.6.",
+  "cloth": "potato3d/motion3d.mjs already hangs capes and strands off his deformed surface. It reads the MODEL's squash and lean, not our rig's. Rig squash reaches cloth because the cloth is a child of the rig group; rig shear does too. Nothing to add."
+ },
+ "always_on": {
+  "what": "layers that never stop, added on top of whatever else is playing. This is what keeps a hold alive.",
+  "breath": {
+   "channel": "sy",
+   "shape": "in over 42% of the breath, out over 58%, a rest of 0 to 25% of the period at the bottom before the next one",
+   "depth": [
+    0.008,
+    0.02
+   ],
+   "period_f": [
+    144,
+    252
+   ],
+   "each_breath_varies": {
+    "depth": 0.25,
+    "period": 0.18
+   },
+   "also": {
+    "browR": "0.03 * breath",
+    "shear": "0.004 * breath (he rocks back a hair as he fills)"
+   },
+   "sigh": {
+    "every_s": [
+     40,
+     120
+    ],
+    "in_f": 54,
+    "depth": 0.045,
+    "hold_f": 10,
+    "out_f": 80,
+    "out_ease": "out3",
+    "then": "sy dips to 0.985 for 30 f before breathing again; lids +0.25 through the out"
+   }
+  },
+  "blink": {
+   "every_s": [
+    2.5,
+    7
+   ],
+   "normal": {
+    "close_f": 3,
+    "shut_f": 2,
+    "open_f": 5,
+    "lid_lag_f": 1.5,
+    "lagging_lid": "lidL (the low-brow side is the slow one)",
+    "open_ease": "out",
+    "open_overshoot": -0.06
+   },
+   "double": {
+    "chance": 0.12,
+    "gap_f": 7
+   },
+   "slow": {
+    "chance": 0.08,
+    "close_f": 12,
+    "shut_f": 9,
+    "open_f": 16,
+    "gx": -0.5,
+    "note": "straight at you. gaze travels to -0.5 over the 10 f BEFORE the close starts"
+   },
+   "half": {
+    "chance": 0.1,
+    "to": 0.55,
+    "close_f": 3,
+    "open_f": 6,
+    "note": "a flinch-blink that does not finish"
+   },
+   "forced_on": [
+    "any turn over 0.6 rad (at the fastest frame)",
+    "any expr swap",
+    "any landing over 3 H/s",
+    "after a glitch step ends"
+   ],
+   "never_during": [
+    "the fries stare",
+    "a slow blink's own hold",
+    "the frame an impact lands"
+   ]
+  },
+  "gaze": {
+   "saccade_f": [
+    2,
+    4
+   ],
+   "fixation_f": [
+    18,
+    150
+   ],
+   "drift": {
+    "amp": 0.02,
+    "period_f": [
+     70,
+     200
+    ],
+    "note": "pupils are never perfectly still during a fixation"
+   },
+   "glance_away_and_back_f": [
+    24,
+    48
+   ],
+   "home_bias": 0.7,
+   "note": "70% of fixations are home (the side-eye). The rest go to the cursor, another Potato, or nothing in particular."
+  },
+  "weight_shift": {
+   "every_s": [
+    9,
+    26
+   ],
+   "tracks": {
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      14,
+      0.018,
+      "io"
+     ],
+     [
+      34,
+      -0.03,
+      "io"
+     ],
+     [
+      52,
+      -0.022,
+      "spring"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      0.985,
+      "io"
+     ],
+     [
+      30,
+      1.0,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      22,
+      -0.012,
+      "io"
+     ],
+     [
+      50,
+      -0.008,
+      "spring"
+     ]
+    ]
+   },
+   "note": "he stands off-centre on purpose and stays there until the next one. Rest is never roll 0: it is the last weight shift, anywhere in -0.03 to 0.03."
+  },
+  "micro": {
+   "brow_twitch": {
+    "every_s": [
+     12,
+     40
+    ],
+    "browR": 0.12,
+    "up_f": 3,
+    "down_f": 9
+   },
+   "nub_shuffle": {
+    "every_s": [
+     20,
+     70
+    ],
+    "needs_hook": "feet",
+    "fallback": "weight_shift at half size"
+   }
+  }
+ },
+ "blend": {
+  "method": "INERTIAL. On every change of move the engine does not cross-fade two moves. It switches at once to the new move's value, measures the gap (old value minus new) and the speed gap, and adds that gap back as an offset that decays to zero on a quintic over blend_f frames, starting with the old speed. First frame after a switch: position and speed are both unbroken. This is why nothing snaps.",
+  "offset_curve": "x(t) = x0 + v0*t + quintic chosen so x, v, a all reach 0 at t = blend_f; if v0 points away from zero, blend_f is shortened to -5*x0/v0 so it never overshoots the old pose",
+  "blend_f": {
+   "default": 12,
+   "by_channel": {
+    "dx": 10,
+    "dy": 8,
+    "sy": 10,
+    "sx": 6,
+    "roll": 12,
+    "pitch": 12,
+    "shear": 10,
+    "yaw": 0,
+    "lidL": 4,
+    "lidR": 4,
+    "gx": 3,
+    "gy": 3,
+    "browL": 6,
+    "browR": 6,
+    "jaw": 4
+   },
+   "yaw_note": "yaw is 0 because the model's yaw spring is already the blend: we only ever change its target."
+  },
+  "by_pair": [
+   {
+    "from": "any idle",
+    "to": "any reaction",
+    "f": 6,
+    "why": "a reaction that eases in for 12 frames is not a reaction"
+   },
+   {
+    "from": "any",
+    "to": "held (grabbed)",
+    "f": 4,
+    "why": "your hand is already there"
+   },
+   {
+    "from": "held",
+    "to": "air",
+    "f": 0,
+    "why": "physics takes the exact speed of the release: nothing to blend"
+   },
+   {
+    "from": "air",
+    "to": "impact",
+    "f": 0,
+    "why": "an impact is a contact: 2 tagged frames, then the spring"
+   },
+   {
+    "from": "impact / splat",
+    "to": "get_up",
+    "f": 10
+   },
+   {
+    "from": "walk / waddle",
+    "to": "stand",
+    "f": 14,
+    "why": "goes through walk_stop, never straight to idle"
+   },
+   {
+    "from": "stand",
+    "to": "walk / waddle",
+    "f": 0,
+    "why": "goes through walk_start, which already begins from the standing pose"
+   },
+   {
+    "from": "any",
+    "to": "zap",
+    "f": 0,
+    "why": "a zap is a cut, on the 12 fps clock. That is the point of it"
+   },
+   {
+    "from": "zap",
+    "to": "any",
+    "f": 16,
+    "why": "coming back is slow and slightly wrong first"
+   },
+   {
+    "from": "sleep",
+    "to": "any",
+    "f": 20
+   }
+  ],
+  "never_blend": [
+   {
+    "what": "expr (the drawn face)",
+    "instead": "swapped on one frame while both lids are above 0.9 (a blink covers it: close 3 f, swap, open 5 f). Two faces are never on screen at once: cross-fading ink gives doubled lines."
+   },
+   {
+    "what": "glitch",
+    "instead": "stepped at 12 fps, held 5 frames a step"
+   },
+   {
+    "what": "anything during a zap",
+    "instead": "the whole pose is held 5 frames a step"
+   },
+   {
+    "what": "pivot",
+    "instead": "changed on one frame; the engine re-solves dx, dy so nothing on screen moves that frame"
+   },
+   {
+    "what": "arms on or off",
+    "instead": "the model's own arms(pose, blend): 0.3 s out, 0.2 s back in. Arms tuck BEFORE he settles, not after"
+   },
+   {
+    "what": "costume or view",
+    "instead": "swap on a frame (canon)"
+   },
+   {
+    "what": "contact frames",
+    "instead": "2 tagged frames per contact, exempt from the thresholds"
+   },
+   {
+    "what": "yaw across the back",
+    "instead": "always the short way round; a turn of exactly pi goes the way his eyes went first"
+   }
+  ],
+  "layers": [
+   "1 always_on (breath, blink, gaze, weight shift): added to everything, scaled down by a move's quiet value",
+   "2 base (stand, walk, waddle, held, air, down, asleep): exactly one",
+   "3 action (one clip): at most one; replaces the channels it keys, leaves the rest to the base",
+   "4 physics (held, air, impact): overrides dx, dy, roll while it owns him",
+   "5 carry: a slow offset under all of it (flags.carry)"
+  ],
+  "interrupt": {
+   "priority": [
+    "physics (grab, throw, shove)",
+    "zap, splat, explode",
+    "reaction (startle, flinch, double take)",
+    "locomotion",
+    "bits (fries, lean, sleep)",
+    "always_on"
+   ],
+   "rule": "a higher line can cut a lower one on ANY frame; inertial blending makes that safe. Same or lower line waits for the move's exit frames.",
+   "eyes_exception": "the eyes may leave for a new target at any time, whatever the body is doing"
+  },
+  "eyes_first": {
+   "lead_f": [
+    7,
+    13
+   ],
+   "rule": "every move that has a target starts its gx, gy track lead_f frames before frame 0 of the body. Written as negative frames in the tracks.",
+   "eyes_last_hold_f": [
+    24,
+    72
+   ]
+  }
+ },
+ "carry": {
+  "what": "BOLD CHOICE. A big hit does not reset. It leaves a mark on how he moves that fades over half a minute. flags.carry = false turns it off.",
+  "sources": {
+   "impact over 6 H/s": {
+    "amount": 0.5
+   },
+   "splat": {
+    "amount": 0.8
+   },
+   "zap": {
+    "amount": 0.7,
+    "kind": "twitchy"
+   },
+   "explode": {
+    "amount": 1.0
+   },
+   "lost a fight": {
+    "amount": 0.6
+   }
+  },
+  "at_amount_1": {
+   "rest_roll": 0.045,
+   "rest_sy": 0.975,
+   "lid_lag_f": 0.5,
+   "walk_asymmetry": 0.3,
+   "walk_asymmetry_note": "the step on the hit side is 30% shorter and lands 3 f early: a limp he is not going to mention",
+   "settle_zeta": 0.45,
+   "settle_note": "he wobbles a touch longer coming to rest",
+   "twitchy": "zap only: one 2-frame glitch step of 0.25 at a random time, at most every 8 s",
+   "lid_lag_note_r3": "THE WINK (Potato seat): was 4. The late lid is never more than 2 f behind in all (blink lag 1.5 + this), so one lid is never shut while the other is open for more than 2 f. The player also guards it at the output."
+  },
+  "fade_s": [
+   20,
+   40
+  ],
+  "fade_shape": "holds near full for the first third, then eases out",
+  "side": "the side he was hit on; stays that side until it fades",
+  "stacking": "amounts add, capped at 1. A second hit while carrying resets the fade clock.",
+  "not": "never a wound, never a face. It is only in posture and timing. Real, not mean."
+ },
+ "moves": {
+  "blink": {
+   "kind": "layer",
+   "len": 10,
+   "phases": {
+    "action": [
+     0,
+     3
+    ],
+    "hold": [
+     3,
+     5
+    ],
+    "follow": [
+     5,
+     10
+    ]
+   },
+   "tracks": {
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      1,
+      "in"
+     ],
+     [
+      5,
+      1,
+      "lin"
+     ],
+     [
+      9,
+      -0.06,
+      "out"
+     ],
+     [
+      10,
+      0,
+      "spring"
+     ]
+    ],
+    "lidL": [
+     [
+      1.5,
+      0
+     ],
+     [
+      4.5,
+      1,
+      "in"
+     ],
+     [
+      6,
+      1,
+      "lin"
+     ],
+     [
+      10.5,
+      0,
+      "out"
+     ]
+    ],
+    "browR": [
+     [
+      0,
+      0
+     ],
+     [
+      4,
+      -0.05,
+      "io"
+     ],
+     [
+      10,
+      0,
+      "spring"
+     ]
+    ]
+   },
+   "note": "the right lid leads, the left trails by 1.5 f, and the right overshoots open by 6%. That unevenness is the whole trick."
+  },
+  "slow_blink": {
+   "kind": "layer",
+   "len": 47,
+   "phases": {
+    "antic": [
+     -10,
+     0
+    ],
+    "action": [
+     0,
+     12
+    ],
+    "hold": [
+     12,
+     21
+    ],
+    "follow": [
+     21,
+     37
+    ],
+    "settle": [
+     37,
+     47
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      -10,
+      0
+     ],
+     [
+      -6,
+      -0.5,
+      "out"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      1,
+      "io"
+     ],
+     [
+      21,
+      1,
+      "lin"
+     ],
+     [
+      37,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      2,
+      0
+     ],
+     [
+      14,
+      1,
+      "io"
+     ],
+     [
+      22,
+      1,
+      "lin"
+     ],
+     [
+      39,
+      0,
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      0.99,
+      "io"
+     ],
+     [
+      37,
+      1,
+      "io"
+     ]
+    ]
+   },
+   "after": {
+    "hold_gaze_f": [
+     30,
+     60
+    ],
+    "then": "gx back to 0 in 3 f"
+   },
+   "note": "he looks straight at you first, then shuts them slowly. A contemptuous courtesy."
+  },
+  "glance": {
+   "kind": "layer",
+   "len": 40,
+   "phases": {
+    "action": [
+     0,
+     3
+    ],
+    "hold": [
+     3,
+     30
+    ],
+    "follow": [
+     30,
+     34
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      "target",
+      "out"
+     ],
+     [
+      30,
+      "target",
+      "lin"
+     ],
+     [
+      33,
+      0,
+      "out"
+     ]
+    ],
+    "browR": [
+     [
+      1,
+      0
+     ],
+     [
+      5,
+      0.08,
+      "out"
+     ],
+     [
+      34,
+      0,
+      "spring"
+     ]
+    ]
+   },
+   "vary": {
+    "hold_f": [
+     12,
+     70
+    ]
+   },
+   "note": "eyes only. The body does not know it happened."
+  },
+  "caught_looking": {
+   "kind": "clip",
+   "len": 70,
+   "phases": {
+    "action": [
+     0,
+     3
+    ],
+    "hold": [
+     3,
+     21
+    ],
+    "follow": [
+     21,
+     46
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      0,
+      "current"
+     ],
+     [
+      2,
+      0,
+      "out"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0.2,
+      "out"
+     ],
+     [
+      20,
+      0.2,
+      "lin"
+     ],
+     [
+      26,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      1,
+      0
+     ],
+     [
+      3,
+      0.2,
+      "out"
+     ],
+     [
+      21,
+      0.2,
+      "lin"
+     ],
+     [
+      28,
+      0,
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      4,
+      1.012,
+      "out"
+     ],
+     [
+      18,
+      1,
+      "spring"
+     ]
+    ],
+    "yaw": [
+     [
+      4,
+      "from"
+     ],
+     [
+      16,
+      "from-0.42",
+      "io"
+     ],
+     [
+      50,
+      "from-0.42",
+      "lin"
+     ],
+     [
+      66,
+      "from",
+      "io"
+     ]
+    ],
+    "gy": [
+     [
+      6,
+      0
+     ],
+     [
+      14,
+      -0.25,
+      "io"
+     ],
+     [
+      44,
+      -0.25,
+      "lin"
+     ],
+     [
+      52,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "after": {
+    "then": "glance back at the cursor after 40 to 90 f, 6 f long, to check whether you bought it"
+   },
+   "note": "back to the side-eye in 2 frames: a beat too fast. The speed IS the tell. direction.json caught_looking_cover_ms = 300 is the 18 f hold here.",
+   "note_r3": "the cover is the gag (director): an elaborate nothing. He turns 0.42 rad away and studies something above and to the side for 34 f, then comes back as if he had finished."
+  },
+  "eyes_track": {
+   "kind": "layer",
+   "len": null,
+   "rule": "gx, gy follow the cursor through the gaze spring, in saccades: the target only updates when the cursor has moved more than 0.12 eye-widths from the last fixation, or every 18 to 60 f. Never a smooth pursuit: smooth pursuit reads as a robot.",
+   "ladder": [
+    {
+     "cursor_within_px": 260,
+     "do": "eyes only"
+    },
+    {
+     "cursor_within_px": 200,
+     "do": "lean_look"
+    },
+    {
+     "cursor_within_px": 140,
+     "do": "turn toward it"
+    }
+   ],
+   "leaves_fast": "cursor speed over 1500 px/s away from him: caught_looking"
+  },
+  "lean_look": {
+   "kind": "clip",
+   "len": 52,
+   "phases": {
+    "antic": [
+     -9,
+     0
+    ],
+    "action": [
+     0,
+     16
+    ],
+    "follow": [
+     16,
+     30
+    ],
+    "hold": [
+     30,
+     null
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      -9,
+      0
+     ],
+     [
+      -6,
+      "target",
+      "out"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      4,
+      -0.012,
+      "io"
+     ],
+     [
+      16,
+      0.07,
+      "io"
+     ],
+     [
+      30,
+      0.06,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      -0.05,
+      "io"
+     ],
+     [
+      30,
+      -0.04,
+      "spring"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      0.98,
+      "io"
+     ],
+     [
+      16,
+      1.02,
+      "io"
+     ],
+     [
+      30,
+      1.01,
+      "spring"
+     ]
+    ],
+    "browR": [
+     [
+      2,
+      0
+     ],
+     [
+      10,
+      0.15,
+      "out"
+     ]
+    ]
+   },
+   "exit": {
+    "len": 22,
+    "tracks": {
+     "shear": [
+      [
+       0,
+       0.06
+      ],
+      [
+       22,
+       0,
+       "spring"
+      ]
+     ],
+     "roll": [
+      [
+       0,
+       -0.04
+      ],
+      [
+       22,
+       0,
+       "spring"
+      ]
+     ],
+     "sy": [
+      [
+       0,
+       1.01
+      ],
+      [
+       22,
+       1,
+       "spring"
+      ]
+     ]
+    }
+   },
+   "note": "nosy. His feet stay put and his top goes to see. He rocks 0.012 H the wrong way first."
+  },
+  "gather": {
+   "kind": "clip",
+   "len": 8,
+   "phases": {
+    "antic": [
+     0,
+     8
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      0.91,
+      "io"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      -0.02,
+      "io"
+     ]
+    ],
+    "lidR": [
+     [
+      2,
+      0
+     ],
+     [
+      6,
+      0.15,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      3,
+      0
+     ],
+     [
+      7,
+      0.15,
+      "io"
+     ]
+    ]
+   },
+   "vary": {
+    "len": [
+     5,
+     9
+    ],
+    "depth": [
+     0.06,
+     0.12
+    ]
+   },
+   "note": "the small squash before anything. Every voluntary move opens with this or names its own. 8 f = 133 ms, inside the director's 80 to 140."
+  },
+  "settle": {
+   "kind": "clip",
+   "len": 30,
+   "phases": {
+    "settle": [
+     0,
+     30
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      "current"
+     ],
+     [
+      30,
+      1,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      "current"
+     ],
+     [
+      30,
+      "rest",
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      "current"
+     ],
+     [
+      30,
+      0,
+      "spring"
+     ]
+    ],
+    "pitch": [
+     [
+      0,
+      "current"
+     ],
+     [
+      30,
+      0,
+      "spring"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 2,
+     "spring": "wob",
+     "v": 0.8
+    }
+   ],
+   "note": "every move ends by handing to this. One overshoot of 11%, done in 26 f; the flesh shivers under it for 60."
+  },
+  "turn_small": {
+   "kind": "clip",
+   "len": 34,
+   "applies": "under 0.6 rad",
+   "phases": {
+    "antic": [
+     -9,
+     0
+    ],
+    "action": [
+     0,
+     20
+    ],
+    "settle": [
+     20,
+     34
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      -9,
+      0
+     ],
+     [
+      -6,
+      "target",
+      "out"
+     ],
+     [
+      16,
+      "target",
+      "lin"
+     ],
+     [
+      20,
+      0,
+      "io"
+     ]
+    ],
+    "yaw": [
+     [
+      0,
+      "from"
+     ],
+     [
+      0,
+      "to",
+      "hold"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      4,
+      0.985,
+      "io"
+     ],
+     [
+      20,
+      1,
+      "spring"
+     ]
+    ]
+   },
+   "note": "we only set the target; the model's yaw spring takes 11 f to halfway, 20 f to 90%, and the model's own lean kick gives the top lag."
+  },
+  "turn_big": {
+   "kind": "clip",
+   "len": 58,
+   "applies": "0.6 rad to pi",
+   "phases": {
+    "antic": [
+     -12,
+     8
+    ],
+    "action": [
+     8,
+     34
+    ],
+    "follow": [
+     34,
+     46
+    ],
+    "settle": [
+     46,
+     58
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      -12,
+      0
+     ],
+     [
+      -9,
+      "target",
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      0.93,
+      "io"
+     ],
+     [
+      14,
+      1.03,
+      "out"
+     ],
+     [
+      34,
+      0.97,
+      "io"
+     ],
+     [
+      58,
+      1,
+      "spring"
+     ]
+    ],
+    "yaw": [
+     [
+      0,
+      "from"
+     ],
+     [
+      5,
+      "from - 0.06*dir",
+      "io"
+     ],
+     [
+      8,
+      "to",
+      "hold"
+     ]
+    ],
+    "dy": [
+     [
+      8,
+      0
+     ],
+     [
+      13,
+      0.025,
+      "out"
+     ],
+     [
+      20,
+      0,
+      "in"
+     ]
+    ],
+    "lidR": [
+     [
+      17,
+      0
+     ],
+     [
+      20,
+      1,
+      "in"
+     ],
+     [
+      22,
+      1,
+      "lin"
+     ],
+     [
+      27,
+      0,
+      "out"
+     ]
+    ],
+    "lidL": [
+     [
+      18,
+      0
+     ],
+     [
+      21,
+      1,
+      "in"
+     ],
+     [
+      23,
+      1,
+      "lin"
+     ],
+     [
+      28,
+      0,
+      "out"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 22,
+     "spring": "wob",
+     "v": 1.2
+    }
+   ],
+   "contacts": [
+    8,
+    20
+   ],
+   "note": "gathers, winds 0.06 rad the wrong way, lifts 0.025 H off his nubs to turn, blinks through the fastest frame, lands. yaw is a target step: the model spring spreads it over ~26 f."
+  },
+  "about_face": {
+   "kind": "clip",
+   "len": 54,
+   "applies": "fed up: his back to you",
+   "phases": {
+    "antic": [
+     0,
+     5
+    ],
+    "action": [
+     5,
+     24
+    ],
+    "settle": [
+     24,
+     40
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      0.95,
+      "io"
+     ],
+     [
+      12,
+      1.02,
+      "io"
+     ],
+     [
+      54,
+      1,
+      "spring"
+     ]
+    ],
+    "yaw": [
+     [
+      0,
+      "from"
+     ],
+     [
+      5,
+      "from",
+      "lin"
+     ],
+     [
+      37,
+      "from + pi*dir",
+      "io"
+     ]
+    ],
+    "browL": [
+     [
+      0,
+      0
+     ],
+     [
+      4,
+      -0.25,
+      "out"
+     ]
+    ],
+    "browR": [
+     [
+      0,
+      0
+     ],
+     [
+      4,
+      -0.3,
+      "out"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 40,
+     "spring": "wob",
+     "v": 1.5
+    }
+   ],
+   "eyes_first": false,
+   "note": "the ONE turn with no eye lead: he does not look where he is going, he is leaving. The yaw kick of 4.5 gets him halfway in 7 f instead of 11.",
+   "retimed_note": "Build round: the yaw target was one step of pi plus a 4.5 kick; the model's yaw spring then moved 0.19 rad a frame (limit 0.15). The target now eases over 32 f, the kick is gone, the move is 54 f."
+  },
+  "double_take": {
+   "kind": "clip",
+   "len": 70,
+   "phases": {
+    "look1": [
+     0,
+     4
+    ],
+    "dismiss": [
+     4,
+     22
+    ],
+    "beat": [
+     22,
+     34
+    ],
+    "take": [
+     34,
+     42
+    ],
+    "hold": [
+     42,
+     70
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      "target",
+      "out"
+     ],
+     [
+      8,
+      "target",
+      "lin"
+     ],
+     [
+      11,
+      0,
+      "out"
+     ],
+     [
+      34,
+      0,
+      "lin"
+     ],
+     [
+      36,
+      "target",
+      "out"
+     ]
+    ],
+    "lidR": [
+     [
+      34,
+      0
+     ],
+     [
+      37,
+      -0.7,
+      "out"
+     ]
+    ],
+    "lidL": [
+     [
+      35,
+      0
+     ],
+     [
+      38,
+      -0.7,
+      "out"
+     ]
+    ],
+    "browR": [
+     [
+      34,
+      0
+     ],
+     [
+      38,
+      0.5,
+      "out"
+     ]
+    ],
+    "browL": [
+     [
+      35,
+      0
+     ],
+     [
+      40,
+      0.3,
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      34,
+      1
+     ],
+     [
+      38,
+      1.045,
+      "out"
+     ],
+     [
+      60,
+      1.02,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      34,
+      0
+     ],
+     [
+      40,
+      -0.03,
+      "out"
+     ],
+     [
+      60,
+      -0.02,
+      "spring"
+     ]
+    ],
+    "yaw": [
+     [
+      36,
+      "from"
+     ],
+     [
+      36,
+      "toward target * 0.5",
+      "hold"
+     ]
+    ]
+   },
+   "note": "looks, dismisses it, 12 frames of nothing, THEN the eyes go back wide and the body rocks 0.03 H away. The 12 dead frames are the joke."
+  },
+  "startle_small": {
+   "kind": "clip",
+   "len": 44,
+   "phases": {
+    "action": [
+     0,
+     4
+    ],
+    "hold": [
+     4,
+     12
+    ],
+    "cover": [
+     12,
+     44
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      1.07,
+      "out"
+     ],
+     [
+      9,
+      0.965,
+      "io"
+     ],
+     [
+      28,
+      0.965,
+      "lin"
+     ],
+     [
+      44,
+      1,
+      "spring"
+     ]
+    ],
+    "dy": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      0.035,
+      "out"
+     ],
+     [
+      9,
+      0,
+      "in"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      -0.8,
+      "out"
+     ],
+     [
+      26,
+      -0.8,
+      "lin"
+     ],
+     [
+      32,
+      0.1,
+      "io"
+     ],
+     [
+      42,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      1,
+      0
+     ],
+     [
+      3,
+      -0.8,
+      "out"
+     ],
+     [
+      27,
+      -0.8,
+      "lin"
+     ],
+     [
+      34,
+      0.1,
+      "io"
+     ],
+     [
+      44,
+      0,
+      "io"
+     ]
+    ],
+    "browR": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      0.55,
+      "out"
+     ],
+     [
+      26,
+      0.5,
+      "lin"
+     ],
+     [
+      40,
+      0,
+      "spring"
+     ]
+    ],
+    "browL": [
+     [
+      1,
+      0
+     ],
+     [
+      4,
+      0.4,
+      "out"
+     ],
+     [
+      27,
+      0.35,
+      "lin"
+     ],
+     [
+      41,
+      0,
+      "spring"
+     ]
+    ],
+    "gx": [
+     [
+      28,
+      "current"
+     ],
+     [
+      30,
+      0,
+      "out"
+     ]
+    ]
+   },
+   "contacts": [
+    0,
+    3,
+    9
+   ],
+   "note": "moment 10 (you come back). 4 f up, 8 f caught, then lids go 10% LOWER than canon on the way back: overdoing the calm.",
+   "note_r3": "A1 / m10: a pop of 3 f (7% up, 0.035 off the floor), a drop of 6, a freeze of 19, then home. It was 0.98 to 1.016 on the strip."
+  },
+  "startle_big": {
+   "kind": "clip",
+   "len": 64,
+   "phases": {
+    "action": [
+     0,
+     5
+    ],
+    "air": [
+     5,
+     17
+    ],
+    "land": [
+     17,
+     20
+    ],
+    "settle": [
+     20,
+     64
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0.95,
+      "in"
+     ],
+     [
+      4,
+      1.12,
+      "out"
+     ],
+     [
+      16,
+      1.06,
+      "io"
+     ],
+     [
+      17,
+      1.03,
+      "lin"
+     ],
+     [
+      19,
+      0.84,
+      "out"
+     ],
+     [
+      21,
+      0.84,
+      "lin"
+     ],
+     [
+      64,
+      1,
+      "spring"
+     ]
+    ],
+    "dy": [
+     [
+      0,
+      0
+     ],
+     [
+      5,
+      0.09,
+      "out"
+     ],
+     [
+      11,
+      0.13,
+      "out"
+     ],
+     [
+      17,
+      0,
+      "in"
+     ]
+    ],
+    "roll": [
+     [
+      2,
+      0
+     ],
+     [
+      10,
+      0.05,
+      "out"
+     ],
+     [
+      17,
+      0.02,
+      "io"
+     ],
+     [
+      50,
+      0,
+      "spring"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 19,
+     "spring": "squash",
+     "v": -1.2
+    },
+    {
+     "f": 19,
+     "spring": "wob",
+     "v": 2.0
+    }
+   ],
+   "contacts": [
+    0,
+    2,
+    17
+   ],
+   "ballistic": [
+    "dy"
+   ],
+   "note": "he leaves the ground: 0.13 H at f 11, back down at f 17. The expr swap at f 2 needs no blink: it is hidden in the 2 contact frames.",
+   "built_note": "RULING 18: no arms, no face swap. The player gives him his own eyes wide (lids -1) and the high brow up."
+  },
+  "walk_start": {
+   "kind": "clip",
+   "len": 22,
+   "phases": {
+    "antic": [
+     -10,
+     8
+    ],
+    "action": [
+     8,
+     22
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      -10,
+      0
+     ],
+     [
+      -7,
+      "target",
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      0.93,
+      "io"
+     ],
+     [
+      16,
+      1.02,
+      "io"
+     ],
+     [
+      22,
+      1,
+      "io"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      -0.03,
+      "io"
+     ],
+     [
+      22,
+      0.03,
+      "io"
+     ]
+    ],
+    "dx": [
+     [
+      8,
+      0
+     ],
+     [
+      22,
+      0.06,
+      "in"
+     ]
+    ]
+   },
+   "then": "walk or waddle, entering its cycle at phase 0 (weight on the back foot)",
+   "note": "he rocks BACK 0.03 H to get going, like pushing a fridge."
+  },
+  "walk": {
+   "kind": "cycle",
+   "len": 54,
+   "what": "going somewhere. 27 f a step (the model's own foot clock: state.walk += 7 * dt). 0.20 H a step = 0.44 H/s at walk_speed 1.",
+   "phase": "p = 0..1 across TWO steps; write state.walk = 2*pi*p - 7*dt before each model step so OUR clock owns the feet",
+   "model": {
+    "waddle": true,
+    "gives": "feet lift 0.05 in turn, leanX 0.05, roll -0.07, squash -4% twice a cycle"
+   },
+   "tracks": {
+    "dx": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      0.035,
+      "in"
+     ],
+     [
+      19,
+      0.165,
+      "lin"
+     ],
+     [
+      27,
+      0.2,
+      "out"
+     ],
+     [
+      35,
+      0.235,
+      "in"
+     ],
+     [
+      46,
+      0.365,
+      "lin"
+     ],
+     [
+      54,
+      0.4,
+      "out"
+     ]
+    ],
+    "dy": [
+     [
+      0,
+      0
+     ],
+     [
+      7,
+      -0.012,
+      "out"
+     ],
+     [
+      16,
+      0.014,
+      "io"
+     ],
+     [
+      27,
+      0,
+      "in"
+     ],
+     [
+      34,
+      -0.012,
+      "out"
+     ],
+     [
+      43,
+      0.014,
+      "io"
+     ],
+     [
+      54,
+      0,
+      "in"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      13,
+      0.058,
+      "io"
+     ],
+     [
+      27,
+      0,
+      "io"
+     ],
+     [
+      40,
+      -0.058,
+      "io"
+     ],
+     [
+      54,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 2,
+     "spring": "wob",
+     "v": 0.5
+    },
+    {
+     "f": 29,
+     "spring": "wob",
+     "v": -0.5
+    }
+   ],
+   "contacts": [
+    0,
+    27
+   ],
+   "speed_note": "he does NOT travel at a steady speed: 0.26 H/s as the foot plants, 0.71 H/s as his weight goes over it. That surge is what reads as weight.",
+   "stride_scales": "walk_speed from the mood multiplies stride (0.20 H), not the cadence, between 0.5 and 1.3. Above 1.3 he waddle-runs: cadence 20 f a step.",
+   "eyes": "fixed on where he is going; a glance at the cursor every 2 to 4 steps",
+   "note_r3": "A8: the rock is 0.058 rad (was 0.035), the default stride is 1.25 (0.56 body heights a second, was 0.44) and he turns 0.85 rad toward where he is going (was 0.5), eased at 0.05 rad a frame."
+  },
+  "waddle": {
+   "kind": "cycle",
+   "len": 64,
+   "what": "not going anywhere much. 32 f a step, 0.13 H a step = 0.24 H/s. More rock, less travel.",
+   "phase": "same clock trick as walk, at 32 f a step",
+   "model": {
+    "waddle": true
+   },
+   "tracks": {
+    "dx": [
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      0.02,
+      "in"
+     ],
+     [
+      24,
+      0.11,
+      "lin"
+     ],
+     [
+      32,
+      0.13,
+      "out"
+     ],
+     [
+      44,
+      0.15,
+      "in"
+     ],
+     [
+      56,
+      0.24,
+      "lin"
+     ],
+     [
+      64,
+      0.26,
+      "out"
+     ]
+    ],
+    "dy": [
+     [
+      0,
+      0
+     ],
+     [
+      9,
+      -0.016,
+      "out"
+     ],
+     [
+      20,
+      0.01,
+      "io"
+     ],
+     [
+      32,
+      0,
+      "in"
+     ],
+     [
+      41,
+      -0.016,
+      "out"
+     ],
+     [
+      52,
+      0.01,
+      "io"
+     ],
+     [
+      64,
+      0,
+      "in"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      0.06,
+      "io"
+     ],
+     [
+      32,
+      0,
+      "io"
+     ],
+     [
+      48,
+      -0.06,
+      "io"
+     ],
+     [
+      64,
+      0,
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      0.975
+     ],
+     [
+      9,
+      0.96,
+      "out"
+     ],
+     [
+      20,
+      1.01,
+      "io"
+     ],
+     [
+      32,
+      0.975,
+      "io"
+     ],
+     [
+      41,
+      0.96,
+      "out"
+     ],
+     [
+      52,
+      1.01,
+      "io"
+     ],
+     [
+      64,
+      0.975,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 3,
+     "spring": "wob",
+     "v": 0.9
+    },
+    {
+     "f": 35,
+     "spring": "wob",
+     "v": -0.9
+    }
+   ],
+   "contacts": [
+    0,
+    32
+   ],
+   "note": "total side-to-side rock is ours 0.06 plus the model's 0.07 = 0.13 rad each way. He travels 70% of each step in its middle 12 frames."
+  },
+  "walk_stop": {
+   "kind": "clip",
+   "len": 34,
+   "phases": {
+    "action": [
+     0,
+     8
+    ],
+    "follow": [
+     8,
+     18
+    ],
+    "settle": [
+     18,
+     34
+    ]
+   },
+   "tracks": {
+    "dx": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      0.05,
+      "out"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      "current"
+     ],
+     [
+      8,
+      0.05,
+      "out"
+     ],
+     [
+      34,
+      0,
+      "spring"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      "current"
+     ],
+     [
+      8,
+      0.95,
+      "io"
+     ],
+     [
+      34,
+      1,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      "current"
+     ],
+     [
+      34,
+      "rest",
+      "spring"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 9,
+     "spring": "wob",
+     "v": 1.0
+    }
+   ],
+   "contacts": [
+    8
+   ],
+   "model": {
+    "waddle": false,
+    "at_f": 8,
+    "only_when": "both feet down (p = 0 or 0.5)"
+   },
+   "note": "feet stop at f 8. His top keeps going 0.05 H past them, comes back once."
+  },
+  "hop": {
+   "kind": "clip",
+   "len": 56,
+   "phases": {
+    "antic": [
+     0,
+     9
+    ],
+    "launch": [
+     9,
+     12
+    ],
+    "air": [
+     12,
+     34
+    ],
+    "land": [
+     34,
+     37
+    ],
+    "settle": [
+     37,
+     56
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      9,
+      0.84,
+      "io"
+     ],
+     [
+      10,
+      0.93,
+      "lin"
+     ],
+     [
+      12,
+      1.13,
+      "out"
+     ],
+     [
+      22,
+      1.03,
+      "io"
+     ],
+     [
+      33,
+      1.1,
+      "in"
+     ],
+     [
+      34,
+      1.07,
+      "lin"
+     ],
+     [
+      36,
+      0.8,
+      "out"
+     ],
+     [
+      38,
+      0.8,
+      "lin"
+     ],
+     [
+      56,
+      1,
+      "spring"
+     ]
+    ],
+    "dy": [
+     [
+      9,
+      0
+     ],
+     [
+      22,
+      0.34,
+      "out"
+     ],
+     [
+      34,
+      0,
+      "in"
+     ]
+    ],
+    "lidR": [
+     [
+      36,
+      0
+     ],
+     [
+      38,
+      0.3,
+      "out"
+     ],
+     [
+      46,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      37,
+      0
+     ],
+     [
+      39,
+      0.3,
+      "out"
+     ],
+     [
+      48,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 36,
+     "spring": "squash",
+     "v": -1.4
+    },
+    {
+     "f": 36,
+     "spring": "wob",
+     "v": 2.0
+    }
+   ],
+   "contacts": [
+    9,
+    11,
+    34
+   ],
+   "ballistic": [
+    "dy"
+   ],
+   "physics_note": "dy here is a stand-in parabola for the pencil test (apex 0.34 H at f 22, 25 f in the air). In the engine, OUR physics owns dy from f 9 (take-off speed 2.9 H/s under g 12 H/s^2 on the way up, 18 on the way down: he falls heavier than he rises, and lands at 3.5 H/s).",
+   "note": "9 f down, 3 f off, a wince on landing. Do not call spud.hop(): it is on a timer and its own gravity.",
+   "built_note": "Built: 9 f gather keyed, then OUR physics owns him (body.impulse, take-off speed from the apex 0.34 H under the engine's gravity 26). No arms tonight (canon-safe: arms only when he needs them)."
+  },
+  "grab": {
+   "kind": "physics",
+   "len": 14,
+   "phases": {
+    "squeeze": [
+     0,
+     4
+    ],
+    "lift": [
+     4,
+     14
+    ]
+   },
+   "tracks": {
+    "pivot": [
+     [
+      0,
+      "feet"
+     ],
+     [
+      0,
+      "grab",
+      "hold"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      0.93,
+      "out"
+     ],
+     [
+      4,
+      0.92,
+      "out"
+     ],
+     [
+      14,
+      1.07,
+      "io"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      -0.6,
+      "out"
+     ]
+    ],
+    "lidL": [
+     [
+      1,
+      0
+     ],
+     [
+      3,
+      -0.6,
+      "out"
+     ]
+    ],
+    "browR": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      0.4,
+      "out"
+     ]
+    ]
+   },
+   "poke": {
+    "f": 0,
+    "at": "the grab point",
+    "power": 0.7
+   },
+   "contacts": [
+    0
+   ],
+   "note": "your finger dents him where you took hold (the model's own poke: a real dent with its own spring), he squeezes 8%, then hangs long: 7% stretched below the grab."
+  },
+  "hang": {
+   "kind": "physics",
+   "len": null,
+   "what": "held. A pendulum about the grab point: his bottom swings behind like a bag.",
+   "pendulum": {
+    "length_H": "distance from grab point to his centre of mass (centre of mass is at 0.38 H from his feet, not 0.5: low centre)",
+    "omega": 9.5,
+    "zeta": 0.22,
+    "max_roll": 1.1,
+    "note": "this one is ALLOWED to ring (zeta 0.22): he is hanging, not standing. It is the only body spring that swings more than once."
+   },
+   "pose_from_physics": {
+    "roll": "the pendulum angle",
+    "sy": "1.07 + 0.012 * (pointer speed in H/s), capped 1.2, through rig.springs.sy",
+    "shear": "0 (the pendulum already is the lag)",
+    "yaw": "drifts toward the direction of travel at 30% of full, so you see a bit of his side when you swing him"
+   },
+   "face": {
+    "first_30_f": "lids -0.6, brows up (grab)",
+    "then": "expr canon. Flat. Unbothered on a body in trouble. gx tracks the cursor (your hand) from below",
+    "shaken": "RULING 18 (build plan): no dizzy face. Eyes follow, then close."
+   },
+   "arms": "none. He does not flail. Flailing is asking for help."
+  },
+  "drag_squish": {
+   "kind": "physics",
+   "len": null,
+   "what": "you push him into the floor or a wall while holding him.",
+   "pose_from_physics": {
+    "sy": "1 - 0.9 * (how far the pointer is pushed past his surface, in H), floor 0.45, through rig.springs.sy with omega 30 (he gives way fast)",
+    "sx": "follows volume up to sy 0.6; below that 1.29 + 0.5 * (0.6 - sy): spreads faster than volume as he flattens",
+    "pivot": "contact (the floor or wall point): he squashes ALONG the contact normal",
+    "poke": "one dent at the pointer, power 0.4 + pressure, refreshed every 12 f while pressed"
+   },
+   "face": {
+    "sy under 0.7": "lids 0.3, brows -0.2: enduring it",
+    "sy under 0.5": "expr 'deadpan' (no blink needed: the face is squashed anyway, swap on the frame sy crosses 0.5)"
+   },
+   "release": {
+    "sy": [
+     [
+      0,
+      "current"
+     ],
+     [
+      3,
+      1.08,
+      "out"
+     ],
+     [
+      30,
+      1,
+      "spring"
+     ]
+    ],
+    "contacts": [
+     0
+    ],
+    "kicks": [
+     {
+      "f": 2,
+      "spring": "wob",
+      "v": 3.0
+     }
+    ],
+    "note": "pops back past round to 8% tall in 3 f, then one overshoot. The flesh rings for a second."
+   }
+  },
+  "set_down": {
+   "kind": "clip",
+   "len": 44,
+   "phases": {
+    "land": [
+     0,
+     3
+    ],
+    "hold": [
+     3,
+     6
+    ],
+    "settle": [
+     6,
+     36
+    ],
+    "look": [
+     36,
+     44
+    ]
+   },
+   "tracks": {
+    "pivot": [
+     [
+      0,
+      "grab"
+     ],
+     [
+      0,
+      "feet",
+      "hold"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1.07
+     ],
+     [
+      2,
+      0.86,
+      "out"
+     ],
+     [
+      5,
+      0.84,
+      "out"
+     ],
+     [
+      36,
+      1,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      "current"
+     ],
+     [
+      30,
+      "rest",
+      "spring"
+     ]
+    ],
+    "lidR": [
+     [
+      2,
+      0
+     ],
+     [
+      4,
+      0.3,
+      "out"
+     ],
+     [
+      12,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      3,
+      0
+     ],
+     [
+      5,
+      0.3,
+      "out"
+     ],
+     [
+      14,
+      0,
+      "io"
+     ]
+    ],
+    "gx": [
+     [
+      36,
+      "current"
+     ],
+     [
+      39,
+      "cursor",
+      "out"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 2,
+     "spring": "squash",
+     "v": -1.0
+    },
+    {
+     "f": 2,
+     "spring": "wob",
+     "v": 1.5
+    }
+   ],
+   "contacts": [
+    0
+   ],
+   "note": "the plop: 16% squash, one overshoot of about 2%, then the last thing that moves is a look at your hand."
+  },
+  "windup_launch": {
+   "kind": "clip",
+   "len": 30,
+   "what": "throwing HIMSELF, or one Potato throwing another (the thrower plays this; the thrown one goes to air).",
+   "phases": {
+    "antic": [
+     0,
+     16
+    ],
+    "hang": [
+     16,
+     20
+    ],
+    "launch": [
+     20,
+     24
+    ],
+    "follow": [
+     24,
+     30
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      -12,
+      0
+     ],
+     [
+      -9,
+      "target",
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      16,
+      0.78,
+      "in"
+     ],
+     [
+      20,
+      0.76,
+      "lin"
+     ],
+     [
+      21,
+      0.88,
+      "lin"
+     ],
+     [
+      23,
+      1.18,
+      "out"
+     ],
+     [
+      30,
+      1.1,
+      "io"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      -0.09,
+      "in3"
+     ],
+     [
+      20,
+      -0.1,
+      "lin"
+     ],
+     [
+      24,
+      0.12,
+      "out3"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      0.12,
+      "in3"
+     ],
+     [
+      20,
+      0.13,
+      "lin"
+     ],
+     [
+      24,
+      -0.2,
+      "out3"
+     ]
+    ],
+    "lidR": [
+     [
+      4,
+      0
+     ],
+     [
+      14,
+      0.35,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      5,
+      0
+     ],
+     [
+      15,
+      0.35,
+      "io"
+     ]
+    ],
+    "browR": [
+     [
+      4,
+      0
+     ],
+     [
+      12,
+      -0.25,
+      "io"
+     ]
+    ],
+    "browL": [
+     [
+      4,
+      0
+     ],
+     [
+      12,
+      -0.3,
+      "io"
+     ]
+    ]
+   },
+   "contacts": [
+    20,
+    22
+   ],
+   "release": {
+    "f": 23,
+    "speed": [
+     5,
+     11
+    ],
+    "angle_rad": [
+     0.5,
+     1.1
+    ]
+   },
+   "note": "16 f coiling back and down on a curve that hangs (in3), 4 f held at the bottom, gone in 3. The longest anticipation he has: the wait is where the weight is."
+  },
+  "air": {
+   "kind": "physics",
+   "len": null,
+   "what": "thrown, launched or knocked: the tumble.",
+   "pose_from_physics": {
+    "pivot": "centre",
+    "sy": "1 + 0.016 * speed (H/s), capped 1.18, through rig.springs.sy. Stretch points ALONG his velocity: the rig turns the stretch axis to the velocity, not to his own up",
+    "roll": "angular speed set at release = 1.6 * (sideways offset of the grab from his centre of mass, in H) * release speed, capped 12 rad/s, plus 0.6 * horizontal speed. Loses 12% a second in the air. A throw from dead centre does not spin at all: he flies like a thrown sack",
+    "yaw": "untouched. He does not turn to face the wind",
+    "armsMotion": "vn = vy / 2.6 every frame"
+   },
+   "judge_note": "14 rad/s would be 0.23 rad a frame, over the director's 0.2. So the cap in force is 12 rad/s (0.2 a frame) until he agrees to raise it.",
+   "face": {
+    "rule": "FLAT for the whole flight. expr canon, lids 0, gx home. The face must not react until the impact frame.",
+    "exception": "speed over 9 H/s for more than 20 f: pupils drift to gx -0.5 (he looks at you, mid-air, as he goes past)"
+   },
+   "arms": "none"
+  },
+  "bounce_floor": {
+   "kind": "physics",
+   "len": 30,
+   "what": "any contact with the floor at v = speed into it (H/s).",
+   "phases": {
+    "impact": [
+     0,
+     2
+    ],
+    "hold": [
+     2,
+     4
+    ],
+    "off": [
+     4,
+     7
+    ]
+   },
+   "pose_from_physics": {
+    "pivot": "contact",
+    "sy_min": "clamp(1 - 0.045 * v, 0.72, 0.95)   (v 2 -> 0.91, v 4 -> 0.82, v 6.2 and up -> 0.72)",
+    "squash_axis": "the contact normal, whatever way up he is",
+    "hold_f": "1 + round(v / 4), capped 3: the faster he hits, the longer the floor keeps him",
+    "restitution": "0.35 (direction.json), applied on the frame the hold ends",
+    "roll": "contact takes 40% of his spin and turns 25% of his sideways speed into spin (he grips)",
+    "leaves_stretched": "sy 1 + 0.016 * exit speed, reached in 3 f"
+   },
+   "example_tracks_v5": {
+    "sy": [
+     [
+      0,
+      1.08
+     ],
+     [
+      1,
+      0.9,
+      "lin"
+     ],
+     [
+      2,
+      0.775,
+      "out"
+     ],
+     [
+      4,
+      0.775,
+      "lin"
+     ],
+     [
+      5,
+      0.9,
+      "lin"
+     ],
+     [
+      7,
+      1.03,
+      "out"
+     ]
+    ]
+   },
+   "contacts": [
+    0,
+    4
+   ],
+   "kicks": "secondary.jiggle, on f 2",
+   "face": {
+    "f0": "lids 0.6 for 4 f (a wince, not a blink)",
+    "over 6 H/s": "expr 'oh' swapped on f 0, back to canon under the first blink after he stops"
+   },
+   "stops_bouncing": "exit speed under 0.9 H/s: no more bounces, go to skid or settle"
+  },
+  "bounce_wall": {
+   "kind": "physics",
+   "len": 30,
+   "what": "same as the floor, sideways. restitution 0.55.",
+   "pose_from_physics": {
+    "inherits": "bounce_floor",
+    "sy_min": "clamp(1 - 0.04 * v, 0.72, 0.95)",
+    "over 7 H/s": "splat_wall instead of a bounce"
+   },
+   "contacts": [
+    0,
+    4
+   ]
+  },
+  "skid": {
+   "kind": "physics",
+   "len": null,
+   "what": "sliding along the floor after the last bounce.",
+   "pose_from_physics": {
+    "friction": "0.6 (direction.json)",
+    "shear": "0.014 * speed toward the way he slides, capped 0.12: feet dragging, top still going",
+    "sy": "0.94",
+    "roll": "if he lands on his side or back he skids there: roll stays, he does not right himself until get_up",
+    "ends": "speed under 0.15 H/s -> settle if upright (roll within 0.5 of up), else down"
+   }
+  },
+  "down": {
+   "kind": "base",
+   "len": null,
+   "what": "lying where he stopped. A hold.",
+   "tracks": {
+    "sy": 0.92,
+    "roll": "where physics left it"
+   },
+   "hold_f": [
+    30,
+    84
+   ],
+   "face": "expr canon. Breath continues at 1.5x depth. One blink. He is deciding whether that happened.",
+   "then": "get_up"
+  },
+  "get_up": {
+   "kind": "clip",
+   "len": 76,
+   "phases": {
+    "antic": [
+     0,
+     18
+    ],
+    "action": [
+     18,
+     46
+    ],
+    "follow": [
+     46,
+     56
+    ],
+    "settle": [
+     56,
+     76
+    ],
+    "look": [
+     76,
+     100
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      0.92
+     ],
+     [
+      18,
+      0.86,
+      "io"
+     ],
+     [
+      30,
+      1.04,
+      "io"
+     ],
+     [
+      46,
+      0.96,
+      "io"
+     ],
+     [
+      76,
+      1,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      "current"
+     ],
+     [
+      18,
+      "current * 1.08",
+      "io"
+     ],
+     [
+      46,
+      "rest - 0.06*sign",
+      "io"
+     ],
+     [
+      76,
+      "rest",
+      "spring"
+     ]
+    ],
+    "dy": [
+     [
+      18,
+      0
+     ],
+     [
+      30,
+      0.04,
+      "out"
+     ],
+     [
+      46,
+      0,
+      "in"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      18,
+      0.3,
+      "io"
+     ],
+     [
+      50,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      0,
+      0
+     ],
+     [
+      18,
+      0.35,
+      "io"
+     ],
+     [
+      54,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 47,
+     "spring": "wob",
+     "v": 1.4
+    }
+   ],
+   "contacts": [
+    18,
+    46
+   ],
+   "after": {
+    "hold_f": [
+     30,
+     84
+    ],
+    "then": "gx to the cursor for 24 to 72 f (you saw that) OR stays home and he turns away 0.4 rad (you saw nothing). Never the same one twice running."
+   },
+   "note": "reluctant: 18 f of leaning further INTO the floor before he rocks up, and he overshoots upright by 0.06 rad. The rock itself is 28 f: from flat on his side (1.57 rad) that peaks at 0.087 rad a frame."
+  },
+  "splat_wall": {
+   "kind": "clip",
+   "len": 116,
+   "what": "hits a wall (or the floor, turned) at over 7 H/s.",
+   "phases": {
+    "impact": [
+     0,
+     2
+    ],
+    "stuck": [
+     2,
+     44
+    ],
+    "slide": [
+     44,
+     96
+    ],
+    "peel": [
+     96,
+     116
+    ]
+   },
+   "tracks": {
+    "pivot": [
+     [
+      0,
+      "centre"
+     ],
+     [
+      0,
+      "contact",
+      "hold"
+     ],
+     [
+      116,
+      "centre",
+      "hold"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1.16
+     ],
+     [
+      1,
+      0.7,
+      "lin"
+     ],
+     [
+      2,
+      0.36,
+      "out"
+     ],
+     [
+      6,
+      0.32,
+      "out"
+     ],
+     [
+      44,
+      0.34,
+      "lin"
+     ],
+     [
+      96,
+      0.4,
+      "io"
+     ],
+     [
+      104,
+      0.46,
+      "io"
+     ],
+     [
+      105,
+      0.6,
+      "lin"
+     ],
+     [
+      108,
+      0.62,
+      "io"
+     ],
+     [
+      109,
+      0.78,
+      "lin"
+     ],
+     [
+      112,
+      0.8,
+      "io"
+     ],
+     [
+      113,
+      1.0,
+      "lin"
+     ],
+     [
+      116,
+      1.03,
+      "io"
+     ]
+    ],
+    "sx": [
+     [
+      0,
+      null
+     ],
+     [
+      2,
+      1.75,
+      "out"
+     ],
+     [
+      8,
+      1.85,
+      "io"
+     ],
+     [
+      96,
+      1.6,
+      "io"
+     ],
+     [
+      104,
+      1.5,
+      "io"
+     ],
+     [
+      105,
+      1.3,
+      "lin"
+     ],
+     [
+      108,
+      1.28,
+      "io"
+     ],
+     [
+      109,
+      1.14,
+      "lin"
+     ],
+     [
+      112,
+      1.12,
+      "io"
+     ],
+     [
+      113,
+      1.0,
+      "lin"
+     ],
+     [
+      116,
+      null,
+      "lin"
+     ]
+    ],
+    "dy": [
+     [
+      14,
+      0
+     ],
+     [
+      44,
+      -0.07,
+      "in"
+     ],
+     [
+      96,
+      -0.36,
+      "lin"
+     ]
+    ],
+    "glitch": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0.8,
+      "hold"
+     ],
+     [
+      5,
+      0,
+      "hold"
+     ]
+    ]
+   },
+   "contacts": [
+    0,
+    104,
+    108,
+    112
+   ],
+   "then": "air (he is off the wall with no speed: he drops) -> bounce_floor -> settle. The plop is the floor's, not this move's.",
+   "face": {
+    "f0": "expr 'oh' (hidden in the contact frames)",
+    "stuck": "one blink at f 20 to 30. gx slides to -0.5 at f 34: he looks at you from the wall",
+    "peel": "expr canon under a blink at f 98"
+   },
+   "peel_order": "top first: the top third comes off over f 96 to 104, hangs, then the rest lets go in three steps (104, 108, 112) like tape. The model's wob spring is kicked 1.2 on each step.",
+   "judge_note": "42 f stuck is the director's 500 to 1400 ms hold after a big bit, at its short end. The comedian may want it longer.",
+   "note": "flat to 36% thick in 2 frames, spreading on to 32% thick and 185% wide. Stuck 0.7 s. Slides 0.3 H down the wall slowly, speeding up. Peels from the top in three goes. Then gravity has him.",
+   "built_note": "Built from a real first contact of kind 'splat': squash along the WALL'S normal as a strain in the room's axes (channels lxx lxy lyy cx cy, overriding physpose for the clip only), stuck 42 f, slides, peels in three, then physics has him. At the canon cap he is 12% flat; ?squash=deep shows the keyed 0.32.",
+   "retimed_note": "Build round: each of the three peel pops now lands in ONE frame, the frame after its contact (inside the 2 exempt frames). As 2-frame 'out' pops a quarter of each jump fell on a judged frame (0.035 to 0.05) on the real model.",
+   "note_r3": "A3 / E1: the slide starts at f 14 (was 44): he creeps down the wall the whole time he is stuck instead of standing on it. The spin he arrived with carries into the wall (roll += spin * 0.11 * (1 - e^(-f/7))). The flat face breaks for 8 f on contact (lids wide, brows up) and is flat again by f 12. From f 20 he looks at you with one brow 0.1 higher (THE LEVEL FACE). PINK: 5 f at 0.8, then none."
+  },
+  "crack_hit": {
+   "kind": "clip",
+   "len": 190,
+   "what": "thrown hard enough: he hits the GLASS (toward the camera) and the screen cracks.",
+   "phases": {
+    "approach": [
+     0,
+     6
+    ],
+    "impact": [
+     6,
+     8
+    ],
+    "stuck": [
+     8,
+     70
+    ],
+    "slide": [
+     70,
+     130
+    ],
+    "drop": [
+     130,
+     146
+    ],
+    "settle": [
+     146,
+     166
+    ],
+    "look_crack": [
+     166,
+     190
+    ]
+   },
+   "tracks": {
+    "scale_all": [
+     [
+      0,
+      1
+     ],
+     [
+      6,
+      2.6,
+      "in"
+     ],
+     [
+      8,
+      2.9,
+      "out"
+     ],
+     [
+      70,
+      2.9,
+      "lin"
+     ],
+     [
+      130,
+      2.8,
+      "lin"
+     ],
+     [
+      146,
+      1,
+      "in"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1.12
+     ],
+     [
+      6,
+      1.15,
+      "lin"
+     ],
+     [
+      7,
+      1.0,
+      "lin"
+     ],
+     [
+      8,
+      0.92,
+      "out"
+     ],
+     [
+      70,
+      0.94,
+      "lin"
+     ],
+     [
+      146,
+      1.05,
+      "in"
+     ],
+     [
+      148,
+      0.8,
+      "out"
+     ],
+     [
+      150,
+      0.8,
+      "lin"
+     ],
+     [
+      166,
+      1,
+      "spring"
+     ]
+    ],
+    "pitch": [
+     [
+      0,
+      0
+     ],
+     [
+      6,
+      0.5,
+      "in"
+     ],
+     [
+      8,
+      1.57,
+      "out"
+     ],
+     [
+      130,
+      1.57,
+      "lin"
+     ],
+     [
+      146,
+      0,
+      "io"
+     ]
+    ],
+    "dy": [
+     [
+      70,
+      0
+     ],
+     [
+      130,
+      -0.55,
+      "in"
+     ]
+    ],
+    "glitch": [
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      0.6,
+      "hold"
+     ],
+     [
+      11,
+      0.25,
+      "hold"
+     ],
+     [
+      16,
+      0,
+      "hold"
+     ]
+    ]
+   },
+   "contacts": [
+    6,
+    130,
+    146
+   ],
+   "events": [
+    {
+     "f": 6,
+     "do": "crack_overlay",
+     "note": "engineer's: the crack starts at his contact point, purple in it"
+    }
+   ],
+   "face": {
+    "f6": "the face is flat against the glass: expr 'deadpan', pupils gx -0.5",
+    "f70": "slides down the inside of your screen, face first, no change of expression",
+    "look_crack": "after he lands: gx, gy to the crack for 40 to 70 f, then to you for 30 to 60 f. Then home."
+   },
+   "needs": "scale_all is a uniform scale on the rig (coming at the camera). Not in the channel list for anything else.",
+   "judge_note": "scale_all 1 to 2.6 in 6 f breaks the 3% scale rule on purpose: it is a contact approach. Tag f 0 to 8 as impact frames or the script fails it. Argued on the board.",
+   "built_note": "Built from a real first contact of kind 'crack': uniform scale 1 to 2.45 on the rig root (not a channel; not in the trace), pitch 0.2 not 1.57 (at 1.57 an orthographic camera shows the top of his head, not his face on the glass), slide 0.55 H, then physics drops him. The crack itself is the comedian's (event 'cracked').",
+   "note_r3": "comedian: the slide is 40 f (was 60). After he lands: 50 f, then he looks UP at the crack: cranes 6% taller and tips back 0.16 rad for 46 (the 0.10 asked for did not read at 100 px), looks at you 58, walks 0.8 of himself away, eyes home."
+  },
+  "through_404": {
+   "kind": "clip",
+   "len": 40,
+   "what": "harder still: through the wallpaper.",
+   "phases": {
+    "impact": [
+     0,
+     2
+    ],
+    "tear": [
+     2,
+     12
+    ],
+    "gone": [
+     12,
+     40
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1.18
+     ],
+     [
+      2,
+      1.18,
+      "lin"
+     ]
+    ],
+    "scale_all": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      0.15,
+      "in"
+     ]
+    ],
+    "glitch": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0.9,
+      "hold"
+     ],
+     [
+      5,
+      0.6,
+      "hold"
+     ],
+     [
+      10,
+      1.0,
+      "hold"
+     ]
+    ]
+   },
+   "contacts": [
+    0
+   ],
+   "face": "flat. He does not get a reaction shot. He is just gone.",
+   "then": {
+    "hole_stays_s": [
+     3,
+     6
+    ],
+    "pause_s": [
+     3.0,
+     3.7
+    ],
+    "return": "walk_back_in",
+    "pause_note_r3": "comedian: the nothing was 297 f, written as 200. Now 180 to 222.",
+    "return_r3": "walk_back_in from the OPPOSITE edge (ruling), 1.0 body height in, stop, look back at the hole 40 f (a turn), look at you 50 f; the player emits hole_shut 24 f into the look at you."
+   },
+   "built_note": "Built: 12 f, then body.vanish; 4 to 9 s later he walks back in from the EDGE (walk_back_in), carrying 0.5.",
+   "glitch_note_r3": "0.9 / 0.8 / 1.0 (the 0.6 step is shown as 0.8: player gate)."
+  },
+  "walk_back_in": {
+   "kind": "clip",
+   "len": null,
+   "what": "he comes back from the EDGE of the screen, not from the hole.",
+   "plays": [
+    "walk at walk_speed 0.7, from 0.6 H outside the screen edge to 1.2 H inside",
+    "walk_stop",
+    "hold 40 to 80 f",
+    "glance at the hole, 8 f, no brow",
+    "settle"
+   ],
+   "carry": "arrives carrying 0.5 (see carry): stride 15% short on one side",
+   "face": "expr canon the whole way. He has been somewhere. He is not going to discuss it."
+  },
+  "zap": {
+   "kind": "clip",
+   "len": 160,
+   "what": "electrocuted. Body on the 12 fps clock: every value below is HELD for 5 frames. No eases anywhere inside the zap.",
+   "clock": "stepped: 5 f a step",
+   "phases": {
+    "hit": [
+     0,
+     5
+    ],
+    "zap": [
+     5,
+     45
+    ],
+    "puff": [
+     45,
+     50
+    ],
+    "rigid": [
+     50,
+     60
+    ],
+    "hair_raised": [
+     60,
+     140
+    ],
+    "back": [
+     140,
+     160
+    ]
+   },
+   "steps": [
+    {
+     "f": 0,
+     "sy": 1.14,
+     "sx": 0.9,
+     "roll": 0.0,
+     "dy": 0.05,
+     "glitch": 0.9,
+     "look": "ink",
+     "expr": "shock"
+    },
+    {
+     "f": 5,
+     "sy": 0.9,
+     "sx": 1.1,
+     "roll": -0.1,
+     "dy": 0.02,
+     "glitch": 0.8,
+     "look": "binary",
+     "expr": "shock"
+    },
+    {
+     "f": 10,
+     "sy": 1.16,
+     "sx": 0.88,
+     "roll": 0.08,
+     "dy": 0.06,
+     "glitch": 1.0,
+     "look": "wireframe",
+     "expr": "shock"
+    },
+    {
+     "f": 15,
+     "sy": 0.94,
+     "sx": 1.06,
+     "roll": 0.12,
+     "dy": 0.03,
+     "glitch": 0,
+     "look": "ink",
+     "expr": "scream"
+    },
+    {
+     "f": 20,
+     "sy": 1.12,
+     "sx": 0.9,
+     "roll": -0.07,
+     "dy": 0.05,
+     "glitch": 0.8,
+     "look": "binary",
+     "expr": "scream"
+    },
+    {
+     "f": 25,
+     "sy": 1.0,
+     "sx": 1.0,
+     "roll": 0.05,
+     "dy": 0.04,
+     "glitch": 0,
+     "look": "ink",
+     "expr": "shock"
+    },
+    {
+     "f": 30,
+     "sy": 1.15,
+     "sx": 0.88,
+     "roll": -0.12,
+     "dy": 0.06,
+     "glitch": 1.0,
+     "look": "wireframe",
+     "expr": "shock"
+    },
+    {
+     "f": 35,
+     "sy": 0.92,
+     "sx": 1.08,
+     "roll": 0.04,
+     "dy": 0.02,
+     "glitch": 0.9,
+     "look": "binary",
+     "expr": "scream"
+    },
+    {
+     "f": 40,
+     "sy": 1.1,
+     "sx": 0.92,
+     "roll": 0.0,
+     "dy": 0.03,
+     "glitch": 0,
+     "look": "ink",
+     "expr": "shock"
+    },
+    {
+     "f": 45,
+     "sy": 1.08,
+     "sx": 0.94,
+     "roll": 0.0,
+     "dy": 0.0,
+     "glitch": 0,
+     "look": "ink",
+     "expr": "startled"
+    }
+   ],
+   "step_order": "steps f 5 to f 40 are dealt in a shuffled order from the seed every time; f 0 and f 45 are fixed. No two zaps are the same eight frames.",
+   "tracks_after": {
+    "sy": [
+     [
+      50,
+      1.08
+     ],
+     [
+      60,
+      1.08,
+      "lin"
+     ],
+     [
+      66,
+      1.04,
+      "io"
+     ],
+     [
+      140,
+      1.04,
+      "lin"
+     ],
+     [
+      160,
+      1,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      50,
+      0
+     ],
+     [
+      160,
+      "rest",
+      "lin"
+     ]
+    ]
+   },
+   "events": [
+    {
+     "f": 45,
+     "do": "puff",
+     "note": "one puff of smoke from his top, ink only, rises 0.3 H over 50 f and thins"
+    }
+   ],
+   "contacts": [
+    0
+   ],
+   "frozen": "f 50 to 80: 30 frames standing 8% too tall, eyes fully open, brows at the top of their range, not breathing (always_on quiet = 1). The longest dead hold he has.",
+   "then": "expr canon under a blink at f 96; hair-raised look = brows stay +0.1 / +0.05 for 4 to 8 s (carry, twitchy)",
+   "note": "the outline flicker (ink / binary / wireframe) is the engineer's and the director's: I only say WHICH step shows which.",
+   "built_note": "Built: expr 'shock' only (one drawn face, swapped inside the contact / stepped frames), canon again from the last step with HIS OWN eyes wide and brow up (the hair-raised side-eye). Binary / wireframe not built (probe P5 not run): the stepped purple glitch alone, as the plan's fallback says. 'look' is emitted as an event for fx.",
+   "glitch_note_r3": "PINK (Potato seat): every step is 0, or 0.8 and up. Never the middle.",
+   "after": {
+    "stiff_f": 90,
+    "brow_r_down_at": 54,
+    "brow_l_down_at": 72,
+    "note_r3": "A5 + comedian: 10 f rigid in the last pose, then 4% tall and stiff under the smoke until +90, brows as high as they go and lids open with the pupils on their home side; the right brow comes down at +54 over 6 f, the left at +72 over 6 f."
+   }
+  },
+  "late_twitch": {
+   "kind": "clip",
+   "len": 34,
+   "what": "two seconds after he has decided it is over.",
+   "delay_after_zap_s": [
+    0.3,
+    0.8
+   ],
+   "steps": [
+    {
+     "f": 0,
+     "sy": 1.1,
+     "roll": 0.12,
+     "dy": 0.06,
+     "glitch": 0.9,
+     "expr": "startled"
+    },
+    {
+     "f": 5,
+     "sy": 0.95,
+     "roll": -0.05,
+     "dy": 0,
+     "glitch": 0,
+     "expr": "startled"
+    }
+   ],
+   "tracks_after": {
+    "sy": [
+     [
+      10,
+      0.95
+     ],
+     [
+      34,
+      1,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      10,
+      -0.05
+     ],
+     [
+      34,
+      "rest",
+      "spring"
+     ]
+    ]
+   },
+   "then": "expr canon under a blink; gx to the cursor for 20 f. He checks whether you saw. Then home.",
+   "note": "two stepped frames, 10 f in all. Once per zap, never twice.",
+   "delay_note_r3": "counted from the END of the zap clip, which now holds the hair-raised after (110 f past the last zap step). So the twitch lands 2.1 to 2.6 s after the zap itself (comedian asked 1.8 to 2.4; the director asked for the after to finish first).",
+   "jolt_note_r3": "A5: a body jolt you can see (10% tall, 0.12 rad, 0.06 off the floor for one 5 f step), not an eye widening."
+  },
+  "fries": {
+   "kind": "sequence",
+   "len": null,
+   "what": "a potato eating fries. He knows exactly what he is doing.",
+   "props": "a carton of fries on the ground, 0.5 H in front of him. Ink outline, no white. He never holds it: no hands, and no arms in this move at all.",
+   "plays": [
+    "fries_check",
+    "fries_bite",
+    "chew x 2 to 4 (one fry is 3 chews)",
+    "fries_swallow",
+    "back to fries_bite, 3 to 6 fries, then stop mid-carton"
+   ],
+   "turn_away": "cursor within 140 px: about_face at half speed (len 60), then carries on eating with his back to you. You see the chew from behind: the squash and the ears of the carton. That is funnier than the face.",
+   "built_note": "Built: check (eyes left, BODY right), bite, chews, swallow. The carton and the fry are the comedian's props: events 'prop' { do: carton | fry_in_mouth | fry_shorter | carton_left }. He has no mouth line in canon: the chew is his whole body and the nose line bobbing.",
+   "note_r3": "one fry a feeding (comedian). check, bite, stare 43, 4 to 6 chews, swallow, one slow blink, done. No arm: see BOARD (the director ruled one arm, signed first by the Potato seat; not built this round)."
+  },
+  "fries_check": {
+   "kind": "clip",
+   "len": 96,
+   "phases": {
+    "left": [
+     0,
+     30
+    ],
+    "right": [
+     30,
+     66
+    ],
+    "you": [
+     66,
+     96
+    ]
+   },
+   "tracks": {
+    "gx": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      -1,
+      "out"
+     ],
+     [
+      26,
+      -1,
+      "lin"
+     ],
+     [
+      29,
+      0,
+      "out"
+     ],
+     [
+      66,
+      0,
+      "lin"
+     ],
+     [
+      69,
+      -0.5,
+      "out"
+     ],
+     [
+      96,
+      -0.5,
+      "lin"
+     ]
+    ],
+    "yaw": [
+     [
+      30,
+      "from"
+     ],
+     [
+      30,
+      "from + 0.5",
+      "hold"
+     ],
+     [
+      60,
+      "from",
+      "hold"
+     ]
+    ],
+    "browR": [
+     [
+      1,
+      0
+     ],
+     [
+      5,
+      0.1,
+      "out"
+     ],
+     [
+      30,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "note": "looks left with his EYES (pupils cross the whole eye: the far corner, 23 f held). He cannot look right with his eyes, home is already there, so he has to turn his body 0.5 rad to check that side. Then eyes to you, and they stay on you into the bite."
+  },
+  "fries_bite": {
+   "kind": "clip",
+   "len": 50,
+   "phases": {
+    "antic": [
+     0,
+     8
+    ],
+    "down": [
+     8,
+     24
+    ],
+    "take": [
+     24,
+     28
+    ],
+    "up": [
+     28,
+     44
+    ],
+    "settle": [
+     44,
+     50
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      1.03,
+      "io"
+     ],
+     [
+      24,
+      0.8,
+      "io"
+     ],
+     [
+      28,
+      0.8,
+      "lin"
+     ],
+     [
+      44,
+      1.02,
+      "io"
+     ],
+     [
+      50,
+      1,
+      "spring"
+     ]
+    ],
+    "pitch": [
+     [
+      8,
+      0
+     ],
+     [
+      24,
+      0.55,
+      "io"
+     ],
+     [
+      28,
+      0.55,
+      "lin"
+     ],
+     [
+      44,
+      0,
+      "io"
+     ]
+    ],
+    "shear": [
+     [
+      8,
+      0
+     ],
+     [
+      24,
+      0.14,
+      "io"
+     ],
+     [
+      28,
+      0.14,
+      "lin"
+     ],
+     [
+      44,
+      0,
+      "io"
+     ]
+    ],
+    "gx": [
+     [
+      0,
+      -0.5
+     ],
+     [
+      50,
+      -0.5,
+      "lin"
+     ]
+    ],
+    "gy": [
+     [
+      8,
+      0
+     ],
+     [
+      24,
+      -0.3,
+      "io"
+     ],
+     [
+      44,
+      0,
+      "io"
+     ]
+    ],
+    "jaw": [
+     [
+      22,
+      0
+     ],
+     [
+      25,
+      0.8,
+      "out"
+     ],
+     [
+      27,
+      0.1,
+      "in"
+     ]
+    ]
+   },
+   "events": [
+    {
+     "f": 26,
+     "do": "fry_in_mouth",
+     "note": "one fry leaves the carton and sticks out of his mouth, 0.16 H long"
+    }
+   ],
+   "contacts": [],
+   "note": "he bends to the carton (tips 0.55 rad, squashes to 80%) and his pupils roll UP as his face goes down, so the eye contact never breaks. That is the whole gag: gy -0.3 at the bottom of the bend.",
+   "stare_f": 43,
+   "note_r3": "comedian: he leans TOWARD the carton in the bend (0.06 -> 0.14). After the first bite he holds 43 f with the fry in his mouth, eyes on you, no blink, before the first chew."
+  },
+  "chew": {
+   "kind": "cycle",
+   "len": 16,
+   "what": "the chew is his whole body.",
+   "tracks": {
+    "jaw": [
+     [
+      0,
+      0.1
+     ],
+     [
+      4,
+      1,
+      "out"
+     ],
+     [
+      8,
+      0.9,
+      "lin"
+     ],
+     [
+      12,
+      0.1,
+      "in"
+     ],
+     [
+      16,
+      0.1,
+      "lin"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      0.972,
+      "io"
+     ],
+     [
+      11,
+      1.008,
+      "io"
+     ],
+     [
+      16,
+      1,
+      "io"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      5,
+      "0.032*side",
+      "io"
+     ],
+     [
+      11,
+      "-0.012*side",
+      "io"
+     ],
+     [
+      16,
+      0,
+      "io"
+     ]
+    ],
+    "browR": [
+     [
+      2,
+      0
+     ],
+     [
+      6,
+      -0.06,
+      "io"
+     ],
+     [
+      12,
+      0.04,
+      "io"
+     ],
+     [
+      16,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 5,
+     "spring": "wob",
+     "v": 0.3
+    }
+   ],
+   "events": [
+    {
+     "f": 5,
+     "do": "fry_shorter",
+     "note": "the fry sticking out gets a third shorter on each chew, like a pencil in a sharpener"
+    }
+   ],
+   "vary": {
+    "len": [
+     14,
+     18
+    ],
+    "side": "alternates",
+    "pause_after": {
+     "chance": 0,
+     "f": [
+      10,
+      30
+     ],
+     "note": "round 3: no pause inside a burst"
+    }
+   },
+   "face": "gx -0.5: on you. No blinking for the first 2 fries (always_on.blink never_during). Then ONE slow_blink, still chewing.",
+   "note": "4.5% squash a chew, a 0.022 rad rock to the chewing side, 22 f = 2.7 chews a second. Slower than you would animate it. He is in no hurry.",
+   "note_r3": "A4: a chew is small and quick: 16 f (3.75 a second), 2.8% of his height, cheeks side to side (roll 0.032 alternating), in one burst of 4 to 6, then fries_swallow is the one bigger dip. The fry gets shorter three times across the burst. It was one 12% bow every 2.6 to 3.2 s."
+  },
+  "fries_swallow": {
+   "kind": "clip",
+   "len": 30,
+   "phases": {
+    "antic": [
+     0,
+     6
+    ],
+    "action": [
+     6,
+     12
+    ],
+    "settle": [
+     12,
+     30
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      6,
+      1.035,
+      "io"
+     ],
+     [
+      12,
+      0.95,
+      "io"
+     ],
+     [
+      30,
+      1,
+      "spring"
+     ]
+    ],
+    "jaw": [
+     [
+      0,
+      0.1
+     ],
+     [
+      6,
+      0,
+      "io"
+     ]
+    ],
+    "lidR": [
+     [
+      5,
+      0
+     ],
+     [
+      9,
+      0.6,
+      "io"
+     ],
+     [
+      16,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      6,
+      0
+     ],
+     [
+      10,
+      0.6,
+      "io"
+     ],
+     [
+      18,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 12,
+     "spring": "wob",
+     "v": 0.6
+    }
+   ],
+   "note": "up 3.5%, down 5%, eyes most of the way shut for 4 f: the only frame in the whole fries bit where he is not looking at you."
+  },
+  "poke_flinch": {
+   "kind": "clip",
+   "len": 30,
+   "what": "poke ladder steps 1 and 2: the body part.",
+   "tracks": {
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      "-0.04*from_side",
+      "out"
+     ],
+     [
+      30,
+      0,
+      "spring"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      0.97,
+      "out"
+     ],
+     [
+      30,
+      1,
+      "spring"
+     ]
+    ],
+    "gx": [
+     [
+      2,
+      0
+     ],
+     [
+      5,
+      "cursor",
+      "out"
+     ]
+    ],
+    "browR": [
+     [
+      4,
+      0
+     ],
+     [
+      9,
+      -0.25,
+      "out"
+     ]
+    ],
+    "browL": [
+     [
+      5,
+      0
+     ],
+     [
+      10,
+      -0.3,
+      "out"
+     ]
+    ]
+   },
+   "poke": {
+    "f": 0,
+    "at": "the click point",
+    "power": 0.6
+   },
+   "contacts": [
+    0
+   ],
+   "note": "the dent is the model's own. He rocks 0.04 H away from the poke. Eyes go to the cursor 2 f AFTER the body: for once the body knows first.",
+   "ladder_r3": "no brain: 1 flinch + eyes · 2 flinch + the glare (brows -0.55 / -0.4, lids 0.1, leaning 0.1 AT the cursor, 4% taller, 36 f: A10) · 3 about_face, his back · 4 his back stays, one waddle step (0.4) further off · 5 he walks 2.2 away with his back to you and stays 20 s. Never a second about-face on the way up."
+  },
+  "bite_cursor": {
+   "kind": "clip",
+   "len": 46,
+   "what": "poke ladder step 5.",
+   "phases": {
+    "antic": [
+     0,
+     14
+    ],
+    "hang": [
+     14,
+     18
+    ],
+    "lunge": [
+     18,
+     22
+    ],
+    "hold": [
+     22,
+     34
+    ],
+    "back": [
+     34,
+     46
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      14,
+      0.86,
+      "in3"
+     ],
+     [
+      18,
+      0.85,
+      "lin"
+     ],
+     [
+      19,
+      0.95,
+      "lin"
+     ],
+     [
+      21,
+      1.16,
+      "out"
+     ],
+     [
+      34,
+      1.12,
+      "lin"
+     ],
+     [
+      46,
+      1,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      14,
+      "-0.07*toward",
+      "in3"
+     ],
+     [
+      18,
+      "-0.07*toward",
+      "lin"
+     ],
+     [
+      22,
+      "0.13*toward",
+      "out3"
+     ],
+     [
+      34,
+      "0.11*toward",
+      "lin"
+     ],
+     [
+      46,
+      0,
+      "spring"
+     ]
+    ],
+    "jaw": [
+     [
+      18,
+      0
+     ],
+     [
+      20,
+      1,
+      "out"
+     ],
+     [
+      22,
+      0,
+      "in"
+     ],
+     [
+      34,
+      0,
+      "lin"
+     ]
+    ],
+    "gx": [
+     [
+      0,
+      "cursor"
+     ],
+     [
+      46,
+      "cursor",
+      "lin"
+     ]
+    ]
+   },
+   "contacts": [
+    18,
+    20
+   ],
+   "note": "his feet never move. 14 f winding back, 4 f hanging, 4 f for the lunge (0.2 H of his top), jaw shut on f 22, held on the cursor 12 f.",
+   "cut_r3": "CUT from the poke ladder (comedian): no mouth you can see at his size, no hang. Rung five is the walk-off. The move still answers play()."
+  },
+  "squish_flat": {
+   "kind": "clip",
+   "len": 96,
+   "what": "pressed flat (by the cursor or something landing on him), then comes back.",
+   "phases": {
+    "impact": [
+     0,
+     2
+    ],
+    "flat": [
+     2,
+     40
+    ],
+    "rise": [
+     40,
+     62
+    ],
+    "settle": [
+     62,
+     96
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      0.6,
+      "lin"
+     ],
+     [
+      2,
+      0.3,
+      "out"
+     ],
+     [
+      40,
+      0.32,
+      "lin"
+     ],
+     [
+      44,
+      0.34,
+      "lin"
+     ],
+     [
+      45,
+      0.5,
+      "lin"
+     ],
+     [
+      52,
+      0.52,
+      "io"
+     ],
+     [
+      53,
+      0.74,
+      "lin"
+     ],
+     [
+      60,
+      0.76,
+      "io"
+     ],
+     [
+      61,
+      1.06,
+      "lin"
+     ],
+     [
+      96,
+      1,
+      "spring"
+     ]
+    ],
+    "sx": [
+     [
+      0,
+      null
+     ],
+     [
+      2,
+      1.9,
+      "out"
+     ],
+     [
+      40,
+      1.85,
+      "lin"
+     ],
+     [
+      44,
+      1.82,
+      "lin"
+     ],
+     [
+      45,
+      1.45,
+      "lin"
+     ],
+     [
+      52,
+      1.42,
+      "io"
+     ],
+     [
+      53,
+      1.2,
+      "lin"
+     ],
+     [
+      60,
+      1.17,
+      "io"
+     ],
+     [
+      61,
+      0.97,
+      "lin"
+     ],
+     [
+      64,
+      null,
+      "lin"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 62,
+     "spring": "wob",
+     "v": 2.5
+    }
+   ],
+   "contacts": [
+    0,
+    1,
+    44,
+    52,
+    60
+   ],
+   "face": "round 3 (THE LEVEL FACE): no drawn deadpan. His own eyes: lids 0.5 (two slits), pupils on you, the high brow 0.1 up. One blink at flat + 28, 6 f (comedian). The look at you is inside the gag: it starts on the frame the clip ends (pop + 35) and holds 48.",
+   "note": "comes up unevenly, in three pushes (f 44, 52, 60), like something inflating.",
+   "retimed_note": "Build round: the crush is two frames (contacts 0 and 1) and each of the three pushes up lands in ONE frame after its contact, like the splat peel."
+  },
+  "explode": {
+   "kind": "clip",
+   "len": 150,
+   "what": "he comes apart, and comes back slightly wrong first.",
+   "phases": {
+    "antic": [
+     0,
+     10
+    ],
+    "burst": [
+     10,
+     12
+    ],
+    "gone": [
+     12,
+     54
+    ],
+    "rebuild_right_way_up": [
+     54,
+     114
+    ],
+    "wrong_one_in_three": [
+     114,
+     130
+    ],
+    "shudder": [
+     130,
+     138
+    ],
+    "fix": [
+     138,
+     143
+    ],
+    "settle": [
+     143,
+     161
+    ],
+    "then": "look left 34 f, look at you 40 f"
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      1.14,
+      "in"
+     ],
+     [
+      12,
+      1.3,
+      "lin"
+     ]
+    ],
+    "glitch": [
+     [
+      10,
+      0
+     ],
+     [
+      10,
+      1.0,
+      "hold"
+     ]
+    ]
+   },
+   "rebuild_steps": "12 fps clock, 12 steps from f 54: glitch 1.0 falling to 0.15 by 0.07 a step; sy rises 0.4 to 1.0 in steps; each step shows 1/12 more of him from the feet up",
+   "wrong": {
+    "f": [
+     114,
+     132
+    ],
+    "what": "he is back, but sy 0.94, roll 0.08, and ONE eye's lid at 0.5. Held 18 f. He has not noticed."
+   },
+   "fix": {
+    "f": [
+     132,
+     136
+    ],
+    "what": "one stepped glitch frame (0.4), and he is right: sy 1, roll rest, lids 0"
+   },
+   "contacts": [
+    10
+   ],
+   "then": "gx to the cursor (who saw), 30 to 60 f, then home. carry amount 1.",
+   "note": "pieces, colours and what the burst looks like are the engineer's and the director's; this is only the timing and the body around it. Purple, on him.",
+   "built_note": "Built as cut 10 says: tears in his own purple, gone 42 f, rebuilt on the 12 fps clock from small, UPSIDE DOWN (ruling 20's block), held 18 f not noticing, one glitch frame and he is right.",
+   "wrong_chance": 0.3333333333333333,
+   "note_r3": "comedian + Potato seat: rebuilt the right way up, glitch 1.0 / 0.8 on alternate steps (never under 0.8). One time in three the last thing is wrong: full size, upside down, torn at 0.8 the whole time, 16 f + an 8 f shudder (0.96 / 1.03, 2 f each) = 24 f upside down in all (was 78, 18 of them clean; now none clean). HE KNOWS for all 24. Then the fix (5 f at 0.9), then who saw."
+  },
+  "sigh": {
+   "kind": "layer",
+   "ref": "always_on.breath.sigh",
+   "len": 174
+  },
+  "nod_off": {
+   "kind": "clip",
+   "len": 260,
+   "what": "low power. He falls asleep standing.",
+   "phases": {
+    "droop1": [
+     0,
+     90
+    ],
+    "catch": [
+     90,
+     98
+    ],
+    "droop2": [
+     98,
+     200
+    ],
+    "asleep": [
+     200,
+     260
+    ]
+   },
+   "tracks": {
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      80,
+      0.75,
+      "in"
+     ],
+     [
+      90,
+      0.85,
+      "lin"
+     ],
+     [
+      94,
+      0.1,
+      "out"
+     ],
+     [
+      110,
+      0.2,
+      "io"
+     ],
+     [
+      200,
+      1,
+      "in"
+     ]
+    ],
+    "lidL": [
+     [
+      0,
+      0
+     ],
+     [
+      70,
+      0.8,
+      "in"
+     ],
+     [
+      90,
+      0.9,
+      "lin"
+     ],
+     [
+      95,
+      0.15,
+      "out"
+     ],
+     [
+      110,
+      0.3,
+      "io"
+     ],
+     [
+      190,
+      1,
+      "in"
+     ]
+    ],
+    "pitch": [
+     [
+      0,
+      0
+     ],
+     [
+      90,
+      0.16,
+      "in"
+     ],
+     [
+      96,
+      0.0,
+      "out"
+     ],
+     [
+      100,
+      -0.02,
+      "io"
+     ],
+     [
+      200,
+      0.22,
+      "in"
+     ],
+     [
+      260,
+      0.25,
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      90,
+      0.96,
+      "io"
+     ],
+     [
+      96,
+      1.01,
+      "out"
+     ],
+     [
+      200,
+      0.94,
+      "io"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      90,
+      0.03,
+      "in"
+     ],
+     [
+      96,
+      0,
+      "out"
+     ],
+     [
+      200,
+      0.04,
+      "in"
+     ]
+    ]
+   },
+   "note": "tips forward slowly for 1.5 s, catches himself in 6 frames (the only fast thing in it), pretends, goes again, and this time stays. One lid goes before the other both times. Deep Rest, not death."
+  },
+  "sleep_slide": {
+   "kind": "base",
+   "len": null,
+   "what": "asleep, and sliding.",
+   "tracks": {
+    "pitch": 0.25,
+    "sy": 0.94,
+    "lidL": 1,
+    "lidR": 1
+   },
+   "breath": {
+    "depth": 0.03,
+    "period_f": 250,
+    "note": "deep and slow: the ONE time his breath is big enough to see from across the room"
+   },
+   "slide": {
+    "dx": "0.02 H/s toward the side he leans, for as long as he sleeps",
+    "roll": "creeps 0.002 rad/s to max 0.3"
+   },
+   "ends": "roll reaches 0.3 -> wake_glitch; or the cursor comes within 140 px -> startle_small"
+  },
+  "wake_glitch": {
+   "kind": "clip",
+   "len": 50,
+   "what": "he wakes himself up with his own glitch.",
+   "steps": [
+    {
+     "f": 0,
+     "glitch": 0.5,
+     "sy": 1.06,
+     "roll": "current"
+    },
+    {
+     "f": 5,
+     "glitch": 0.15,
+     "sy": 1.0,
+     "roll": "current*0.5"
+    }
+   ],
+   "tracks_after": {
+    "roll": [
+     [
+      10,
+      "current*0.5"
+     ],
+     [
+      50,
+      "rest",
+      "spring"
+     ]
+    ],
+    "pitch": [
+     [
+      10,
+      0.25
+     ],
+     [
+      18,
+      -0.03,
+      "out"
+     ],
+     [
+      50,
+      0,
+      "spring"
+     ]
+    ],
+    "lidR": [
+     [
+      10,
+      1
+     ],
+     [
+      13,
+      -0.5,
+      "out"
+     ],
+     [
+      28,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      12,
+      1
+     ],
+     [
+      16,
+      -0.4,
+      "out"
+     ],
+     [
+      32,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "then": "caught_looking (he was not asleep)",
+   "note_r3": "PINK: steps under 0.3 are shown as 0, the rest as 0.8 and up (player gate)."
+  },
+  "lean_on_edge": {
+   "kind": "base",
+   "len": null,
+   "what": "bored: leans on the edge of the screen.",
+   "enter": {
+    "len": 40,
+    "tracks": {
+     "roll": [
+      [
+       0,
+       0
+      ],
+      [
+       10,
+       "-0.03*side",
+       "io"
+      ],
+      [
+       30,
+       "0.2*side",
+       "io"
+      ],
+      [
+       40,
+       "0.18*side",
+       "spring"
+      ]
+     ],
+     "sy": [
+      [
+       0,
+       1
+      ],
+      [
+       30,
+       0.97,
+       "io"
+      ]
+     ],
+     "sx_contact": "his side flattens 4% against the edge"
+    },
+    "contacts": [
+     28
+    ]
+   },
+   "hold_s": [
+    8,
+    40
+   ],
+   "exit": {
+    "len": 30,
+    "tracks": {
+     "roll": [
+      [
+       0,
+       "0.18*side"
+      ],
+      [
+       6,
+       "0.21*side",
+       "io"
+      ],
+      [
+       30,
+       "rest",
+       "spring"
+      ]
+     ]
+    }
+   },
+   "note": "he pushes off by leaning IN first (0.21) and letting the wall give him back."
+  },
+  "one_nub": {
+   "kind": "clip",
+   "len": 200,
+   "what": "bored: balances on one nub. Fails.",
+   "needs_hook": "feet (lift one). Fallback without the hook: the roll alone, both feet down, reads as a slow lean and recover.",
+   "tracks": {
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      30,
+      0.1,
+      "io"
+     ],
+     [
+      60,
+      0.08,
+      "io"
+     ],
+     [
+      95,
+      0.13,
+      "io"
+     ],
+     [
+      120,
+      0.07,
+      "io"
+     ],
+     [
+      150,
+      0.17,
+      "in"
+     ],
+     [
+      158,
+      0.3,
+      "in"
+     ],
+     [
+      164,
+      0.02,
+      "out3"
+     ],
+     [
+      200,
+      0,
+      "spring"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      30,
+      1.03,
+      "io"
+     ],
+     [
+      158,
+      1.04,
+      "lin"
+     ],
+     [
+      166,
+      0.9,
+      "out"
+     ],
+     [
+      200,
+      1,
+      "spring"
+     ]
+    ],
+    "gy": [
+     [
+      0,
+      0
+     ],
+     [
+      20,
+      0.4,
+      "io"
+     ],
+     [
+      150,
+      0.4,
+      "lin"
+     ],
+     [
+      156,
+      0,
+      "out"
+     ]
+    ]
+   },
+   "contacts": [
+    158
+   ],
+   "note": "he watches his own foot (gy 0.4). The wobble gets bigger each time: 0.10, 0.13, 0.17, gone.",
+   "built_note": "Fallback only (no feet hook): the roll and the look down.",
+   "retimed_note": "Build round: the catch was 6 f with 'out' (3.5% on the first judged frame); now 8 f."
+  },
+  "notice_other": {
+   "kind": "clip",
+   "len": 110,
+   "what": "two of him notice each other. Both play this, the second one 5 to 24 f late.",
+   "phases": {
+    "stop": [
+     0,
+     14
+    ],
+    "beat": [
+     14,
+     40
+    ],
+    "take": [
+     40,
+     110
+    ]
+   },
+   "plays": [
+    "walk_stop if moving, else nothing",
+    "hold 26 f",
+    "double_take toward the other"
+   ],
+   "then": "both hold the side-eye at each other for 40 to 90 f. One shuffles 0.15 H closer (waddle, 1 step). It goes from there.",
+   "note": "they must NOT be in step: crowd.reaction_stagger_ms in direction.json.",
+   "note_r3": "A1 + comedian (m09): hold `delay` (20), then notice_turn: a 6% gather, eyes first, the body turns 0.55 rad (0.9 when the other is on his left: his face is drawn right of his middle, so a left turn has to go further to read) to the other one over 14 f and holds until `home_at` (86) from the play, when it snaps home in 8 f (two played on the same frame turn home on the same frame); 34 f later notice_second, the slow one: 0.36 rad over 24 f with a lean, lids lower, 26 f hold, home."
+  },
+  "bump": {
+   "kind": "clip",
+   "len": 40,
+   "what": "argument ladder step 3. The one doing it.",
+   "tracks": {
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      "-0.03*toward",
+      "io"
+     ],
+     [
+      14,
+      "0.09*toward",
+      "out"
+     ],
+     [
+      40,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      8,
+      0
+     ],
+     [
+      14,
+      0.07,
+      "out"
+     ],
+     [
+      30,
+      0,
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      0.95,
+      "io"
+     ],
+     [
+      14,
+      1.03,
+      "io"
+     ],
+     [
+      40,
+      1,
+      "spring"
+     ]
+    ]
+   },
+   "contacts": [
+    14
+   ],
+   "gives": {
+    "to": "the other",
+    "impulse_H_per_s": 0.9,
+    "play": "bumped"
+   },
+   "note": "his side, not his front. A shoulder with no shoulder."
+  },
+  "bumped": {
+   "kind": "clip",
+   "len": 44,
+   "what": "the one who got bumped.",
+   "tracks": {
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      "-0.07*away",
+      "out"
+     ],
+     [
+      44,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      0.1,
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      0.95,
+      "out"
+     ],
+     [
+      44,
+      1,
+      "spring"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      -0.5,
+      "out"
+     ],
+     [
+      20,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      1,
+      0
+     ],
+     [
+      4,
+      -0.5,
+      "out"
+     ],
+     [
+      22,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "kicks": [
+    {
+     "f": 1,
+     "spring": "wob",
+     "v": 2.2
+    },
+    {
+     "f": 1,
+     "spring": "leanX",
+     "v": 1.4
+    }
+   ],
+   "poke": {
+    "f": 0,
+    "at": "the side that was hit",
+    "power": 0.5
+   },
+   "contacts": [
+    0
+   ],
+   "then": "40 to 80 f hold, then a slow turn toward the one who did it (turn_big at tempo 1.5)"
+  },
+  "shove": {
+   "kind": "clip",
+   "len": 50,
+   "what": "argument ladder step 4.",
+   "phases": {
+    "antic": [
+     0,
+     14
+    ],
+    "action": [
+     14,
+     19
+    ],
+    "follow": [
+     19,
+     30
+    ],
+    "settle": [
+     30,
+     50
+    ]
+   },
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      14,
+      0.86,
+      "in3"
+     ],
+     [
+      15,
+      0.92,
+      "lin"
+     ],
+     [
+      18,
+      1.1,
+      "out"
+     ],
+     [
+      50,
+      1,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      14,
+      "-0.08*toward",
+      "in3"
+     ],
+     [
+      19,
+      "0.13*toward",
+      "out3"
+     ],
+     [
+      50,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      14,
+      0
+     ],
+     [
+      19,
+      0.16,
+      "out3"
+     ],
+     [
+      40,
+      0.1,
+      "io"
+     ]
+    ]
+   },
+   "contacts": [
+    14,
+    16
+   ],
+   "gives": {
+    "to": "the other",
+    "impulse_H_per_s": 3.2,
+    "play": "air if it lifts him, else skid"
+   },
+   "note": "his whole body is the shove: no arms. After it he rocks back 0.06 H on his own follow-through, which is when the other one gets him back."
+  },
+  "back_turned": {
+   "kind": "base",
+   "len": null,
+   "what": "after a fight: backs to each other.",
+   "enter": "about_face",
+   "hold_s": [
+    4,
+    10
+   ],
+   "tracks": {
+    "sy": 0.98,
+    "browL": -0.2,
+    "browR": -0.25
+   },
+   "peek": {
+    "len": 50,
+    "tracks": {
+     "yaw": [
+      [
+       0,
+       "from"
+      ],
+      [
+       0,
+       "from - 0.5*dir",
+       "hold"
+      ],
+      [
+       34,
+       "from",
+       "hold"
+      ]
+     ],
+     "gx": [
+      [
+       8,
+       0
+      ],
+      [
+       11,
+       -1,
+       "out"
+      ],
+      [
+       30,
+       -1,
+       "lin"
+      ],
+      [
+       32,
+       0,
+       "out"
+      ]
+     ]
+    },
+    "note": "turns 0.5 rad back and the pupils go the rest of the way to the far corner. If the other one is peeking too, both snap back (caught_looking) on the same frame: the one time they ARE in step."
+   }
+  },
+  "watch_go_by": {
+   "kind": "layer",
+   "len": null,
+   "what": "one of them is picked up or thrown: the rest watch it like a tennis crowd.",
+   "rule": "gx, gy follow the flying one through the gaze spring; when it passes more than 0.6 rad off their front, yaw follows at 70% (turn_small, no gather). Each one lags the last by 5 to 24 f.",
+   "on_impact": "all of them wince (lids 0.4, 4 f) on their own stagger"
+  },
+  "zap_nosy": {
+   "kind": "clip",
+   "len": 52,
+   "what": "round 3 (comedian): the zap he walked into. The spark alone; at +10 he leans at it (0.06 over 18 f); a 12 f hold at +36 (the lean stops, nothing happens); at +48 the lean reaches it; zap. The tracks are built in the player (they need the spark's side).",
+   "then": "zap"
+  },
+  "count_spots": {
+   "kind": "clip",
+   "len": 150,
+   "what": "round 3 (comedian, m10): the private thing he gets caught at. Eyes down at himself, tipped forward 0.12 rad, three small nods 40 f apart (he is counting). On cursor_returned the player freezes every value for 12 f, then cuts to caught_looking.",
+   "tracks": {
+    "gy": [
+     [
+      0,
+      0
+     ],
+     [
+      6,
+      0.45,
+      "io"
+     ],
+     [
+      150,
+      0.45,
+      "lin"
+     ]
+    ],
+    "gx": [
+     [
+      0,
+      "current"
+     ],
+     [
+      6,
+      -0.35,
+      "io"
+     ],
+     [
+      150,
+      -0.35,
+      "lin"
+     ]
+    ],
+    "pitch": [
+     [
+      4,
+      0
+     ],
+     [
+      16,
+      0.12,
+      "io"
+     ],
+     [
+      36,
+      0.12,
+      "lin"
+     ],
+     [
+      41,
+      0.21,
+      "io"
+     ],
+     [
+      48,
+      0.12,
+      "io"
+     ],
+     [
+      76,
+      0.12,
+      "lin"
+     ],
+     [
+      81,
+      0.21,
+      "io"
+     ],
+     [
+      88,
+      0.12,
+      "io"
+     ],
+     [
+      116,
+      0.12,
+      "lin"
+     ],
+     [
+      121,
+      0.21,
+      "io"
+     ],
+     [
+      128,
+      0.12,
+      "io"
+     ],
+     [
+      150,
+      0.12,
+      "lin"
+     ]
+    ],
+    "sy": [
+     [
+      4,
+      1
+     ],
+     [
+      16,
+      0.955,
+      "io"
+     ],
+     [
+      150,
+      0.955,
+      "lin"
+     ]
+    ],
+    "lidL": [
+     [
+      4,
+      0
+     ],
+     [
+      12,
+      0.25,
+      "io"
+     ],
+     [
+      150,
+      0.25,
+      "lin"
+     ]
+    ],
+    "lidR": [
+     [
+      4,
+      0
+     ],
+     [
+      12,
+      0.25,
+      "io"
+     ],
+     [
+      150,
+      0.25,
+      "lin"
+     ]
+    ]
+   }
+  },
+  "kit_swing": {
+   "kind": "clip",
+   "len": 56,
+   "what": "winds back, whips through",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      16,
+      0.9,
+      "in3"
+     ],
+     [
+      20,
+      1.08,
+      "out"
+     ],
+     [
+      56,
+      1,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      "-0.09*toward",
+      "in3"
+     ],
+     [
+      21,
+      "0.13*toward",
+      "out3"
+     ],
+     [
+      56,
+      0,
+      "spring"
+     ]
+    ],
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      "-0.2*tip",
+      "in3"
+     ],
+     [
+      21,
+      "0.26*tip",
+      "out3"
+     ],
+     [
+      56,
+      0,
+      "spring"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "antic": [
+     0,
+     16
+    ],
+    "action": [
+     16,
+     21
+    ],
+    "follow": [
+     21,
+     32
+    ],
+    "settle": [
+     32,
+     56
+    ]
+   },
+   "contacts": [
+    19
+   ],
+   "checked": "PLAYS, but one frame moves faster than his smoothness limit allows (roll step 0.2245, limit 0.2): needs retiming before it is used in a level"
+  },
+  "kit_jab": {
+   "kind": "clip",
+   "len": 34,
+   "what": "a short straight poke with his top",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      0.94,
+      "in"
+     ],
+     [
+      11,
+      1.08,
+      "out"
+     ],
+     [
+      34,
+      1,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      "-0.05*toward",
+      "in"
+     ],
+     [
+      11,
+      "0.12*toward",
+      "out3"
+     ],
+     [
+      34,
+      0,
+      "spring"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "antic": [
+     0,
+     8
+    ],
+    "action": [
+     8,
+     11
+    ],
+    "follow": [
+     11,
+     18
+    ],
+    "settle": [
+     18,
+     34
+    ]
+   },
+   "contacts": [
+    10
+   ],
+   "checked": "PLAYS, but one frame moves faster than his smoothness limit allows (sy step 0.0404, limit 0.03): needs retiming before it is used in a level"
+  },
+  "kit_charge": {
+   "kind": "clip",
+   "len": 70,
+   "what": "a run-up with a held lean",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      14,
+      0.86,
+      "in3"
+     ],
+     [
+      18,
+      1.04,
+      "out"
+     ],
+     [
+      40,
+      1.04,
+      "lin"
+     ],
+     [
+      42,
+      0.9,
+      "out"
+     ],
+     [
+      70,
+      1,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      14,
+      "-0.08*toward",
+      "in3"
+     ],
+     [
+      18,
+      "0.1*toward",
+      "out"
+     ],
+     [
+      40,
+      "0.1*toward",
+      "lin"
+     ],
+     [
+      44,
+      "-0.06*toward",
+      "out3"
+     ],
+     [
+      70,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      14,
+      0
+     ],
+     [
+      40,
+      "to_contact",
+      "in"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "antic": [
+     0,
+     14
+    ],
+    "run": [
+     14,
+     40
+    ],
+    "hit": [
+     40,
+     44
+    ],
+    "follow": [
+     44,
+     54
+    ],
+    "settle": [
+     54,
+     70
+    ]
+   },
+   "contacts": [
+    14,
+    40
+   ],
+   "checked": "PLAYS, but one frame moves faster than his smoothness limit allows (sy step 0.0617, limit 0.03): needs retiming before it is used in a level"
+  },
+  "kit_stomp": {
+   "kind": "clip",
+   "len": 50,
+   "what": "stretches up, drops, squashes",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      12,
+      1.14,
+      "io"
+     ],
+     [
+      15,
+      1.1,
+      "lin"
+     ],
+     [
+      17,
+      0.72,
+      "out"
+     ],
+     [
+      22,
+      0.74,
+      "lin"
+     ],
+     [
+      50,
+      1,
+      "spring"
+     ]
+    ],
+    "dy": [
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      0.1,
+      "out"
+     ],
+     [
+      16,
+      0,
+      "in"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "antic": [
+     0,
+     12
+    ],
+    "drop": [
+     12,
+     16
+    ],
+    "hold": [
+     16,
+     22
+    ],
+    "settle": [
+     22,
+     50
+    ]
+   },
+   "contacts": [
+    16
+   ],
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_cast": {
+   "kind": "clip",
+   "len": 64,
+   "what": "rises tall, hangs, snaps forward",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      18,
+      1.14,
+      "in3"
+     ],
+     [
+      24,
+      1.15,
+      "lin"
+     ],
+     [
+      28,
+      0.92,
+      "out3"
+     ],
+     [
+      64,
+      1,
+      "spring"
+     ]
+    ],
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      18,
+      "-0.06*toward",
+      "in3"
+     ],
+     [
+      24,
+      "-0.06*toward",
+      "lin"
+     ],
+     [
+      28,
+      "0.13*toward",
+      "out3"
+     ],
+     [
+      64,
+      0,
+      "spring"
+     ]
+    ],
+    "browL": [
+     [
+      0,
+      0
+     ],
+     [
+      18,
+      0.4,
+      "out"
+     ],
+     [
+      28,
+      0,
+      "in"
+     ]
+    ],
+    "browR": [
+     [
+      0,
+      0
+     ],
+     [
+      18,
+      0.4,
+      "out"
+     ],
+     [
+      28,
+      0,
+      "in"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "antic": [
+     0,
+     18
+    ],
+    "hang": [
+     18,
+     24
+    ],
+    "action": [
+     24,
+     28
+    ],
+    "follow": [
+     28,
+     40
+    ],
+    "settle": [
+     40,
+     64
+    ]
+   },
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_toss": {
+   "kind": "clip",
+   "len": 48,
+   "what": "squashes, pops",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      0.84,
+      "in3"
+     ],
+     [
+      13,
+      1.14,
+      "out"
+     ],
+     [
+      48,
+      1,
+      "spring"
+     ]
+    ],
+    "gy": [
+     [
+      12,
+      0
+     ],
+     [
+      18,
+      -0.3,
+      "out"
+     ],
+     [
+      36,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "antic": [
+     0,
+     10
+    ],
+    "pop": [
+     10,
+     13
+    ],
+    "follow": [
+     13,
+     24
+    ],
+    "settle": [
+     24,
+     48
+    ]
+   },
+   "contacts": [
+    12
+   ],
+   "checked": "PLAYS, but one frame moves faster than his smoothness limit allows (sy step 0.0483, limit 0.03): needs retiming before it is used in a level"
+  },
+  "kit_pull": {
+   "kind": "clip",
+   "len": 60,
+   "what": "leans away and hauls",
+   "tracks": {
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      8,
+      "0.06*toward",
+      "io"
+     ],
+     [
+      14,
+      "-0.13*toward",
+      "out3"
+     ],
+     [
+      26,
+      "-0.12*toward",
+      "lin"
+     ],
+     [
+      60,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      8,
+      0
+     ],
+     [
+      26,
+      "-0.12*toward",
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      8,
+      1
+     ],
+     [
+      14,
+      0.92,
+      "out"
+     ],
+     [
+      60,
+      1,
+      "spring"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "grip": [
+     0,
+     8
+    ],
+    "haul": [
+     8,
+     26
+    ],
+    "settle": [
+     26,
+     60
+    ]
+   },
+   "contacts": [
+    8
+   ],
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_puff": {
+   "kind": "clip",
+   "len": 60,
+   "what": "swells, holds, lets go",
+   "tracks": {
+    "sx": [
+     [
+      0,
+      1
+     ],
+     [
+      16,
+      1.22,
+      "in3"
+     ],
+     [
+      26,
+      1.24,
+      "lin"
+     ],
+     [
+      30,
+      0.9,
+      "out3"
+     ],
+     [
+      44,
+      1,
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      16,
+      1.08,
+      "in3"
+     ],
+     [
+      26,
+      1.09,
+      "lin"
+     ],
+     [
+      30,
+      0.96,
+      "out3"
+     ],
+     [
+      60,
+      1,
+      "spring"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "in": [
+     0,
+     16
+    ],
+    "hold": [
+     16,
+     26
+    ],
+    "out": [
+     26,
+     30
+    ],
+    "settle": [
+     30,
+     60
+    ]
+   },
+   "checked": "PLAYS, but one frame moves faster than his smoothness limit allows (position step 0.4216, limit 0.04): needs retiming before it is used in a level"
+  },
+  "kit_bow": {
+   "kind": "clip",
+   "len": 80,
+   "what": "a slow bow, held",
+   "tracks": {
+    "pitch": [
+     [
+      0,
+      0
+     ],
+     [
+      24,
+      0.5,
+      "io"
+     ],
+     [
+      50,
+      0.5,
+      "lin"
+     ],
+     [
+      74,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      0,
+      0
+     ],
+     [
+      20,
+      0.6,
+      "io"
+     ],
+     [
+      56,
+      0.6,
+      "lin"
+     ],
+     [
+      70,
+      0,
+      "io"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      20,
+      0.6,
+      "io"
+     ],
+     [
+      56,
+      0.6,
+      "lin"
+     ],
+     [
+      70,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_recoil": {
+   "kind": "clip",
+   "len": 44,
+   "what": "knocked back, still upright",
+   "tracks": {
+    "shear": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      "-0.11*away",
+      "out"
+     ],
+     [
+      44,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      "0.16*away*power",
+      "out"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      0.92,
+      "out"
+     ],
+     [
+      44,
+      1,
+      "spring"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      -0.5,
+      "out"
+     ],
+     [
+      20,
+      0,
+      "io"
+     ]
+    ],
+    "lidL": [
+     [
+      1,
+      0
+     ],
+     [
+      4,
+      -0.5,
+      "out"
+     ],
+     [
+      22,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "contacts": [
+    0
+   ],
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_stagger": {
+   "kind": "clip",
+   "len": 80,
+   "what": "a hit, then two off-balance rocks",
+   "tracks": {
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      6,
+      "-0.16*tip",
+      "out3"
+     ],
+     [
+      22,
+      "0.12*tip",
+      "io"
+     ],
+     [
+      40,
+      "-0.07*tip",
+      "io"
+     ],
+     [
+      80,
+      0,
+      "spring"
+     ]
+    ],
+    "dx": [
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      "0.14*away*power",
+      "out"
+     ],
+     [
+      34,
+      "0.2*away*power",
+      "io"
+     ],
+     [
+      54,
+      "0.17*away*power",
+      "io"
+     ]
+    ],
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      0.9,
+      "out"
+     ],
+     [
+      80,
+      1,
+      "spring"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "hit": [
+     0,
+     12
+    ],
+    "rock1": [
+     12,
+     34
+    ],
+    "rock2": [
+     34,
+     54
+    ],
+    "settle": [
+     54,
+     80
+    ]
+   },
+   "contacts": [
+    0
+   ],
+   "checked": "PLAYS, but one frame moves faster than his smoothness limit allows (sy step 0.04, limit 0.03): needs retiming before it is used in a level"
+  },
+  "kit_flatten": {
+   "kind": "clip",
+   "len": 90,
+   "what": "pancaked, then peels up",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      0.34,
+      "out3"
+     ],
+     [
+      40,
+      0.36,
+      "lin"
+     ],
+     [
+      64,
+      1.1,
+      "io"
+     ],
+     [
+      90,
+      1,
+      "spring"
+     ]
+    ],
+    "sx": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      1.6,
+      "out3"
+     ],
+     [
+      40,
+      1.58,
+      "lin"
+     ],
+     [
+      60,
+      1,
+      "io"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "phases": {
+    "hit": [
+     0,
+     3
+    ],
+    "hold": [
+     3,
+     40
+    ],
+    "peel": [
+     40,
+     64
+    ],
+    "settle": [
+     64,
+     90
+    ]
+   },
+   "contacts": [
+    0
+   ],
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_freeze": {
+   "kind": "clip",
+   "len": 60,
+   "what": "stiff, not breathing",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      3,
+      1.08,
+      "out3"
+     ],
+     [
+      40,
+      1.08,
+      "lin"
+     ],
+     [
+      60,
+      1,
+      "spring"
+     ]
+    ],
+    "lidL": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      -1,
+      "out"
+     ],
+     [
+      40,
+      -1,
+      "lin"
+     ],
+     [
+      50,
+      0,
+      "io"
+     ]
+    ],
+    "lidR": [
+     [
+      0,
+      0
+     ],
+     [
+      3,
+      -1,
+      "out"
+     ],
+     [
+      40,
+      -1,
+      "lin"
+     ],
+     [
+      52,
+      0,
+      "io"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_shrug_off": {
+   "kind": "clip",
+   "len": 70,
+   "what": "it lands, he barely moves",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      0.97,
+      "out"
+     ],
+     [
+      20,
+      1,
+      "spring"
+     ]
+    ],
+    "gx": [
+     [
+      30,
+      "home"
+     ],
+     [
+      36,
+      "other",
+      "io"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "checked": "passes his smoothness judge (Nov 12)"
+  },
+  "kit_dodge": {
+   "kind": "clip",
+   "len": 40,
+   "what": "a duck: it misses",
+   "tracks": {
+    "sy": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      0.6,
+      "out3"
+     ],
+     [
+      10,
+      0.6,
+      "lin"
+     ],
+     [
+      40,
+      1,
+      "spring"
+     ]
+    ]
+   },
+   "from": "The Book of What Potato Does, the kit (written by the fights seat, Hit Frame, team Under The Hat, Nov 12 2026; keys unedited except frames before 0 moved to 0)",
+   "checked": "passes his smoothness judge (Nov 12)"
+  }
+ },
+ "moves_index": {
+  "eyes and face": [
+   "blink",
+   "slow_blink",
+   "glance",
+   "caught_looking",
+   "eyes_track",
+   "double_take",
+   "count_spots"
+  ],
+  "weight in place": [
+   "gather",
+   "settle",
+   "lean_look",
+   "turn_small",
+   "turn_big",
+   "about_face",
+   "startle_small",
+   "startle_big",
+   "sigh",
+   "poke_flinch",
+   "bite_cursor"
+  ],
+  "getting about": [
+   "walk_start",
+   "walk",
+   "waddle",
+   "walk_stop",
+   "hop",
+   "walk_back_in"
+  ],
+  "in your hand": [
+   "grab",
+   "hang",
+   "drag_squish",
+   "set_down"
+  ],
+  "thrown": [
+   "windup_launch",
+   "air",
+   "bounce_floor",
+   "bounce_wall",
+   "skid",
+   "down",
+   "get_up",
+   "splat_wall",
+   "crack_hit",
+   "through_404"
+  ],
+  "the big ones": [
+   "zap",
+   "late_twitch",
+   "fries",
+   "fries_check",
+   "fries_bite",
+   "chew",
+   "fries_swallow",
+   "squish_flat",
+   "explode",
+   "zap_nosy"
+  ],
+  "on his own": [
+   "nod_off",
+   "sleep_slide",
+   "wake_glitch",
+   "lean_on_edge",
+   "one_nub"
+  ],
+  "the others": [
+   "notice_other",
+   "bump",
+   "bumped",
+   "shove",
+   "back_turned",
+   "watch_go_by"
+  ]
+ },
+ "hooks_wanted": [
+  {
+   "hook": "feet",
+   "what": "lift one foot nub on its own (today the model only moves feet inside its waddle)",
+   "for": [
+    "one_nub",
+    "always_on.micro.nub_shuffle",
+    "a fed-up foot tap"
+   ],
+   "without_it": "each has a fallback written in; nothing is blocked"
+  },
+  {
+   "hook": "state.walk writable",
+   "what": "we set the model's walk phase each frame so our walk clock owns the feet",
+   "for": [
+    "walk",
+    "waddle"
+   ],
+   "without_it": "feet step at the model's fixed 27 f; our stride timing must match that cadence exactly (it does, for walk)"
+  },
+  {
+   "hook": "stretch axis",
+   "what": "the rig stretches along his velocity, not his own up, in the air and on contacts",
+   "for": [
+    "air",
+    "bounce_floor",
+    "bounce_wall",
+    "splat_wall"
+   ],
+   "without_it": "stretch along his own up only: reads fine upright, wrong when tumbling"
+  }
+ ],
+ "unproven": [
+  "Pupil travel: canon eyes are white half-moons with a large solid pupil against the screen-right corner (I looked at play/face-canon.png). Moving the pupil means repainting the white and the pupil under the lid line. Not built. Rule for whoever builds it: at lid 0, gaze 0, brows 0 the painter draws NOTHING over the canon face, so rest is the canon picture, pixel for pixel.",
+  "state.walk being safely writable from outside (it is a plain number on the exposed state; nobody has tried).",
+  "Every number here was played only as curves and a stand-in shape (tools/pencil_test.py). None has been seen on the real model."
+ ],
+ "brace": {
+  "what": "BOLD CHOICE. Anticipation, aimed at YOU. After he has been thrown, a cursor closing on him fast makes him lean away a hair and lower his lids, before anything touches him. Face stays the side-eye. It is 'here we go', never fear.",
+  "full_after_throws": 2,
+  "forget_s": 90,
+  "within_bh": 2.2,
+  "closing_bh_s": 3,
+  "hold_f": 26,
+  "shear": 0.045,
+  "roll": 0.035,
+  "sy": 0.03,
+  "lids": 0.22,
+  "note": "amount = throws remembered / full_after_throws (one is forgotten every forget_s). Ease in 8 f, out 16 f. Nothing on his face but the lids. Off: flags.brace = false."
+ },
+ "round3": "Round 3 (character animator, carried from One Overshoot and His Own Pixels): the notes in NOTES-DIRECTOR / NOTES-COMEDY / NOTES-POTATO applied. Every changed value has a *_r3 note beside it or is listed in BOARD.md under the animator's round 3 section.",
+ "stance_look": {
+  "turn": 0.62,
+  "gx": -0.12,
+  "note": "body turned 0.62 rad away to screen-left; his pupils sit almost in their home corner, which from there is straight at you. (0.38 was tried first: because his face is drawn to the right of his middle, 0.38 to the left only brought it to the centre and read as facing you.)"
+ },
+ "hang_swing": {
+  "omega": 10,
+  "zeta": 0.13,
+  "gain": 0.2,
+  "max_acc": 60,
+  "note_r3": "A7: in your hand his bottom swings on every change of the hand speed (shear about the grab point) and rings on for two swings you can see after the hand stops. Period 0.63 s; each swing 44% of the one before."
+ },
+ "nosy_watch": {
+  "lean_after_f": 110,
+  "turn_after_f": 280,
+  "give_up_f": 620,
+  "shear": 0.085,
+  "turn": 0.5,
+  "note_r3": "A1 / m02: the cursor stays inside 1.75 body heights: eyes (always-on), a lean toward it after 110 f, a turn after 280 f (only with no brain loaded), and he loses interest after 620 f."
+ },
+ "replant": {
+  "shuffle_bh": [
+   0.05,
+   0.11
+  ],
+  "f": 26,
+  "sy_dip": 0.96,
+  "note": "see flags.replant. Not after the crack (he walks away there instead)."
+ }
+}

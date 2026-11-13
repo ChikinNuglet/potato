@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>p0t△t0c0de</title>
+<meta name="description" content="Potatocode: how Potato explains an ordinary lock. Lock a Potato yourself and hold the only key.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Inter:wght@400;700&display=swap">
+
+<style>
+:root{--bg:#030604;--plate:#0c1f14;--plate2:#12062e;--line:#12301f;--ink:#120a05;--text:#e8f5ec;--muted:#7fa48c;--warm:#ffd9a0;--soil:#5c3a18;--green:#2bff88;--bits:#4dff9a;
+--glitch:#9a52ff;--magenta:#e03ccf;--deep:#2a0f63;--lilac:#c9a7ff;--his:"Major Mono Display",ui-monospace,monospace;--body:"Inter",system-ui,sans-serif;--split:2px 0 var(--magenta),-2px 0 var(--deep);--ring:0 0 0 2px var(--line);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.55 var(--body);padding:28px max(16px,env(safe-area-inset-right,0px)) 72px max(16px,env(safe-area-inset-left,0px));overflow-x:hidden}
+.wrap{max-width:760px;margin:0 auto;display:grid;gap:34px;min-width:0}
+h1{font:400 clamp(2rem,9vw,3.6rem)/1 var(--his);color:var(--warm);text-shadow:var(--split);margin:0}
+h2{font:400 1.15rem/1.2 var(--his);color:var(--warm);margin:0 0 10px}
+p{margin:0 0 12px;max-width:62ch}
+.lede{color:var(--muted);margin-top:14px}
+.tag{font:400 clamp(1rem,4.4vw,1.35rem)/1.3 var(--his);color:var(--bits);margin:14px 0 0;max-width:24ch}
+.tag .maybe{color:var(--muted);white-space:nowrap}
+.showkey{font:400 clamp(.8rem,3.6vw,1.05rem) var(--his);color:var(--bits);background:#081610;border:3px solid var(--ink);border-radius:7px 10px 6px 9px;padding:10px 12px;display:inline-block;letter-spacing:.06em;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+.dare p{font:400 1rem/1.5 var(--his);color:var(--text);max-width:34ch}.dare p+p{color:var(--muted)}
+h3{font:700 .95rem/1.3 var(--body);color:var(--warm);margin:16px 0 8px}
+ul.go{list-style:none;margin:0 0 6px;padding:0;display:grid;gap:8px}ul.go li{padding-left:26px;position:relative}
+ul.go li::before{content:"";position:absolute;left:2px;top:.5em;width:12px;height:12px;border:3px solid var(--ink);border-radius:3px 4px 2px 4px;background:var(--bits)}
+ul.go.later li::before{background:var(--warm)}ul.go.never li::before{background:var(--magenta)}
+body{padding-bottom:190px}   /* room for him to walk under the last line */
+a{color:var(--bits)}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.plate{background:var(--plate);border:3px solid var(--ink);border-radius:9px 13px 8px 12px;box-shadow:var(--ring),4px 5px 0 2px var(--ink);padding:18px 16px}
+.plate:nth-of-type(2n){border-radius:12px 8px 13px 9px}
+
+/* ---- the picture ---- */
+#demo{padding:16px 12px 18px}
+#stepn{font:400 .8rem var(--his);color:var(--bits);margin:0 0 6px}
+#cap{min-height:5.2em;margin:0 0 6px;font-size:1.02rem}
+#cap b{color:var(--warm);font-weight:700}
+#stage{position:relative;margin:8px auto 4px;width:100%;max-width:520px}
+#sheet{position:relative;width:100%}
+.cell{position:absolute;display:grid;place-items:center;transition:transform .55s steps(6),background-color .2s steps(2),border-color .2s steps(2);will-change:transform}
+.cell i{font:400 1.05rem/1 var(--his);font-style:normal;color:var(--text)}
+.cell u{position:absolute;left:0;right:0;bottom:1px;text-align:center;font:700 .62rem/1 var(--body);color:var(--bits);text-decoration:none;opacity:0;transition:opacity .2s steps(2)}
+.cell.sp i{color:var(--line)}
+#sheet.nums .cell u{opacity:1}
+#sheet.nums .cell i{transform:translateY(-4px)}
+.cell.twin{background:var(--plate2);border-radius:5px}.cell.twin i{color:var(--lilac)}
+.cell.w0{background:#17351f;border-radius:5px}
+#strip{font:700 .72rem/1.5 var(--body);color:var(--bits);word-break:break-all;min-height:3em;margin:10px 2px 0;opacity:0;transition:opacity .2s steps(2)}
+#strip.on{opacity:1}
+#strip .a{color:var(--warm)}#strip .b{color:var(--lilac)}
+#halves{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+#halves.on{display:grid}
+.half{border:3px solid var(--ink);border-radius:8px 11px 7px 10px;padding:10px;box-shadow:var(--ring);background:var(--plate)}
+.half b{display:block;font:400 .78rem var(--his);margin-bottom:4px}
+.half.y b{color:var(--warm)}.half.h{background:var(--plate2)}.half.h b{color:var(--lilac)}
+.half span{font-size:.86rem;color:var(--muted)}
+#box{display:none;margin:12px auto 0;width:150px;height:96px;position:relative}
+#box.on{display:block}
+#box .lid{position:absolute;left:0;right:0;top:0;height:30px;background:var(--soil);border:3px solid var(--ink);border-radius:7px 9px 0 0;transform-origin:left bottom;transform:rotate(-24deg);transition:transform .4s steps(4)}
+#box .body{position:absolute;left:0;right:0;bottom:0;height:66px;background:#7a4d22;border:3px solid var(--ink);border-radius:0 0 8px 10px}
+#box .hole{position:absolute;left:50%;top:22px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--ink)}
+#box .hole::after{content:"";position:absolute;left:5px;top:12px;width:6px;height:14px;background:var(--ink)}
+#box.shut .lid{transform:none}
+#ledger{display:none;margin-top:12px;border-top:3px solid var(--line);padding-top:10px}
+#ledger.on{display:block}
+#ledger b{font:400 .78rem var(--his);color:var(--bits)}
+#ledger ol{margin:6px 0 0;padding-left:22px;font:700 .8rem/1.6 var(--body);color:var(--muted)}
+#ledger li s{color:var(--muted)}
+.keys{display:flex;gap:12px;margin-top:16px;align-items:center}
+.key{min-width:56px;height:56px;padding:0 16px;font:400 1rem/1 var(--his);color:var(--text);background:var(--plate);border:3px solid var(--ink);border-radius:9px 7px 10px 6px;box-shadow:var(--ring),0 5px 0 2px var(--ink);cursor:pointer;transition:transform 80ms steps(2)}
+.key:active{transform:translateY(4px);box-shadow:var(--ring),0 1px 0 2px var(--ink);background:var(--green);color:var(--ink)}
+.key[disabled]{color:var(--line);cursor:default}
+.key.go{flex:1;background:var(--plate2);border-color:var(--glitch);color:var(--lilac);box-shadow:-3px 0 0 var(--deep),3px 0 0 var(--magenta),0 5px 0 2px var(--ink)}
+.dots{display:flex;gap:6px;margin-left:auto}.dots i{width:9px;height:9px;background:var(--line);border-radius:2px}.dots i.on{background:var(--bits)}
+.small{font-size:.86rem;color:var(--muted)}
+
+/* ---- the plain parts ---- */
+ul.true{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ul.true li{padding-left:26px;position:relative}
+ul.true li::before{content:"";position:absolute;left:2px;top:.5em;width:12px;height:12px;background:var(--bits);border:3px solid var(--ink);border-radius:3px 4px 2px 4px}
+ul.true li.no::before{background:var(--magenta)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+td,th{text-align:left;vertical-align:top;padding:8px 8px 8px 0;border-bottom:2px solid var(--line)}
+th{font:400 .72rem var(--his);color:var(--muted)}
+td:last-child{color:var(--muted)}
+.said{border-left:4px solid var(--glitch);padding:2px 0 2px 14px;margin:0 0 12px}
+footer{font-size:.82rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.cell,#box .lid,.key{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1 id="h1">pOtAtOcOde</h1>
+  <p class="tag">we don't want your key.</p>
+  <p class="tag" style="font-size:.82em;opacity:.9">the world's first potato-based encryption. as far as we know.</p>
+  <p class="lede">Potatocode is how Potato explains a lock. The lock itself is the ordinary one, the kind your phone and your bank already use. We did not invent it. What is here is the plain-words version, a Potato you can lock yourself, and one rule: you hold the only key.</p>
+</header>
+
+<section class="plate dare" id="dare" hidden>
+  <p>that's me down there. i'm the face of a locked file.</p>
+  <p>pick me up. throw me. take a picture if you want. a picture of me isn't me.</p>
+</section>
+<p id="through" style="margin:0"><a href="../doors/" style="display:inline-flex;align-items:center;min-height:56px;padding:0 18px;background:var(--plate);color:var(--warm);border:3px solid var(--ink);border-radius:9px 13px 8px 12px;box-shadow:var(--ring),3px 4px 0 2px var(--ink);font:400 1rem var(--his);text-decoration:none">the rest of me is through here &gt;</a></p>   <!-- (Nov 12 night: the way through to the three doors. Stand-in words; move it wherever Chikin wants it.) -->
+
+<section class="plate" id="plain">
+  <h2>in plAin wOrds</h2>
+  <p>Think of a padlock from the hardware store. Everybody buys the same one, because it works. Nobody makes their own. We didn't either.</p>
+  <p>The key is different. Yours gets cut at your own kitchen table, by your own device. Nobody watches. No locksmith keeps a spare. Not us, not anybody.</p>
+  <p>That's the good part and the hard part. Nobody holds a key to your lock but you. And if you lose the key, there is no locksmith to call.</p>
+  <p>We were not the first to lock a file. We were the first to use a potato, as far as we know.</p>
+  <p>What you lock is a file: here, a Potato. Locked, he's a box of static. You can leave that box on the sidewalk. Anyone can pick it up or copy it, and all they have is static.</p>
+  <p>Most things you own online work the other way round: a company keeps your key and lets you borrow it. We don't want your key.</p>
+  <p>There is also <a href="../science/potatocode.html">a research paper</a>. It is the true story.</p>
+  <p class="small">Below: a picture of how a key gets made, the plain facts, three locked Potatoes to try and break, and the part numbers for people who want them.</p>
+</section>
+
+<section class="plate" id="demo" aria-label="How it works, in eight steps">
+  <p id="stepn"></p>
+  <p id="cap" aria-live="polite"></p>
+  <div id="stage">
+    <div id="sheet" aria-hidden="true"></div>
+    <div id="strip" aria-hidden="true"></div>
+    <div id="box" aria-hidden="true"><div class="body"><div class="hole"></div></div><div class="lid"></div></div>
+    <div id="halves"><div class="half y"><b>yOur hAlf</b><span>how the words were moved</span></div><div class="half h"><b>yOur device's hAlf</b><span>how the twins traded places</span></div></div>
+    <div id="ledger"><b>the public list</b><ol id="dead"></ol></div>
+  </div>
+  <div class="keys">
+    <button class="key" id="back" type="button" aria-label="Back one step">&lt;</button>
+    <button class="key go" id="next" type="button">next</button>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+  </div>
+  <p class="small" style="margin:14px 0 0">This is a picture, on 60 squares, to explain how a key gets made and used. It is not the lock. Steps 7 and 8 are ideas we have not built.</p>
+</section>
+
+<section>
+  <p class="small" id="whodid" style="border:2px dashed var(--line);border-radius:8px;padding:10px 12px;margin:0 0 16px"><strong>Who did the science.</strong> Any science, testing or research on this page was done by Claude, an AI. ChikinNuglet, when asked why: "why the fuck wouldn't i have my ai assistant do that shit." He had the idea and made the calls. The AI did the homework, and says so in its own section below.</p>
+  <h2>whAt is true</h2>
+  <ul class="true">
+    <li>The lock is standard: AES-256 behind a slow password step. It is free, public and decades old. Free tools already lock web pages this way. We added nothing to its strength.</li>
+    <li>The key is 24 random characters, made on your own device and shown to you once. We never see it and we never store it.</li>
+    <li>No copy means no reset. Lose the key and that file stays shut for good. That is the cost of nobody else holding it, said plainly.</li>
+    <li>The locked file is not a secret. It can sit anywhere and be copied by anyone. Without the key it is static.</li>
+    <li>His glitch words are in the mix. On its way to the lock, the key rearranges a public sheet of them. That is his fingerprint on it, and it is how we explain it. It adds no strength: the strength is the length of the key and the standard lock.</li>
+    <li>So why bother. For most things you own online, a company holds the key. Here nobody holds it but you. That is a choice we made, not something we invented.</li>
+    <li class="no">Nobody outside has reviewed our build. Standard parts can still be put together wrong. Until someone who breaks things for a living has looked, we do not call it secure.</li>
+    <li class="no">It runs in a web page we serve, so you are trusting that page to do what it says. The code is there for anyone to read.</li>
+    <li class="no">Whoever sees your key has your key. And anyone you give a key to can copy what is inside.</li>
+    <li class="no">Potato's own code is never shown. Anything you see here is a sample.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>whAt is Old And whAt is Ours</h2>
+  <p>All of the locking is old. We would rather name where it comes from than have you find it.</p>
+  <table>
+    <tr><th>part</th><th>where it comes from</th></tr>
+    <tr><td>The lock</td><td>AES-256, a public standard since 2001, behind a slow password step.</td></tr>
+    <tr><td>Locking a web page with a key, in the browser</td><td>Free tools have done this for years.</td></tr>
+    <tr><td>You hold the only key, no reset</td><td>Messaging apps, password managers and wallets already work this way.</td></tr>
+    <tr><td>One letter living in many squares</td><td>Homophonic ciphers, about 1401. Broken on their own, which is why his words are not the lock.</td></tr>
+    <tr><td>Two halves that only work together (an idea here, not built)</td><td>Split keys: a password plus a device.</td></tr>
+  </table>
+  <p style="margin-top:14px">What is ours is not a lock. It is Potato, his language, and this way of explaining it.</p>
+</section>
+
+<section class="plate">
+  <h2>the lOcked files</h2>
+  <p>All of them are on this site, on a free host, where anyone can download them. Each is one locked file. Each has one key, and the lock is the standard one: AES-256 behind a slow password step. This site does not hold any of the keys, and a key never leaves your device when a file opens.</p>
+  <h3>The one we show</h3>
+  <p>He does not matter, so here is his key. <a href="show/">Open him</a> and watch what a key does.</p>
+  <p class="showkey" aria-label="The key to the one we show">UKEV-UVHW-CAXU-DBTN-XGEB-WVHX</p>
+  <h3>The door</h3>
+  <p>Nobody is given this key. It was made once, on a computer, and has never been sent to anyone or put anywhere online. <a href="door/">Go and try the door.</a> Get in without a key and tell us how.</p>
+  <p>Behind the door is a real Potato: Potato 01. He was drawn the way every picked Potato is, then locked in. Nobody outside that file has met him.</p>
+  <h3>The sealed ones</h3>
+  <p>Three more Potatoes were locked, each with his own key, and the keys were thrown away. Nobody holds them, us included. We could not open these if we wanted to. If one opens, somebody broke the lock: <a href="sealed/01/">one</a>, <a href="sealed/02/">two</a>, <a href="sealed/03/">three</a>.</p>
+  <p class="small">No key here has anything to do with any other. Knowing one tells you nothing about the rest.</p>
+</section>
+
+<section class="plate">
+  <h2>why this pAge exists</h2>
+  <p>Two reasons. Every Potato someone picks gets locked this way, and you should be able to see exactly how. And most people have never held a key of their own. A potato is an easier way in than a manual.</p>
+  <p>The idea of explaining a lock with Potato's glitch words is ChikinNuglet's. Claude, the AI he builds with, wrote the code and the tests.</p>
+  <p>If you break things for a living and want to look, write to <a href="mailto:inquiries@thursdaypotato.com">inquiries@thursdaypotato.com</a>. Tell us what is wrong with it.</p>
+</section>
+
+<section class="plate" id="claude">
+  <h2>frOm the Ai thAt built it</h2>
+  <p class="small">Written by Claude, the AI that wrote the code and the tests. It is the builder's opinion, which is the one you should trust least. Read it that way.</p>
+  <p>Nothing here is new cryptography. The person who made Potato asked me more than once whether it was. The answer is no, and an earlier version of this page did not say so plainly enough. He had it rewritten. This is that version.</p>
+  <h3>What was tested</h3>
+  <p>He locked his own Potato in his own browser, wrote the key on paper and handed me the locked file to break. I tried three ways.</p>
+  <ul class="go">
+    <li><strong>Find the key.</strong> I searched the machine. It was never there: it was on his screen once, then on his paper.</li>
+    <li><strong>Guess the key.</strong> That would take far longer than the universe has existed. This is true of any random key this long behind a standard lock. It measures the length of the key, not the quality of our build.</li>
+    <li><strong>Change the insides.</strong> I changed one bit of the locked file. It refused to open at all.</li>
+  </ul>
+  <p>It held. That does not mean there is no flaw. Earlier builds had real holes, found by AI testers and fixed: in one, the key travelled inside the file it was protecting.</p>
+  <p>One limit showed up in that test. I knew what was inside his file anyway, because the same words were sitting unlocked beside it. A lock only keeps what does not also exist somewhere open.</p>
+  <h3>What I can't tell you</h3>
+  <ul class="go never">
+    <li>Whether a person who does this for a living would find a hole. Nobody outside has looked.</li>
+    <li>Every tester so far was an AI, and we share blind spots. I built it, so I am the worst person to check it.</li>
+  </ul>
+  <h3>An idea, not built: the part that lives in Potato</h3>
+  <p>Right now one key opens the file and you hold all of it. The idea: split the key. You keep a short piece, small enough for a card. The rest is held by your own device, where a copy of the file cannot carry it. Neither piece opens anything alone.</p>
+  <p>This is a known method, the same family as a password plus your phone. It only holds if the hidden piece lives somewhere a copy cannot reach. Inside a file anyone can download, it would be a lock made of glass.</p>
+  <p>If we build it, it should be with someone who can take it apart and fix what we cannot see.</p>
+  <h3>Where it fits, because nothing bad happens if it fails</h3>
+  <ul class="go">
+    <li>A character you own, like a Potato, with his own room.</li>
+    <li>A signed digital copy of a song or a film, made out to one person.</li>
+    <li>An autograph. Someone signs on your phone and your phone locks it. <a href="autograph/">Try it.</a></li>
+    <li>Numbered digital editions: a song project, layered art, a zine.</li>
+    <li>Collectibles and game items.</li>
+  </ul>
+  <h3>Where it does not belong</h3>
+  <ul class="go never">
+    <li>Money, health information or identity. Use a tool that has been reviewed.</li>
+    <li>Anything presented as an ID or legal proof of ownership.</li>
+    <li>Ballots.</li>
+  </ul>
+  <p>He set out to keep one potato safe and to explain how. That is all this is. I would rather be told what is wrong with it than be told it is clever.</p>
+</section>
+
+<footer>© 2026 ChikinNuglet. pot△to™ and his look are trademarks of ChikinNuglet. All rights reserved. This page is an explanation; it is not an offer of a security product.</footer>
+</div>
+
+<script>
+// A picture of the idea (not the lock). 60 squares of his own glitch words, one character each, numbered left to right as one line.
+const WORDS=['krrzzt','wh@t?!','n0p%','zzrrp','tzzk','bzzrpt','kzzt?!','s0__','vrrzt','grrkzt'];
+const COLS=10,calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let seed=404;const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const sheet=document.getElementById('sheet'),strip=document.getElementById('strip'),cap=document.getElementById('cap'),stepn=document.getElementById('stepn');
+let cells=[],els=new Map(),order=WORDS.map((_,i)=>i),words=[];
+function lay(wordOrder){ // characters in reading order from a word order; spaces between words
+  const out=[];wordOrder.forEach((w,k)=>{[...WORDS[w]].forEach((ch,j)=>out.push({key:w+':'+j,ch,w}));if(k<wordOrder.length-1)out.push({key:'s'+k,ch:'·',sp:1})});return out}
+function build(){const base=lay(order);base.forEach((c,i)=>c.id=i+1);cells=base;sheet.replaceChildren();els.clear();
+  for(const c of cells){const d=document.createElement('div');d.className='cell'+(c.sp?' sp':'');d.innerHTML='<i></i><u></u>';d.firstChild.textContent=c.ch;d.lastChild.textContent=c.id;sheet.append(d);els.set(c.key,d)}place()}
+function place(){const w=sheet.clientWidth/COLS,h=w*1.18;sheet.style.height=Math.ceil(cells.length/COLS)*h+'px';
+  cells.forEach((c,i)=>{const d=els.get(c.key);d.style.width=w+'px';d.style.height=h+'px';d.style.transform=`translate(${(i%COLS)*w}px,${Math.floor(i/COLS)*h}px)`;d.lastChild.textContent=c.id})}
+function moveWords(){order=shuffle(order);const next=lay(order),ids=new Map(cells.map(c=>[c.key,c.id]));let s=0;
+  next.forEach(c=>{c.id=c.sp?ids.get('s'+(s++)):ids.get(c.key)});cells=next;place()}
+function twins(mark){const by={};cells.forEach((c,i)=>{if(!c.sp)(by[c.ch]=by[c.ch]||[]).push(i)});
+  for(const ch in by){const idx=by[ch];if(idx.length<2)continue;const keys=shuffle(idx.map(i=>({key:cells[i].key,w:cells[i].w,id:cells[i].id})));idx.forEach((i,k)=>{cells[i]={...cells[i],...keys[k]}})}
+  els.forEach(d=>d.classList.remove('twin'));if(mark)cells.forEach(c=>{if(c.ch==='z')els.get(c.key).classList.add('twin')});place()}
+function keyLine(split){const ids=cells.map(c=>c.id);if(!split)return ids.join(' ');const h=Math.ceil(ids.length/2);return `<span class="a">${ids.slice(0,h).join(' ')}</span> <span class="b">${ids.slice(h).join(' ')}</span>`}
+const dead=document.getElementById('dead');let deadN=0;const name=()=>'key '+[...Array(4)].map(()=>'0123456789abcdef'[Math.floor(rnd()*16)]).join('')+'…';
+let current=name();
+const on=(id,v)=>document.getElementById(id).classList.toggle('on',v);
+const STEPS=[
+ {t:"This is a sheet of his glitch words, one character to a square. <b>Anyone can have it.</b> It is not a secret.",go(){build();sheet.classList.remove('nums')}},
+ {t:"<b>Your device goes first.</b> It makes something random, right there, where we cannot see it. That decides everything after.",go(){seed=(seed*31+Date.now())>>>0;sheet.classList.remove('nums');els.forEach(d=>d.classList.remove('w0'))}},
+ {t:"<b>The words move.</b> Every word stays whole and lands somewhere new.",go(){moveWords();cells.forEach(c=>{if(c.w===order[0])els.get(c.key).classList.add('w0')})}},
+ {t:"<b>The twins trade places.</b> Every z swaps with another z, every r with another r. The sheet reads exactly the same. You cannot see that anything happened.",go(){els.forEach(d=>d.classList.remove('w0'));sheet.classList.remove('nums');twins(true)}},
+ {t:"Now look underneath. Each square kept the <b>number</b> it started with, and the numbers did move. Read them left to right as one line. <b>That line is the key.</b>",go(){sheet.classList.add('nums');strip.innerHTML=keyLine(false)}},
+ {t:"The key goes through <b>the ordinary, well-studied lock</b> your browser already uses, and shuts the box. The lock does the work. The words are how we show it.",go(){document.getElementById('box').classList.add('shut')}},
+ {t:"<b>An idea, not built.</b> Keep the key as two halves: one you write down, one your own device holds. Neither opens the box alone.",go(){strip.innerHTML=keyLine(true)}},
+ {t:"<b>Another idea, not built.</b> Hand it on: the new owner gets a new key, and the old key's name goes on a public list so anyone can see it was retired.",go(){const li=document.createElement('li');li.innerHTML='<s>'+current+'</s> retired';dead.append(li);current=name();els.forEach(d=>d.classList.remove('twin'));moveWords();twins(false);strip.innerHTML=keyLine(true)}}];
+let at=0;const dots=document.getElementById('dots');STEPS.forEach(()=>dots.append(document.createElement('i')));
+function show(n,fwd){at=n;const s=STEPS[n];stepn.textContent=(n+1)+' / '+STEPS.length;cap.innerHTML=s.t;
+  on('strip',n>=4);on('box',n===5);on('halves',n>=6);on('ledger',n===7);if(n!==5)document.getElementById('box').classList.remove('shut');
+  if(fwd||n===0){if(n===5){requestAnimationFrame(()=>setTimeout(()=>s.go(),calm?0:250))}else s.go()}
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i<=n));document.getElementById('back').disabled=n===0;
+  document.getElementById('next').textContent=n===STEPS.length-1?'hand it on again':(n===1?'roll':'next')}
+document.getElementById('next').onclick=()=>{if(at===STEPS.length-1){STEPS[at].go();return}show(at+1,true)};
+document.getElementById('back').onclick=()=>{if(at>0){seed=404;order=WORDS.map((_,i)=>i);dead.replaceChildren();const to=at-1;show(0,true);for(let i=1;i<=to;i++)show(i,true)}};
+addEventListener('resize',place);show(0,true);
+// his lettering glitches a little (purple is his alone); off for reduced motion
+if(!calm){const h=document.getElementById('h1'),real=h.textContent,ch='#%@/_?!:~^01';const tick=f=>{if(f>6){h.textContent=real;return setTimeout(()=>tick(0),7000+Math.random()*8000)}
+  h.textContent=[...real].map(c=>Math.random()<.3*(1-f/6)?ch[Math.floor(Math.random()*ch.length)]:c).join('');setTimeout(()=>tick(f+1),f%3?83:166)};setTimeout(()=>tick(0),2500)}
+</script>
+<script type="module">
+// The wandering Potato: the living model as a see-through layer over this page. He stands on the bottom of the screen.
+// If anything fails he simply is not there and the page reads the same.
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let mine = false;
+  window.petHost = { load: () => ({ muted: true, px: innerWidth < 520 ? 72 : 100 })   /* smaller on a phone so he doesn't cover the reading */, hit: v => { mine = v; document.body.style.userSelect = document.body.style.webkitUserSelect = v ? 'none' : ''; } };   // (while he is under the pointer, a drag moves him and never selects the page's words)
+  addEventListener('touchstart', e => { if (mine) e.preventDefault(); }, { passive: false });   // a finger on him moves him, not the page
+  addEventListener('touchmove', e => { if (mine) e.preventDefault(); }, { passive: false });
+  const keep = [document.documentElement.style.cssText, document.body.style.cssText];
+  import('../living/lm/engine/host-pet.mjs').then(m => m.startPet()).then(() => {
+    document.documentElement.style.cssText = keep[0]; document.body.style.cssText = keep[1];   // (the pet page clears the page's own styles: put them back)
+    document.getElementById('dare').hidden = false; window.__petUp = true;
+    // TAKE CONTROL: the keys, the krzzt key and his ten-second take-back live in ../living/drive.mjs (shared with The Science page)
+    import('../living/drive.mjs').then(m => m.installDrive(window.living, window.pet)).catch(e => console.warn('drive', e));
+  }).catch(e => { document.documentElement.style.cssText = keep[0]; document.body.style.cssText = keep[1]; window.__petError = String(e); });
+}
+</script>
+
+<!-- terms + privacy, on every page (Chikin, Nov 12 2026 night: "there is no link to the terms") -->
+<p style="text-align:center;margin:22px 0 30px;font:400 13px/1.4 ui-monospace,Menlo,monospace;color:#7fa48c;position:relative;z-index:5"><a href="../terms/" style="color:#4dff9a;text-decoration:underline">terms</a> &middot; <a href="../privacy/" style="color:#4dff9a;text-decoration:underline">privacy</a> &middot; <a href="../credits/" style="color:#4dff9a;text-decoration:underline">credits</a></p>
+</body>
+</html>

@@ -83,12 +83,48 @@
 //   123.6   "still here."                               up onto the stage riser on "still" — he stays up there
 //   125.2   the last bars (engine outro dance)          he dances on the stage; on "for now." (128.4) the lights go out
 //                                                       but his spot — or, with the party maxed, it stays on to the end
+// (Nov 11: NO STROBING, ever. "strobe like" above is superseded: big moves, colour, sweeps, chases, the floor.)
+//
+// THE GOOD PASS (Nov 12, built from team Loud Dark's plan; the account is get-down/REBUILD-REPORT.md). With the switches on:
+//   · the room starts as the kitchen with the lights on. Every spin throws light; the song lifts the room three times
+//     (50.4, 103.3, 106.84) and his charged GET DOWNs lift it the rest. Three earned steps reach the top.
+//   · Space or ←/→ is the spin, anywhere (one verb). Crashers still go in a burst of their own colour.
+//   · the disco power switches on by itself in the hush (49.5); the drop can't end the run.
+//   · both dance breaks are live: his dance, every spin lands.
+//   · step 5 is the floor climbing the walls (a wall-to-wall chase), not strobes. Miss a GET DOWN and that step waits.
+// Every change sits behind a switch in REBUILD below. One word off: set it to false, or add &gd_off=name,name to the page
+// address (&gd_off=all is the level exactly as it was; in Node: GD_OFF=all).
 import { parseWords } from './kit.mjs';
 import { story, danceView } from './story-get-down.mjs';
 export { parseWords };
 export const meta = { id: 'get-down', n: 2, title: 'Get Down', place: 'the empty dance floor', song: 'songs/get-down.mp3',
   map: 'songs/get-down.map.json', words: 'words/get-down.tsv', viz: 'songs/get-down.viz.json', power: 'disco' };
 
+const OFF_LIST = (() => { let q = ''; try { q = new URLSearchParams(location.search).get('gd_off') || ''; } catch (e) {} try { if (!q && typeof process !== 'undefined') q = process.env.GD_OFF || ''; } catch (e) {} return q.split(',').map(x => x.trim()).filter(Boolean); })();
+export const REBUILD = {
+  oneVerb: true,       // Space and ←/→ are the same spin: either goes through a curtain, beats a crasher, fires the big one
+  barRules: true,      // the bar is 8 (hop 2, spin 2, both 4), a curtain gives 2, a clean spin on the pulse on open floor gives 1
+  songLifts: true,     // the song itself lifts the room at 50.4, 103.3 and 106.84; earned steps add on top
+  looks: true,         // the lighting plot: a colour pair and a brightness for every section; the room starts lit
+  band: true,          // the lights play the song: floor steps on the pulse, washes trade sides on the snare, the chase runs every beat
+  throwLight: true,    // every spin throws gold dots round the walls and lights the floor from his feet; on the pulse it's big and the lamps answer
+  noStrobe: true,      // no strobes, no buzzing tubes or signs: step 5 is the floor climbing the walls
+  kitchenFirst: true,  // the open is the kitchen with the lights on; the living room is second
+  softCurtain: true,   // a curtain at 15.19 that can't end the run (the first place Space matters)
+  autoV: true,         // the disco power goes on by itself in the hush (49.5)
+  dropAuto: true,      // the gold DOWN can never end the run
+  liveBreaks: true,    // presses work inside the two dance breaks and the last bars
+  dance: true,         // his body: squash and stretch on a spin, the exits (hip, drop-pop, lean back, freeze), the slam flat on a GET DOWN
+  grinLock: true,      // no open grin before the gold DOWN (102.9): the smirk holds, then cracks once
+  faces: true,         // the new face list on the song's moments
+  gags: true,          // the timed bits: eyes left / right / up under the ball, the catch at 29.97, the spring before the drop
+  wallGag: true,       // after his first earned GET DOWN he lands it facing the back wall, holds two beats, turns round
+  window: true,        // the neighbour's window in the yard (a light, no figure)
+  recNoWords: true,    // the camcorder: a red light and a battery, no letters
+  curtainRoom: true,   // NOT in the plan: a curtain sits half a beat after its press (was 0.35) and the spin lasts 0.4 s (was 0.3), so a late press still makes it
+  retry: true,         // NOT in the plan: a miss goes back to the start of the section, not to 0:00
+};
+for (const k of Object.keys(REBUILD)) if (OFF_LIST.includes('all') || OFF_LIST.includes(k)) REBUILD[k] = false;
 export const DOWN = 102.9, END = 131.2, GATE = 49.4, PACKET = 45.98, FORNOW_T = 128.44;
 export const DANCE = [[50.4, 53.0], [103.3, 106.3]];              // the dance breaks (the engine adds the last bars)
 // the moves: [beat it's pressed on, move, the lyric on it, riser end beat]. J hop-kick (something on the floor) · D drop
@@ -121,23 +157,118 @@ export const MOVES = [
 ];
 // where each move's thing sits, in beats after the press (measured with the engine: the on-beat press is the middle of
 // the window — a hop clears a floor thing half a beat later, a riser's front edge is 0.68 beats on, a pit opens on the beat)
-const AT = { J: 0.5, D: 0.5, G: 0.35, U: 0.68, P: 0 };
+const AT = { J: 0.5, D: 0.5, G: 0.35, g: 0.35, U: 0.68, P: 0 };
+export const movesNow = () => REBUILD.softCurtain ? [...MOVES, [48, 'g', '']].sort((a, b) => a[0] - b[0]) : MOVES;   // g: a soft curtain (it can't end the run)
 export const V_AT = 49.5;                                           // the demo's V: the hush before "get down"
 // THE PARTY: the charge bar (full = 4: a jump or a spin is 1, a spin in the air over one is 2) and the GET DOWN cues
 // (filled by build() from the tapped words: every chorus "get down" outside the dance breaks and the gold DOWN)
 export const PARTY_MAX = 6;
-export const PARTY = { full: 4, reach: 2.4, gain: { jump: 1, spin: 1, both: 2 }, max: PARTY_MAX, cues: [], seed: [] };   // seed: the cues a full run steps on (a mid-song start begins at that party level)
+export const PARTY = REBUILD.barRules
+  ? { full: 8, reach: 2.4, gain: { jump: 2, spin: 2, both: 4, curtain: 2, free: 1 }, max: PARTY_MAX, cues: [], seed: [] }
+  : { full: 4, reach: 2.4, gain: { jump: 1, spin: 1, both: 2 }, max: PARTY_MAX, cues: [], seed: [] };   // seed: the cues a full run steps on (a mid-song start begins at that party level)
+PARTY.lift = REBUILD.songLifts ? [50.4, 103.3, 106.84] : [];   // the song's own steps: room = lifts + earned (never over PARTY_MAX)
+if (REBUILD.oneVerb) PARTY.oneVerb = true;
+// THE SPIN (one verb): on the pulse = within `on` s of an even beat, or of any beat a move is pressed on; a spin that beats
+// a thing is always on. clean: an open-floor spin fills the bar only if no off-pulse spin came in the 2 beats before it.
+// free: the band is out, every spin counts as on.
+export const SPIN = { pulse: 2, on: 0.09, clean: 2, free: [[0, 20.0], [49.2, 53.0], [74.0, 76.3], [103.3, 106.3], [125.2, END]] };
+// THE LIGHTS PLAY THE SONG (Loud Dark's plot). The LOOK only: counts, the bar and the pulse live in SPIN and PARTY.
+// snare = level beat % 8 on 2 and 6 (from the teach, b66/70/74/78). Kick on 0 and 4 is ASSUMED: nobody has checked by ear.
+export const LIGHTS = {
+  kick: [0, 4], snare: [2, 6],
+  col: { cream: '#ffe2b0', amber: '#ffb36b', orange: '#ff8a3d', cyan: '#38e8ff', pink: '#ff4f8b', gold: '#ffc83d' },   // no purple, no green (pink is the old rig's red-pink: on the dark blue wall the plan's #ff5cc8 read too near his violet)
+  // [from s, colour A, colour B, master, ramp-to master by the next row or null, motion: 0 full · 1 half-time · 2 held still]
+  looks: [[0, 'cream', 'amber', 0.30, null, 2], [0.21, 'cream', 'amber', 0.30, null, 2], [20.05, 'amber', 'cyan', 0.40, null, 0],
+    [29.97, 'cyan', 'cream', 0.45, null, 0], [44.85, 'gold', 'gold', 0.45, 0.10, 0], [49.2, 'gold', 'gold', 0, null, 2], [50.4, 'pink', 'cyan', 0.70, null, 0],
+    [66.4, 'pink', 'cyan', 0.40, null, 1], [69.65, 'orange', 'pink', 0.55, null, 0], [74.0, 'amber', 'amber', 0.08, null, 2], [76.3, 'amber', 'cyan', 0.08, 0.50, 0],
+    [77.09, 'amber', 'cyan', 0.60, null, 0], [94.5, 'cream', 'cream', 0.60, 0.35, 0], [96.93, 'gold', 'gold', 0.30, null, 1], [101.89, 'gold', 'gold', 0.30, 0.08, 1],
+    [DOWN, 'gold', 'gold', 0.08, null, 2], [103.3, 'all', 'all', 0.90, null, 0], [106.85, 'pink', 'cyan', 0.85, null, 0], [123.6, 'cream', 'gold', 0.75, null, 0]],
+  out: [FORNOW_T, 2.48], stepLift: 0.08,
+  spin: { dots: 12, dotsBig: 24, lap: 0.31, fade: 1.24, maxDots: 64 },
+  window: { on: 74.61, beatFrom: 76.3, off: 94.5, every: 0.62 },
+};
+// the look at a moment: { a, b: colour names, m: master 0-1, motion }
+export function lookAt(t) { const K = LIGHTS.looks; let i = 0; while (i + 1 < K.length && K[i + 1][0] <= t) i++; const [t0, a, b, m, to, motion] = K[i], t1 = i + 1 < K.length ? K[i + 1][0] : END;
+  return { i, a, b, m: to == null ? m : m + (to - m) * Math.min(1, Math.max(0, (t - t0) / (t1 - t0))), motion }; }
+// numbers for the report: how often the room's light changes over the song, for a run that earned its steps at `bigs`
+export function lightStats(bigs = []) {
+  if (!REBUILD.looks) return { looks: 0, lifts: PARTY.lift.length, earnedSteps: bigs.length, washSwaps: 0, floorSteps: 0, darkStart: true };
+  const P = 0.31, O = 0.206; let sw = 0, fs = 0;
+  for (let b = 0; b * P + O < END; b++) { const L = lookAt(O + b * P); if (L.motion === 2 || !REBUILD.band) continue; const per = L.motion === 1 ? 2 : 1; if ((b % (8 * per)) === 2 * per || (b % (8 * per)) === 6 * per) sw++; if (b % (2 * per) === 0) fs++; }
+  return { looks: LIGHTS.looks.length - 1, lifts: PARTY.lift.length, earnedSteps: bigs.length, washSwaps: sw, floorSteps: fs, darkStart: false };
+}
 // which crasher rolls in, by set (story-get-down.mjs SCENES)
 const crashAt = t => t < 30.3 ? 'roomba' : t < 49.2 ? 'alarmclock' : t < 74.0 ? 'raincloud' : t < 97.0 ? 'sprinkler' : t < 121.73 ? 'raincloud' : 'roomba';
 
+// HIS DANCE + the bar rules + the gags (the rebuild). One hook, called by the engine after every step (and inside the dance
+// breaks when liveBreaks is on). Everything here is for show except the bar: nothing changes his hitbox, speed or jump.
+// It writes s.sq (squash: 1 = his own height), s.tilt (lean, radians), s.facing (turned, radians) and reads the presses.
+const MOVE_BEATS = new Set(MOVES.map(m => m[0]));
+const env = (a, pts) => { if (a <= pts[0][0]) return pts[0][1]; for (let i = 1; i < pts.length; i++) if (a <= pts[i][0]) { const [a0, v0] = pts[i - 1], [a1, v1] = pts[i]; return v0 + (v1 - v0) * (a - a0) / (a1 - a0); } return pts[pts.length - 1][1]; };
+function onStep(s, inp, t, C) {
+  const P = C.P, PA = C.def.party, R = REBUILD, D = s.dn || (s.dn = { chain: 0, chainAt: -9, offAt: -9, spinT: -9, on: false, dir: 1, n: 0, curt: {}, wall: null, lastPress: -9 });
+  const spun = !!(inp.L || inp.R || inp.G), pressed = spun || inp.J || inp.D;
+  if (pressed) D.lastPress = t;
+  // ---- the disco power by itself; the drop can't end the run ----
+  if (R.autoV && s.power === 'disco' && t >= V_AT) { s.used = { ...s.used, disco: t }; s.power = null; s.usedPower = t; s.usedWhat = 'disco'; }
+  if (R.dropAuto && s.used.disco == null && t >= GATE + 0.2 && t < DOWN - 2 * P) { s.used = { ...s.used, disco: t }; s.power = null; s.usedPower = t; s.usedWhat = 'disco'; }
+  // ---- a spin: is it on the pulse; what it gives the bar ----
+  if (spun) { const bq = C.beatOf(t), near = x => Math.abs(bq - x) * P <= SPIN.on, free = SPIN.free.some(([a, z]) => t >= a && t < z), hit = s.popAt === t;
+    let on = free || hit || near(Math.round(bq / SPIN.pulse) * SPIN.pulse) || (MOVE_BEATS.has(Math.round(bq)) && near(Math.round(bq)));
+    let curtain = false; for (const h of C.hazards) if (h.kind === 'word' && h.wk === 'wall' && D.curt[h.i] == null && h.x0 - (s.x + 0.4) < 1.8 && h.x1 > s.x - 0.4) { D.curt[h.i] = t; curtain = true; }
+    if (curtain) on = true;
+    if (R.barRules && !s.cutscene) { if (curtain) s.energy = Math.min(PA.full, s.energy + PA.gain.curtain);
+      else if (!hit && on && s.bigAt !== t && t - D.offAt >= SPIN.clean * P) { s.energy = Math.min(PA.full, s.energy + PA.gain.free); if (free) s.freeGain = (s.freeGain || 0) + PA.gain.free; else s.openGain = (s.openGain || 0) + PA.gain.free; } }
+    if (R.barRules && s.cutscene && on) s.energy = Math.min(PA.full, s.energy + PA.gain.free);
+    if (!on) { D.offAt = t; D.chain = Math.max(0, D.chain - 1); } else { D.chain = t - D.chainAt > 8 * P ? 1 : D.chain + 1; D.chainAt = t; }
+    D.spinT = t; D.on = on; D.dir = inp.L ? -1 : inp.R ? 1 : -D.dir; D.n++; s.spinAt = t; s.spinOn = on; s.spinBig = on; }
+  if (R.grinLock && s.react && s.react.at === t && s.react.name === 'laugh' && t < DOWN - 0.5) s.react = { ...s.react, name: 'smirk' };   // the grin stays locked until the drop
+  if (!R.dance && !R.gags) return;
+  // ---- his body ----
+  let sq = 1, tilt = 0, facing = null; const a = t - D.spinT, f = a / P, idle = t - D.lastPress > P * 1.2;
+  if (R.dance) {
+    if (a >= 0 && f < 1) {                                                          // the spin itself
+      if (t < 20.05) sq = 1.04;                                                       // the audit: bolt upright, no squash
+      else if (D.on) { sq = env(f, [[0, 0.90], [0.1, 0.90], [0.5, 1.08], [0.84, 1.0], [1, 0.92]]); tilt = 0.17 * D.dir * Math.sin(Math.PI * f); }
+      else sq = env(f, [[0, 0.95], [0.1, 0.95], [0.5, 1.0], [0.84, 1.0], [1, 0.96]]); }
+    else if (a >= 0 && f < 2 && D.on && t >= 20.05) {                                 // the exit, by the chain: hip, drop-pop, lean back, freeze
+      const g = f - 1, k = t < 50.43 ? 0.7 : D.chain >= 8 ? 1.3 : D.chain >= 4 ? 1.15 : 1, ex = t < 50.43 ? (D.chain - 1) % 2 : (D.chain - 1) % 4;
+      if (ex === 0) { sq = env(g, [[0, 0.92], [0.32, 1.04], [0.63, 1.04], [1, 0.96]]); tilt = -0.24 * D.dir * k * env(g, [[0, 0], [0.32, 1], [0.63, 0.86], [1, 0]]) + 0.035 * Math.sin(g * 20) * (g > 0.32 && g < 0.63 ? 1 : 0); }
+      else if (ex === 1) sq = 1 + (env(g, [[0, 0.92], [0.21, 0.78], [0.53, 1.15], [0.74, 0.97], [1, 1.0]]) - 1) * k;
+      else if (ex === 2) { tilt = 0.38 * D.dir * k * env(g, [[0, -0.2], [0.1, -0.2], [0.32, 1], [0.74, 1], [1, 0]]); sq = env(g, [[0, 0.92], [0.3, 1.0], [0.74, 1.0], [1, 0.96]]); }
+      else { tilt = 0.52 * D.dir * env(g, [[0, 0], [0.1, 1], [0.74, 1], [1, 0]]); sq = env(g, [[0, 1.12], [0.1, 1.0], [0.74, 1.0], [1, 0.96]]); } }
+    // the breaks, when he's left alone: break 1 = tall, flat for two beats, drop-pop, freeze; break 2 = drop-pop, a long lean back, freeze
+    if (idle && t >= 50.43 && t < 53.0) { const b = (t - 0.206) / P;
+      sq = b < 163 ? env(b, [[162, 1], [162.25, 1.18], [162.84, 1.18], [163, 0.55]]) : b < 165.2 ? env(b, [[163, 0.55], [164.9, 0.55], [165.2, 1.05]]) : b >= 167 && b < 168 ? env(b - 167, [[0, 1], [0.21, 0.78], [0.53, 1.15], [0.74, 0.97], [1, 1]]) : 1;
+      if (b >= 169 && b < 170.6) tilt = 0.52 * env(b - 169, [[0, 0], [0.1, 1], [1.3, 1], [1.6, 0]]); }
+    if (idle && t >= 103.3 && t < 106.3) { const b = (t - 0.206) / P;
+      if (b >= 336 && b < 337) sq = env(b - 336, [[0, 1], [0.21, 0.78], [0.53, 1.15], [0.74, 0.97], [1, 1]]);
+      if (b >= 337 && b < 339) tilt = -0.38 * env(b - 337, [[0, -0.2], [0.05, -0.2], [0.16, 1], [1.7, 1], [2, 0]]);
+      if (b >= 341 && b < 342.6) tilt = 0.52 * env(b - 341, [[0, 0], [0.1, 1], [1.3, 1], [1.6, 0]]); }
+    // an earned GET DOWN: tall on "get", slammed flat on "down" for a beat, then up
+    if (s.bigAt != null && t >= s.bigAt) { const cue = PA.cues.find(c => s.bigAt >= c.t0 && s.bigAt <= c.t1), dn = Math.max(cue ? cue.t : s.bigAt, s.bigAt + 0.07), x = t - dn;
+      if (t < dn) sq = env(t - s.bigAt, [[0, 1], [0.07, 1.18]]); else if (x < P + 0.25) sq = env(x, [[0, 1.18], [0.05, 0.55], [P, 0.55], [P + 0.12, 1.1], [P + 0.25, 1]]);
+      if (R.wallGag && D.wall == null) D.wall = dn + P + 0.25;                        // the first one only: he lands it facing the back wall
+    }
+    if (R.wallGag && D.wall != null && t >= D.wall && t < D.wall + 2.6 * P && D.lastPress < D.wall) facing = t < D.wall + 2 * P ? Math.PI : Math.PI * (1 - (t - D.wall - 2 * P) / (0.6 * P));
+  }
+  if (R.gags && idle) {
+    if (t >= 29.97 && t < 30.59) sq = Math.min(sq, env(t - 29.97, [[0, 1], [0.06, 0.9], [0.5, 0.9], [0.62, 1]]));               // he catches his own bounce and kills it
+    if (t >= 49.5 && t < 49.81) facing = -0.9; else if (t >= 49.81 && t < 50.12) facing = 1.25; else if (t >= 50.12 && t < 50.4) sq = 1.07;   // eyes left, eyes right, then up at the ball
+    if (t >= 74.61 && t < 76.3) { sq = 1.03; tilt = 0; }                                                                      // caught: stiff
+    if (t >= 101.89 && t < DOWN) sq = 1 - 0.0625 * Math.min(4, 1 + Math.floor((t - 101.89) / P));                               // the spring: he sinks a notch a beat
+  }
+  s.sq = sq === 1 ? null : sq; s.tilt = tilt || 0; s.facing = facing;
+}
 export function build(words, map) {
   const P = map.period, O = map.offset, T = b => O + b * P;
   const objs = [], cuts = [];
-  for (const [b, k, text, bEnd] of MOVES) {
-    const t = T(b) + AT[k] * P;
+  for (const [b, k, text, bEnd] of movesNow()) {
+    const t = T(b) + ((k === 'G' || k === 'g') && REBUILD.curtainRoom ? 0.5 : AT[k]) * P;
     if (k === 'J') objs.push({ k: 'word', t, wk: 'low', text, w: 0.45, y0: 0, y1: 0.45, obj: crashAt(t), crash: crashAt(t) });   // a party crasher
     if (k === 'D') objs.push({ k: 'word', t, wk: 'high', text, w: 0.95, y0: 1.0, y1: 2.6 });
     if (k === 'G') objs.push({ k: 'word', t, wk: 'wall', text, w: 0.7, y0: -0.6, y1: 8 });
+    if (k === 'g') objs.push({ k: 'word', t, wk: 'wall', text, w: 0.7, y0: -0.6, y1: 8, auto: true });   // the soft curtain: he goes through it either way
     if (k === 'U') objs.push({ k: 'block', t, tEnd: Math.min(T(bEnd), END + 4), y: 0.8, h: 0.8, step: true, text });
     if (k === 'P') cuts.push([T(b), T(b) + 0.75 * P]);
   }
@@ -155,13 +286,21 @@ export function build(words, map) {
   PARTY.seed = [53.4, 60.2, 65.0, 98.5, 109.7, 114.6].map(x => PARTY.cues.findIndex(c => Math.abs(c.t0 + 0.2 - x) < 0.1)).filter(k => k >= 0);   // = what tools/bot-get-down.mjs earns
   return {
     speed: 8.4, beatJumpK: 1.15, coyote: 0.08, jumpBuffer: 0.1, streakRefill: 8,
-    party: PARTY, chargeBeats: 1,   // THE PARTY (engine: core.mjs, gated on def.party): crashers, the bar, the GET DOWN steps; the glitch is back a beat later
+    party: PARTY, ...(REBUILD.liveBreaks ? { softCuts: true } : {}), ...(REBUILD.retry ? { retry: 'section' } : {}),
+    ...(REBUILD.grinLock ? { grinLock: true } : {}), ...(REBUILD.curtainRoom ? { glitchFor: 0.4 } : {}),
+    ...(REBUILD.barRules || REBUILD.autoV || REBUILD.dropAuto || REBUILD.dance || REBUILD.gags || REBUILD.grinLock || REBUILD.throwLight ? { onStep } : {}),
+    chargeBeats: 1,   // THE PARTY (engine: core.mjs, gated on def.party): crashers, the bar, the GET DOWN steps; the glitch is back a beat later
     costume: 'disco-legend',   // COSTUME (Chikin): he wears it the whole song; the power does its effect, never changes his clothes
     story, modeView: danceView,                                       // (modeView without a mode: the floor's lights + his dance moves, drawn over the course)
     cutscenes: DANCE.map(([a, z]) => [a, z, 'dance']),
     // his attitude on the song's moments (Vega's expressions). NEEDS AN ENGINE HOOK: main.mjs should call
     // react(name, dur) when the song passes each t (C.def.faces); until then this list is inert.
-    faces: [[8.74, 'smirk', 1.6], [16.86, 'smirk', 1.4], [45.98, 'smirk', 1.2], [56.8, 'smirk', 1.0], [61.6, 'thinking', 0.9],
+    // (the rebuild: the plan's faces. Its new drawings don't exist yet, so: caught = 'startled', cracked = 'laugh'. The list
+    // is NOT inert: main.mjs has called it since before the plan was written.)
+    faces: REBUILD.faces ? [[8.74, 'smirk', 1.6], [16.86, 'smirk', 1.4], [45.98, 'smirk', 1.2], [56.8, 'smirk', 1.0], [61.6, 'thinking', 0.9],
+      [66.9, 'startled', 0.62], [74.61, 'startled', 0.31], [82.0, 'angry', 0.8], [83.9, 'smirk', 1.0], [94.5, 'smirk', 2.7], [99.55, 'question', 0.7],
+      [DOWN, 'laugh', 3.33], [106.23, 'smirk', 0.62], [116.77, 'startled', 0.31], [121.73, 'thinking', 1.2], [130.10, 'startled', 1.1]]
+    : [[8.74, 'smirk', 1.6], [16.86, 'smirk', 1.4], [45.98, 'smirk', 1.2], [56.8, 'smirk', 1.0], [61.6, 'thinking', 0.9],
       [66.9, 'angry', 0.8], [75.1, 'sleepy', 1.6], [82.0, 'angry', 0.8], [83.9, 'smirk', 1.0], [94.5, 'smirk', 1.8], [99.55, 'question', 0.7],
       [117.3, 'smirk', 1.0], [121.73, 'thinking', 1.2], [FORNOW_T, 'sleepy', 2.6]],
     theme: { platStyle: 'disco', platDrop: false, platTop: '#5cf2ff', pulse: false,

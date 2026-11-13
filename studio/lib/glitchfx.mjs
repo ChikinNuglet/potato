@@ -10,10 +10,10 @@ export function createGlitchFX(renderer) {
   const quad = new T.Mesh(new T.PlaneGeometry(2, 2), new T.ShaderMaterial({
     transparent: true, depthTest: false, depthWrite: false,
     uniforms: { tex: { value: rt.texture }, amount: { value: 0 }, seed: { value: 0 }, box: { value: new T.Vector4(0, 0, 1, 1) },
-                res: { value: new T.Vector2(1, 1) } },
+                res: { value: new T.Vector2(1, 1) }, tint: { value: new T.Vector3(0.604, 0.322, 1.0) } },   // tint: the colour of his glitch ghost. Potato's is his purple; a picked Potato brings his own (setTint)
     vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
     fragmentShader: `
-      uniform sampler2D tex; uniform float amount, seed; uniform vec4 box; uniform vec2 res; varying vec2 vUv;
+      uniform sampler2D tex; uniform float amount, seed; uniform vec4 box; uniform vec2 res; uniform vec3 tint; varying vec2 vUv;
       float h(float n){ return fract(sin(n * 91.3458) * 47453.5453); }
       vec4 tap(vec2 p){ return (p.x < 0.0 || p.x > 1.0 || p.y < 0.0 || p.y > 1.0) ? vec4(0.0) : texture2D(tex, p); }
       void main(){
@@ -42,7 +42,7 @@ export function createGlitchFX(renderer) {
         // channel split: purple ghost to the left, magenta to the right, where his shape doesn't overlap itself
         vec3 col = c.rgb; float a = c.a;
         float lp = l.a * (1.0 - c.a), rm = r.a * (1.0 - c.a);
-        col = mix(col, vec3(0.604, 0.322, 1.0), lp); a = max(a, lp * 0.9);
+        col = mix(col, tint, lp); a = max(a, lp * 0.9);
         col = mix(col, vec3(0.878, 0.235, 0.812), rm * (1.0 - lp)); a = max(a, rm * 0.9);
         // inside a hit slice the colour itself corrupts toward his purples (and some slices posterize hard)
         col = mix(col, vec3(0.482, 0.235, 0.949) * (0.6 + 0.6 * c.r), hit * 0.45 * amount);
@@ -72,6 +72,7 @@ export function createGlitchFX(renderer) {
   const fx = {
     amount: 0,
     setWordsLayer(el) { wordsEl = el; },
+    setTint(hex) { const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex || ''); if (m) quad.material.uniforms.tint.value.set(parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255); else quad.material.uniforms.tint.value.set(0.604, 0.322, 1.0); },   // (a picked Potato's own colour; no argument = Potato's purple)
     // render: world first (already drawn by the caller), then Potato's layer through the shader
     render(potatoScene, cam, time, rect /* {x,y,w,h} in uv, his screen box */) {
       const size = renderer.getDrawingBufferSize(new T.Vector2());

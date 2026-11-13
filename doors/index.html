@@ -1,0 +1,148 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>the potato project</title><meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<script src="../glitchwords.js"></script>
+<!-- THE MAIN DOOR (Chikin, Nov 12 2026: "lets make a door for the potato project, this will be the main door to everything, it should say
+     How Do You Want To Learn About Potato: The Spud The Science The Source, those three windows will take us to different areas of the site.
+     it should feel potato but be fairly minimalist"). First try was drawn windows on a plain wall: "nooo lol thats not potato at all ...
+     this says Claude, it does not say potato". So this one is built from HIS world, the same pieces as his door: the binary rain that
+     spells potato (with his glitch words and the odd tiny potato in it), his logo with him popping up in the O's and the triangle, the
+     3D Potato, his purple glitch, his lettering. Minimal = nothing else: no forms, no tape, no boxes of text.
+     Three windows, him in each:  THE SPUD -> bare, side-eye (his door "../")
+                                  THE SCIENCE -> mad scientist (the paper, ../science/)
+                                  THE SOURCE -> binary Potato, his simulation skin (how he is made, ../source/)
+     The card's QR lands here (D-20261111-16). Old versions: drafts-archive/2026-11-12-doors/. -->
+<style>
+:root{--bg:#05070a;--ink:#eef2f6;--dim:#8a93a6;--green:#4dff9a;--purple:#9a52ff;--mag:#e03ccf;--deep:#7b3cf2;--lilac:#c9a7ff}
+html{background:var(--bg)}
+body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,4vh,40px);
+  padding:max(24px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left));box-sizing:border-box;
+  color:var(--ink);font:16px/1.5 "JetBrains Mono",ui-monospace,Menlo,monospace;overflow-x:hidden}
+#bin{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block}
+:focus-visible{outline:3px solid var(--green);outline-offset:6px}
+
+/* his logo, exactly as on his door: he pops up in the O's and the triangle */
+.lw{position:relative;width:min(400px,74vw)}.lw .logo{width:100%;height:auto;display:block}
+.lw .gl{position:absolute;inset:0;opacity:0;pointer-events:none}
+.lw.glitch .g1{opacity:.9;transform:translate(-6px,0);filter:hue-rotate(40deg) saturate(3);clip-path:inset(18% 0 52% 0)}
+.lw.glitch .g2{opacity:.9;transform:translate(7px,0);filter:hue-rotate(-60deg) saturate(3);clip-path:inset(58% 0 12% 0)}
+.lw.glitch>.logo:first-child{transform:translateX(2px) skewX(-6deg)}
+.tm{position:absolute;left:86.6%;top:27%;font:600 clamp(7px,1.3vw,10px)/1 "JetBrains Mono",monospace;color:#e9ddff;opacity:.85}
+.hole{position:absolute;overflow:hidden}.hole.o{clip-path:ellipse(50% 50% at 50% 50%)}.hole.t{clip-path:polygon(50% 0,100% 100%,0 100%)}
+.hole img{position:absolute;left:-4%;width:108%;top:100%;transition:top .45s cubic-bezier(.3,1.4,.6,1)}
+.hole.up img{top:22%}.hole.t.up img{top:38%}
+
+/* the question, in his lettering; now and then it glitches into his language */
+h1{margin:0;text-align:center;font:400 clamp(17px,3.2vw,28px)/1.4 "Major Mono Display",monospace;color:#f1e8ff;letter-spacing:.02em;max-width:24ch;
+  text-shadow:-2px 0 var(--deep),2px 0 var(--mag)}
+h1{animation:jit 3.1s steps(1) infinite}
+h1.glitch{transform:translateX(3px) skewX(-5deg);color:var(--lilac)}
+
+/* three windows with POTATO BORDERS (Chikin, Nov 12: "give the windows potato borders, and make them glitch ptotato style, the text should
+   also be glitching"; then "not brown boders" -> his purple glitch): the frame is drawn like his POTATO logo, a lilac line split purple/magenta,
+   lumpy uneven corners, a little crooked. Inside, the dark glass with him peeking up from the sill. */
+.wins{display:flex;gap:clamp(14px,3.5vw,40px);justify-content:center;flex-wrap:wrap}
+.win{position:relative;display:block;width:clamp(150px,21vw,210px);text-decoration:none;color:var(--ink)}
+.win:nth-child(1){rotate:-1.6deg}.win:nth-child(2){rotate:1.1deg}.win:nth-child(3){rotate:-.7deg}
+.glass{position:relative;display:block;aspect-ratio:1/1;border-radius:26px 34px 22px 30px / 30px 24px 34px 26px;background:transparent;
+  border:4px solid #f1e8ff;box-shadow:-4px 0 0 #7b3cf2,4px 0 0 #e03ccf,inset -4px 0 0 #7b3cf2,inset 4px 0 0 #e03ccf,0 0 30px #9a52ff40;transition:box-shadow .1s steps(2)}
+.pane{position:absolute;inset:8px;background:#0b0e14;border-radius:18px 26px 15px 22px;overflow:hidden}
+.pane::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#4dff9a09 0 2px,transparent 2px 4px);z-index:1;pointer-events:none}  /* scanlines */
+.pane img{position:absolute;left:50%;width:90%;height:auto;translate:-50% 0;bottom:-24%;z-index:2;transition:bottom .4s cubic-bezier(.3,1.4,.6,1)}
+@keyframes jit{0%,86%{text-shadow:-2px 0 var(--deep),2px 0 var(--mag);transform:none}88%{text-shadow:-5px 0 var(--deep),4px 0 var(--mag);transform:translateX(2px) skewX(-8deg)}91%{text-shadow:3px 0 var(--deep),-3px 0 var(--mag);transform:translateX(-3px)}94%{text-shadow:-2px 0 var(--deep),2px 0 var(--mag);transform:none}}
+.name{animation:jit 2.3s steps(1) infinite;display:block;margin-top:14px;text-align:center;font:400 clamp(14px,1.9vw,19px)/1 "Major Mono Display",monospace;color:var(--green);letter-spacing:.04em}
+.win:hover .pane img,.win:focus-visible .pane img{bottom:3%}
+.win:hover .glass,.win:focus-visible .glass{box-shadow:-8px 0 0 #7b3cf2,8px 0 0 #e03ccf,inset -6px 0 0 #7b3cf2,inset 6px 0 0 #e03ccf,0 0 44px #9a52ff70}
+.win:hover .name,.win:focus-visible .name{color:var(--lilac);text-shadow:-2px 0 var(--deep),2px 0 var(--mag)}
+.win.glitch .glass{transform:translate(var(--gx,5px),0) skewX(var(--gs,-3deg));box-shadow:-10px 0 0 #7b3cf2,10px 0 0 #e03ccf,inset -6px 0 0 #7b3cf2,inset 6px 0 0 #e03ccf;border-color:#c9a7ff;clip-path:var(--cut)}
+.win.glitch .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#9a52ff33;mix-blend-mode:screen;pointer-events:none}
+/* the source: binary Potato, and he ticks (Chikin: "spud is right, science should be mad scientist potato, and source should be binary potato") */
+.src.tick .pane img{clip-path:polygon(0 0,100% 0,100% 30%,90% 30%,90% 46%,100% 46%,100% 100%,0 100%,0 70%,12% 70%,12% 55%,0 55%);translate:-46% 0}
+
+footer{position:fixed;left:8px;bottom:4px;font:10px/1.3 system-ui,sans-serif;color:#fff;opacity:.45;pointer-events:none}
+
+/* phone: windows in a row of three, smaller, so the whole thing still fits one screen */
+@media (max-width:600px){
+  .wins{flex-wrap:nowrap;gap:10px;width:100%}
+  .win{width:calc((100% - 20px)/3)}
+  .glass{border-radius:18px 24px 15px 21px;border-width:3px}.pane{inset:5px}
+  .name{font-size:clamp(10px,3.1vw,14px);margin-top:10px;letter-spacing:0}
+  .pane img{bottom:-10%}
+}
+@media (prefers-reduced-motion:reduce){.pane img,.hole img{transition:none}.name,h1{animation:none!important}}
+/* THE POTATO PROJECT (Chikin, Nov 12 2026 night: "the three door page should say Project Potato at the top" / "or the potato project" / "i like that better"): the logo stays the logo; "the" sits over its left end, "project" under its right */
+.tpp{margin:0;width:min(400px,74vw);font:400 clamp(15px,4.4vw,26px)/1 "Major Mono Display",monospace;color:var(--lilac);letter-spacing:.34em;text-shadow:-2px 0 var(--deep),2px 0 var(--mag);animation:jit 2.7s steps(1) infinite}
+.tp1{text-align:left;margin-bottom:-2px}.tp2{text-align:right;margin-top:-4px}
+@media (prefers-reduced-motion:reduce){.tpp{animation:none!important}}
+</style></head><body>
+<canvas id="bin" aria-hidden="true"></canvas>
+<p class="tpp tp1" aria-hidden="true">the</p>
+<div class="lw" id="lw" role="img" aria-label="the pot△to™ project">
+  <img class="logo" src="../logo/potato-logo.png" alt="">
+  <img class="logo gl g1" src="../logo/potato-logo.png" alt="" aria-hidden="true">
+  <img class="logo gl g2" src="../logo/potato-logo.png" alt="" aria-hidden="true">
+  <span class="tm" aria-hidden="true">TM</span>
+  <div class="hole o" style="left:21.33%;top:30%;width:7.26%;height:47.5%"><img src="../logo/potato-3d.png" alt=""></div>
+  <div class="hole t" style="left:48.17%;top:41.9%;width:7.87%;height:35%"><img src="../logo/potato-3d.png" alt=""></div>
+  <div class="hole o" style="left:75.61%;top:30%;width:7.26%;height:47.5%"><img src="../logo/potato-3d.png" alt=""></div>
+</div>
+<p class="tpp tp2" aria-hidden="true">prOject</p>
+<h1 id="q" data-g="h0w d0 y0u w@nt t0 l34rn ab0ut p0t4t0?! krrzzt">how do you want to learn about potato?</h1>
+<nav class="wins" aria-label="three ways in">
+  <a class="win spud" href="../?spud" aria-label="The Spud: Potato himself, his door and his house"><span class="glass"><span class="pane"><img src="../logo/potato-3d.png" alt=""></span></span><span class="name" data-g="th3 spüd">the spud</span></a>
+  <a class="win sci" href="../science/" aria-label="The Science: the paper"><span class="glass"><span class="pane"><img src="../garden/costumes/mad-scientist.webp" alt=""></span></span><span class="name" data-g="th3 sc1enc3">the science</span></a>
+  <a class="win src" href="../source/" aria-label="The Source: how he is made"><span class="glass"><span class="pane"><img src="../garden/costumes/simulation.webp" alt=""></span></span><span class="name" data-g="th3 s0urc3">the source</span></a>
+</nav>
+<!-- OUR CATCHPHRASE, quietly, in a few places (Chikin, Nov 13 2026: "not your mascot, not your toy needs to be more on the site, not in your face, but it feels ike it needs to be in a few places"). Styled as he picked it on Nov 5. -->
+<p style="font:400 .86rem/1.4 'Major Mono Display',ui-monospace,Menlo,monospace;text-transform:lowercase;color:#c9a7ff;opacity:.75;text-align:center;margin:18px 12px 8px;position:relative;z-index:5">he's not your mascot. he's not your toy. 🥔</p>
+<footer>&copy; 2026 ChikinNuglet. pot&#9651;to&trade; and his look are trademarks of ChikinNuglet. All rights reserved.</footer>
+<script>
+(function(){var c=document.getElementById('bin'),x=c.getContext('2d'),W,H,cols,drops,F=16,seq=[],still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// the rain, same as his door: real binary spelling "potato" (8 bits a letter); now and then a 0 is a tiny potato, and his glitch words fall too
+var BITS=Array.from('potato ').map(function(ch){return ch.charCodeAt(0).toString(2).padStart(8,'0')}).join('');
+function spud(X,Y){x.save();x.translate(X,Y);x.rotate(-.3);x.fillStyle='#c98a45';x.beginPath();x.ellipse(0,0,6,4.6,0,0,6.283);x.fill();x.fillStyle='#7a4f24';x.beginPath();x.arc(-2,-1,.9,0,6.283);x.arc(2,1.2,.8,0,6.283);x.fill();x.restore()}
+var words=(window.POTATO_GLITCH_WORDS||[]).concat(['p0t4t0','n0t f0und','th3 d00r','krrzzt','404','wh@t?!','hm']);
+var burst=0,nextBurst=2;
+function size(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);cols=Math.ceil(W/F);drops=[];for(var i=0;i<cols;i++){drops.push(Math.random()*H/F);seq.push(Math.floor(Math.random()*56))}x.fillStyle='#05070a';x.fillRect(0,0,W,H)}
+function step(){x.fillStyle='rgba(5,7,10,.12)';x.fillRect(0,0,W,H);x.font='600 14px "JetBrains Mono",monospace';
+ for(var i=0;i<cols;i++){var y=drops[i]*F;if(Math.random()<(burst>0?.05:.012)){var w=words[Math.floor(Math.random()*words.length)];x.fillStyle=Math.random()<.5?'rgba(154,82,255,.75)':'rgba(224,60,207,.65)';x.fillText(w,i*F,y)}else{var bit=BITS[(seq[i]++)%BITS.length];if(bit==='0'&&Math.random()<.035){spud(i*F+5,y-5)}else{x.fillStyle=Math.random()<.04?'rgba(200,255,225,.6)':'rgba(77,255,154,.26)';x.fillText(bit,i*F,y)}}
+  if(y>H&&Math.random()>.975)drops[i]=0;drops[i]+=.55}
+ var T=performance.now()/1000;if(T>nextBurst){burst=.35+Math.random()*.4;nextBurst=T+2.5+Math.random()*3.5}
+ if(burst>0){burst-=.05;var d=Math.min(2,devicePixelRatio||1);for(var b=0;b<3;b++){var by=Math.random()*H,bh=6+Math.random()*40,dx=(Math.random()-.5)*60;x.save();x.globalCompositeOperation='lighter';x.globalAlpha=.5;x.drawImage(c,0,by*d,c.width,bh*d,dx,by,W,bh);x.fillStyle='rgba(123,60,242,.18)';x.fillRect(0,by,W,bh);x.restore()}}}
+size();addEventListener('resize',size);
+if(still){for(var k=0;k<120;k++)step();return}
+(function loop(){step();setTimeout(function(){requestAnimationFrame(loop)},45)})();
+
+// him in the logo: pops up in an O or the triangle, looks, drops back
+var holes=[].slice.call(document.querySelectorAll('.hole'));
+function pop(){var h=holes[Math.floor(Math.random()*holes.length)];h.classList.add('up');setTimeout(function(){h.classList.remove('up')},1400+Math.random()*1200);setTimeout(pop,2600+Math.random()*3800)}
+setTimeout(pop,900);
+// his glitch: the logo, the question, a window, the source ticking. Steps, holds, never smooth.
+var lw=document.getElementById('lw'),q=document.getElementById('q'),plain=q.textContent,wins=[].slice.call(document.querySelectorAll('.win')),src=document.querySelector('.src');
+function hit(el,ms){el.classList.add('glitch');setTimeout(function(){el.classList.remove('glitch')},ms)}
+function glitch(){var r=Math.random();
+ if(r<.35)hit(lw,120+Math.random()*160);
+ else if(r<.6){q.textContent=q.dataset.g;q.classList.add('glitch');setTimeout(function(){q.textContent=plain;q.classList.remove('glitch')},180+Math.random()*220)}
+ else{var w=wins[Math.floor(Math.random()*wins.length)];w.style.setProperty('--gx',(Math.random()<.5?-1:1)*(3+Math.random()*5)+'px');hit(w,90+Math.random()*120)}
+ setTimeout(glitch,1800+Math.random()*3200)}
+setTimeout(glitch,1600);
+(function tick(){src.classList.toggle('tick',Math.random()<.5);setTimeout(tick,src.classList.contains('tick')?70+Math.random()*90:400+Math.random()*1400)})();
+// the names glitch into his language while you hover them
+// the windows glitch on their own, potato style: a slice of the frame jumps sideways, purple/magenta split, hold, snap back
+function cut(){var a=10+Math.random()*60,b=a+6+Math.random()*16,dx=(Math.random()<.5?-1:1)*(3+Math.random()*7);
+ return 'polygon(0 0,100% 0,100% '+a+'%,'+(100-dx)+'% '+a+'%,'+(100-dx)+'% '+b+'%,100% '+b+'%,100% 100%,0 100%,0 '+(b+8)+'%,'+Math.abs(dx)+'% '+(b+8)+'%,'+Math.abs(dx)+'% '+(a+4)+'%,0 '+(a+4)+'%)'}
+(function frames(){var w=wins[Math.floor(Math.random()*wins.length)];w.style.setProperty('--cut',cut());w.style.setProperty('--gx',(Math.random()<.5?-1:1)*(2+Math.random()*6)+'px');w.style.setProperty('--gs',((Math.random()-.5)*8)+'deg');
+ hit(w,70+Math.random()*130);if(Math.random()<.35)setTimeout(function(){w.style.setProperty('--cut',cut());hit(w,60+Math.random()*80)},170);setTimeout(frames,700+Math.random()*1700)})();
+// the words glitch all the time: a few letters swap for his glitch letters, hold, come back; sometimes the whole name goes glitch
+var GL={a:'@4',e:'3',i:'1!',o:'0',s:'5$',t:'7',u:'ü',p:'þ',c:'(',h:'#',r:'®',n:'ñ',d:'Ð'};
+function scramble(el){var t=el.dataset.plain;if(Math.random()<.25){el.textContent=el.dataset.g;return}
+ el.textContent=t.split('').map(function(ch){var g=GL[ch.toLowerCase()];return g&&Math.random()<.35?g[Math.floor(Math.random()*g.length)]:ch}).join('')}
+[].slice.call(document.querySelectorAll('.name')).forEach(function(n){n.dataset.plain=n.textContent;
+ (function go(){scramble(n);setTimeout(function(){n.textContent=n.dataset.plain},90+Math.random()*160);setTimeout(go,500+Math.random()*1800)})();
+ n.closest('.win').addEventListener('pointerenter',function(){n.textContent=n.dataset.g;setTimeout(function(){n.textContent=n.dataset.plain},300)})});
+q.dataset.plain=plain;(function qq(){if(!q.classList.contains('glitch')){scramble(q);setTimeout(function(){if(!q.classList.contains('glitch'))q.textContent=plain},110+Math.random()*150)}setTimeout(qq,900+Math.random()*2000)})();
+})();
+</script>
+<!-- terms + privacy, on every page (Chikin, Nov 12 2026 night: "there is no link to the terms") -->
+<p style="position:fixed;right:10px;bottom:6px;margin:0;z-index:2147483646;font:400 12px/1.3 ui-monospace,Menlo,monospace;color:#7fa48c"><a href="../terms/" style="color:#4dff9a;text-decoration:underline">terms</a> &middot; <a href="../privacy/" style="color:#4dff9a;text-decoration:underline">privacy</a> &middot; <a href="../credits/" style="color:#4dff9a;text-decoration:underline">credits</a></p>
+</body></html>

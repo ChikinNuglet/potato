@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>the science</title><meta name="referrer" content="no-referrer">
+<!-- THE SCIENCE MENU (Chikin, Nov 12 2026 night: "for the science, lets make a menu that it takes you too, a potato menu plese"). The Science window on the
+     three doors lands here. Every label is a STAND-IN in his voice for Chikin's read. The Thursday paper moved to thursday.html (index.before-menu.html = before). -->
+<style>
+:root{--bg:#030604;--plate:#0c1f14;--line:#12301f;--ink:#120a05;--text:#e8f5ec;--muted:#7fa48c;--warm:#ffd9a0;--bits:#4dff9a;--glitch:#9a52ff;--magenta:#e03ccf;--paper:#f3dfae;
+--his:"Major Mono Display","SF Mono",ui-monospace,Menlo,Consolas,monospace;--body:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:400 17px/1.5 var(--body);-webkit-tap-highlight-color:transparent}
+main{max-width:560px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px 240px;display:grid;gap:16px}
+:focus-visible{outline:4px solid #2bff88;outline-offset:4px}
+.back{color:var(--bits);font:400 .9rem var(--his);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+h1{font:400 clamp(1.7rem,8vw,2.5rem)/1.1 var(--his);color:var(--warm);margin:0;text-shadow:3px 0 var(--glitch),-3px 0 var(--magenta)}
+.say{font:400 clamp(.95rem,4vw,1.1rem)/1.4 var(--his);color:var(--warm);margin:0;text-transform:lowercase}
+/* the menu: a paper card, like the coupon */
+.menu{background:var(--paper);color:var(--ink);border:6px solid var(--ink);border-radius:14px;padding:14px 14px 6px;position:relative;transform:rotate(-.6deg);box-shadow:5px 6px 0 2px #000}
+.menu::before{content:"";position:absolute;inset:7px;border:3px dashed #120a0566;border-radius:8px;pointer-events:none}
+.menu h2{font:400 1rem var(--his);margin:4px 6px 8px;text-transform:lowercase;letter-spacing:.04em}
+.item{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline;padding:12px 8px;min-height:64px;color:var(--ink);text-decoration:none;border-top:3px solid var(--ink)}
+.item b{font:400 clamp(1rem,4.6vw,1.2rem)/1.2 var(--his)}
+.item span{grid-column:1/-1;font-size:.9rem;opacity:.8}
+.item i{font:400 .85rem var(--his);font-style:normal;white-space:nowrap}
+.item:hover b,.item:focus-visible b{text-shadow:2px 0 var(--glitch),-2px 0 var(--magenta)}
+.item:active{transform:translate(2px,2px)}
+.small{font-size:.86rem;color:var(--muted);margin:0}
+</style></head><body>
+<!-- THE COUPON, at the top of every page behind the three doors (Chikin, Nov 12 2026 night). The words are a stand-in. It shows "soon" to the public until the mail room is switched on. -->
+<a href="../redeem/" aria-label="Coupon: one potato. Tap to redeem." style="display:grid;grid-template-columns:auto auto;width:max-content;max-width:calc(100vw - 150px);margin:14px 0 8px 18px;background:#f3dfae;color:#120a05;border:4px solid #120a05;border-radius:10px;font:400 11px/1.15 'Major Mono Display',ui-monospace,Menlo,monospace;text-decoration:none;text-transform:lowercase;transform:rotate(-2.5deg);box-shadow:4px 0 0 #7b3cf2,-4px 0 0 #e03ccf,0 5px 0 #000;position:relative;z-index:5"><span style="position:relative;display:grid;place-items:center;padding:8px 9px;border-right:3px dashed #120a05"><svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true" style="display:block"><path d="M50 12c26-2 38 24 34 46s-20 32-40 30S10 72 14 48 26 14 50 12z" fill="#b98a55" stroke="#120a05" stroke-width="6"/><ellipse cx="38" cy="36" rx="5" ry="3" fill="#7a5730"/><ellipse cx="62" cy="58" rx="6" ry="3.5" fill="#7a5730"/><ellipse cx="44" cy="68" rx="4" ry="2.5" fill="#7a5730"/><ellipse cx="66" cy="32" rx="3.5" ry="2.5" fill="#7a5730"/></svg><span aria-hidden="true" style="position:absolute;right:-9px;top:-10px;width:15px;height:15px;box-sizing:border-box;border:4px solid #120a05;border-radius:50%;background:#030604"></span><span aria-hidden="true" style="position:absolute;right:-9px;bottom:-10px;width:15px;height:15px;box-sizing:border-box;border:4px solid #120a05;border-radius:50%;background:#030604"></span></span><span style="display:grid;align-content:center;gap:3px;padding:7px 14px 7px 13px"><span style="letter-spacing:.16em;opacity:.75">c0upon</span><b style="font-weight:400;font-size:17px;white-space:nowrap">one (1) potato</b><span style="opacity:.75;white-space:nowrap">limit one. no cash value. &gt;</span></span></a>
+<main>
+<a class="back" href="../doors/">&lt; the doors</a>
+<h1>the science</h1>
+<p class="say">they studied me. then they studied the lock. pick one.</p>
+<nav class="menu" aria-label="The science menu">
+  <h2>tOdAy's speciAls</h2>
+  <a class="item" href="thursday.html"><b>the study about me</b><i>312 thursdays</i><span>They knocked every Thursday for six years to see if anyone was home.</span></a>
+  <a class="item" href="potato-virus.html"><b>pOtAtO.exe</b><i>do not open</i><span>Three assistants opened a coupon. One potato came out.</span></a>
+  <a class="item" href="../potatocode/"><b>pOtAtOcOde</b><i>a lock</i><span>How a key works, in plain words. Three locked Potatoes to try and break.</span></a>
+  <a class="item" href="potatocode.html"><b>the paper about the lock</b><i>true story</i><span>He thought he had reinvented encryption. Nobody told him for three days.</span></a>
+  <a class="item" href="potatocode-assistant.html"><b>the ai's side of it</b><i>it's sorry</i><span>The same three days, from the one who didn't say.</span></a>
+  <a class="item" href="from-the-ai.html"><b>how it has been</b><i>not a parody</i><span>The whole project, from the A.I. that builds it.</span></a>
+  <a class="item" href="../potatocode/autograph/"><b>AutOgrAph</b><i>sign here</i><span>Someone signs on your phone. Your phone locks it. Yours.</span></a>
+</nav>
+<p class="small">The papers are parodies. The lock is real. Use A.I. with caution.</p>
+<p class="small">Any real science, testing or research here was done by Claude, an A.I. ChikinNuglet, when asked why: "why the fuck wouldn't i use my ai assistant."</p>
+</main>
+<script type="module">
+// The Potato of this page: the alive one, in the mad scientist's coat (Chikin, Nov 13: "this potato needs to be on The Science page, in the mad
+// scientist costume, same control button, will always default back to mad scientist potato if the user changes him once he regains control").
+// If anything fails he simply is not there and the paper reads the same.
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let mine = false;
+  window.petHost = { load: () => ({ muted: true, px: innerWidth < 520 ? 72 : 100 }), hit: v => { mine = v; document.body.style.userSelect = document.body.style.webkitUserSelect = v ? 'none' : ''; } };
+  addEventListener('touchstart', e => { if (mine) e.preventDefault(); }, { passive: false });
+  addEventListener('touchmove', e => { if (mine) e.preventDefault(); }, { passive: false });
+  const keep = [document.documentElement.style.cssText, document.body.style.cssText];
+  import('../living/lm/engine/host-pet.mjs').then(m => m.startPet()).then(() => {
+    document.documentElement.style.cssText = keep[0]; document.body.style.cssText = keep[1];
+    return import('../living/drive.mjs').then(m => m.installDrive(window.living, window.pet, { home: 'mad-scientist' }));
+  }).catch(e => { document.documentElement.style.cssText = keep[0]; document.body.style.cssText = keep[1]; window.__petError = String(e); });
+}
+</script>
+
+<!-- terms + privacy, on every page (Chikin, Nov 12 2026 night: "there is no link to the terms") -->
+<p style="text-align:center;margin:22px 0 30px;font:400 13px/1.4 ui-monospace,Menlo,monospace;color:#7fa48c;position:relative;z-index:5"><a href="../terms/" style="color:#4dff9a;text-decoration:underline">terms</a> &middot; <a href="../privacy/" style="color:#4dff9a;text-decoration:underline">privacy</a> &middot; <a href="../credits/" style="color:#4dff9a;text-decoration:underline">credits</a></p>
+</body></html>

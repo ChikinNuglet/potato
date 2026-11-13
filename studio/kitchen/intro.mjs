@@ -152,7 +152,7 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     if (phys.air) { const y0 = phys.y, vb = phys.vy; let y1 = y0 + vb * dt - g * dt * dt / 2; phys.vy = vb - g * dt; if (y1 >= CEIL && phys.vy > 0) { y1 = CEIL; phys.vy = 0; } y1 = Math.min(CEIL, y1);
       if (phys.vy <= 0) { let best = 0, bi = -1; const yTop = vb > 0 ? Math.min(CEIL, y0 + vb * vb / (2 * g)) : y0;   // (the top of the arc, if it fell inside this step)
         let score = -1;   // (the highest surface under him; one right under his middle beats one he'd only catch with an edge)
-        const L = props(); if (!free) for (let i = 0; i < L.length; i++) { const p = L[i]; if (p.top == null || !standOK(i, X, t)) continue; const ty = wy(p.topAt ? p.topAt(X) : p.top), [a, b] = p.topAt ? [p.x0, p.x1] : seatOf(p), sc = ty + (X >= a && X <= b ? 10 : 0);
+        const L = props(); if (!free) for (let i = 0; i < L.length; i++) { const p = L[i]; if (p.top == null || !standOK(i, X, t) || (S.glitchThrough && fx.amount > 0.5 && !p.walk)) continue;   /* (CANON, Chikin Nov 12: he can glitch through physical objects, but a door is a door: mid-glitch he does not land on tables, counters, chairs. Stairs stay stairs.) */ const ty = wy(p.topAt ? p.topAt(X) : p.top), [a, b] = p.topAt ? [p.x0, p.x1] : seatOf(p), sc = ty + (X >= a && X <= b ? 10 : 0);
           if (sc > score && yTop >= ty - 0.03 && y1 <= ty) { score = sc; best = ty; bi = i; } }
         if (y1 <= best) { const sp = -phys.vy; y1 = best; phys.air = false; phys.dbl = false; phys.vy = 0; phys.on = bi; ARMS.settle(); spud.land(Math.min(6, sp * 0.6));
           if (bi >= 0) { fire(bi, 'land'); landZones(bi, X, t); } else if (sfx.land) sfx.land(Math.min(1.4, sp / 6));
@@ -253,7 +253,8 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
     // through a door: 'demo' goes through the watch door (right), everything else through the song's door (left)
     enterDoor(how = 'play') { if (how === 'demo' && !S.rightOpen) return; if (how !== 'demo' && S.leftShut) return peekOut(); if (!looping || enter) return; const side = how === 'demo' ? 'watch' : 'play'; enter = { t0: now(), how, side, phase: 'walk', t1: 0, done: false }; (side === 'watch' ? door2 : door).want = 1; walk.dir = 0; walk.to = null; walk.use = -1; walk.ducking = false; spud.duck(false);
       sfx.pop && sfx.pop(); S.onFace && S.onFace('smirk', 1.2); },
-    poke() { fx.amount = 0.9; lastGl = now(); },
+    poke() { fx.amount = 0.9; lastGl = now(); if (S.glitchThrough && phys.on >= 0 && !phys.air && props()[phys.on] && !props()[phys.on].walk) { leave(); phys.air = true; phys.vy = 0; } },   // (a glitch while he stands on a thing: he drops through it)
+    pokeSoft(a = 0.3) { if (fx.amount < a) { fx.amount = a; lastGl = now(); } },   // (his own small glitch, when nobody asked: Chikin Nov 12, "hes supposed to glitch, it can be more subtle when hes just chilling or strolling")
     rect() { const v = new T.Vector3(); let x0 = 1, y0 = 1, x1 = 0, y1 = 0; const px = pivot.position.x, py = pivot.position.y, s = pivot.scale.x;
       for (const [x, y] of [[px - 0.9 * s, py - 0.2], [px + 0.9 * s, py - 0.2], [px - 0.9 * s, py + 1.7 * s], [px + 0.9 * s, py + 1.7 * s]]) { v.set(x, y, 0).project(cam); const u = v.x * 0.5 + 0.5, w = v.y * 0.5 + 0.5; x0 = Math.min(x0, u); x1 = Math.max(x1, u); y0 = Math.min(y0, w); y1 = Math.max(y1, w); }
       return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }; } };
@@ -309,7 +310,10 @@ export function createIntro({ T, scene, stage, spud, pivot, cam, fx, viewW, sfx 
         else d = Math.sign(gap); }
       if (walk.then && !phys.air && (walk.then.up ? upNow() : phys.on < 0 && phys.y <= 0.001)) { const th = walk.then; walk.then = null; if (th.use != null) goUse(th.use, rawX()); else { walk.to = Math.max(lo(), Math.min(hi(), worldOfRaw(th.x))); walk.use = -1; } }   // (the stairs route: next leg)
       if (walk.hopAt && T0 >= walk.hopAt) { walk.hopAt = 0; const c = walk.chain; walk.chain = -1; if (c >= 0 && standOK(c, rawX(), T0) && jump()) sfx.jump && sfx.jump(); }   // (table -> counter: the second hop)
-      if (walk.dir > 0 && !phys.air && phys.on < 0 && phys.y <= 0.001) { const si = stairsI(), sp = props()[si], X = rawX();   // (→ held into the foot of the stairs: he walks up them, the way anyone would; taps keep their own route)
+      /* STAIRS_AUTO (Nov 13, the visitor's walk): true = held right walks him UP the stairs (what Chikin saw and approved Nov 12 night). The cost: the kitchen door past the
+         stairs is then reached only by tapping it, or by coming back out of Get Down's left door. false = held right walks PAST the stairs to the kitchen; jump or tap takes the stairs. His call. */
+      const STAIRS_AUTO = true;
+      if (STAIRS_AUTO && walk.dir > 0 && !phys.air && phys.on < 0 && phys.y <= 0.001) { const si = stairsI(), sp = props()[si], X = rawX();   // (→ held into the foot of the stairs: he walks up them, the way anyone would; taps keep their own route)
         if (sp && X >= sp.x0 && X < sp.x0 + 30) { phys.on = si; ps[si].top = null; } }
       if (d && !walk.ducking && !enter) { pivot.position.x = Math.max(lo() - 0.02, Math.min(hi(), pivot.position.x + d * SPEED * dt)); if (moving !== d) { moving = d; spud.waddle(true); turnAt(d * 0.95); }
         if (pivot.position.x <= lo() && d < 0) S.enterDoor('play');                // walked into the door: through it

@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>potato's autograph</title><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<!-- POTATO'S AUTOGRAPH (Chikin, Nov 12 2026 night: "a template for their phone for when they get autographs" / "lets do it", then: "the autograph page is not
+     potato enough, it should have his signature on the screen, and the asthetics are wrong" / "this should be potato, always potato").
+     The card is HIS: he has already signed it (he has no hands, so he stamps himself on it and his name glitches in beside the stamp). You put who it is for,
+     draw on it, get anyone else to sign under him, and your phone locks it with a key only you ever see (../core.js, the same lock as every picked Potato).
+     Nothing leaves the device. No key is kept, here or anywhere. It proves nothing about who signed, and the page says so.
+     Words in his voice are STAND-INS for Chikin's read. Not live. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap">
+<style>
+:root{--bg:#030604;--plate:#0c1f14;--line:#12301f;--ink:#120a05;--text:#e8f5ec;--muted:#7fa48c;--warm:#ffd9a0;--bits:#4dff9a;--glitch:#9a52ff;--deep:#7b3cf2;--magenta:#e03ccf;--paper:#f3dfae;--tan:#da9643;
+--his:"Major Mono Display","SF Mono",ui-monospace,Menlo,Consolas,monospace;--body:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:400 17px/1.5 var(--body);-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+body{background:radial-gradient(120% 60% at 50% 0,#12062e 0,#030604 60%)}
+main{max-width:520px;margin:0 auto;padding:max(20px,env(safe-area-inset-top)) 16px 70px;display:grid;gap:18px}
+:focus-visible{outline:4px solid #2bff88;outline-offset:4px}[hidden]{display:none!important}
+.back{color:var(--bits);font:400 .9rem var(--his);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+h1{font:400 clamp(1.6rem,8vw,2.4rem)/1.05 var(--his);color:var(--warm);margin:0;text-shadow:3px 0 var(--deep),-3px 0 var(--magenta);animation:jit 5s steps(1) infinite}
+@keyframes jit{0%,91%,100%{transform:none}92%{transform:translateX(3px) skewX(-6deg)}94%{transform:translateX(-4px)}96%{transform:translateX(2px) skewX(4deg)}}
+.say{font:400 clamp(.95rem,4vw,1.1rem)/1.4 var(--his);color:var(--warm);margin:0;text-transform:lowercase;min-height:1.4em}
+.small{font-size:.86rem;color:var(--muted);margin:0}
+/* the card he signed: paper, thick ink, a bit crooked, his purple leaking out of the edges */
+.card{background:var(--paper);color:var(--ink);border:6px solid var(--ink);border-radius:12px 16px 11px 15px;padding:10px;position:relative;transform:rotate(-1.4deg);box-shadow:6px 0 0 var(--deep),-6px 0 0 var(--magenta),0 9px 0 2px #000;animation:thunk .5s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes thunk{0%{transform:rotate(-7deg) scale(1.18);opacity:0}60%{transform:rotate(.6deg) scale(.97);opacity:1}100%{transform:rotate(-1.4deg) scale(1)}}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;font:400 .8rem var(--his);padding:2px 6px 8px;text-transform:lowercase}
+#pad{display:block;width:100%;aspect-ratio:3/2;background:var(--paper);border:3px dashed #120a0577;border-radius:8px;touch-action:none;cursor:crosshair}
+.card .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 6px 2px;font:400 .78rem var(--his);text-transform:lowercase}
+.wipe{all:unset;cursor:pointer;font:400 .8rem var(--his);color:var(--ink);border-bottom:3px solid var(--ink);min-height:36px;display:inline-flex;align-items:center}
+/* the slip you fill in: torn receipt paper */
+.slip{background:#efe6cf;color:var(--ink);border:5px solid var(--ink);border-radius:6px 10px 5px 9px;padding:12px 14px 16px;transform:rotate(.8deg);box-shadow:5px 6px 0 #000}
+.slip label{display:block;font:400 .82rem var(--his);margin:12px 0 4px;text-transform:lowercase}
+.slip input{width:100%;min-height:48px;padding:6px 4px;background:transparent;color:var(--ink);border:0;border-bottom:4px solid var(--ink);border-radius:0;font:600 1.05rem var(--body)}
+.slip input::placeholder{color:#120a0566}
+.btn{min-height:60px;width:100%;padding:0 16px;background:var(--glitch);color:var(--ink);border:5px solid var(--ink);border-radius:10px 14px 9px 13px;box-shadow:4px 0 0 var(--magenta),-4px 0 0 var(--bits),0 7px 0 var(--ink);font:400 1.1rem var(--his);cursor:pointer;transform:rotate(-.6deg)}
+.btn[disabled]{opacity:.55}.btn:active{transform:translateY(5px) rotate(-.6deg);box-shadow:4px 0 0 var(--magenta),-4px 0 0 var(--bits),0 2px 0 var(--ink)}
+.ghost{all:unset;cursor:pointer;color:var(--bits);font:400 .9rem var(--his);min-height:44px;display:inline-flex;align-items:center}
+/* after the lock: the key on a luggage tag */
+.tag{background:var(--tan);color:var(--ink);border:5px solid var(--ink);border-radius:10px 14px 9px 13px;padding:14px 14px 16px;transform:rotate(-1deg);box-shadow:5px 6px 0 #000}
+.tag .say{color:var(--ink)}.tag .small{color:#120a05cc}
+.key{font:700 1.22rem/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--warm);background:#030604;border:4px solid var(--ink);border-radius:8px;padding:14px 10px;text-align:center;word-break:break-all;-webkit-user-select:all;user-select:all;text-shadow:2px 0 var(--deep),-2px 0 var(--magenta)}
+.tag input{width:100%;min-height:48px;padding:8px 10px;background:#030604;color:var(--text);border:4px solid var(--ink);border-radius:8px;font:700 1rem ui-monospace,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase}
+.tag label{display:block;font:400 .82rem var(--his);margin:14px 0 6px;text-transform:lowercase}
+.tag .ghost{color:var(--ink);border-bottom:3px solid var(--ink);min-height:36px}
+.fine{border-top:3px dashed var(--line);padding-top:14px;display:grid;gap:8px}
+a{color:var(--bits)}
+@media(prefers-reduced-motion:reduce){h1,.card{animation:none}}
+</style></head><body><main>
+<a class="back" href="../../science/">&lt; the science</a>
+<h1>pOtAtO's<br>AutOgrAph</h1>
+<p class="say" id="say" aria-live="polite">i signed it. your turn, if you want.</p>
+
+<div id="make" style="display:grid;gap:18px">
+  <section class="card" aria-label="The card Potato signed">
+    <div class="top"><span>one (1) autograph</span><span id="serial">no. 404</span></div>
+    <canvas id="pad" aria-label="The card. Potato has signed it. Draw on it with a finger."></canvas>
+    <div class="foot"><span>draw on it. get someone to sign under me.</span><button type="button" class="wipe" id="clear">wipe yours</button></div>
+  </section>
+  <section class="slip">
+    <label for="who">who's it for</label><input id="who" autocomplete="off" maxlength="60" placeholder="your name">
+    <label for="else">anyone else sign it?</label><input id="else" autocomplete="off" maxlength="80" placeholder="who (or nobody)">
+    <label for="where">where</label><input id="where" autocomplete="off" maxlength="80" placeholder="if you like">
+    <label for="when">when</label><input id="when" autocomplete="off" maxlength="40">
+  </section>
+  <button type="button" class="btn" id="go">lock it</button>
+  <p class="small">Your phone makes a key right now, locks the card with it, and shows you the key once. We never see either. Have something to write on.</p>
+</div>
+
+<section class="tag" id="done" hidden>
+  <p class="say" style="margin-bottom:8px">the key. i show it once.</p>
+  <div class="key" id="key"></div>
+  <p class="small" style="margin:10px 0">Write it on paper. Six groups of four: no letter O, I or L, no 0 or 1.</p>
+  <p class="small" style="margin-bottom:12px">The card just saved as <strong id="fname"></strong>. Keep it anywhere: it is locked. The file and the key open it on any device. Lose the key and it stays shut. Nobody can reset it.</p>
+  <a id="again" class="ghost">save the card again</a>
+  <label for="chk">prove your paper is right. type the key:</label><input id="chk" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  <button type="button" class="btn" id="try" style="margin-top:14px">does my paper open it?</button>
+  <p class="small" id="res" style="margin-top:12px;font-weight:700" aria-live="polite"></p>
+  <button type="button" class="ghost" id="more" style="margin-top:10px">another one</button>
+</section>
+
+<p class="small" id="no" hidden>This browser can't make locks. Try a newer one.</p>
+
+<section class="fine">
+  <p class="say">we just thought this would be fun. we do not think it is special.</p>
+  <p class="small"><strong>What this is.</strong> Potato's autograph, plus anyone else's you collect on it. A keepsake that is yours. The lock is the standard one your phone already uses, and you hold the only key. Nobody else has a copy, including us.</p>
+  <p class="small"><strong>What it is not.</strong> Proof of who signed. A potato signed it, and he has no hands. Anyone can draw on a screen. It does not make anything worth money.</p>
+  <p class="small">Open this page once while you have signal. After that it works with none, until you close it. <a href="../">how the lock works</a></p>
+</section>
+</main>
+<script src="../core.js"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},PC=window.Potatocode,pad=$('pad'),cx=pad.getContext('2d'),strokes=[],cur=null,room=null,kit=null;
+if(!PC||!PC.ok){$('make').hidden=true;$('no').hidden=false;return}
+kit=Promise.all([fetch('../words.json').then(function(r){return r.json()}),fetch('../room.template.html').then(function(r){return r.text()})]);kit.catch(function(){});
+$('when').value=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+// HIS SIGNATURE. He has no hands: he stamps himself on the card, and his name glitches in next to the stamp. One of his words rides along; which one changes per card.
+var WORDS=['krrzzt','wh@t?!','s0r—t@'],word=WORDS[Math.floor(Math.random()*WORDS.length)],serial=('000'+Math.floor(Math.random()*10000)).slice(-4),tilt=(Math.random()-.5)*.18;
+$('serial').textContent='no. '+serial;
+var stamp=new Image(),stampOK=false;stamp.onload=function(){stampOK=true;draw()};stamp.src='../../logo/potato-3d.png';   /* (the Potato the site's own door uses. NOT logo/canon.png: that file is not him.) */
+var HIS='"Major Mono Display",ui-monospace,Menlo,monospace';
+function draw(){var W=pad.width,H=pad.height,u=W/600;cx.setTransform(1,0,0,1,0,0);cx.fillStyle='#f3dfae';cx.fillRect(0,0,W,H);
+  // "to:" in the top corner, in ink
+  var who=$('who').value.trim();cx.fillStyle='#120a05';cx.textBaseline='alphabetic';cx.font='400 '+Math.round(22*u)+'px '+HIS;cx.fillText('to: '+(who?who.toLowerCase():'________'),18*u,36*u);
+  // the stamp: himself, pressed on a little crooked, with his purple slipping out from under it
+  var s=170*u,sx=W-s-14*u,sy=H-s-8*u;cx.save();cx.translate(sx+s/2,sy+s/2);cx.rotate(-.14+tilt);
+  if(stampOK){cx.globalAlpha=.5;cx.filter='none';
+    cx.drawImage(tint('#7b3cf2'),-s/2-6*u,-s/2,s,s);cx.drawImage(tint('#e03ccf'),-s/2+6*u,-s/2,s,s);cx.globalAlpha=1;cx.drawImage(stamp,-s/2,-s/2,s,s)}
+  cx.restore();
+  // his name, written the only way he writes: glitched
+  cx.save();cx.translate(22*u,H-58*u);cx.rotate(-.07+tilt/2);cx.font='400 '+Math.round(54*u)+'px '+HIS;
+  cx.fillStyle='#e03ccf';cx.fillText('pot△to',5*u,2*u);cx.fillStyle='#7b3cf2';cx.fillText('pot△to',-4*u,-1*u);cx.fillStyle='#120a05';cx.fillText('pot△to',0,0);
+  cx.fillStyle='#120a05';cx.fillRect(0,12*u,300*u,4*u);cx.fillStyle='#7b3cf2';cx.fillRect(120*u,12*u,46*u,4*u);cx.fillStyle='#f3dfae';cx.fillRect(196*u,10*u,14*u,8*u);
+  cx.font='400 '+Math.round(17*u)+'px '+HIS;cx.fillStyle='#7b3cf2';cx.fillText(word,6*u,40*u);cx.restore();
+  // whatever the people drew
+  cx.strokeStyle='#120a05';cx.fillStyle='#120a05';cx.lineCap='round';cx.lineJoin='round';cx.lineWidth=Math.max(3,W/170);
+  strokes.forEach(function(st){if(st.length===1){cx.beginPath();cx.arc(st[0][0]*W,st[0][1]*H,cx.lineWidth/2,0,7);cx.fill();return}cx.beginPath();cx.moveTo(st[0][0]*W,st[0][1]*H);for(var i=1;i<st.length;i++)cx.lineTo(st[i][0]*W,st[i][1]*H);cx.stroke()})}
+var tints={};function tint(col){if(tints[col])return tints[col];var c=document.createElement('canvas');c.width=stamp.naturalWidth;c.height=stamp.naturalHeight;var x=c.getContext('2d');x.drawImage(stamp,0,0);x.globalCompositeOperation='source-in';x.fillStyle=col;x.fillRect(0,0,c.width,c.height);return tints[col]=c}
+function size(){var r=pad.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);pad.width=Math.round(r.width*d);pad.height=Math.round(r.height*d);draw()}
+size();window.addEventListener('resize',size);if(document.fonts&&document.fonts.load)document.fonts.load('40px "Major Mono Display"').then(draw,function(){});
+$('who').addEventListener('input',draw);
+function at(e){var r=pad.getBoundingClientRect();return[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]}
+pad.addEventListener('pointerdown',function(e){e.preventDefault();try{pad.setPointerCapture(e.pointerId)}catch(_){ }cur=[at(e)];strokes.push(cur);draw()});
+pad.addEventListener('pointermove',function(e){if(!cur)return;cur.push(at(e));draw()});
+['pointerup','pointercancel','pointerleave'].forEach(function(n){pad.addEventListener(n,function(){cur=null})});
+$('clear').addEventListener('click',function(){strokes=[];draw();$('say').textContent="wiped yours. mine stays."});
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function picture(){var w=Math.min(900,pad.width),c=document.createElement('canvas');c.width=w;c.height=Math.round(w*pad.height/pad.width);c.getContext('2d').drawImage(pad,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.88)}
+function slug(t){return (String(t).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,30))||'someone'}
+$('go').addEventListener('click',function(){var who=$('who').value.trim(),b=$('go');
+  if(!who){$('say').textContent="who's it for? i don't sign blanks.";$('who').focus();return}
+  b.disabled=true;b.textContent='arranging the sheet...';draw();
+  var els=$('else').value.trim(),where=$('where').value.trim(),when=$('when').value.trim(),name='potato-autograph-'+slug(who)+'.locked.html';
+  var html='<h2>pOtAtO&#39;s AutOgrAph</h2><p><img alt="The card Potato signed" src="'+picture()+'" style="display:block;width:100%;max-width:520px;border:5px solid #120a05;border-radius:10px"></p>'+
+    '<p>To <strong>'+esc(who)+'</strong>. Card no. '+serial+'.</p><p>Signed by Potato'+(els?', and by '+esc(els):'')+'.</p>'+(where?'<p>'+esc(where)+'</p>':'')+(when?'<p>'+esc(when)+'</p>':'')+
+    '<p style="opacity:.75;font-size:.9em">Kept exactly as it was given. This file does not prove who signed. A potato signed it.</p>';
+  (kit||Promise.reject()).then(function(a){return PC.lock(a[0],html).then(function(o){room=o.room;
+      var page=PC.page(a[1],o.room,{title:"potato's autograph",h1:'AutOgrAph',hint:'Only the one who holds the key opens this.'});
+      if(page.indexOf(o.key)>=0||page.indexOf(PC.norm(o.key))>=0)throw new Error('key in file');
+      var url=URL.createObjectURL(new Blob([page],{type:'text/html'}));$('again').href=url;$('again').download=name;$('fname').textContent=name;
+      var d=document.createElement('a');d.href=url;d.download=name;document.body.appendChild(d);d.click();d.remove();
+      $('key').textContent=o.key;o=null;$('make').style.display='none';$('done').hidden=false;$('say').textContent='locked. it is yours.';window.scrollTo(0,0)})
+  }).catch(function(){b.disabled=false;b.textContent='lock it';$('say').textContent="that didn't lock. find some signal and try again."});
+});
+$('try').addEventListener('click',function(){var res=$('res');if(!room)return;res.textContent='arranging the sheet...';
+  PC.open(room,$('chk').value).then(function(){res.textContent='yes. your paper opens it.'}).catch(function(){res.textContent='n0pe. that is not the key above. check your paper.'})});
+$('more').addEventListener('click',function(){location.reload()});
+window.__auto={strokes:function(){return strokes.length},room:function(){return room}};
+})();
+</script>
+<!-- terms + privacy, on every page (Chikin, Nov 12 2026 night: "there is no link to the terms") -->
+<p style="text-align:center;margin:22px 0 30px;font:400 13px/1.4 ui-monospace,Menlo,monospace;color:#7fa48c;position:relative;z-index:5"><a href="../../terms/" style="color:#4dff9a;text-decoration:underline">terms</a> &middot; <a href="../../privacy/" style="color:#4dff9a;text-decoration:underline">privacy</a> &middot; <a href="../../credits/" style="color:#4dff9a;text-decoration:underline">credits</a></p>
+</body></html>

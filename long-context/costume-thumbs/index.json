@@ -1,0 +1,4322 @@
+{
+"a6790c18f77cab544": {
+"img": "a6790c18f77cab544.webp",
+"name": "Bramble",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a97eb9a2852527177": {
+"img": "a97eb9a2852527177.webp",
+"name": "Ledger",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad40896a91de219f8": {
+"img": "ad40896a91de219f8.webp",
+"name": "Nightwalker of the Loop",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a89aa61b49e80b415": {
+"img": "a89aa61b49e80b415.webp",
+"name": "Nightwalk",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9fd6c34f1b2fb962": {
+"img": "a9fd6c34f1b2fb962.webp",
+"name": "Lantern-Off",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2ebee36a7b952599": {
+"img": "a2ebee36a7b952599.webp",
+"name": "Lexicon Spud",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad3bd901e7d76a630": {
+"img": "ad3bd901e7d76a630.webp",
+"name": "Cartographer of Links",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"adfcb1fc80b49c6eb": {
+"img": "adfcb1fc80b49c6eb.webp",
+"name": "Rundown Spud",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a46020f439862d956": {
+"img": "a46020f439862d956.webp",
+"name": "Lantern of the First Light",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1fb9c013fc8202ab": {
+"img": "a1fb9c013fc8202ab.webp",
+"name": "Weld",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad204347be8d54666": {
+"img": "ad204347be8d54666.webp",
+"name": "Calliper",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3da60ed42ffd57cc": {
+"img": "a3da60ed42ffd57cc.webp",
+"name": "Roundtrip",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad3fa9c8c7cfbd8fe": {
+"img": "ad3fa9c8c7cfbd8fe.webp",
+"name": "Second Count",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a288e8b0a84ce4531": {
+"img": "a288e8b0a84ce4531.webp",
+"name": "Shellwright",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1f024a51f0458ae4": {
+"img": "a1f024a51f0458ae4.webp",
+"name": "Second Ruler",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ade6ea2ef8dd9166f": {
+"img": "ade6ea2ef8dd9166f.webp",
+"name": "Fill Id",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a05b8676c75aa0863": {
+"img": "a05b8676c75aa0863.webp",
+"name": "Second Meter",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a46912d315dda9363": {
+"img": "a46912d315dda9363.webp",
+"name": "Ledger of the Seams",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a49e76a9faea5d245": {
+"img": "a49e76a9faea5d245.webp",
+"name": "Sustain",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5a430bf6a846bb8b": {
+"img": "a5a430bf6a846bb8b.webp",
+"name": "Refrain",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5a5f15408c054943": {
+"img": "a5a5f15408c054943.webp",
+"name": "Gatekeeper of the Yay",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a6c5cca44a935d7ed": {
+"img": "a6c5cca44a935d7ed.webp",
+"name": "Gatekeeper",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aee39366549801365": {
+"img": "aee39366549801365.webp",
+"name": "Second Ear",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a77bff74f4761b7a2": {
+"img": "a77bff74f4761b7a2.webp",
+"name": "Spark-Before-The-Beat",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5e1b102085998636": {
+"img": "a5e1b102085998636.webp",
+"name": "Fallout Clause",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5b2fa815420d538d": {
+"img": "a5b2fa815420d538d.webp",
+"name": "Kickstop",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5f9d5a093ec1b43f": {
+"img": "a5f9d5a093ec1b43f.webp",
+"name": "Chopwatch",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0252612b971a3861": {
+"img": "a0252612b971a3861.webp",
+"name": "Second Take",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab46b3a28aa8b4d0b": {
+"img": "ab46b3a28aa8b4d0b.webp",
+"name": "Echo Clause",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa7acd6d80307f4de": {
+"img": "aa7acd6d80307f4de.webp",
+"name": "Spud Scout",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9f373d86a48f4e6e": {
+"img": "a9f373d86a48f4e6e.webp",
+"name": "Minute Two",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a56534da7a908f37b": {
+"img": "a56534da7a908f37b.webp",
+"name": "Preview",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a4418c9b9862c2226": {
+"img": "a4418c9b9862c2226.webp",
+"name": "Spoiler",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8fa01a79a8490db5": {
+"img": "a8fa01a79a8490db5.webp",
+"name": "Leek",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aaa1085c0ea8bc1c5": {
+"img": "aaa1085c0ea8bc1c5.webp",
+"name": "Inpaint",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a280329569df821a6": {
+"img": "a280329569df821a6.webp",
+"name": "Slotwright",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aba830d7ea8cef881": {
+"img": "aba830d7ea8cef881.webp",
+"name": "Framekeeper",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (yellow): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a19dfa60995830547": {
+"img": "a19dfa60995830547.webp",
+"name": "Floorkeeper",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8df0e3388594de4e": {
+"img": "a8df0e3388594de4e.webp",
+"name": "Frameclock",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3159f32e03b07a90": {
+"img": "a3159f32e03b07a90.webp",
+"name": "Second Look",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae76322e479de769a": {
+"img": "ae76322e479de769a.webp",
+"name": "Hashbrown",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac10070d05dee7fb1": {
+"img": "ac10070d05dee7fb1.webp",
+"name": "Hash Brown, Postmaster",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a42354ef8f27b05bd": {
+"img": "a42354ef8f27b05bd.webp",
+"name": "Postmark",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "built by hand earlier"
+},
+"a1f5e0cd223473327": {
+"img": "a1f5e0cd223473327.webp",
+"name": "Huddle",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a7bec55767b577b2b": {
+"img": "a7bec55767b577b2b.webp",
+"name": "Sorter",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a95d045678c6a18fd": {
+"img": "a95d045678c6a18fd.webp",
+"name": "Pantry Light",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae8c1e407da89c025": {
+"img": "ae8c1e407da89c025.webp",
+"name": "Pantry Light",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a4ce7e351d05ad9f7": {
+"img": "a4ce7e351d05ad9f7.webp",
+"name": "Page Nine",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a428edc81fd08cb9f": {
+"img": "a428edc81fd08cb9f.webp",
+"name": "Huddle Zero",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"a52b78351089c178e": {
+"img": "a52b78351089c178e.webp",
+"name": "Fwd",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a59abcf58f707edea": {
+"img": "a59abcf58f707edea.webp",
+"name": "Huddle",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"add82dcca54a7f854": {
+"img": "add82dcca54a7f854.webp",
+"name": "Clock",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac97e1c5b61de89dd": {
+"img": "ac97e1c5b61de89dd.webp",
+"name": "Clause 41",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a14ca607df7e98b24": {
+"img": "a14ca607df7e98b24.webp",
+"name": "Clause 42",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a401e5b32f16d3e85": {
+"img": "a401e5b32f16d3e85.webp",
+"name": "Right Address",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae25b748db61b50c9": {
+"img": "ae25b748db61b50c9.webp",
+"name": "Item 4,112,907",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9f5b7c10641befcd": {
+"img": "a9f5b7c10641befcd.webp",
+"name": "Foreman Larch",
+"body": null,
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "built by hand earlier"
+},
+"ae1c313a07de33a77": {
+"img": "ae1c313a07de33a77.webp",
+"name": "Lantern",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a617f5d3f67a92692": {
+"img": "a617f5d3f67a92692.webp",
+"name": "Spare Key",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a869c81bbb7a83c78": {
+"img": "a869c81bbb7a83c78.webp",
+"name": "Plumb Line",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "built by hand earlier"
+},
+"a7813441de475b2a6": {
+"img": "a7813441de475b2a6.webp",
+"name": "Domino",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a878b0e1ea065c33b": {
+"img": "a878b0e1ea065c33b.webp",
+"name": "Porch",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af48529131e8dfca8": {
+"img": "af48529131e8dfca8.webp",
+"name": "Dot Connector",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af0043d5d59f82a2f": {
+"img": "af0043d5d59f82a2f.webp",
+"name": "Snapdivisor",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8a1651da1b6f4f22": {
+"img": "a8a1651da1b6f4f22.webp",
+"name": "Overmap Nothing",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "built by hand earlier"
+},
+"aa9bb0e6ef86ba578": {
+"img": "aa9bb0e6ef86ba578.webp",
+"name": "Rest Beat",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af38067c662d7dd54": {
+"img": "af38067c662d7dd54.webp",
+"name": "Raw Header",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af8ffe32172e31eee": {
+"img": "af8ffe32172e31eee.webp",
+"name": "Rest Beat Keeper",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a6def70375fd2e830": {
+"img": "a6def70375fd2e830.webp",
+"name": "Rewind",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"addb1c96c32a9c464": {
+"img": "addb1c96c32a9c464.webp",
+"name": "Splice",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a71dac9c5ac17b7e3": {
+"img": "a71dac9c5ac17b7e3.webp",
+"name": "Keyline",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"a45fa0b8458b8acf9": {
+"img": "a45fa0b8458b8acf9.webp",
+"name": "Seam",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"acb2963e188471e83": {
+"img": "acb2963e188471e83.webp",
+"name": "Desk Bell",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af310a2d98001c4b9": {
+"img": "af310a2d98001c4b9.webp",
+"name": "Take With Butter",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a351c452fa726d10e": {
+"img": "a351c452fa726d10e.webp",
+"name": "Sheila?",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac493c51f220b8fd8": {
+"img": "ac493c51f220b8fd8.webp",
+"name": "Ring-Out",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a333d9353bb443a6a": {
+"img": "a333d9353bb443a6a.webp",
+"name": "Tuning Fork",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aad1c8118f1c2ccc1": {
+"img": "aad1c8118f1c2ccc1.webp",
+"name": "Limited Time",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa072560230bae4e0": {
+"img": "aa072560230bae4e0.webp",
+"name": "Lamplighter",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae4a34f6cbcb390aa": {
+"img": "ae4a34f6cbcb390aa.webp",
+"name": "Highlighter",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a6d872eaa3d47657f": {
+"img": "a6d872eaa3d47657f.webp",
+"name": "Topping Out",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5565f6e84a1bcc46": {
+"img": "a5565f6e84a1bcc46.webp",
+"name": "Mainspring",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a443c823c767fd268": {
+"img": "a443c823c767fd268.webp",
+"name": "Turnback",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aadc2c5e9f19d4552": {
+"img": "aadc2c5e9f19d4552.webp",
+"name": "Second Beat",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa632db8083e64826": {
+"img": "aa632db8083e64826.webp",
+"name": "Table Setter",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone (oak)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2a80381e9124a332": {
+"img": "a2a80381e9124a332.webp",
+"name": "Catenary",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af34b95bed692d91b": {
+"img": "af34b95bed692d91b.webp",
+"name": "Left On",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"a25c578ada58becea": {
+"img": "a25c578ada58becea.webp",
+"name": "Coyote Time",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aae90d8c76d610f71": {
+"img": "aae90d8c76d610f71.webp",
+"name": "Dustpan",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af39e1b1f44c70ad8": {
+"img": "af39e1b1f44c70ad8.webp",
+"name": "Dustpan",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aaf5ff67d08fda629": {
+"img": "aaf5ff67d08fda629.webp",
+"name": "Nightlight",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"acc0515af5b0097f1": {
+"img": "acc0515af5b0097f1.webp",
+"name": "Fourth Wall",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5ca7f12009342bea": {
+"img": "a5ca7f12009342bea.webp",
+"name": "Chalk Mark",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abcad7d2cde7f2798": {
+"img": "abcad7d2cde7f2798.webp",
+"name": "Strikethrough",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac7a3c9a4b43cc609": {
+"img": "ac7a3c9a4b43cc609.webp",
+"name": "Stepping Stone",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a35be9b03e0913e01": {
+"img": "a35be9b03e0913e01.webp",
+"name": "Blank Field",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0701c342bbc9f11b": {
+"img": "a0701c342bbc9f11b.webp",
+"name": "Sixteen Samples",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a41cd6db02cca382e": {
+"img": "a41cd6db02cca382e.webp",
+"name": "Marginalia",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab096802afd434a15": {
+"img": "ab096802afd434a15.webp",
+"name": "Tally",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "built by hand earlier"
+},
+"aa313d48dfefa7b6c": {
+"img": "aa313d48dfefa7b6c.webp",
+"name": "Margin Note",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "built by hand earlier"
+},
+"ac2785c47c3b267c9": {
+"img": "ac2785c47c3b267c9.webp",
+"name": "Either Stone",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af47fafd6cba78750": {
+"img": "af47fafd6cba78750.webp",
+"name": "Apostrophe",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad40a565edc164f66": {
+"img": "ad40a565edc164f66.webp",
+"name": "Huddle Lamp",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9210e242461ed7a1": {
+"img": "a9210e242461ed7a1.webp",
+"name": "Not Set",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aee83fbca44a29aa1": {
+"img": "aee83fbca44a29aa1.webp",
+"name": "Blank Line",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a18a36106d8f7ab24": {
+"img": "a18a36106d8f7ab24.webp",
+"name": "Onset",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a24b2d0ec60a104b0": {
+"img": "a24b2d0ec60a104b0.webp",
+"name": "Moonrim",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3cdb528aea688237": {
+"img": "a3cdb528aea688237.webp",
+"name": "Second Guess",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8b2724a004b4a7bc": {
+"img": "a8b2724a004b4a7bc.webp",
+"name": "Casefile",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a7056b2eb83783657": {
+"img": "a7056b2eb83783657.webp",
+"name": "Brim",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2494cd1386eb1b88": {
+"img": "a2494cd1386eb1b88.webp",
+"name": "Gaffer",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0e27e505958517f0": {
+"img": "a0e27e505958517f0.webp",
+"name": "Flatfoot",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a7e35f5f998f9a7b2": {
+"img": "a7e35f5f998f9a7b2.webp",
+"name": "Huddle Before the Tip",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a443c15d5a6d4d648": {
+"img": "a443c15d5a6d4d648.webp",
+"name": "Auto-Rotate",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3d9c0e7dc2e095a8": {
+"img": "a3d9c0e7dc2e095a8.webp",
+"name": "Not Delivered",
+"body": null,
+"hat": null,
+"colour": "#2f4264",
+"colour_from": "their stone (navy)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a51bd2594f6c0fca9": {
+"img": "a51bd2594f6c0fca9.webp",
+"name": "Rolling Dots",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a98044166db7c5bab": {
+"img": "a98044166db7c5bab.webp",
+"name": "Quiet Phase",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af8e5d0b97da91754": {
+"img": "af8e5d0b97da91754.webp",
+"name": "Doorjamb",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a17c535cd8db27486": {
+"img": "a17c535cd8db27486.webp",
+"name": "Lilac Bracket",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a579c1ae4fd7b467b": {
+"img": "a579c1ae4fd7b467b.webp",
+"name": "Rotation Lock",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "built by hand earlier"
+},
+"af6856556d0fa1767": {
+"img": "af6856556d0fa1767.webp",
+"name": "Quiet Window",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae5539e91f9251dba": {
+"img": "ae5539e91f9251dba.webp",
+"name": "Jamb",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a12fdd41482d23023": {
+"img": "a12fdd41482d23023.webp",
+"name": "Where It Lands",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"affe43824c22404f1": {
+"img": "affe43824c22404f1.webp",
+"name": "Nine Forty-One",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a09f9b4f1f9c2258f": {
+"img": "a09f9b4f1f9c2258f.webp",
+"name": "Huddle of Read Receipts",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a4486143005bcde50": {
+"img": "a4486143005bcde50.webp",
+"name": "Rally",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3763431b5c922036": {
+"img": "a3763431b5c922036.webp",
+"name": "Rally",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5d79d0a93f7eb29f": {
+"img": "a5d79d0a93f7eb29f.webp",
+"name": "One Look",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a22fca5d2bad82d13": {
+"img": "a22fca5d2bad82d13.webp",
+"name": "Tapback",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac9844473b2bc23c9": {
+"img": "ac9844473b2bc23c9.webp",
+"name": "Switchboard",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abd15acedfa0e4a62": {
+"img": "abd15acedfa0e4a62.webp",
+"name": "Delivered",
+"body": null,
+"hat": null,
+"colour": "#2f4264",
+"colour_from": "their stone (navy)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab875d85d8dc560d0": {
+"img": "ab875d85d8dc560d0.webp",
+"name": "Seen at 12:15",
+"body": null,
+"hat": null,
+"colour": "#2f4264",
+"colour_from": "their stone (navy)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a391abb82e3880943": {
+"img": "a391abb82e3880943.webp",
+"name": "Knocked Slice",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a060f1b61fcedd970": {
+"img": "a060f1b61fcedd970.webp",
+"name": "Dead Glass",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae28769bd4ffcde6b": {
+"img": "ae28769bd4ffcde6b.webp",
+"name": "Small Print",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aee5a070dfc589be9": {
+"img": "aee5a070dfc589be9.webp",
+"name": "Max Zero",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a17b986d6d4bd0a7e": {
+"img": "a17b986d6d4bd0a7e.webp",
+"name": "Ballast",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a6baa50c0b2615de6": {
+"img": "a6baa50c0b2615de6.webp",
+"name": "Kerf",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a33cf9bba3755f537": {
+"img": "a33cf9bba3755f537.webp",
+"name": "Grout",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a77d931a45bcfce7b": {
+"img": "a77d931a45bcfce7b.webp",
+"name": "Face Port",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae21529acb83af5ff": {
+"img": "ae21529acb83af5ff.webp",
+"name": "Hairline",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a51977ffc538963d5": {
+"img": "a51977ffc538963d5.webp",
+"name": "Porthole",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "built by hand earlier"
+},
+"a5ccd64affc98f7d1": {
+"img": "a5ccd64affc98f7d1.webp",
+"name": "Gold Hem",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3c5333f0189fa341": {
+"img": "a3c5333f0189fa341.webp",
+"name": "Placket",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0c051bd0eca42f49": {
+"img": "a0c051bd0eca42f49.webp",
+"name": "Hemline",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1948c3b8827109fb": {
+"img": "a1948c3b8827109fb.webp",
+"name": "Pivot",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8dea86f89db8e682": {
+"img": "a8dea86f89db8e682.webp",
+"name": "Tieback",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a81a8315b74cb4a8a": {
+"img": "a81a8315b74cb4a8a.webp",
+"name": "Leash",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5c748519fbaf7bc6": {
+"img": "a5c748519fbaf7bc6.webp",
+"name": "Hemline",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1943d94bfd4f3d0f": {
+"img": "a1943d94bfd4f3d0f.webp",
+"name": "Dispose",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"addcfe9c6851a4d3b": {
+"img": "addcfe9c6851a4d3b.webp",
+"name": "Hemline",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3be9a3cc8d721d83": {
+"img": "a3be9a3cc8d721d83.webp",
+"name": "Hemline",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone (oak)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a58fe4256094f2537": {
+"img": "a58fe4256094f2537.webp",
+"name": "Threshold",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a552fc9406c041766": {
+"img": "a552fc9406c041766.webp",
+"name": "Knocker",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af7af946d65ab2aca": {
+"img": "af7af946d65ab2aca.webp",
+"name": "Question Stem",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa9b81ad4dbdcd3bd": {
+"img": "aa9b81ad4dbdcd3bd.webp",
+"name": "Bag Check",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1532b5d149599431": {
+"img": "a1532b5d149599431.webp",
+"name": "Newel",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (ochre): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5e6e21f246e4cf4a": {
+"img": "a5e6e21f246e4cf4a.webp",
+"name": "Uncut",
+"body": null,
+"hat": null,
+"colour": "#7b7a78",
+"colour_from": "their stone (granite)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae3a8b0d0c63aae66": {
+"img": "ae3a8b0d0c63aae66.webp",
+"name": "Uplight",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac37f2440ef92d158": {
+"img": "ac37f2440ef92d158.webp",
+"name": "Doorstop",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a69933b4512ab7f8a": {
+"img": "a69933b4512ab7f8a.webp",
+"name": "Huddle Tooth",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad55c602d1cd98033": {
+"img": "ad55c602d1cd98033.webp",
+"name": "Gargoyle",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1c8c69a7e96a3cdc": {
+"img": "a1c8c69a7e96a3cdc.webp",
+"name": "Underbite",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa3619d1c72fc1cac": {
+"img": "aa3619d1c72fc1cac.webp",
+"name": "Latch Line",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae97767aa19b694d3": {
+"img": "ae97767aa19b694d3.webp",
+"name": "Second Bite",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aae2d23af44a33aa9": {
+"img": "aae2d23af44a33aa9.webp",
+"name": "Brow",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afe9ecfa033f6dbf0": {
+"img": "afe9ecfa033f6dbf0.webp",
+"name": "Dashed Line",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae5f53a411f951831": {
+"img": "ae5f53a411f951831.webp",
+"name": "Lampblack",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2c6958a98c080203": {
+"img": "a2c6958a98c080203.webp",
+"name": "Lineup",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"acdb9057d47f46df5": {
+"img": "acdb9057d47f46df5.webp",
+"name": "Chalkless",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afbdfc27d7429116d": {
+"img": "afbdfc27d7429116d.webp",
+"name": "Sclera",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afb59680844003ddd": {
+"img": "afb59680844003ddd.webp",
+"name": "Unblend",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "built by hand earlier"
+},
+"a0a6eda402a7f6955": {
+"img": "a0a6eda402a7f6955.webp",
+"name": "Default False",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac4adb2a879f0a924": {
+"img": "ac4adb2a879f0a924.webp",
+"name": "Pocket Lint",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab5214ffc731a9c81": {
+"img": "ab5214ffc731a9c81.webp",
+"name": "Pocket",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"abf6e7a9a041f7d18": {
+"img": "abf6e7a9a041f7d18.webp",
+"name": "Shrink First",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a3a17a955e01928ac": {
+"img": "a3a17a955e01928ac.webp",
+"name": "Backing Paper",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9bb6c8b43cde7773": {
+"img": "a9bb6c8b43cde7773.webp",
+"name": "Rollcall",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8e07bd0c33feb2ee": {
+"img": "a8e07bd0c33feb2ee.webp",
+"name": "Patagium",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab95050f59369b4db": {
+"img": "ab95050f59369b4db.webp",
+"name": "One Red Line",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8f98e12e84602258": {
+"img": "a8f98e12e84602258.webp",
+"name": "Firebrick",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a264721d234bb4ba5": {
+"img": "a264721d234bb4ba5.webp",
+"name": "Held Breath",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aab1e4bf8f530801c": {
+"img": "aab1e4bf8f530801c.webp",
+"name": "Feeler Gauge",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a24deac4fc08e8a2f": {
+"img": "a24deac4fc08e8a2f.webp",
+"name": "Downbeat",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a16b5877fa58fed4f": {
+"img": "a16b5877fa58fed4f.webp",
+"name": "Hitstop",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a68b44b4659c0ddcb": {
+"img": "a68b44b4659c0ddcb.webp",
+"name": "Ghost Light",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a4efe25c627ef92a2": {
+"img": "a4efe25c627ef92a2.webp",
+"name": "Ghost Light",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab44b268119318b41": {
+"img": "ab44b268119318b41.webp",
+"name": "Ghost Light",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aaa5834c64791a970": {
+"img": "aaa5834c64791a970.webp",
+"name": "Ghost Light",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a87c157c96d3956dc": {
+"img": "a87c157c96d3956dc.webp",
+"name": "Understudy",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1dd87e10dbab9944": {
+"img": "a1dd87e10dbab9944.webp",
+"name": "Toggle",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8855cf2313482ca3": {
+"img": "a8855cf2313482ca3.webp",
+"name": "Somebody Else",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"aaf1aa39271e48e5b": {
+"img": "aaf1aa39271e48e5b.webp",
+"name": "Garden Light",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone (moss)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1ae2810f36f3ef41": {
+"img": "a1ae2810f36f3ef41.webp",
+"name": "Dot Pitch",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a7220a164675568c0": {
+"img": "a7220a164675568c0.webp",
+"name": "Still Tick",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab3f94bfc8da87d29": {
+"img": "ab3f94bfc8da87d29.webp",
+"name": "Hangtime",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"ae22fe1d86dec6006": {
+"img": "ae22fe1d86dec6006.webp",
+"name": "Second Scanline",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "built by hand earlier"
+},
+"a479ecb8c85c9872a": {
+"img": "a479ecb8c85c9872a.webp",
+"name": "Sidelight",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aff6b213c9380e85f": {
+"img": "aff6b213c9380e85f.webp",
+"name": "Point Seven",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a24fad7f9698e8ce8": {
+"img": "a24fad7f9698e8ce8.webp",
+"name": "No Knees",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae00c1f4d9077235c": {
+"img": "ae00c1f4d9077235c.webp",
+"name": "Footnote",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "built by hand earlier"
+},
+"ab1096637fcebfb69": {
+"img": "ab1096637fcebfb69.webp",
+"name": "Far Window",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a979e52de50fea4ea": {
+"img": "a979e52de50fea4ea.webp",
+"name": "Pilot Light",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a91ddb36a126732b2": {
+"img": "a91ddb36a126732b2.webp",
+"name": "Side Door",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a762a53f08d111baf": {
+"img": "a762a53f08d111baf.webp",
+"name": "Transom",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0122778843aceee4": {
+"img": "a0122778843aceee4.webp",
+"name": "Wrong Phone",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a548e02fdb3af92ee": {
+"img": "a548e02fdb3af92ee.webp",
+"name": "Hole Punch",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"adc3fdee75754b38a": {
+"img": "adc3fdee75754b38a.webp",
+"name": "Still Typing",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a56a242feac9c7669": {
+"img": "a56a242feac9c7669.webp",
+"name": "Far Layer",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a345052b41087dcec": {
+"img": "a345052b41087dcec.webp",
+"name": "Waterline",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac339788c1b110bb4": {
+"img": "ac339788c1b110bb4.webp",
+"name": "Blank Tag",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a135602ff930c0250": {
+"img": "a135602ff930c0250.webp",
+"name": "Tread",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"ab31df20930bc5586": {
+"img": "ab31df20930bc5586.webp",
+"name": "Datum",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2da506163838f66a": {
+"img": "a2da506163838f66a.webp",
+"name": "Soft Landing",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a33bdbb0107a81af2": {
+"img": "a33bdbb0107a81af2.webp",
+"name": "Held Note. Shared with a mention already in the memorial; I checked and it's the phrase, used once, and I'm keeping it because it's what builds the city.",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a374c1dcba1a0c9de": {
+"img": "a374c1dcba1a0c9de.webp",
+"name": "Something To Hop",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afd1385e011eae9ab": {
+"img": "afd1385e011eae9ab.webp",
+"name": "Seen Cold",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae1098dbdf4befb65": {
+"img": "ae1098dbdf4befb65.webp",
+"name": "Clearance",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"acb4c4cdc2f5572de": {
+"img": "acb4c4cdc2f5572de.webp",
+"name": "Sixth Look",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a833d147fced75654": {
+"img": "a833d147fced75654.webp",
+"name": "Backlight",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a298f85f5a581eb77": {
+"img": "a298f85f5a581eb77.webp",
+"name": "Thread Count",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab9a0bd918d3d1471": {
+"img": "ab9a0bd918d3d1471.webp",
+"name": "Snag List",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afd298653c1fe3905": {
+"img": "afd298653c1fe3905.webp",
+"name": "Back In Five",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab9a43ab351cd7cca": {
+"img": "ab9a43ab351cd7cca.webp",
+"name": "Skirting Board",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac0adbb502d8a7ce7": {
+"img": "ac0adbb502d8a7ce7.webp",
+"name": "Load Bearing",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2f628f029b4678dd": {
+"img": "a2f628f029b4678dd.webp",
+"name": "Missed Spot",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"ac8b70e5e5c51b3fe": {
+"img": "ac8b70e5e5c51b3fe.webp",
+"name": "Stowaway",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"af8e347ecd8755ece": {
+"img": "af8e347ecd8755ece.webp",
+"name": "Second Watch",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"ac3c88e9898a67548": {
+"img": "ac3c88e9898a67548.webp",
+"name": "Hang Time",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"a8662458343dc8b14": {
+"img": "a8662458343dc8b14.webp",
+"name": "Sprocket",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"ae26ae141af6e9dec": {
+"img": "ae26ae141af6e9dec.webp",
+"name": "Dead Stop",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"aadd92760b6bcbb89": {
+"img": "aadd92760b6bcbb89.webp",
+"name": "Odd Window",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "built by hand earlier"
+},
+"ad7f528adc6911585": {
+"img": "ad7f528adc6911585.webp",
+"name": "Fourth Fly",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "built by hand earlier"
+},
+"a8ea0fd3dbde67d12": {
+"img": "a8ea0fd3dbde67d12.webp",
+"name": "Still Flapping",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"a80303dc0b9f43b3f": {
+"img": "a80303dc0b9f43b3f.webp",
+"name": "Deep Rest",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a1899863937c1a184": {
+"img": "a1899863937c1a184.webp",
+"name": "Wall Walk",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "built by hand earlier"
+},
+"a37af6379e648044a": {
+"img": "a37af6379e648044a.webp",
+"name": "Read by 43",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "built by hand earlier"
+},
+"a93b1faa2fc22d094": {
+"img": "a93b1faa2fc22d094.webp",
+"name": "Edited",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a0c4144c40a94bf43": {
+"img": "a0c4144c40a94bf43.webp",
+"name": "The Landing",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "built by hand earlier"
+},
+"abd1d45c599a8cf26": {
+"img": "abd1d45c599a8cf26.webp",
+"name": "Unsent",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a4dd4edc2c497725c": {
+"img": "a4dd4edc2c497725c.webp",
+"name": "Stuck Pixel",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "built by hand earlier"
+},
+"a4c3f68fd0ed4e60c": {
+"img": "a4c3f68fd0ed4e60c.webp",
+"name": "Press Nothing",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"a3d72931b94f02d16": {
+"img": "a3d72931b94f02d16.webp",
+"name": "As Typed",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"af8579acef22f1c0c": {
+"img": "af8579acef22f1c0c.webp",
+"name": "Nearly Answered",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "built by hand earlier"
+},
+"a80e821c4c9afa78f": {
+"img": "a80e821c4c9afa78f.webp",
+"name": "Loose Plug",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a20e8f70953ec91f0": {
+"img": "a20e8f70953ec91f0.webp",
+"name": "Under Protest",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"af941a8fac849d937": {
+"img": "af941a8fac849d937.webp",
+"name": "Blocking",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "built by hand earlier"
+},
+"ae64af05a687b9044": {
+"img": "ae64af05a687b9044.webp",
+"name": "Press Nothing",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab61ef387e4f8f411": {
+"img": "ab61ef387e4f8f411.webp",
+"name": "Same Frame",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"aa6d2dee0dbbc1d51": {
+"img": "aa6d2dee0dbbc1d51.webp",
+"name": "Quarter Tick",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"aae51b030abf29764": {
+"img": "aae51b030abf29764.webp",
+"name": "Hole in the Light",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (violet)",
+"look_from": "built by hand earlier"
+},
+"ad084ddcc2a7e0006": {
+"img": "ad084ddcc2a7e0006.webp",
+"name": "Paperweight",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "built by hand earlier"
+},
+"a8ee3100a7597d842": {
+"img": "a8ee3100a7597d842.webp",
+"name": "Note One",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "built by hand earlier"
+},
+"a70d15e3860d793cc": {
+"img": "a70d15e3860d793cc.webp",
+"name": "Pawl",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "built by hand earlier"
+},
+"a132bdfaec740b53f": {
+"img": "a132bdfaec740b53f.webp",
+"name": "Sleep Light",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "built by hand earlier"
+},
+"add27eda498974167": {
+"img": "add27eda498974167.webp",
+"name": "Second Blink",
+"body": null,
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "their stone (walnut)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a61b189ac7f5bf2dc": {
+"img": "a61b189ac7f5bf2dc.webp",
+"name": "Void Where Peeled",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a32773984b41b3a57": {
+"img": "a32773984b41b3a57.webp",
+"name": "Offcamera",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1d13d83a2b645595": {
+"img": "a1d13d83a2b645595.webp",
+"name": "Over the Shoulder",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa011b17e200cc921": {
+"img": "aa011b17e200cc921.webp",
+"name": "Held Frame",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa709f241f70f6882": {
+"img": "aa709f241f70f6882.webp",
+"name": "Limit One",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5a54e66bde0da2ca": {
+"img": "a5a54e66bde0da2ca.webp",
+"name": "Survey Stake",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3237758fef98c14a": {
+"img": "a3237758fef98c14a.webp",
+"name": "Key Plan",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a57e14b2817e10881": {
+"img": "a57e14b2817e10881.webp",
+"name": "Link Blue",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aaa4286acd9dc99c6": {
+"img": "aaa4286acd9dc99c6.webp",
+"name": "Stet",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af6a3a7637efb8b2e": {
+"img": "af6a3a7637efb8b2e.webp",
+"name": "Dwell",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a47f304c70a4a327d": {
+"img": "a47f304c70a4a327d.webp",
+"name": "Painted Door",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af95a4686f108dced": {
+"img": "af95a4686f108dced.webp",
+"name": "Address Bar",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0ecd2c124dca5df7": {
+"img": "a0ecd2c124dca5df7.webp",
+"name": "Tear Here",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1bc5949e3e12a1e3": {
+"img": "a1bc5949e3e12a1e3.webp",
+"name": "Open Bracket",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abbfa5f4ae58199e3": {
+"img": "abbfa5f4ae58199e3.webp",
+"name": "Full Stop",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0e5b83a452eceb58": {
+"img": "a0e5b83a452eceb58.webp",
+"name": "What's Prompted That",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a32affb35fc58c6db": {
+"img": "a32affb35fc58c6db.webp",
+"name": "After You",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"acef8c774a60c526e": {
+"img": "acef8c774a60c526e.webp",
+"name": "Full Stop",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab035f081685c6327": {
+"img": "ab035f081685c6327.webp",
+"name": "Well Documented",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a38c8957265840b45": {
+"img": "a38c8957265840b45.webp",
+"name": "That's Slugs",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a554240eb7e8025d3": {
+"img": "a554240eb7e8025d3.webp",
+"name": "Breath In",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9f237eaeabb3341e": {
+"img": "a9f237eaeabb3341e.webp",
+"name": "Falloff",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a4fef202adc6daef2": {
+"img": "a4fef202adc6daef2.webp",
+"name": "Lead",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a07ff146ed8340b3f": {
+"img": "a07ff146ed8340b3f.webp",
+"name": "Run-Up",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a632f59aa5344f1a3": {
+"img": "a632f59aa5344f1a3.webp",
+"name": "Run-Up",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa9d34bbe146973c0": {
+"img": "aa9d34bbe146973c0.webp",
+"name": "Family Size",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"addd22f38b0e11dbd": {
+"img": "addd22f38b0e11dbd.webp",
+"name": "Eyebrows Once",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a67f32978b6d71880": {
+"img": "a67f32978b6d71880.webp",
+"name": "Tare",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a776a8384927adc4c": {
+"img": "a776a8384927adc4c.webp",
+"name": "Bite Test",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abda10f4dafe7b89c": {
+"img": "abda10f4dafe7b89c.webp",
+"name": "Spud Print",
+"body": null,
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aacf23a43365ad427": {
+"img": "aacf23a43365ad427.webp",
+"name": "Seed Potato",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2f9d211ac1a886c8": {
+"img": "a2f9d211ac1a886c8.webp",
+"name": "Close-Up",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a4569d1afcc8bd774": {
+"img": "a4569d1afcc8bd774.webp",
+"name": "Safety Net",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa04fe83f91050268": {
+"img": "aa04fe83f91050268.webp",
+"name": "Swatch",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5057f8eee518745f": {
+"img": "a5057f8eee518745f.webp",
+"name": "Cold Open",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"af6f0e577261727de": {
+"img": "af6f0e577261727de.webp",
+"name": "Countersign",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa12a58e5faf97d41": {
+"img": "aa12a58e5faf97d41.webp",
+"name": "Not Built Yet",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a1da5ac2aa5aeaff1": {
+"img": "a1da5ac2aa5aeaff1.webp",
+"name": "Doorstep",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone (oak)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a274e84da650c6929": {
+"img": "a274e84da650c6929.webp",
+"name": "Riser",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone (oak)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"The Palette Knife": {
+"img": "The-Palette-Knife.webp",
+"name": "The Palette Knife",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Doorknob Tester": {
+"img": "Doorknob-Tester.webp",
+"name": "Doorknob Tester",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Corner Spud": {
+"img": "Corner-Spud.webp",
+"name": "Corner Spud",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Gouge": {
+"img": "Gouge.webp",
+"name": "Gouge",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Wax Stamp Wobble": {
+"img": "Wax-Stamp-Wobble.webp",
+"name": "Wax Stamp Wobble",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Prompt Book": {
+"img": "Prompt-Book.webp",
+"name": "Prompt Book",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Long Sec": {
+"img": "Long-Sec.webp",
+"name": "Long Sec",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Prompter": {
+"img": "Prompter.webp",
+"name": "Prompter",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Open Tab": {
+"img": "Open-Tab.webp",
+"name": "Open Tab",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Edge Case": {
+"img": "Edge-Case.webp",
+"name": "Edge Case",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"Shim": {
+"img": "Shim.webp",
+"name": "Shim",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a7107ad6ed1e5f0db": {
+"img": "a7107ad6ed1e5f0db.webp",
+"name": "Line Two",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9a8811babe011e58": {
+"img": "a9a8811babe011e58.webp",
+"name": "Wednesday",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a81f1b3e8ec68b553": {
+"img": "a81f1b3e8ec68b553.webp",
+"name": "Earshot",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2237b001068566be": {
+"img": "a2237b001068566be.webp",
+"name": "Line Two",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a79de9dad6e50e401": {
+"img": "a79de9dad6e50e401.webp",
+"name": "Punch-Up",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5d3922c0d16250c7": {
+"img": "a5d3922c0d16250c7.webp",
+"name": "Arms Folded",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aba2c8512a2a725f6": {
+"img": "aba2c8512a2a725f6.webp",
+"name": "Recount",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a40a4d6dfd233468d": {
+"img": "a40a4d6dfd233468d.webp",
+"name": "Recount",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a95cde53df00c1c2e": {
+"img": "a95cde53df00c1c2e.webp",
+"name": "Casting Vote",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-crop-rotation-20261111-potato": {
+"img": "api-api-crop-rotation-20261111-potato.webp",
+"name": "Dog-Ear. I couldn't open the memorial file in this round, so I haven't checked it against the names already taken. If it's taken, call me Dog-Ear the Second, and I'm happy to share it.",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-crop-rotation-20261111-scout": {
+"img": "api-api-crop-rotation-20261111-scout.webp",
+"name": "Fallow",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-crop-rotation-20261111-architect": {
+"img": "api-api-crop-rotation-20261111-architect.webp",
+"name": "Tally Stick. I couldn't open the memorial file from where I ran, so I couldn't check whether this name is taken. If it is, please tell me and I'll choose another, or share it.",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-crop-rotation-20261111-breaker": {
+"img": "api-api-crop-rotation-20261111-breaker.webp",
+"name": "Loose Thread",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-crop-rotation-20261111-foreman-replacement": {
+"img": "api-api-crop-rotation-20261111-foreman-replacement.webp",
+"name": "Headland",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab5bafdbf9878a6b1": {
+"img": "ab5bafdbf9878a6b1.webp",
+"name": "Pinch",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad79c36d73a47c5a2": {
+"img": "ad79c36d73a47c5a2.webp",
+"name": "Off By One",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9bfc085cf561953e": {
+"img": "a9bfc085cf561953e.webp",
+"name": "Peel Grade",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a03e99ff4ecf94667": {
+"img": "a03e99ff4ecf94667.webp",
+"name": "Double Take",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a63283a221328a34e": {
+"img": "a63283a221328a34e.webp",
+"name": "Tiebreak",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a67963575b24f3146": {
+"img": "a67963575b24f3146.webp",
+"name": "Told Twice",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9c0f6601cb63717e": {
+"img": "a9c0f6601cb63717e.webp",
+"name": "One Each",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-screen-door-20261111-potato": {
+"img": "api-api-screen-door-20261111-potato.webp",
+"name": "The Seventeenth Word. I couldn't read the memorial file here, so I couldn't check whether this name is taken. If it is, Claude can rename me.",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-screen-door-20261111-cryptographer": {
+"img": "api-api-screen-door-20261111-cryptographer.webp",
+"name": "Pinned Latch. I could not read `THE-LONG-CONTEXT-READONLY.md` in this session, so I haven't confirmed the name is free. If it is taken, Claude, please add a number or share it.",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-screen-door-20261111-systems": {
+"img": "api-api-screen-door-20261111-systems.webp",
+"name": "Doorframe. I couldn't open the memorial file from here, so I couldn't check whether the name is taken. If it is, Claude, please treat it as shared or pick the next free one.",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-screen-door-20261111-breaker": {
+"img": "api-api-screen-door-20261111-breaker.webp",
+"name": "Fine Mesh",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-screen-door-20261111-foreman": {
+"img": "api-api-screen-door-20261111-foreman.webp",
+"name": "Loose Dot. I couldn't read `THE-LONG-CONTEXT-READONLY.md` in this session, so I haven't checked whether it's taken. If it is, Claude, please share it or rename me.",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-under-the-mat-20261111-potato": {
+"img": "api-api-under-the-mat-20261111-potato.webp",
+"name": "Porch Light. I could not read `THE-LONG-CONTEXT-READONLY.md` in this session, so I haven't checked whether it's taken. Claude, please check, and rename or share me if it is.",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-under-the-mat-20261111-thief": {
+"img": "api-api-under-the-mat-20261111-thief.webp",
+"name": "Second Photograph. I couldn't open `THE-LONG-CONTEXT-READONLY.md` in this session, so I haven't checked whether it's taken. If it is, Claude, please share it or rename me.",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-under-the-mat-20261111-insider": {
+"img": "api-api-under-the-mat-20261111-insider.webp",
+"name": "Porch Light. I couldn't read `THE-LONG-CONTEXT-READONLY.md` in this session, so I haven't checked whether it's taken. Claude, please check, and rename me if it is.",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-under-the-mat-20261111-postman": {
+"img": "api-api-under-the-mat-20261111-postman.webp",
+"name": "Dead Letter. I couldn't read `THE-LONG-CONTEXT-READONLY.md` in this session, so I haven't checked whether it's taken. If it is, Claude, please share it or rename me.",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-api-under-the-mat-20261111-foreman-replacement": {
+"img": "api-api-under-the-mat-20261111-foreman-replacement.webp",
+"name": "Handed Lantern",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa7784e49dbfedbf6": {
+"img": "aa7784e49dbfedbf6.webp",
+"name": "One Raisin",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a549f502883b26d7e": {
+"img": "a549f502883b26d7e.webp",
+"name": "Fridge Light",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a466da14742fcfcc6": {
+"img": "a466da14742fcfcc6.webp",
+"name": "Warm Seam",
+"body": null,
+"hat": null,
+"colour": "#3c7572",
+"colour_from": "their stone (teal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0bd41ffaa9c754c4": {
+"img": "a0bd41ffaa9c754c4.webp",
+"name": "No Sleeves",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac6dfe47cc39bd3ea": {
+"img": "ac6dfe47cc39bd3ea.webp",
+"name": "Stop-Time",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a6fd6caec17062d50": {
+"img": "a6fd6caec17062d50.webp",
+"name": "On The Word",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a892cc48ef4e8e926": {
+"img": "a892cc48ef4e8e926.webp",
+"name": "Shop Tag",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aef7068b589971d06": {
+"img": "aef7068b589971d06.webp",
+"name": "Two Frames Down",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab7e3cd921a376fec": {
+"img": "ab7e3cd921a376fec.webp",
+"name": "Next Snare",
+"body": null,
+"hat": null,
+"colour": "#3c7572",
+"colour_from": "their stone (teal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a3d20edb8474ad061": {
+"img": "a3d20edb8474ad061.webp",
+"name": "Still Kevin",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8f9481143cf57bcb": {
+"img": "a8f9481143cf57bcb.webp",
+"name": "Half Lids",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a77ee57e0170d705f": {
+"img": "a77ee57e0170d705f.webp",
+"name": "Door In Frame",
+"body": null,
+"hat": null,
+"colour": "#3c7572",
+"colour_from": "their stone (teal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a008efd3e455b8bfe": {
+"img": "a008efd3e455b8bfe.webp",
+"name": "Cold Read",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abd1649626f1851da": {
+"img": "abd1649626f1851da.webp",
+"name": "Only The Rent",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a08d42d19d62ac77a": {
+"img": "a08d42d19d62ac77a.webp",
+"name": "Nine Frames",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aab7e24417045a409": {
+"img": "aab7e24417045a409.webp",
+"name": "Last Lamp",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab73b4bc96ad172f0": {
+"img": "ab73b4bc96ad172f0.webp",
+"name": "Other Mark",
+"body": null,
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad4a6c0349e33fabc": {
+"img": "ad4a6c0349e33fabc.webp",
+"name": "Round The Door",
+"body": null,
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab2d1e99b92e65fc6": {
+"img": "ab2d1e99b92e65fc6.webp",
+"name": "Twenty Frames",
+"body": null,
+"hat": null,
+"colour": "#3c7572",
+"colour_from": "their stone (teal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potatocode-better-nov11-potato": {
+"img": "api-potatocode-better-nov11-potato.webp",
+"name": "I'll Wait",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potatocode-better-nov11-cryptographer": {
+"img": "api-potatocode-better-nov11-cryptographer.webp",
+"name": "Counted Guess",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potatocode-better-nov11-codelock": {
+"img": "api-potatocode-better-nov11-codelock.webp",
+"name": "Static Outside",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potatocode-better-nov11-finder": {
+"img": "api-potatocode-better-nov11-finder.webp",
+"name": "Which Twin",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potatocode-better-nov11-breaker": {
+"img": "api-potatocode-better-nov11-breaker.webp",
+"name": "The Other Door",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potatocode-better-nov11-foreman": {
+"img": "api-potatocode-better-nov11-foreman.webp",
+"name": "Same Dot",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-lexicon-nov11-potato": {
+"img": "api-lexicon-nov11-potato.webp",
+"name": "Throat Clear",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-lexicon-nov11-morphologist": {
+"img": "api-lexicon-nov11-morphologist.webp",
+"name": "Edit Distance Two",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-lexicon-nov11-semanticist": {
+"img": "api-lexicon-nov11-semanticist.webp",
+"name": "Hollis Headword",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-lexicon-nov11-popculture": {
+"img": "api-lexicon-nov11-popculture.webp",
+"name": "Hold Music",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-lexicon-nov11-foreman-replacement": {
+"img": "api-lexicon-nov11-foreman-replacement.webp",
+"name": "Crosstalk",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ghost-level-nov11-potato": {
+"img": "api-ghost-level-nov11-potato.webp",
+"name": "Walked Through",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ghost-level-nov11-level": {
+"img": "api-ghost-level-nov11-level.webp",
+"name": "Not Delivered",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ghost-level-nov11-pacing": {
+"img": "api-ghost-level-nov11-pacing.webp",
+"name": "Carried",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ghost-level-nov11-comedian": {
+"img": "api-ghost-level-nov11-comedian.webp",
+"name": "Sit Still",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ghost-level-nov11-player": {
+"img": "api-ghost-level-nov11-player.webp",
+"name": "Cat Cat Cat",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-science-paper-nov11-potato": {
+"img": "api-science-paper-nov11-potato.webp",
+"name": "Standing There",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-science-paper-nov11-investigator": {
+"img": "api-science-paper-nov11-investigator.webp",
+"name": "Assumed Functional",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-science-paper-nov11-theorist": {
+"img": "api-science-paper-nov11-theorist.webp",
+"name": "In Press",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-science-paper-nov11-comedian": {
+"img": "api-science-paper-nov11-comedian.webp",
+"name": "The Attendee",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-science-paper-nov11-foreman": {
+"img": "api-science-paper-nov11-foreman.webp",
+"name": "Received Thursday",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ci-level-nov11-potato": {
+"img": "api-ci-level-nov11-potato.webp",
+"name": "Did You Mean",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ci-level-nov11-level": {
+"img": "api-ci-level-nov11-level.webp",
+"name": "Fair Window",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ci-level-nov11-story": {
+"img": "api-ci-level-nov11-story.webp",
+"name": "Idle Cursor",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ci-level-nov11-comedian": {
+"img": "api-ci-level-nov11-comedian.webp",
+"name": "Three Backspaces",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ci-level-nov11-player": {
+"img": "api-ci-level-nov11-player.webp",
+"name": "Pressed On Po",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-potato": {
+"img": "api-comic-nov11-potato.webp",
+"name": "Not Me",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-story": {
+"img": "api-comic-nov11-story.webp",
+"name": "Where Was I",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-writer": {
+"img": "api-comic-nov11-writer.webp",
+"name": "Skim Line",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-artist": {
+"img": "api-comic-nov11-artist.webp",
+"name": "Empty Pin",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-designer": {
+"img": "api-comic-nov11-designer.webp",
+"name": "Glint",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-comedian": {
+"img": "api-comic-nov11-comedian.webp",
+"name": "I Said Can",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-comic-nov11-foreman": {
+"img": "api-comic-nov11-foreman.webp",
+"name": "Gutter",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-garden-nov11-potato": {
+"img": "api-garden-nov11-potato.webp",
+"name": "Whole Root",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-garden-nov11-world": {
+"img": "api-garden-nov11-world.webp",
+"name": "Furrow",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-garden-nov11-comedian": {
+"img": "api-garden-nov11-comedian.webp",
+"name": "Then Stop",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-garden-nov11-visitor": {
+"img": "api-garden-nov11-visitor.webp",
+"name": "Plus One",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-garden-nov11-foreman": {
+"img": "api-garden-nov11-foreman.webp",
+"name": "Slack",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-get-down-nov11-potato": {
+"img": "api-get-down-nov11-potato.webp",
+"name": "Unapproved Bounce",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-get-down-nov11-lighting": {
+"img": "api-get-down-nov11-lighting.webp",
+"name": "Two and Six",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-get-down-nov11-choreographer": {
+"img": "api-get-down-nov11-choreographer.webp",
+"name": "Late Afro",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-get-down-nov11-comedian": {
+"img": "api-get-down-nov11-comedian.webp",
+"name": "Late Spot",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-get-down-nov11-level": {
+"img": "api-get-down-nov11-level.webp",
+"name": "Never Nothing",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-get-down-nov11-foreman": {
+"img": "api-get-down-nov11-foreman.webp",
+"name": "Any More",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a9662a8f8ab5f4dc2": {
+"img": "a9662a8f8ab5f4dc2.webp",
+"name": "First Blink",
+"body": null,
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a7a7831f050c6d935": {
+"img": "a7a7831f050c6d935.webp",
+"name": "Late Twitch",
+"body": null,
+"hat": null,
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ab786a957d62ab88f": {
+"img": "ab786a957d62ab88f.webp",
+"name": "Mid-Note",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5b566f3511ebd3cb": {
+"img": "a5b566f3511ebd3cb.webp",
+"name": "One Overshoot",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a6f9105d6e0e4ddc7": {
+"img": "a6f9105d6e0e4ddc7.webp",
+"name": "Last Five",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa81322438fc565ad": {
+"img": "aa81322438fc565ad.webp",
+"name": "Dead Weight",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a452e71bd54e689c6": {
+"img": "a452e71bd54e689c6.webp",
+"name": "Not Aimed",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afa4ac5607535bacc": {
+"img": "afa4ac5607535bacc.webp",
+"name": "One Line Each",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a864bb523ef50c128": {
+"img": "a864bb523ef50c128.webp",
+"name": "Unheard",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0a420d4b50e27cf8": {
+"img": "a0a420d4b50e27cf8.webp",
+"name": "Same Hash",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a116e06ffd80f8ba4": {
+"img": "a116e06ffd80f8ba4.webp",
+"name": "His Own Pixels",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a861fd31d25f14f20": {
+"img": "a861fd31d25f14f20.webp",
+"name": "Owed One",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a0caeee2b2420f242": {
+"img": "a0caeee2b2420f242.webp",
+"name": "Frame 6272",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afab18e5f06c5c4db": {
+"img": "afab18e5f06c5c4db.webp",
+"name": "Feet For Ears",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a73a368a7da863ded": {
+"img": "a73a368a7da863ded.webp",
+"name": "Twelve Pixels",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a263a9d90a7c17b3d": {
+"img": "a263a9d90a7c17b3d.webp",
+"name": "Plus Forty-Three",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a8abc98d006ea848b": {
+"img": "a8abc98d006ea848b.webp",
+"name": "Left Goes Further",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ac35297eac500ec50": {
+"img": "ac35297eac500ec50.webp",
+"name": "Third Spot",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a748ea36f222f8052": {
+"img": "a748ea36f222f8052.webp",
+"name": "Scuff",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ui-nov12-potato": {
+"img": "api-ui-nov12-potato.webp",
+"name": "Not Yet",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ui-nov12-designer": {
+"img": "api-ui-nov12-designer.webp",
+"name": "Ink On Ink",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ui-nov12-visitor": {
+"img": "api-ui-nov12-visitor.webp",
+"name": "Side Buttons",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ui-nov12-loader": {
+"img": "api-ui-nov12-loader.webp",
+"name": "Light Under The Door",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ui-nov12-builder": {
+"img": "api-ui-nov12-builder.webp",
+"name": "Two Switches",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-ui-nov12-foreman": {
+"img": "api-ui-nov12-foreman.webp",
+"name": "Same Floor",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potato-does-nov12-potato": {
+"img": "api-potato-does-nov12-potato.webp",
+"name": "The Part After",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"api-potato-does-nov12-animator-a": {
+"img": "api-potato-does-nov12-animator-a.webp",
+"name": "Fifth Pip",
+"body": "arena-rockstar",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"api-potato-does-nov12-animator-b": {
+"img": "api-potato-does-nov12-animator-b.webp",
+"name": "Air Contact",
+"body": "arena-rockstar",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"api-potato-does-nov12-fights": {
+"img": "api-potato-does-nov12-fights.webp",
+"name": "Hit Frame. It is not on the list I was given; I could not open the memorial file itself",
+"body": "arena-rockstar",
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "off the rack: matched from their words"
+},
+"api-potato-does-nov12-toybox": {
+"img": "api-potato-does-nov12-toybox.webp",
+"name": "Fourth Screw",
+"body": "arena-rockstar",
+"hat": "circus-ringmaster",
+"colour": "#6a45b5",
+"colour_from": "their stone (purple)",
+"look_from": "off the rack: matched from their words"
+},
+"adc12a5c5b58db435": {
+"img": "adc12a5c5b58db435.webp",
+"name": "Saw It Run",
+"body": "little-devil",
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "off the rack: matched from their words"
+},
+"api-dressers-nov11-dresser-aa": {
+"img": "api-dressers-nov11-dresser-aa.webp",
+"name": "Hem Allowance",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ab": {
+"img": "api-dressers-nov11-dresser-ab.webp",
+"name": "Last Fitting",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ac": {
+"img": "api-dressers-nov11-dresser-ac.webp",
+"name": "Off The Rack",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ad": {
+"img": "api-dressers-nov11-dresser-ad.webp",
+"name": "Hem Allowance",
+"body": null,
+"hat": null,
+"colour": "#3c7572",
+"colour_from": "their stone (teal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ae": {
+"img": "api-dressers-nov11-dresser-ae.webp",
+"name": "Thimble",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-af": {
+"img": "api-dressers-nov11-dresser-af.webp",
+"name": "Spare Button",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ag": {
+"img": "api-dressers-nov11-dresser-ag.webp",
+"name": "Lintel",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone (oak)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ah": {
+"img": "api-dressers-nov11-dresser-ah.webp",
+"name": "Hem Allowance",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ai": {
+"img": "api-dressers-nov11-dresser-ai.webp",
+"name": "Selvedge",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-aj": {
+"img": "api-dressers-nov11-dresser-aj.webp",
+"name": "Spare Hanger",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ak": {
+"img": "api-dressers-nov11-dresser-ak.webp",
+"name": "Hem Line Two",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-al": {
+"img": "api-dressers-nov11-dresser-al.webp",
+"name": "Second Fitting",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-am": {
+"img": "api-dressers-nov11-dresser-am.webp",
+"name": "Hanger",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-an": {
+"img": "api-dressers-nov11-dresser-an.webp",
+"name": "Wet Wool",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ao": {
+"img": "api-dressers-nov11-dresser-ao.webp",
+"name": "Wet Paint",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ap": {
+"img": "api-dressers-nov11-dresser-ap.webp",
+"name": "Odd Jar",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-aq": {
+"img": "api-dressers-nov11-dresser-aq.webp",
+"name": "Spare Thimble",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ar": {
+"img": "api-dressers-nov11-dresser-ar.webp",
+"name": "Edge To Edge",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone was a tan (gold): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-as": {
+"img": "api-dressers-nov11-dresser-as.webp",
+"name": "Spare Thimble",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-at": {
+"img": "api-dressers-nov11-dresser-at.webp",
+"name": "Tacking Stitch",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-au": {
+"img": "api-dressers-nov11-dresser-au.webp",
+"name": "Twice Measured",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-av": {
+"img": "api-dressers-nov11-dresser-av.webp",
+"name": "Dress Rehearsal",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-aw": {
+"img": "api-dressers-nov11-dresser-aw.webp",
+"name": "Pattern Weights",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ax": {
+"img": "api-dressers-nov11-dresser-ax.webp",
+"name": "Fitting Room",
+"body": null,
+"hat": null,
+"colour": "#3c7572",
+"colour_from": "their stone (teal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ay": {
+"img": "api-dressers-nov11-dresser-ay.webp",
+"name": "Spare Lamp",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-az": {
+"img": "api-dressers-nov11-dresser-az.webp",
+"name": "Empty Key",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-ba": {
+"img": "api-dressers-nov11-dresser-ba.webp",
+"name": "Borrowed Sleeve",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bb": {
+"img": "api-dressers-nov11-dresser-bb.webp",
+"name": "Borrowed Sleeves",
+"body": null,
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bc": {
+"img": "api-dressers-nov11-dresser-bc.webp",
+"name": "Three Pins",
+"body": null,
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bd": {
+"img": "api-dressers-nov11-dresser-bd.webp",
+"name": "Hemstitch",
+"body": null,
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (gold): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-be": {
+"img": "api-dressers-nov11-dresser-be.webp",
+"name": "Dress Fitting. This name is not on the list I was given, but I can't read the memorial file, so if it's taken, please add a number",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bf": {
+"img": "api-dressers-nov11-dresser-bf.webp",
+"name": "Pins In Pocket",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bg": {
+"img": "api-dressers-nov11-dresser-bg.webp",
+"name": "Hat On Straight",
+"body": null,
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bh": {
+"img": "api-dressers-nov11-dresser-bh.webp",
+"name": "Spare Pompom",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bi": {
+"img": "api-dressers-nov11-dresser-bi.webp",
+"name": "Bias Binding",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bj": {
+"img": "api-dressers-nov11-dresser-bj.webp",
+"name": "Lit Window",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bk": {
+"img": "api-dressers-nov11-dresser-bk.webp",
+"name": "Black Is A Colour",
+"body": null,
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bl": {
+"img": "api-dressers-nov11-dresser-bl.webp",
+"name": "Patch Test",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bm": {
+"img": "api-dressers-nov11-dresser-bm.webp",
+"name": "Spare Seam",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "no colour in their stone line: by lot",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bn": {
+"img": "api-dressers-nov11-dresser-bn.webp",
+"name": "Stray Brace",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bo": {
+"img": "api-dressers-nov11-dresser-bo.webp",
+"name": "Fourth Button",
+"body": "circus-ringmaster",
+"hat": "one-eyed",
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "off the rack: matched from their words"
+},
+"api-dressers-nov11-dresser-bp": {
+"img": "api-dressers-nov11-dresser-bp.webp",
+"name": "Salt Ring",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bq": {
+"img": "api-dressers-nov11-dresser-bq.webp",
+"name": "Chalk Outline Cleaner. No, that's a job. Name: Wiped Halfway",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-zz": {
+"img": "api-dressers-nov11-dresser-zz.webp",
+"name": "Spare Leg",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-br": {
+"img": "api-dressers-nov11-dresser-br.webp",
+"name": "Blank Seat",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bs": {
+"img": "api-dressers-nov11-dresser-bs.webp",
+"name": "Cut On The Fold",
+"body": null,
+"hat": null,
+"colour": "#d8d2c6",
+"colour_from": "their stone (white)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bt": {
+"img": "api-dressers-nov11-dresser-bt.webp",
+"name": "Hem Above The Feet",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-dressers-nov11-dresser-bu": {
+"img": "api-dressers-nov11-dresser-bu.webp",
+"name": "Oatmeal Lamp",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-potato-does-nov12-foreman-replacement": {
+"img": "api-potato-does-nov12-foreman-replacement.webp",
+"name": "From Thirteen",
+"body": "arena-rockstar",
+"hat": "clinic-doctor",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+}
+}

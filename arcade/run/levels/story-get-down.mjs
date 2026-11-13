@@ -26,38 +26,47 @@ import { BLANK_Q } from '../blank.mjs';   // (the clean-slate run: game/playthro
 // D-20261105-12/28): in the movie set (?blank) the previous-story props, signs, cards, gags and characters are not drawn;
 // only the look stays (the house party, room by room, and its rig). ?oldprops shows them again in a blank run, to compare.
 const SET = BLANK_Q && !(() => { try { return new URLSearchParams(location.search).has('oldprops'); } catch (e) { return false; } })();
-import { PARTY, PARTY_MAX } from './get-down.mjs';                       // (read only at run time: the two files import each other)
+import { PARTY, PARTY_MAX, REBUILD, LIGHTS, lookAt } from './get-down.mjs';                       // (read only at run time: the two files import each other)
 const OLD_WHITE = (() => { try { return +new URLSearchParams(location.search).get('border') > 0; } catch (e) { return false; } })();   // NO WHITE LINES (Nov 5, D-20261105-09): the white sticker borders are off; ?border=1 shows the old ones to compare
 const DOWN = 102.9, DANCE = [[50.4, 53.0], [103.3, 106.3]];            // = get-down.mjs (the gold DOWN, the dance breaks)
 
-const CYAN = '#38e8ff', ORANGE = '#ff8a3d', YELLOW = '#ffe066', PINK = '#ff4f8b', LIME = '#7dff9a', NEON = [CYAN, ORANGE, YELLOW, PINK, LIME];
+const CYAN = '#38e8ff', ORANGE = '#ff8a3d', YELLOW = '#ffe066', PINK = '#ff4f8b', LIME = '#7dff9a', NEON0 = [CYAN, ORANGE, YELLOW, PINK, LIME];
+const GOLD = '#ffc83d', RIG = [CYAN, ORANGE, GOLD, PINK, '#ffe2b0'];   // the rebuild's rig: no purple, no green (green is his binary's)
+let NEON = NEON0;
 const MONO = '"Major Mono Display", ui-monospace, monospace';
 const SCENES = [[0, 'room'], [30.3, 'kitchen'], [49.2, 'club'], [74.0, 'yard'], [94.4, 'radio'], [97.0, 'ball'], [DOWN, 'stage'], [121.73, 'home']];
-const sceneAt = t => { let s = SCENES[0][1]; for (const [a, n] of SCENES) if (t >= a) s = n; return s; };
+const SCENES_K = [[0, 'kitchen'], [30.3, 'room'], ...SCENES.slice(2)];   // the rebuild: the open is the kitchen with the lights on
+const sceneAt = t => { const SC = REBUILD.kitchenFirst ? SCENES_K : SCENES; let s = SC[0][1]; for (const [a, n] of SC) if (t >= a) s = n; return s; };
 const FORNOW = 128.44;
 
 // ---------- the party + his dance moves, read off the run (works from any start: it reseeds from the sim) ----------
 const LV = [0.07, 0.36, 0.52, 0.66, 0.78, 0.9, 1.0];                          // the room's light at each party level
-export const GV = { t: -9, heat: LV[0], level: 0, steps: [], stepAt: -9, maxed: false, call: 0, cue: null, eShow: 0, moves: [], me: 0, laughs: 0, j: null, d: null, g: null, lastFlash: -9 };
+export const GV = { t: -9, heat: LV[0], level: 0, steps: [], stepAt: -9, maxed: false, call: 0, cue: null, eShow: 0, moves: [], me: 0, laughs: 0, j: null, d: null, g: null, lastFlash: -9, throws: [], sp: null, look: null, chase: null, ans: 0 };
 const dipAt = (t, last, maxed) => t >= 49.2 && t < 50.4 ? 0.12 : t >= 75.1 && t < 76.2 ? 0.15 : t >= 94.4 && t < 97.0 ? 0.45
   : t >= 97.0 && t < DOWN && last < 97 ? 0.3 : t >= FORNOW && !maxed ? 0.03 : 1;
 export function track(s, t, P, b) {
   if (GV.t === t) return GV;
   const O = t - b * P, onBeat = tp => { const q = (tp - O) / P; return Math.abs(q - Math.round(q)) * P < 0.08; };
-  const st = s.steps || {}, steps = Object.values(st).sort((x, y) => x - y), lvl = Math.min(PARTY_MAX, s.party || 0), last = steps.length ? steps[steps.length - 1] : -9;
+  const st = s.steps || {}, steps = Object.values(st).sort((x, y) => x - y), lifts = (PARTY.lift || []).filter(x => t >= x), lvl = Math.min(PARTY_MAX, (s.party || 0) + lifts.length), last = Math.max(steps.length ? steps[steps.length - 1] : -9, lifts.length ? lifts[lifts.length - 1] : -9);
   Object.assign(GV, { level: lvl, steps, stepAt: last, maxed: lvl >= PARTY_MAX });
-  const tgt = Math.min(LV[lvl], dipAt(t, last, GV.maxed));
+  const LK = REBUILD.looks ? lookAt(t) : null; GV.look = LK;
+  // (the rebuild) the plot's brightness for this moment + a little for every earned step + the lift right after one; at room 6 the bright sections go to full
+  const bigT = GV.throws.length ? GV.throws[GV.throws.length - 1] : null, ansA = bigT && bigT.big ? t - bigT.t : 9; GV.ans = ansA < 0 ? 0 : ansA < 0.06 ? ansA / 0.06 : Math.max(0, 1 - (ansA - 0.06) / 0.56);
+  const eStep = steps.length && t - steps[steps.length - 1] < 1.5 && t >= steps[steps.length - 1] ? LIGHTS.stepLift * (1 - (t - steps[steps.length - 1]) / 1.5) : 0;
+  const lookTgt = LK ? clamp((lvl >= PARTY_MAX && LK.m > 0.5 ? 1 : LK.m + 0.025 * steps.length) + eStep + 0.05 * GV.ans) * (t >= FORNOW && lvl < PARTY_MAX ? clamp(1 - (t - FORNOW) / LIGHTS.out[1]) : 1) : 0;
+  const tgt = LK ? lookTgt : Math.min(LV[lvl], dipAt(t, last, GV.maxed));
   // a GET DOWN coming with the bar full: the floor calls for it (~1 s ahead) — no words, just light
   const k = PARTY.cues.findIndex((c, i) => st[i] == null && t > c.t0 - 1.0 && t < c.t1), cue = k >= 0 ? PARTY.cues[k] : null;
   GV.cue = cue; GV.call = cue && (s.energy || 0) >= PARTY.full && lvl < PARTY_MAX ? 0.4 + 0.6 * clamp(1 - (cue.t0 - t)) : 0;   // 0.4 the moment it shows (1 s out), 1 in the window
   if (t < GV.t - 0.05 || t - GV.t > 0.75) {                                         // a fresh start (or a jump in time): reseed
-    Object.assign(GV, { moves: [], me: s.beatJumps || 0, laughs: 0, j: s.jumpedAt, d: s.duckUntil, g: s.glitchAt, heat: tgt, eShow: s.energy || 0 }); }
+    Object.assign(GV, { moves: [], me: s.beatJumps || 0, laughs: 0, j: s.jumpedAt, d: s.duckUntil, g: s.glitchAt, heat: tgt, eShow: s.energy || 0, throws: [], sp: s.spinAt }); }
   const add = (tp, kind, on, big) => { GV.moves.push({ t: tp, kind, on, big, x: s.x, y: s.y }); if (on) GV.me++; else { GV.laughs++; GV.offAt = tp; } };
   if (s.jumpedAt != null && s.jumpedAt !== GV.j) { GV.j = s.jumpedAt; if (s.jumpedAt <= t) add(s.jumpedAt, 'kick', (s.streak || 0) > 0); }
   if (s.duckUntil && s.duckUntil !== GV.d) { GV.d = s.duckUntil; const tp = s.duckUntil - Math.max(0.9 * P, 0.42); if (tp <= t && tp > t - 0.2) add(tp, 'drop', onBeat(tp)); }
   if (s.glitchAt != null && s.glitchAt !== GV.g) { GV.g = s.glitchAt; if (s.glitchAt <= t) add(s.glitchAt, 'blast', onBeat(s.glitchAt) || s.bigAt === s.glitchAt, s.bigAt === s.glitchAt); }
+  if (REBUILD.throwLight && s.spinAt != null && s.spinAt !== GV.sp) { GV.sp = s.spinAt; if (s.spinAt <= t) { GV.throws.push({ t: s.spinAt, big: !!s.spinOn, n: GV.throws.length }); if (GV.throws.length > 3) GV.throws.shift(); } }   // every spin throws light (at most 3 throws alive: 64 dots or fewer)
   while (GV.moves.length && GV.moves[0].t < t - 3) GV.moves.shift();
-  const dt = clamp(t - GV.t, 0, 0.1), rate = tgt > GV.heat ? 3 : 1.4;
+  const dt = clamp(t - GV.t, 0, 0.1), rate = LK ? (tgt > GV.heat ? 8 : 2.6) : tgt > GV.heat ? 3 : 1.4;   // (the plot: up in about a quarter second, down never faster than 0.31 s)
   GV.heat += (tgt - GV.heat) * Math.min(1, dt * rate); GV.eShow += ((s.energy || 0) - GV.eShow) * Math.min(1, dt * 12); GV.t = t;
   return GV;
 }
@@ -70,8 +79,9 @@ const BEAMS = [0, 0, 0.55, 0.75, 0.9, 1, 1.25], LASER = [0, 0, 0, 0, 0.5, 0.75, 
 export function story(ctx, e) {
   const { t, b, kick, px, py } = e, fy = clamp(e.floorY ?? py + 70, 220, H - 60), s = e.s, P = e.P;
   const G = track(s, t, P, b), h = G.heat, L = G.level, calm = !!e.calm, home = sceneAt(t) === 'home', maxed = G.maxed;
+  NEON = REBUILD.looks ? RIG : NEON0;
   const scene = home && maxed ? 'stage' : sceneAt(t);                               // a maxed party never stops: the stage, to the end
-  const dim = clamp(h / LV[L]), since = t - G.stepAt;                               // dim: the song's dips (and the light still easing up after a step)
+  const dim = REBUILD.looks ? clamp(h / 0.55) : clamp(h / LV[L]), since = t - G.stepAt;                               // dim: the song's dips (and the light still easing up after a step)
   if (s.ground && !s.ducking && fy - py > 10) upu = clamp((fy - py) / 0.7, 30, 110);
   const last = G.moves[G.moves.length - 1];
   const blasted = t >= DOWN && t < 121.73 ? DOWN : null;
@@ -80,6 +90,8 @@ export function story(ctx, e) {
   else if (scene === 'kitchen') kitchen(ctx, e, fy, h);
   else if (scene === 'yard' || scene === 'radio') yard(ctx, e, fy, h, scene === 'radio');
   else club(ctx, e, fy, h, scene, G);
+  if (REBUILD.kitchenFirst && scene === 'room' && !SET) resumeCard(ctx, t, fy - 420);
+  if (REBUILD.looks || REBUILD.band) band(ctx, e, fy, G, scene, px);
   if (scene === 'radio' && !SET) radio(ctx, t);   // (SET: the POP / COUNTRY / POTATO dial is out, an old gag with words. Chikin: "the assets are supposed to go away")
 
   // ---- the club-family lights, switched on by the party: beams, lasers, the mirrorball, strobes, the HUGE rig ----
@@ -89,7 +101,9 @@ export function story(ctx, e) {
     if (LASER[L]) lasers(ctx, t, b, fy, LASER[L] * dim * (L >= 6 ? 1.3 : 1));
     mirrorball(ctx, e, s.used && s.used.disco != null ? s.used.disco : L >= 4 ? 0 : null, scene, L >= 4 && dim > 0.5);
     if (L >= 6) huge(ctx, e, fy, dim, calm);
-    if (L >= 5 && !calm) strobes(ctx, e, fy, (L >= 6 ? 1 : 0.6) * dim);
+    if (L >= 5 && !calm && !REBUILD.noStrobe) strobes(ctx, e, fy, (L >= 6 ? 1 : 0.6) * dim);
+    if (L >= 5 && REBUILD.noStrobe) wallChase(ctx, e, fy, (L >= 6 ? 1 : 0.7) * dim);
+    if (REBUILD.gags && span(t, 49.5, 50.4) && !SET) glow(ctx, 600, -40 + ease((t - 49.5) / 3) * 255, 46, GOLD, 0.55 * fade(t, 49.5, 50.4, 0.12, 0.5));   // the ball comes down in the hush with one gold glint
   }
   // ---- the scoreboard: "I keep score when they laugh me off" (the video's LAUGHED AT ME | ME board) ----
   const sbA = fade(t, 61.3, 69.6, 0.3, 0.5) + fade(t, 110.5, 119.0, 0.3, 0.5);
@@ -100,7 +114,7 @@ export function story(ctx, e) {
   // ---- the "?" over the empty floor: buzzes on "if a potato can rap?", shorts out on "wrong question" ----
   // (SET: out, an old gag. Chikin: "the assets are supposed to go away")
   if (!SET && span(t, 6.14, 13.6)) { const fall = t > 8.74 ? ease((t - 8.74) / 0.9) : 0;
-    neon(ctx, '?', 660, 250 + fall * 220, 190, YELLOW, t, 6.14, (1 - fall) * (t > 8.74 && Math.floor(t * 12) % 3 === 0 ? 0.25 : 0.85)); }
+    neon(ctx, '?', 660, 250 + fall * 220, 190, YELLOW, t, 6.14, (1 - fall) * (!REBUILD.noStrobe && t > 8.74 && Math.floor(t * 12) % 3 === 0 ? 0.25 : 0.85)); }
 
   // ---- the crowd: silhouettes at the front of the floor (the party brings them) ----
   // (SET: out, the old video's crowd; the new story stages its own. Chikin: "It's a setting, they have to fill the space")
@@ -127,7 +141,8 @@ export function story(ctx, e) {
     if (t < 119 && L >= 2) confetti(ctx, t, blasted, fy, h); }
   // ---- his spot (always there in the dim; at the end — unless the party's maxed — the only light left) ----
   const endDark = t >= FORNOW && !maxed;
-  if (h < 0.5 || scene === 'ball' || (t >= FORNOW - 0.2 && !maxed)) spotOn(ctx, px, fy, endDark ? 1 : scene === 'ball' && L < 4 ? 0.9 : 0.5 * clamp(1 - h / 0.5) + 0.15);
+  if (REBUILD.throwLight && !SET) throwDots(ctx, e, fy, px, py, G);
+  if (h < 0.5 || scene === 'ball' || (t >= FORNOW - 0.2 && !maxed) || (REBUILD.looks && t >= 20.05)) spotOn(ctx, px, fy, endDark ? 1 : scene === 'ball' && L < 4 ? 0.9 : 0.5 * clamp(1 - h / 0.5) + 0.15);
   if (!SET && (scene === 'room' || home)) rec(ctx, t, b, home);   // (SET: the camcorder frame is out, the old video's framing device. Chikin: "the assets are supposed to go away")
   if (endDark) { ctx.fillStyle = '#000'; ctx.globalAlpha = 0.55 * ease((t - FORNOW) / 0.25); ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; spotOn(ctx, px, fy, 1); }   // he switched it off
 }
@@ -206,8 +221,8 @@ function kitchen(ctx, e, fy, h) {
   ctx.save(); ctx.globalAlpha = hush ? 0.35 : 0.55 + 0.45 * h; ctx.drawImage(ART.kitchen, -ox, dy); ctx.drawImage(ART.kitchen, 2 * W - ox, dy); ctx.restore();
   // the neon 404 PARTY on the wall (its own text): buzzes on with "round face", brighter as the party catches up with him
   // (SET: the 404 PARTY sign is out, a sign that names the scene in words. Chikin: "the assets are supposed to go away")
-  if (!SET) { neon(ctx, '404', 640, 232 + dy, 64, PINK, t, 30.32, (hush ? 0.3 : 0.35 + 0.65 * h));
-  neon(ctx, 'party', 640, 285 + dy, 30, LIME, t, 31.0, (hush ? 0.25 : 0.25 + 0.75 * h)); }
+  if (!SET) { neon(ctx, '404', 640, 232 + dy, 64, PINK, t, REBUILD.kitchenFirst ? 20.05 : 30.32, (hush ? 0.3 : 0.35 + 0.65 * h));
+  neon(ctx, 'party', 640, 285 + dy, 30, REBUILD.looks ? GOLD : LIME, t, REBUILD.kitchenFirst ? 20.67 : 31.0, (hush ? 0.25 : 0.25 + 0.75 * h)); }
   stringLights(ctx, t, e.b, 128, hush ? 0.1 : 0.2 + 0.8 * h, 0, 30);
   // "name myself potato. that's the whole résumé." — a résumé card pinned on the wall (SET: out, an old gag. Chikin: "the assets are supposed to go away")
   const k = SET ? 0 : fade(t, 45.44, 48.4, 0.35, 0.4); if (k > 0) { ctx.save(); ctx.translate(800, 240 + dy + (1 - ease(clamp((t - 45.44) / 0.35))) * -60); ctx.rotate(0.06); ctx.globalAlpha = k;
@@ -261,6 +276,12 @@ function yard(ctx, e, fy, h, radioOn) {
   if (!ART.yard) ART.yard = yardArt();
   const ox = scroll(X, 2, 2 * W); ctx.drawImage(ART.yard, -ox, dy); ctx.drawImage(ART.yard, 2 * W - ox, dy);
   ctx.fillStyle = '#f2ecd6'; ctx.shadowColor = '#f2ecd6'; ctx.shadowBlur = 30; ctx.beginPath(); ctx.arc(820, 200 + dy * 0.3, 22, 0, 7); ctx.fill(); ctx.shadowBlur = 0;   // the moon
+  if (REBUILD.window && !SET) { const WN = LIGHTS.window, hx = 96, hy = fy - 250;                                // the neighbour's house, far off: one window (a light, no figure)
+    ctx.fillStyle = '#080a18'; ctx.beginPath(); ctx.moveTo(hx, fy - 78); ctx.lineTo(hx, hy + 46); ctx.lineTo(hx + 82, hy); ctx.lineTo(hx + 164, hy + 46); ctx.lineTo(hx + 164, fy - 78); ctx.fill();
+    const onK = t >= WN.on && t < WN.off ? clamp((t - WN.on) / 0.12) : t >= WN.off ? clamp(1 - (t - WN.off) / 0.5) : 0, ph = ((t - WN.beatFrom) % WN.every) / WN.every, beatK = t >= WN.beatFrom ? 0.72 + 0.28 * Math.max(0, 1 - ph * 1.6) : 1;
+    ctx.fillStyle = onK > 0 ? '#ffb36b' : '#10132a'; ctx.globalAlpha = onK > 0 ? onK * beatK : 1; ctx.fillRect(hx + 58, hy + 70, 48, 40); ctx.globalAlpha = 1;
+    ctx.strokeStyle = '#080a18'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(hx + 82, hy + 70); ctx.lineTo(hx + 82, hy + 110); ctx.moveTo(hx + 58, hy + 90); ctx.lineTo(hx + 106, hy + 90); ctx.stroke();
+    if (onK > 0) glow(ctx, hx + 82, hy + 90, 70, '#ffb36b', 0.3 * onK * beatK); }
   const nobody = span(t, 75.1, 76.2);
   stringLights(ctx, t, e.b, 175, radioOn ? 0.15 : nobody ? 0.06 : 0.15 + 0.85 * h, scroll(X, 4, 1200), 40);
   for (let i = 0; i < 18; i++) { if (rnd(i, 3) > h) continue; const x = (rnd(i, 1) * W + Math.sin(t * 0.7 + i) * 30), y = fy - 30 - rnd(i, 2) * 140 + Math.sin(t * 1.3 + i * 2) * 12;   // fireflies with the groove
@@ -285,17 +306,69 @@ function rec(ctx, t, b, home) {
   ctx.save(); ctx.strokeStyle = 'rgba(230,236,255,0.6)'; ctx.lineWidth = 3;
   for (const [x, y, dx, dy] of [[24, 172, 1, 1], [W - 24, 172, -1, 1], [24, H - 24, 1, -1], [W - 24, H - 24, -1, -1]]) { ctx.beginPath(); ctx.moveTo(x + 28 * dx, y); ctx.lineTo(x, y); ctx.lineTo(x, y + 28 * dy); ctx.stroke(); }
   if (Math.floor(t * 1.6) % 2 === 0) { ctx.fillStyle = '#ff3b3b'; ctx.beginPath(); ctx.arc(46, 196, 7, 0, 7); ctx.fill(); }
-  ctx.fillStyle = 'rgba(230,236,255,0.8)'; ctx.font = '700 15px "JetBrains Mono", ui-monospace, monospace'; ctx.textBaseline = 'middle'; ctx.fillText('REC', 60, 197);
-  ctx.fillStyle = home && t > 124 && Math.floor(t * 2) % 2 ? '#ff3b3b' : LIME; ctx.fillRect(W - 92, H - 50, 8, 16); ctx.fillStyle = 'rgba(230,236,255,0.8)'; ctx.fillText('4%', W - 78, H - 42);
+  ctx.fillStyle = 'rgba(230,236,255,0.8)'; ctx.font = '700 15px "JetBrains Mono", ui-monospace, monospace'; ctx.textBaseline = 'middle'; if (!REBUILD.recNoWords) ctx.fillText('REC', 60, 197);
+  ctx.fillStyle = home && t > 124 && Math.floor(t * 2) % 2 ? '#ff3b3b' : LIME; ctx.fillRect(W - 92, H - 50, 8, 16); ctx.fillStyle = 'rgba(230,236,255,0.8)'; if (!REBUILD.recNoWords) ctx.fillText('4%', W - 78, H - 42); else { ctx.strokeStyle = 'rgba(230,236,255,0.7)'; ctx.lineWidth = 2; ctx.strokeRect(W - 96, H - 54, 40, 24); ctx.fillRect(W - 56, H - 47, 4, 10); }   // (no letters: a battery, one bar left)
   ctx.restore();
 }
 function stringLights(ctx, t, b, y, a, ox, gap) {                                  // a sagging string of party bulbs
   ctx.save(); ctx.strokeStyle = '#2a2a3a'; ctx.lineWidth = 1.5; ctx.beginPath();
   for (let x = -ox % 240 - 240; x < W + 240; x += 240) { ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 120, y + 26, x + 240, y); } ctx.stroke();
   for (let x0 = -ox % gap - gap, i = 0; x0 < W + gap; x0 += gap, i++) { const u = ((x0 + ox) % 240 + 240) % 240 / 240, yy = y + 26 * 2 * u * (1 - u) * 1.0 + 6, k = Math.floor((x0 + ox) / gap);
-    const col = NEON[((k % 5) + 5) % 5], on = a > 0.05 && rnd(k, 3) < 0.35 + a;
-    ctx.fillStyle = on ? col : '#252535'; ctx.globalAlpha = on ? 0.5 + 0.5 * a : 0.8; ctx.beginPath(); ctx.arc(x0, yy, 3.5, 0, 7); ctx.fill();
-    if (on && a > 0.3) glow(ctx, x0, yy, 14, col, 0.3 * a); }
+    const hot = GV.chase != null && a > 0.05 && ((k - GV.chase) % 4 + 4) % 4 === 0, col = NEON[((k % 5) + 5) % 5], on = hot || (a > 0.05 && rnd(k, 3) < 0.35 + a);   // (hot: the chase runs along the string, one bulb in four, a step a beat)
+    ctx.fillStyle = on ? col : '#252535'; ctx.globalAlpha = on ? (hot ? 1 : 0.5 + 0.5 * a) : 0.8; ctx.beginPath(); ctx.arc(x0, yy, hot ? 4.5 : 3.5, 0, 7); ctx.fill();
+    if (on && (a > 0.3 || hot)) glow(ctx, x0, yy, hot ? 22 : 14, col, hot ? 0.3 + 0.3 * a : 0.3 * a); }
+  ctx.restore();
+}
+// ---------- the rebuild: the lights play the song ----------
+function resumeCard(ctx, t, dy) {                                                   // (the kitchen's résumé card, for when the living room is the second set)
+  const k = fade(t, 45.44, 48.4, 0.35, 0.4); if (k <= 0) return; ctx.save(); ctx.translate(800, 240 + dy + (1 - ease(clamp((t - 45.44) / 0.35))) * -60); ctx.rotate(0.06); ctx.globalAlpha = k;
+  ctx.fillStyle = '#f4efe4'; ctx.fillRect(-62, -78, 124, 156); ctx.fillStyle = '#0b0d12'; ctx.font = `400 15px ${MONO}`; ctx.textAlign = 'center'; ctx.fillText('résumé', 0, -56);
+  ctx.font = `400 11px ${MONO}`; ctx.fillStyle = '#7a6040'; ctx.fillText('potato', 0, -40);
+  ctx.fillStyle = '#9aa0ab'; for (let i = 0; i < 6; i++) ctx.fillRect(-48, -22 + i * 15, 70 + 26 * rnd(i, 4), 5); ctx.restore();
+}
+// the house's own lamps do the club jobs: where they hang in each set [x, top y]. (The club sets have their rig already.)
+const LAMPS = { kitchen: [[170, 150], [470, 150], [770, 150]], room: [[250, 168], [700, 168]], yard: [[330, 176], [760, 176]], radio: [[330, 176], [760, 176]], home: [[250, 168], [700, 168]] };
+const PAL5 = ['pink', 'cyan', 'gold', 'orange', 'cream'];
+// THE BAND: two washes up the back wall in the section's colour pair, trading sides on the snare (beats 2 and 6 of the bar,
+// a quarter-second crossfade, never a blink); the lamps' cones in the same pair, leaning to him when a spin lands on the
+// pulse; the chase index for the string lights. Held still where the plot says so; half-time where the band dips.
+function band(ctx, e, fy, G, scene, px) {
+  const { t, b } = e, P = e.P || 0.31, LK = G.look || lookAt(t), C = LIGHTS.col, calm = !!e.calm, m = G.heat;
+  const still = LK.motion === 2 || !REBUILD.band, per = LK.motion === 1 ? 2 : 1, all = LK.a === 'all', bar = Math.floor(b / 8);
+  const cA = all ? C[PAL5[bar % 5]] : C[LK.a], cB = all ? C[PAL5[(bar + 2) % 5]] : C[LK.b];
+  const q = (b / per - 2) / 4, n = Math.floor(q), sinceSw = (q - n) * 4 * per * P, sw = still ? 1 : ease(clamp(sinceSw / 0.25)), leftA = still ? 1 : (n % 2 === 0 ? sw : 1 - sw);
+  GV.chase = still ? null : Math.floor(b / per);
+  if (!REBUILD.looks || m <= 0.01) return;
+  const wa = Math.min(0.34, m * 0.5) * (calm ? 0.6 : 1), breathe = still ? 1 : 0.86 + 0.14 * Math.max(0, 1 - ((b / (2 * per)) % 1) * 1.6);   // (behind the course nothing is over 0.35)
+  for (const [x, kA] of [[W * 0.2, leftA], [W * 0.8, 1 - leftA]]) { if (kA > 0.01) glow(ctx, x, fy - 110, 430, cA, wa * kA * breathe); if (kA < 0.99) glow(ctx, x, fy - 110, 430, cB, wa * (1 - kA) * breathe); }
+  const lamps = LAMPS[scene]; if (!lamps) return;
+  ctx.save();
+  lamps.forEach(([x, y0], i) => { const kA = i % 2 ? 1 - leftA : leftA, lean = (px - x) * 0.75 * G.ans, bx = x + lean, yb = fy + 6;
+    ctx.globalCompositeOperation = 'lighter';
+    for (const [col, k] of [[cA, kA], [cB, 1 - kA]]) { if (k <= 0.01) continue; const g = ctx.createLinearGradient(x, y0 + 30, bx, yb); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = Math.min(0.34, m * 0.55 + 0.1 * G.ans) * k * (calm ? 0.6 : 1); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(x - 16, y0 + 30); ctx.lineTo(x + 16, y0 + 30); ctx.lineTo(bx + 105, yb); ctx.lineTo(bx - 105, yb); ctx.fill(); }
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;                                           // the lamp itself: a cord and an inked shade, a little crooked
+    ctx.strokeStyle = '#0b0d12'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(x, y0 - 30); ctx.lineTo(x, y0 + 6); ctx.stroke();
+    ctx.fillStyle = '#2a2232'; ctx.lineWidth = 3.5; ctx.beginPath(); ctx.moveTo(x - 9, y0 + 4); ctx.lineTo(x + 10, y0 + 6); ctx.lineTo(x + 22, y0 + 30); ctx.lineTo(x - 21, y0 + 28); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = kA > 0.5 ? cA : cB; ctx.globalAlpha = 0.35 + 0.65 * clamp(m / 0.5); ctx.beginPath(); ctx.ellipse(x, y0 + 30, 15, 4.5, 0.03, 0, 7); ctx.fill(); ctx.globalAlpha = 1; });
+  ctx.restore();
+}
+// THE THROW: every spin throws gold dots that lap the walls once in a beat and fade (12 small, 24 on the pulse)
+function throwDots(ctx, e, fy, px, py, G) {
+  const t = e.t, SP = LIGHTS.spin; if (!G.throws.length) return;
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = GOLD;
+  for (const th of G.throws) { const a = t - th.t; if (a < 0 || a > SP.fade) continue; const n = th.big ? SP.dotsBig : SP.dots, lap = ease(clamp(a / SP.lap)), fd = 1 - a / SP.fade;
+    const cx = px + (W / 2 - px) * lap * (th.big ? 0.9 : 0.35), cy = py + ((170 + fy) / 2 - 10 - py) * lap, rx = 36 + (th.big ? 500 : 250) * lap, ry = 18 + (th.big ? (fy - 190) / 2 : (fy - 190) / 3.2) * lap, sz = th.big ? 9 : 6;
+    for (let i = 0; i < n; i++) { const ang = i / n * 6.283 + th.t * 3 + (th.n % 2 ? -1 : 1) * (lap * 6.283 * 0.5 + a * 0.5), x = cx + Math.cos(ang) * rx, y = Math.min(fy - 6, Math.max(140, cy + Math.sin(ang) * ry));
+      ctx.globalAlpha = fd * (e.calm ? 0.5 : 0.9) * (0.6 + 0.4 * rnd(i, th.t)); ctx.fillRect(x - sz / 2, y - sz / 2, sz, sz); } }
+  ctx.restore();
+}
+// STEP 5, no strobes: the floor's pattern climbs the walls (a wall-to-wall chase of soft tiles, a step on every pulse, cross-faded)
+function wallChase(ctx, e, fy, a) {
+  if (a <= 0) return; const { t, b } = e, P = e.P || 0.31, n = Math.floor(b / 2), k = ease(clamp(((b / 2) - n) * 2 * P / 0.18)), cols = 12, rows = 4, cw = W / cols, ch = (fy - 190) / rows;
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  for (let c = 0; c < cols; c++) for (let r = 0; r < rows; r++) { const on = m => ((c + m + r) % 4 + 4) % 4 === 0 ? 1 : 0, v = on(n - 1) * (1 - k) + on(n) * k; if (v <= 0.01) continue;
+    ctx.globalAlpha = Math.min(0.3, 0.3 * a) * v * (e.calm ? 0.5 : 1); ctx.fillStyle = NEON[(c + r) % 5]; ctx.beginPath(); ctx.roundRect(c * cw + 7, fy - 12 - (r + 1) * ch + 6, cw - 14, ch - 12, 9); ctx.fill(); }
   ctx.restore();
 }
 // ---------- party pieces ----------
@@ -338,14 +411,14 @@ function sheet(ctx, t, t0, y) {                                                 
   ctx.restore();
 }
 function tube(ctx, x, fy, color, t, t0, a) {
-  const top = 175, on = t > t0 && (t - t0 > 0.45 || rnd(Math.floor(t * 18), t0) < 0.45);
+  const top = 175, on = t > t0 && (REBUILD.noStrobe || t - t0 > 0.45 || rnd(Math.floor(t * 18), t0) < 0.45); if (REBUILD.noStrobe && on) a *= clamp((t - t0) / 0.3);
   ctx.save(); ctx.lineCap = 'round'; ctx.lineWidth = 7; ctx.strokeStyle = on ? color : '#1a1830'; ctx.globalAlpha = on ? Math.min(1, a) : 0.7;
   ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, fy - 12); ctx.stroke();
   if (on) { ctx.globalCompositeOperation = 'lighter'; ctx.lineWidth = 22; ctx.globalAlpha = Math.min(1, a) * 0.18; ctx.stroke(); }
   ctx.restore();
 }
 function neon(ctx, text, x, y, size, color, t, t0, a) {                            // a neon sign: buzzes on, then hums
-  if (a <= 0 || t < t0) return; const on = t - t0 > 0.45 || rnd(Math.floor(t * 18), t0) < 0.45;
+  if (a <= 0 || t < t0) return; const on = REBUILD.noStrobe || t - t0 > 0.45 || rnd(Math.floor(t * 18), t0) < 0.45; if (REBUILD.noStrobe) a *= clamp((t - t0) / 0.3);
   ctx.save(); ctx.font = `400 ${size}px ${MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.globalAlpha = a * (on ? 0.95 : 0.15); ctx.fillStyle = on ? color : '#3a3346'; if (on) { ctx.shadowColor = color; ctx.shadowBlur = size * 0.4; }
   ctx.fillText(text, x, y); ctx.restore();
@@ -395,14 +468,14 @@ function mirrorball(ctx, e, wornT, scene, lit) {                                
   ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.clip(); ctx.fillStyle = lit ? '#d9e2f2' : '#2a2c38'; ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
   const rot = lit ? t * 2 : 0.3;
   for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) { const u = ((i / 8 + rot / 6.28) % 1) * 2 - 1, v = j / 8 * 2 - 1 + 0.06;
-    const on = lit && rnd(i * 8 + j, Math.floor(b * 2)) < 0.35; ctx.fillStyle = on ? NEON[(i + j) % 5] : lit ? '#9aa6bc' : '#3c3f4e';
+    const on = lit && rnd(i * 8 + j, Math.floor(REBUILD.noStrobe ? b / 2 : b * 2)) < 0.35; ctx.fillStyle = on ? NEON[(i + j) % 5] : lit ? '#9aa6bc' : '#3c3f4e';
     ctx.fillRect(x + Math.sin(u * 1.4) * R * 0.95 - 3, y + v * R - 3, 6 * Math.cos(u * 1.1), 6); }
   ctx.restore();
   if (!lit) return;
   glow(ctx, x, y, 80 + 40 * kick, '#ffffff', scene === 'ball' ? 0.3 : 0.45);
   ctx.save(); ctx.globalCompositeOperation = 'lighter';
   for (let i = 0; i < 40; i++) { const a = i * 2.4 + t * (0.5 + rnd(i, 1) * 0.5), r = 60 + rnd(i, 2) * 560, sx = x + Math.cos(a) * r * 1.3, sy = y + 30 + Math.abs(Math.sin(a)) * r * 0.6;
-    ctx.fillStyle = NEON[i % 5]; ctx.globalAlpha = (0.2 + 0.5 * kick * rnd(i, Math.floor(b))) * (scene === 'ball' ? 0.6 : 1); ctx.fillRect(sx - 3, sy - 3, 6, 6); }
+    ctx.fillStyle = NEON[i % 5]; ctx.globalAlpha = (0.2 + 0.5 * kick * rnd(i, Math.floor(REBUILD.noStrobe ? b / 2 : b))) * (scene === 'ball' ? 0.6 : 1); ctx.fillRect(sx - 3, sy - 3, 6, 6); }
   ctx.restore();
 }
 function confetti(ctx, t, t0, fy, h) {
@@ -425,12 +498,13 @@ const CRASH_COL = { roomba: CYAN, alarmclock: PINK, raincloud: '#9fd8ff', sprink
 export const danceView = ({ T, world, C }) => {
   const N = 10, fl = Array.from({ length: N }, () => new T.Vector4(0, -9, 0, 0));
   const mat = lift => new T.ShaderMaterial({ transparent: true, depthWrite: false,
-    uniforms: { heat: { value: 0 }, time: { value: 0 }, beat: { value: 0 }, calm: { value: 0 }, px: { value: 0 }, lift: { value: lift }, fl: { value: fl } },
+    uniforms: { heat: { value: 0 }, time: { value: 0 }, beat: { value: 0 }, calm: { value: 0 }, px: { value: 0 }, lift: { value: lift }, fl: { value: fl }, band: { value: 0 }, stepN: { value: 0 }, stepK: { value: 1 }, tx0: { value: C.X(C.tOfBeat ? C.tOfBeat(0) : 0.206) }, tw: { value: (C.X(1.31) - C.X(1.0)) / 2 } },   // (tw: half a beat of floor = two of its tile columns)
     vertexShader: `varying vec2 wp; varying float ly; void main(){ ly = position.y; vec4 w = modelMatrix * vec4(position, 1.0); wp = w.xy; gl_Position = projectionMatrix * viewMatrix * w; }`,
-    fragmentShader: `uniform float heat, time, beat, calm, px, lift; uniform vec4 fl[${N}]; varying vec2 wp; varying float ly;
+    fragmentShader: `uniform float heat, time, beat, calm, px, lift, band, stepN, stepK, tx0, tw; uniform vec4 fl[${N}]; varying vec2 wp; varying float ly;
       void main(){ if (ly > -0.08) discard;
         float lit = 0.85 * heat + lift + 0.34 * exp(-pow((wp.x - px) / 1.5, 2.0));
         lit += (1.0 - calm) * heat * heat * 0.16 * (1.0 - fract(beat * 0.5));
+        if (band > 0.0) { float tile = floor((wp.x - tx0) / tw); lit += band * (mix(mod(tile + stepN - 1.0, 2.0), mod(tile + stepN, 2.0), stepK) * 0.36 - 0.06); }   // (the rebuild) the floor steps on the pulse: every other tile, moving one along
         for (int i = 0; i < ${N}; i++) { float a = time - fl[i].y, D = 0.7 * (1.0 + fl[i].w); if (a >= 0.0 && a < D) { float r = a * 13.0 * (1.0 + 0.6 * fl[i].w), d = abs(abs(wp.x - fl[i].x) - r);
           lit += fl[i].z * (1.0 - a / D) * exp(-d * d * 1.2 / (1.0 + fl[i].w)) * (calm > 0.5 ? 0.45 : 1.0); } }
         float depth = clamp(-ly / 3.5, 0.0, 1.0);
@@ -439,7 +513,7 @@ export const danceView = ({ T, world, C }) => {
   for (const q of C.solids) if (q.kind === 'block' && !q.ceil && q.x1 - q.x0 >= 1.2) {
     const w = q.x1 - q.x0, tot = (q.y1 - q.y0) + 9, m = new T.Mesh(new T.PlaneGeometry(w, tot), q.step ? mRiser : mGround);
     m.geometry.translate(w / 2, -tot / 2, 0); m.position.set(q.x0, q.y1, 0.5); m.renderOrder = 2; world.add(m); veils.push(m); }
-  let slot = 0, seenBlast = null, seenBig = null, seenPop = null, video = false, eFlashAt = -9, eLast = 0;
+  let slot = 0, seenBlast = null, seenBig = null, seenPop = null, seenSpin = null, video = false, eFlashAt = -9, eLast = 0;
   const ring = (x, t0, k, size) => { fl[slot].set(x, t0, k, size); slot = (slot + 1) % N; };
   return {
     draw(f) {
@@ -448,12 +522,15 @@ export const danceView = ({ T, world, C }) => {
         if (s.bigAt === s.glitchAt) { ring(s.x, s.bigAt, 1.6, 1.5); ring(s.x, s.bigAt + 0.15, 1.2, 2.6); ring(s.x, s.bigAt + 0.32, 1.0, 3.6); seenBig = s.bigAt; }   // the big one: three, the width of the room
         else ring(s.x, s.glitchAt, 1.0, 0); }
       const pop = s.pops && s.pops[s.pops.length - 1]; if (pop && pop.t !== seenPop && pop.t <= t) { seenPop = pop.t; ring(pop.x, pop.t, pop.how === 'both' ? 0.9 : 0.55, 0); }
+      if (REBUILD.throwLight && s.spinAt != null && s.spinAt !== seenSpin && s.spinAt <= t) { seenSpin = s.spinAt; if (s.spinAt !== s.glitchAt) ring(s.x, s.spinAt, s.spinOn ? 0.9 : 0.5, 0); }   // every spin lights the floor from his feet
+      const LK = REBUILD.band && REBUILD.looks ? G.look || lookAt(t) : null, per = LK && LK.motion === 1 ? 2 : 1, pb = b / (2 * per), stepOn = LK && LK.motion !== 2 && !(t >= FORNOW && !G.maxed);
+      for (const M of [mGround, mRiser]) { M.uniforms.band.value = stepOn ? clamp(0.35 + G.heat) * (f.calm ? 0.4 : 1) : 0; M.uniforms.stepN.value = Math.floor(pb); M.uniforms.stepK.value = ease(clamp((pb - Math.floor(pb)) * 2 * per * C.P / 0.12)); }
       const hot = G.maxed ? 1 : 0;
       for (const M of [mGround, mRiser]) { const u = M.uniforms; u.heat.value = Math.min(cap, G.heat) * (t >= FORNOW && !hot ? 0 : 1); u.time.value = t; u.beat.value = b; u.calm.value = f.calm ? 1 : 0; u.px.value = s.x; }
       mRiser.uniforms.lift.value = t >= FORNOW && !hot ? 0 : 0.12;
     },
     over(ctx, f) {
-      const { s, t, b, calm } = f, G = GV; if ((t >= FORNOW && !G.maxed) || video) return;
+      const { s, t, b, calm } = f, G = GV; NEON = REBUILD.looks ? RIG : NEON0; if ((t >= FORNOW && !G.maxed) || video) return;
       const A = f.project(s.x, s.y + 0.1), U = Math.abs(f.project(s.x + 1, s.y).x - A.x);
       ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
       // ---- his moves: the hop-kick's arc, the drop's shock, and THE DANCE BLAST ----
@@ -464,7 +541,7 @@ export const danceView = ({ T, world, C }) => {
           ctx.beginPath(); ctx.moveTo(F.x - r, F.y - 2); ctx.lineTo(F.x - r * 0.55, F.y - 2); ctx.moveTo(F.x + r * 0.55, F.y - 2); ctx.lineTo(F.x + r, F.y - 2); ctx.stroke(); }
         else {                                                                                                           // the dance blast (big: on a charged GET DOWN)
           const C2 = f.project(s.x, s.y + 0.62), Z = m.big ? 2.2 : 1, n = m.big ? 5 : 3, al = (1 - k) * (calm ? 0.6 : 0.95);
-          for (let i = 0; i < n; i++) { ctx.strokeStyle = [CYAN, PINK, YELLOW, LIME, ORANGE][i % 5]; ctx.globalAlpha = al; ctx.lineWidth = (3 + (m.big ? 3 : 0)) * (1 - k) + 1;   // the swirl round him
+          for (let i = 0; i < n; i++) { ctx.strokeStyle = [CYAN, PINK, YELLOW, REBUILD.looks ? GOLD : LIME, ORANGE][i % 5]; ctx.globalAlpha = al; ctx.lineWidth = (3 + (m.big ? 3 : 0)) * (1 - k) + 1;   // the swirl round him
             ctx.beginPath(); ctx.ellipse(C2.x, C2.y, (0.7 + 0.25 * i + 0.4 * k) * U * Z, (0.25 + 0.1 * i) * U * Z, 0, k * 9 + i * 2, k * 9 + i * 2 + 2.4); ctx.stroke(); }
           const ns = m.big ? 18 : 9; for (let i = 0; i < ns; i++) { const ang = i / ns * 6.283 + m.t * 3, r0 = (0.6 + 1.6 * k) * U * Z, r1 = r0 + (0.35 + 0.4 * (1 - k)) * U * Z;   // the strokes off him
             ctx.strokeStyle = NEON[(i + Math.floor(m.t * 5)) % 5]; ctx.globalAlpha = al * 0.9; ctx.lineWidth = (m.big ? 5 : 3) * (1 - k) + 1;
@@ -480,7 +557,8 @@ export const danceView = ({ T, world, C }) => {
         ctx.strokeStyle = col; ctx.globalAlpha = 1 - k; ctx.lineWidth = 5 * (1 - k) + 1; ctx.beginPath(); ctx.arc(B.x, B.y, 6 + R * k, 0, 7); ctx.stroke();
         if (dbl) { ctx.strokeStyle = PINK; ctx.beginPath(); ctx.arc(B.x, B.y, 6 + R * 0.6 * k, 0, 7); ctx.stroke(); }
         ctx.fillStyle = col; for (let i = 0; i < (dbl ? 14 : 9); i++) { const ang = rnd(i, p.t * 11) * 6.283, r = (0.2 + 1.1 * k * (0.6 + 0.4 * rnd(i, 4))) * U * (dbl ? 1.3 : 1);
-          ctx.globalAlpha = (1 - k) * 0.95; ctx.fillRect(B.x + Math.cos(ang) * r - 3, B.y + Math.sin(ang) * r - 3 - k * 10, 6, 6); } }
+          ctx.globalAlpha = (1 - k) * 0.95; if (REBUILD.throwLight) { ctx.font = `400 ${dbl ? 15 : 13}px ${MONO}`; ctx.fillText(rnd(i, p.t) < 0.5 ? '0' : '1', B.x + Math.cos(ang) * r - 4, B.y + Math.sin(ang) * r * 0.7 + k * k * 46); }   /* (the rebuild: it goes binary, in its own colour, and falls) */
+          else ctx.fillRect(B.x + Math.cos(ang) * r - 3, B.y + Math.sin(ang) * r - 3 - k * 10, 6, 6); } }
       // ---- a GET DOWN coming with the bar full: the floor round him calls for it, in front of him (~1 s ahead, on the beat, no words) ----
       if (G.call > 0) { const pulse = Math.max(0, Math.cos((b % 1) * Math.PI * 2)), F = f.project(s.x, s.y), C2 = f.project(s.x, s.y + 0.55), al = G.call * (calm ? 0.45 : 1);
         for (const [rx, ry, col, lw, k] of [[1.4 + 0.3 * pulse, 0.3, YELLOW, 5, 1], [1.75 + 0.35 * pulse, 0.38, PINK, 3.5, 0.8]]) {

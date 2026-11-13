@@ -131,9 +131,12 @@ export function livingRoom(K) {
   function upstairs(x, t, P) {   // the door at the top of the stairs: shut. Light under it. Try it and it rattles, the light behind it flinches
     const s = P.upstairs || Z, a = since(s, t), r = s.on ? Math.sin(a * 70) * 3 * (1 - Math.min(1, a / 0.9)) : 0, X = 1340, Y = 206, W = 130, H = LAND.top - Y;
     box(x, X - 14, Y - 16, W + 28, H + 16, '#4a2f1f', { r: 4, lw: 6, sh: 'n' });
-    const fl = 0.65 + 0.35 * rnd(Math.floor(t * 3), 5), dim = s.on && a < 0.9 ? 0.2 : 1;   // something's on up there
+    const fl = 0.65 + 0.35 * rnd(Math.floor(t * 3), 5), dim = s.on && a < 1.6 ? ((typeof location !== 'undefined' && /[?&]room=/.test(location.search)) && a > 0.16 ? 1.6 : 0.2) : 1;   // something's on up there
     x.save(); x.globalCompositeOperation = 'lighter'; x.fillStyle = rgba('#ffe2a8', 0.5 * fl * dim); x.beginPath(); x.moveTo(X + 4, LAND.top - 4); x.lineTo(X + W - 4, LAND.top - 4); x.lineTo(X + W + 30, LAND.top + 8); x.lineTo(X - 30, LAND.top + 8); x.fill(); x.restore();
-    x.save(); x.translate(r, 0); box(x, X, Y, W, H - 6, DOORC, { r: 3, lw: 6, sh: 'r', f: 0.14 });
+    /* IN THE HOUSE THE DOOR OPENS (Chikin, Nov 12 night: "can you make it open, it breaks the illusion"): a short rattle, then it swings in on its left hinge and the light from upstairs is in the doorway. */
+    const open = (typeof location !== 'undefined' && /[?&]room=/.test(location.search)) && s.on ? Math.min(1, Math.max(0, (a - 0.16) / 0.42)) : 0, ease = open * open * (3 - 2 * open);
+    if (open > 0) { box(x, X, Y, W, H - 6, '#ffe2a8', { r: 3, lw: 6, sh: 'n' }); x.save(); x.globalCompositeOperation = 'lighter'; x.fillStyle = rgba('#fff3cf', 0.35 * ease); x.fillRect(X - 26, Y - 10, W + 52, H + 30); x.restore(); }
+    x.save(); x.translate(r * (1 - ease), 0); x.translate(X, 0); x.scale(1 - 0.84 * ease, 1); x.translate(-X, 0); box(x, X, Y, W, H - 6, open > 0 ? dk(DOORC, 0.12 * ease) : DOORC, { r: 3, lw: 6, sh: 'r', f: 0.14 });
     box(x, X + 18, Y + 20, W - 36, 80, dk(DOORC, 0.05), { r: 3, sh: 'b', f: 0.25, lw: 4 }); box(x, X + 18, Y + 118, W - 36, 86, dk(DOORC, 0.05), { r: 3, sh: 'b', f: 0.25, lw: 4 });
     const kr = s.on ? Math.sin(a * 40) * 0.5 : 0; x.save(); x.translate(X + W - 20, Y + 112); x.rotate(kr); circ(x, 0, 0, 9, '#e0b45a', { lw: 4 }); x.restore(); box(x, X + W - 24, Y + 126, 8, 12, '#2a2016', { r: 2, sh: 'n', lw: 0 }); x.restore();
     seg(x, [[X + 4, LAND.top - 5], [X + W - 4, LAND.top - 5]], 3, rgba('#ffe2a8', 0.9 * fl * dim)); }
@@ -156,7 +159,7 @@ export function livingRoom(K) {
       { id: 'console', kind: 'switch', busy: 1.2, x0: 662, x1: 748, y0: 612, y1: 700, hint: [705, 604], sfx: { on: 'flick', off: 'flick' }, face: { on: ['smirk', 1.2] } },
       { id: 'tv', kind: 'switch', x0: 676, x1: 834, y0: 400, y1: 600, hint: [755, 392], sfx: { on: 'tvOn', off: 'tvOff' }, face: { on: ['awe', 1.4] } },
       { id: 'stairs', kind: 'hop', walk: true, topAt, x0: ST.x0 - 4, x1: LAND.x1, top: FLOOR - ST.rise, seat: [ST.x0 + 4, ST.x0 + 80], hit: [ST.x0 - 20, 300, LAND.x1, 610], y0: 300, y1: 707, creak: top => top === FLOOR - 3 * ST.rise || top === FLOOR - 6 * ST.rise, stepSfx: 'creak', sfx: { land: 'thunk' } },
-      { id: 'upstairs', kind: 'switch', call: true, auto: 0.9, upY: LAND.top, x0: 1340, x1: 1470, y0: 196, y1: 432, hint: [1405, 186], sfx: { on: 'rattle', done: 'thud' }, face: { on: ['question', 1.4] } },
+      { id: 'upstairs', kind: 'switch', call: true, auto: (typeof location !== 'undefined' && /[?&]room=/.test(location.search)) ? 1.6 : 0.9, upY: LAND.top, x0: 1340, x1: 1470, y0: 196, y1: 432, hint: [1405, 186], sfx: { on: 'rattle', done: 'thud' }, face: { on: ['question', 1.4] } },
       { id: 'cupboard', kind: 'switch', downOnly: true, x0: 1326, x1: 1450, y0: 518, y1: 707, hint: [1388, 506], sfx: { on: 'drawer', off: 'thunk' }, face: { on: ['smirk', 1.1] } } ],
     base,
     under(x, t, lit, P, me) { lampSt(x, t, P, lit); couch(x, t, P, me); gameConsole(x, t, P); sideTable(x, t); plant(x, t); upstairs(x, t, P); cupboard(x, t, P); },
