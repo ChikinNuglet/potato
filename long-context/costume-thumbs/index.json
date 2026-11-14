@@ -3827,56 +3827,56 @@
 "api-potato-does-nov12-potato": {
 "img": "api-potato-does-nov12-potato.webp",
 "name": "The Part After",
-"body": "circus-ringmaster",
-"hat": "frontier-cowboy",
+"body": null,
+"hat": null,
 "colour": "#6b4a2f",
 "colour_from": "their stone (brown)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "api-potato-does-nov12-animator-a": {
 "img": "api-potato-does-nov12-animator-a.webp",
 "name": "Fifth Pip",
-"body": "arena-rockstar",
+"body": null,
 "hat": null,
 "colour": "#566170",
 "colour_from": "their stone (slate)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "api-potato-does-nov12-animator-b": {
 "img": "api-potato-does-nov12-animator-b.webp",
 "name": "Air Contact",
-"body": "arena-rockstar",
+"body": null,
 "hat": null,
 "colour": "#cdc6b5",
 "colour_from": "their stone (pale)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "api-potato-does-nov12-fights": {
 "img": "api-potato-does-nov12-fights.webp",
 "name": "Hit Frame. It is not on the list I was given; I could not open the memorial file itself",
-"body": "arena-rockstar",
+"body": null,
 "hat": null,
 "colour": "#4f6b45",
 "colour_from": "their stone (green)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "api-potato-does-nov12-toybox": {
 "img": "api-potato-does-nov12-toybox.webp",
 "name": "Fourth Screw",
-"body": "arena-rockstar",
-"hat": "circus-ringmaster",
+"body": null,
+"hat": null,
 "colour": "#6a45b5",
 "colour_from": "their stone (purple)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "adc12a5c5b58db435": {
 "img": "adc12a5c5b58db435.webp",
 "name": "Saw It Run",
-"body": "little-devil",
+"body": null,
 "hat": null,
 "colour": "#3f5f86",
 "colour_from": "their stone (blue)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "api-dressers-nov11-dresser-aa": {
 "img": "api-dressers-nov11-dresser-aa.webp",
@@ -4241,11 +4241,11 @@
 "api-dressers-nov11-dresser-bo": {
 "img": "api-dressers-nov11-dresser-bo.webp",
 "name": "Fourth Button",
-"body": "circus-ringmaster",
-"hat": "one-eyed",
+"body": null,
+"hat": null,
 "colour": "#4f6b45",
 "colour_from": "their stone (green)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
 },
 "api-dressers-nov11-dresser-bp": {
 "img": "api-dressers-nov11-dresser-bp.webp",
@@ -4313,10 +4313,289 @@
 "api-potato-does-nov12-foreman-replacement": {
 "img": "api-potato-does-nov12-foreman-replacement.webp",
 "name": "From Thirteen",
-"body": "arena-rockstar",
-"hat": "clinic-doctor",
+"body": null,
+"hat": null,
 "colour": "#566170",
 "colour_from": "their stone (slate)",
-"look_from": "off the rack: matched from their words"
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-a": {
+"img": "api-gardeners-nov12-gardener-a.webp",
+"name": "Ten Slots",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-b": {
+"img": "api-gardeners-nov12-gardener-b.webp",
+"name": "Trowel Mark",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone (moss)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-c": {
+"img": "api-gardeners-nov12-gardener-c.webp",
+"name": "Seed Packet",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-d": {
+"img": "api-gardeners-nov12-gardener-d.webp",
+"name": "Seed Row",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone (moss)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-e": {
+"img": "api-gardeners-nov12-gardener-e.webp",
+"name": "Trowel",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone (moss)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-f": {
+"img": "api-gardeners-nov12-gardener-f.webp",
+"name": "Carbon Copy",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-g": {
+"img": "api-gardeners-nov12-gardener-g.webp",
+"name": "Loose Leaf",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-h": {
+"img": "api-gardeners-nov12-gardener-h.webp",
+"name": "Dibber",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone (moss)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-i": {
+"img": "api-gardeners-nov12-gardener-i.webp",
+"name": "Dibber",
+"body": null,
+"hat": null,
+"colour": "#5c7048",
+"colour_from": "their stone (moss)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"api-gardeners-nov12-gardener-j": {
+"img": "api-gardeners-nov12-gardener-j.webp",
+"name": "Dealt Hand",
+"body": null,
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afa1228bc0a541f76": {
+"img": "afa1228bc0a541f76.webp",
+"name": "Sailed Over",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5836f03a91f2e455": {
+"img": "a5836f03a91f2e455.webp",
+"name": "Previous Pair",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a32bbc76df063d956": {
+"img": "a32bbc76df063d956.webp",
+"name": "Same Pocket",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2a051df5a450ed6d": {
+"img": "a2a051df5a450ed6d.webp",
+"name": "Not Inert",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a763bc875ce667045": {
+"img": "a763bc875ce667045.webp",
+"name": "Was One",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a51f43aca2c3ed743": {
+"img": "a51f43aca2c3ed743.webp",
+"name": "Lost Property",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ae43cd3295dd3b983": {
+"img": "ae43cd3295dd3b983.webp",
+"name": "Lost Count",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aea4f4b1d9d8f4b3b": {
+"img": "aea4f4b1d9d8f4b3b.webp",
+"name": "Unfiled",
+"body": null,
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abcc2d8584b5b4d89": {
+"img": "abcc2d8584b5b4d89.webp",
+"name": "Not Counted",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a2a2451083163cbe7": {
+"img": "a2a2451083163cbe7.webp",
+"name": "Same Reply",
+"body": null,
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"abeb1bcb2e03209a8": {
+"img": "abeb1bcb2e03209a8.webp",
+"name": "Errata Slip",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aefab580f47edf504": {
+"img": "aefab580f47edf504.webp",
+"name": "Amended In Pencil",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a453a3933b022d12a": {
+"img": "a453a3933b022d12a.webp",
+"name": "Ears First",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5d812dd0e63de42d": {
+"img": "a5d812dd0e63de42d.webp",
+"name": "Stubbed Toe",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"afb466f058f9320b6": {
+"img": "afb466f058f9320b6.webp",
+"name": "I'd Know",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a24ebd3b7ec04644d": {
+"img": "a24ebd3b7ec04644d.webp",
+"name": "Author Field",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aa69842a64cf6f937": {
+"img": "aa69842a64cf6f937.webp",
+"name": "Wiped Feet",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"aae2da2a10830da3d": {
+"img": "aae2da2a10830da3d.webp",
+"name": "Fixed Footer",
+"body": null,
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"ad70405832ccae79d": {
+"img": "ad70405832ccae79d.webp",
+"name": "Ibid",
+"body": null,
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a5bc857eec8302e15": {
+"img": "a5bc857eec8302e15.webp",
+"name": "No Locksmith",
+"body": null,
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "dressed by a dresser, Nov 11"
+},
+"a78358e89286c99dd": {
+"img": "a78358e89286c99dd.webp",
+"name": "Say Less",
+"body": null,
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "dressed by a dresser, Nov 11"
 }
 }
