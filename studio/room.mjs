@@ -302,6 +302,12 @@ async function main() {
         if (Math.random() < 0.62) { bub.textContent = t; return; }
         const a = words.slice(), n = 1 + (Math.random() < 0.35 ? 1 : 0); for (let k = 0; k < n; k++) { const i = Math.floor(Math.random() * a.length); a[i] = pick(words[i].length); } bub.textContent = a.join(' '); }, 140); }
     const go = async x => { intro.walkTo((200 + 0.76 * x) / 1600, 0.86); for (let i = 0; i < 50; i++) { await wait(120); if (Math.abs(intro.props().x - x) < 46) break; } await wait(250); };
+    /* PUT YOURS AWAY (Chikin, Nov 15: "i picked a potato, now the sad potato is overriding my regular potato" / "only for me please").
+       A pick lives in this browser, so one picked on a shared phone took over his house. Only by address, nothing on the page for visitors:
+       ?potato puts the picked one away ('potato-spud-away', never deleted) and the house is Potato again; ?yours brings him back. */
+    { const SP = 'potato-spud', AWAY = 'potato-spud-away', mv = (from, to) => { try { const m = localStorage.getItem(from); if (m) { localStorage.setItem(to, m); localStorage.removeItem(from); if (from === SP) localStorage.removeItem('potato-spud-locked'); } } catch (e) {} };
+      if (Q.has('potato')) mv(SP, AWAY); else if (Q.has('yours')) mv(AWAY, SP);
+      if (Q.has('potato') || Q.has('yours')) { try { const u = new URL(location.href); u.searchParams.delete('potato'); u.searchParams.delete('yours'); history.replaceState(null, '', u); } catch (e) {} } }
     const mine = async () => { let m = null; try { m = JSON.parse(localStorage.getItem('potato-spud') || 'null'); } catch (e) {}
       if (Q.get('spud')) { try { const j = await (await fetch('../redeem/pool.json')).json(), want = Q.get('spud'), i = j.potatoes.findIndex(q => q.id === want); if (i >= 0) m = { spud: i + 1, potato: j.potatoes[i] }; } catch (e) {} }
       return m && m.potato ? m : null; };
