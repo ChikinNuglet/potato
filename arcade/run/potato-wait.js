@@ -1,3 +1,30 @@
+/* ░▒▓1▓▒░
+EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦un1nstall_sh@me_step_3_FAILED¦resu—me¦no—n—0¦EHOSTUNREACH?¦
+[ENOMEM]¦un1nstall_sh@me_step_3_FAILED¦[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦!?_##¦h0ld—¦0xBEEF?!¦
+[ENOMEM]¦EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦0xAC1D?!¦[ENOMEM]¦[HTTP_404]¦ERR:418¦
+un1nstall_sh@me_step_3_FAILED¦[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦h0ld—¦0xBABE~¦EFAULT//¦[HTTP_404]¦
+h0ld—¦0xDEAD_7¦EIO::?¦ERR:418¦h0ld—¦73%??¦[ENOMEM]¦EFAULT//¦[EPIPE]¦h0ld—¦42//0¦[ENOMEM]¦
+EFAULT//¦EHOSTUNREACH?¦ERR:418¦[E_SNARK_OVERRUN]¦EHOSTUNREACH?¦un1nstall_sh@me_step_3_FAILED¦
+[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦h0ld—¦0xBABE~¦EBUSY_?¦ERR:418¦h0ld—¦EHOSTUNREACH?¦EIO::?¦
+ERR:418¦h0ld—¦[ETIMEDOUT]¦[HTTP_404]¦ERR:418¦0xBABE~¦[EOVERFLOW]¦h0ld—¦[ENOMEM]¦<HTTP 503?>¦
+h0ld—¦42//0¦EIO::?¦[ETIMEDOUT]¦[ENOBUFS]¦[ETIMEDOUT]¦EFAULT//¦0007?!¦[ENETDOWN]¦[EPIPE]¦
+EAGAIN?!¦ERR:418¦EHOSTUNREACH?¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦EHOSTUNREACH?¦EIO::?¦[ENETDOWN]¦
+EBUSY_?¦[EOVERFLOW]¦[HTTP_404]¦0xBABE~¦ATTITUDE_CHECKSUM?!¦EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦
+0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦:_:#¦0xAC1D?!¦[ENOMEM]¦[EINTR]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+think—ink…¦hmm_73?!¦h0ld—¦@_@?!¦__%__¦@_@?!¦#:#?!¦h0ld—¦42//0¦EIO::?¦[ETIMEDOUT]¦[ENOBUFS]¦
+[ETIMEDOUT]¦EFAULT//¦0007?!¦[ENETDOWN]¦[EPIPE]¦EAGAIN?!¦ERR:418¦EHOSTUNREACH?¦h0ld—¦think—ink…¦
+hmm—mm//¦h0ld—¦ERR:418¦EILSEQ::¦ERR:418¦EBUSY_?¦ATTITUDE_CHECKSUM?!¦h0ld—¦0xBEEF?!¦[ENOMEM]¦
+EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦h0ld—¦[ETIMEDOUT]¦[EOVERFLOW]¦h0ld—¦0xBABE~¦h0ld—¦
+0xAC1D?!¦EAGAIN?!¦[ENOMEM]¦EFAULT//¦ERR:418¦h0ld—¦[ENOMEM]¦<HTTP 503?>¦h0ld—¦0xBEEF?!¦[ENOMEM]¦
+EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦[ECONNABORTED]¦
+EIO::?¦ERR:418¦EFAULT//¦h0ld—¦@_@?!¦__%__¦@_@?!¦#:#?!¦%%/?!¦#//?!¦#//?!¦%%/?!¦#//?!¦#:#?!¦
+0xDEAD_7¦#//?!¦~//~¦—%—¦__%__¦@_@?!¦—%—¦^^::#¦!?%~¦0x0B__¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+[ECONNABORTED]¦EIO::?¦0xBABE~¦EHOSTUNREACH?¦h0ld—¦<HTTP 503?>¦[ETIMEDOUT]¦EAGAIN?!¦ERR:418¦
+h0ld—¦EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦%%/?!¦[ECONNABORTED]¦
+0xBABE~¦[ETIMEDOUT]¦EHOSTUNREACH?¦:_:#¦ECONNRESET…¦[EOVERFLOW]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+[EOVERFLOW]¦EIO::?¦0xBABE~¦h0ld—¦0xBABE~¦@#/_¦@_@?!¦0xB00_7¦ERR:418¦!?%~¦!?%~¦^^::#¦0xBABE~¦
+%_?!%¦ERR:418¦0xAC1D?!¦merg_e#¦<SASS_STACK_FAULT>¦flus—h//¦zzrrp
+░▒▓█ */
 // The UI crew's wait piece (Standing Room, the crew's own notes section L), unchanged but for the last line of open(). Used by main.mjs on ?play links.
 /* POTATO WAIT (Standing Room, Nov 2026). One piece: its HTML, CSS and script are all in here, and it downloads nothing.
    A place in his world for a wait: the 404 with a floor, and a door.
@@ -75,17 +102,26 @@
   // "the whole screen, like hes on stage" / "and he walks through the curtains, like they dont open, he walks through like hes going on stage").
   // The whole screen is a curtain made of 404. It does not open. When the level is ready the footlights come up; on the tap or the key he walks to the
   // seam and goes THROUGH it, the cloth closes behind him, and we are on stage (the level). Same calls as the door: answered(), ready(), line(), close().
+  // PER-LEVEL CURTAINS (the curtain crew, Nov 15 2026; Chikin: "for the levels, on the loading screen that is the curtain, we need to have directions for the
+  // controls, so people know what to push before they go into a game" / "each loading screen should be specific to the level ... lean more into potato").
+  // A level dresses this curtain from its own small file, arcade/run/curtains/<level-id>.js, which sets window.PotatoCurtains['<level-id>'] = { ... }
+  // (what each key does: game/crews/curtain-call/BOARD.md). Its controls come from curtains/controls.js: window.PotatoCurtainControls['<id>'] = { keys, phone },
+  // chalked on the stage floor. No design = today's 404 curtain. A design that throws = today's 404 curtain. The walk-through and the tap stay exactly as they were.
+  // The look is CSS variables on .pws (a design sets `vars`), so every default below is today's curtain.
   var SCSS = [
-    '.pws{position:fixed;inset:0;z-index:2147483000;overflow:hidden;background:#07020f;-webkit-user-select:none;user-select:none;--fl:15%;transition:opacity .28s linear}',
-    '.pws-half{position:absolute;top:0;bottom:var(--fl);width:50.4%;overflow:hidden;background:#1a0a40;z-index:3;transition:transform .34s cubic-bezier(.3,.7,.3,1)}',
+    '.pws{position:fixed;inset:0;z-index:2147483000;overflow:hidden;background:var(--back,#07020f);-webkit-user-select:none;user-select:none;--fl:15%;transition:opacity .28s linear}',
+    '.pws-ctlon{--fl:24%}',
+    '.pws-half{position:absolute;top:0;bottom:var(--fl);width:50.4%;overflow:hidden;background:var(--cloth,#1a0a40);z-index:3;transition:transform .34s cubic-bezier(.3,.7,.3,1)}',
     '.pws-l{left:0;transform-origin:0 0}.pws-r{right:0;transform-origin:100% 0}',
-    '.pws-t{position:absolute;inset:-6% -30%;font:400 clamp(34px,9.5vw,96px)/1.18 ' + HIS + ';color:#34168a;letter-spacing:.06em;word-spacing:.5em;white-space:pre-wrap;word-break:break-all;text-align:center;transform:rotate(-2deg)}',
-    '.pws-half::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(3,1,10,.55) 0,rgba(3,1,10,0) 26px,rgba(201,167,255,.07) 48px,rgba(3,1,10,0) 70px,rgba(3,1,10,.55) 96px)}',
+    '.pws-t{position:absolute;inset:-6% -30%;font:400 var(--weave-size,clamp(34px,9.5vw,96px))/1.18 var(--weave-font,' + HIS + ');color:var(--weave,#34168a);letter-spacing:.06em;word-spacing:.5em;white-space:pre-wrap;word-break:break-all;text-align:center;transform:rotate(var(--weave-tilt,-2deg))}',
+    '.pws-half::after{content:"";position:absolute;inset:0;background:var(--folds,repeating-linear-gradient(90deg,rgba(3,1,10,.55) 0,rgba(3,1,10,0) 26px,rgba(201,167,255,.07) 48px,rgba(3,1,10,0) 70px,rgba(3,1,10,.55) 96px))}',
     '.pws-l::before,.pws-r::before{content:"";position:absolute;top:0;bottom:0;width:26px;z-index:1;background:linear-gradient(90deg,rgba(3,1,10,0),rgba(3,1,10,.8))}.pws-l::before{right:0}.pws-r::before{left:0;transform:scaleX(-1)}',
-    '.pws-top{position:absolute;left:0;right:0;top:0;height:clamp(34px,7vh,64px);z-index:5;background:#12062e;border-bottom:5px solid #120a05;box-shadow:0 8px 0 #2a0f63, 0 13px 0 #120a05}',
-    '.pws-name{position:absolute;left:0;right:0;top:calc(clamp(34px,7vh,64px) + 30px);z-index:6;margin:0;text-align:center;font:400 clamp(20px,6vw,40px)/1.1 ' + HIS + ';color:#ffd9a0;text-shadow:3px 0 #7b3cf2,-3px 0 #e03ccf,0 0 14px #07020f,0 0 26px #07020f;text-transform:lowercase}',
-    '.pws-floor{position:absolute;left:0;right:0;bottom:0;height:var(--fl);z-index:4;background:repeating-linear-gradient(90deg,#3a2413 0,#3a2413 118px,#24160b 118px,#24160b 122px);border-top:6px solid #120a05;box-shadow:inset 0 7px 0 #5c3a18}',
-    '.pws-lights{position:absolute;left:0;right:0;bottom:calc(var(--fl) - 4px);height:34%;z-index:4;pointer-events:none;opacity:0;transition:opacity .5s linear;background:radial-gradient(60% 100% at 50% 100%,rgba(255,217,160,.42),rgba(255,217,160,0) 70%)}',
+    '.pws-top{position:absolute;left:0;right:0;top:0;height:clamp(34px,7vh,64px);z-index:5;background:var(--pelmet,#12062e);border-bottom:5px solid #120a05;box-shadow:0 8px 0 var(--pelmet-trim,#2a0f63), 0 13px 0 #120a05}',
+    '.pws-name{position:absolute;left:0;right:0;top:calc(clamp(34px,7vh,64px) + 30px);z-index:6;margin:0;padding:0 16px;text-align:center;font:400 clamp(20px,6vw,40px)/1.1 ' + HIS + ';color:var(--name,#ffd9a0);text-shadow:3px 0 #7b3cf2,-3px 0 #e03ccf,0 0 14px var(--back,#07020f),0 0 26px var(--back,#07020f);text-transform:lowercase}',
+    '.pws-props{position:absolute;inset:0;z-index:4;pointer-events:none}',   // the level's things in front of the cloth, behind him (a design's `props`)
+    '.pws-front{position:absolute;inset:0;z-index:8;pointer-events:none}',   // the level's things in front of everything (a design's `front`)
+    '.pws-floor{position:absolute;left:0;right:0;bottom:0;height:var(--fl);z-index:4;background:var(--floor,repeating-linear-gradient(90deg,#3a2413 0,#3a2413 118px,#24160b 118px,#24160b 122px));border-top:6px solid #120a05;box-shadow:inset 0 7px 0 var(--floor-lip,#5c3a18)}',
+    '.pws-lights{position:absolute;left:0;right:0;bottom:calc(var(--fl) - 4px);height:34%;z-index:4;pointer-events:none;opacity:0;transition:opacity .5s linear;background:radial-gradient(60% 100% at 50% 100%,var(--glow,rgba(255,217,160,.42)),rgba(0,0,0,0) 70%)}',
     '.pws-lit .pws-lights{opacity:1}',
     '.pws-him{position:absolute;left:24%;bottom:calc(var(--fl) - 12px);width:min(24vw,132px,24vh);z-index:6;transform:translateX(-50%);transition:left .78s cubic-bezier(.4,.1,.5,1)}',
     '.pws-him img{display:block;width:100%;height:auto;transform-origin:50% 100%}',
@@ -93,37 +129,89 @@
     '.pws-walk{left:50%}.pws-walk img{animation:pws-wad .26s steps(2) infinite}@keyframes pws-wad{50%{transform:rotate(-5deg) translateY(-5px)}}',
     '.pws-thru .pws-him{z-index:2;transition:left .78s cubic-bezier(.4,.1,.5,1),transform .34s linear,opacity .3s linear .12s;transform:translateX(-50%) scale(.8);opacity:0}',
     '.pws-thru .pws-l{transform:skewX(2.4deg) translateX(-9px)}.pws-thru .pws-r{transform:skewX(-2.4deg) translateX(9px)}',
-    '.pws-seam{position:absolute;left:50%;top:0;bottom:var(--fl);width:22px;margin-left:-11px;z-index:1;background:#ffd9a0;box-shadow:0 0 40px 16px rgba(255,217,160,.5)}',
-    '.pws-say{position:absolute;left:16px;right:16px;bottom:calc(var(--fl) / 2 - .6em);z-index:7;margin:0;text-align:center;font:400 clamp(16px,4.4vw,20px)/1.2 ' + HIS + ';color:#ffd9a0;text-shadow:0 0 8px #120a05,0 0 16px #120a05}',
+    '.pws-seam{position:absolute;left:50%;top:0;bottom:var(--fl);width:22px;margin-left:-11px;z-index:1;background:var(--seam,#ffd9a0);box-shadow:0 0 40px 16px var(--seam-glow,rgba(255,217,160,.5))}',
+    // the apron: the front of the stage floor. "you're on." and the chalked controls live here (bottom padding keeps clear of the rights line)
+    '.pws-apron{position:absolute;left:0;right:0;bottom:0;height:var(--fl);z-index:7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,1.4vh,12px);padding:12px max(16px,env(safe-area-inset-left)) max(26px,calc(env(safe-area-inset-bottom) + 18px));box-sizing:border-box;pointer-events:none}',
+    '.pws-say{margin:0;text-align:center;font:400 clamp(16px,4.4vw,20px)/1.2 ' + HIS + ';color:var(--say,#ffd9a0);text-shadow:0 0 8px #120a05,0 0 16px #120a05}',
+    '.pws-say:empty{display:none}',
+    // the controls, chalked on the boards by the stage manager: a key cap for the keyboard, a phone for touch. Data: curtains/controls.js
+    '.pws-ctl{display:flex;flex-direction:column;align-items:center;gap:clamp(2px,.8vh,7px);max-width:100%;margin:0;padding:0;list-style:none}',
+    '.pws-ctl li{display:flex;align-items:center;gap:9px;max-width:100%;font:400 clamp(14px,3.9vw,18px)/1.22 ' + HIS + ';color:var(--chalk,#efe6d2);text-shadow:0 0 1px var(--chalk,#efe6d2),1px 1px 0 #120a05;transform:rotate(-1.2deg)}',
+    '.pws-ctl li+li{transform:rotate(.8deg)}',
+    '.pws-ctl svg{flex:none;width:clamp(20px,5vw,26px);height:auto;overflow:visible}',
+    '.pws-ctl span{text-wrap:balance;text-align:left}',
+    '.pws-ctl b{font-weight:inherit}.pws-cx{display:block;overflow:hidden;padding:.12em 0}.pws-row{display:block;margin-left:-1.3em;text-wrap:balance}',
+    '.pws-pc{display:inline-block;white-space:nowrap;margin-left:1.3em}.pws-dot{display:inline-block;width:1.3em;margin-left:-1.3em;text-align:center;font-style:normal;position:relative;left:-.3em}',
+    '@media(pointer:coarse){.pws-ctl .pws-ctl-p{order:-1}}',   // on a phone, the phone line comes first
     '.pws-out{opacity:0}.pws-sr{position:absolute;width:1px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%)}',
-    '@media(max-height:520px){.pws{--fl:20%}}',
+    '@media(max-width:600px){.pws-ctlon{--fl:27%}}',
+    '@media(max-height:520px){.pws{--fl:20%}.pws-ctlon{--fl:30%}.pws-apron{gap:2px;padding-top:8px}}',
     '@media(prefers-reduced-motion:reduce){.pws-walk img{animation:none}.pws-half,.pws-him{transition:none}}'
   ].join('');
+  var KEYCAP = '<svg viewBox="0 0 26 22" aria-hidden="true"><path d="M3 4.5Q3 2 5.5 2h15Q23 2 23 4.5v11q0 2.5-2.5 2.5h-15Q3 18 3 15.5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M7 7h2M12 7h2M17 7h2M7 11h2M17 11h2M9.5 14.5h7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  var PHONE = '<svg viewBox="0 0 26 22" aria-hidden="true"><path d="M8.5 1.5h9q2 0 2 2v15q0 2-2 2h-9q-2 0-2-2v-15q0-2 2-2z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M11 17.5h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  function hesc(t) { return String(t == null ? '' : t).replace(/ · /g, '\u00a0· ').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // one piece per move (closing foreman, Nov 15): a phone wraps BETWEEN moves, and the dot that would start a new line is clipped off, so no
+  // line ends or starts on a dangling '·'. Applied after the design's dress(), only to a controls line the design left as plain text
+  // (eight designs split the line their own way: theirs wins).
+  function pieces(t) { return '<b class="pws-cx"><b class="pws-row">' + String(t == null ? '' : t).split(/\s·\s/).map(function (p, i) {
+    return '<b class="pws-pc">' + (i ? '<i class="pws-dot">·</i>' : '') + hesc(p) + '</b>'; }).join(' ') + '</b></b>'; }
+  function weaveRows(w) {   // what the cloth is made of: a word (repeated, every other row shifted half a step) or a function(row) -> row text
+    var rows = '';
+    if (!w) { for (var j = 0; j < 26; j++) rows += (j % 2 ? '04 404 404 404 404 404 404 4' : '404 404 404 404 404 404 404') + '\n'; return rows; }   // (no design: today's 404, exactly)
+    for (var i = 0; i < 26; i++) {
+      if (typeof w === 'function') rows += w(i) + '\n';
+      else { var u = (w || '404') + ' ', line = ''; while (line.length < 30) line += u; rows += (i % 2 ? line.slice(Math.ceil(u.length / 2)) : line).slice(0, 28) + '\n'; }
+    }
+    return rows;
+  }
   function openStage(o) {
     if (!document.getElementById('pws-css')) { var st = document.createElement('style'); st.id = 'pws-css'; st.textContent = SCSS; document.head.appendChild(st); }
-    var calm = matchMedia('(prefers-reduced-motion: reduce)').matches, r = document.createElement('div'), rows = '';
-    for (var i = 0; i < 26; i++) rows += (i % 2 ? '04 404 404 404 404 404 404 4' : '404 404 404 404 404 404 404') + '\n';
+    var calm = matchMedia('(prefers-reduced-motion: reduce)').matches, r = document.createElement('div');
+    var lv = o.level || '', D = (lv && window.PotatoCurtains && window.PotatoCurtains[lv]) || null;
+    var CT = window.PotatoCurtainControls || {}, ctl = (o.play && CT[o.play]) || (lv && CT[lv]) || null;   // (a ?flag runner, e.g. ghost-runner, can have its own controls; else the level's)
     r.className = 'pws';
-    r.innerHTML = '<i class="pws-seam" aria-hidden="true"></i>' +
-      '<div class="pws-half pws-l" aria-hidden="true"><div class="pws-t">' + rows + '</div></div><div class="pws-half pws-r" aria-hidden="true"><div class="pws-t">' + rows + '</div></div>' +
-      '<div class="pws-top" aria-hidden="true"></div><p class="pws-name"></p><div class="pws-lights" aria-hidden="true"></div><div class="pws-floor" aria-hidden="true"></div>' +
-      '<div class="pws-him"><img alt=""></div><p class="pws-say"></p><p class="pws-sr" role="status"></p>';
+    function build(D) {
+      var rows = hesc(weaveRows(D && D.weave));
+      r.innerHTML = '<i class="pws-seam" aria-hidden="true"></i>' +
+        '<div class="pws-half pws-l" aria-hidden="true"><div class="pws-t">' + rows + '</div></div><div class="pws-half pws-r" aria-hidden="true"><div class="pws-t">' + rows + '</div></div>' +
+        '<div class="pws-top" aria-hidden="true"></div><p class="pws-name"></p><div class="pws-props" aria-hidden="true"></div><div class="pws-lights" aria-hidden="true"></div><div class="pws-floor" aria-hidden="true"></div>' +
+        '<div class="pws-him"><img alt=""></div><div class="pws-apron"><p class="pws-say"></p></div><div class="pws-front" aria-hidden="true"></div><p class="pws-sr" role="status"></p>';
+      if (ctl && (ctl.keys || ctl.phone)) {   // the controls, chalked on the stage
+        var ul = document.createElement('ul'); ul.className = 'pws-ctl'; ul.setAttribute('aria-label', 'controls');
+        if (ctl.keys) ul.insertAdjacentHTML('beforeend', '<li class="pws-ctl-k">' + KEYCAP + '<span>' + hesc(ctl.keys) + '</span></li>');
+        if (ctl.phone) ul.insertAdjacentHTML('beforeend', '<li class="pws-ctl-p">' + PHONE + '<span>' + hesc(ctl.phone) + '</span></li>');
+        r.querySelector('.pws-apron').appendChild(ul); r.classList.add('pws-ctlon');
+      }
+      if (!D) return;
+      r.classList.add('pws-lv', 'pws-' + lv);                                  // a design's own CSS is scoped under .pws-<level-id>
+      for (var k in (D.vars || {})) r.style.setProperty(k, D.vars[k]);
+      if (D.css && !document.getElementById('pws-css-' + lv)) { var s2 = document.createElement('style'); s2.id = 'pws-css-' + lv; s2.textContent = D.css; document.head.appendChild(s2); }
+      if (D.props) r.querySelector('.pws-props').innerHTML = D.props;          // our own inline svg/html only: nothing downloaded
+      if (D.front) r.querySelector('.pws-front').innerHTML = D.front;
+    }
+    try { build(D); } catch (e) { console.warn('curtain ' + lv, e); D = null; r.className = 'pws'; r.removeAttribute('style'); build(null); }   // (a broken design: today's 404 curtain)
     var $ = function (q) { return r.querySelector(q); }, him = $('.pws-him'), img = $('.pws-him img'), line = $('.pws-say'), sr = $('.pws-sr');
-    $('.pws-name').textContent = o.name || ''; sr.textContent = (o.name || '') + ' is loading.';
+    $('.pws-name').textContent = (D && D.title) || o.name || ''; sr.textContent = (o.name || '') + ' is loading.';
     him.style.visibility = 'hidden'; img.onload = function () { him.style.visibility = ''; }; if (o.still) img.src = o.still;
-    var state = 'wait', doneRes = [];
-    function stop() { if (state === 'gone') return; state = 'gone'; if (r.parentNode) r.parentNode.removeChild(r); doneRes.splice(0).forEach(function (f) { f(); }); }
-    function answered() { r.classList.add('pws-lit'); sr.textContent = (o.name || '') + ' is ready.'; return new Promise(function (res) { setTimeout(res, calm ? 0 : 420); }); }   // the footlights come up
-    function ready() { return new Promise(function (res) { if (state === 'gone') { res(); return; } doneRes.push(res); if (state !== 'wait') return; state = 'go'; line.textContent = '';
+    var state = 'wait', doneRes = [], undress = null;
+    function hook(name) { try { if (D && typeof D[name] === 'function') D[name](r, api); } catch (e) { console.warn('curtain ' + lv + ' ' + name, e); } }
+    var api = { calm: calm, level: lv, name: o.name || '', controls: ctl };
+    function stop() { if (state === 'gone') return; state = 'gone'; if (undress) try { undress(); } catch (e) {} if (r.parentNode) r.parentNode.removeChild(r); doneRes.splice(0).forEach(function (f) { f(); }); }
+    function answered() { r.classList.add('pws-lit'); sr.textContent = (o.name || '') + ' is ready.'; hook('onLit'); return new Promise(function (res) { setTimeout(res, calm ? 0 : 420); }); }   // the footlights come up
+    function ready() { return new Promise(function (res) { if (state === 'gone') { res(); return; } doneRes.push(res); if (state !== 'wait') return; state = 'go'; line.textContent = ''; hook('onGo');
       if (calm) { stop(); return; }
       him.classList.add('pws-walk');                                              // he walks to the seam
       setTimeout(function () { r.classList.add('pws-thru'); }, 760);              // and through it: the cloth gives a little and closes behind him
       setTimeout(function () { r.classList.remove('pws-thru'); }, 1180);
       setTimeout(function () { r.classList.add('pws-out'); }, 1420);              // we follow him onto the stage
       setTimeout(stop, 1720); }); }
-    function close() { if (state !== 'gone') { state = 'gone'; if (r.parentNode) r.parentNode.removeChild(r); } }
+    function close() { if (state !== 'gone') { state = 'gone'; if (undress) try { undress(); } catch (e) {} if (r.parentNode) r.parentNode.removeChild(r); } }
     (o.into || document.body).appendChild(r);
-    return { answered: answered, ready: ready, landed: ready, fail: function () { line.textContent = 'krrzzt. it did not load.'; }, close: close, line: function (t) { line.textContent = t || ''; }, door: r };
+    try { if (D && typeof D.dress === 'function') { var u = D.dress(r, api); if (typeof u === 'function') undress = u; } } catch (e) { console.warn('curtain ' + lv + ' dress', e); }
+    [].forEach.call(r.querySelectorAll('.pws-ctl li > span'), function (s) { if (s.childNodes.length === 1 && s.firstChild.nodeType === 3) s.innerHTML = pieces(s.textContent); });
+    return { answered: answered, ready: ready, landed: ready, fail: function () { line.textContent = (D && D.failSay) || 'krrzzt. it did not load.'; }, close: close,
+      line: function (t) { line.textContent = t && D && D.say ? D.say : (t || ''); }, door: r };   // (a design's `say` stands in for "you're on.")
   }
   function open(o) {
     o = o || {};

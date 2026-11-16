@@ -5,3 +5,6 @@ tonight/
 # not the site: test tools and the page Chikin has not cleared (Nov 13 2026, the reader)
 living/lm/engine/behaviour/tools/
 source/transcript.html
+
+# Potatocode "your key" meaning map: his synonym list, PRIVATE (D-20261109-46). Local test only; tools/prepush_check.py refuses it too (Nov 16 2026)
+potatocode/your-key/meaning/

@@ -1,5 +1,5 @@
 {
- "note": "The pool behind the coupon. Not approved for picking until Chikin has read them.",
+ "note": "The pool behind the coupon. Not approved for picking until Chikin has read them. Each is tied to the Long Context agents he grew from (\"agents\") and wears the costume of the first one (\"look\"): tools/make_pick_pool.py.",
  "potatoes": [
   {
    "id": "pp-0113",
@@ -22,7 +22,26 @@
     "Casefile",
     "Pocket Lint",
     "Huddle Tooth"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Casefile",
+     "who": "a8b2724a004b4a7bc",
+     "img": "a8b2724a004b4a7bc.webp"
+    },
+    {
+     "name": "Pocket Lint",
+     "who": "ac4adb2a879f0a924",
+     "img": "ac4adb2a879f0a924.webp"
+    },
+    {
+     "name": "Huddle Tooth",
+     "who": "a69933b4512ab7f8a",
+     "img": "a69933b4512ab7f8a.webp"
+    }
+   ],
+   "look": "agent-a8b2724a004b4a7bc",
+   "skin": "#566170"
   },
   {
    "id": "pp-0114",
@@ -43,7 +62,16 @@
    },
    "from": [
     "Unblend"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Unblend",
+     "who": "afb59680844003ddd",
+     "img": "afb59680844003ddd.webp"
+    }
+   ],
+   "look": "agent-afb59680844003ddd",
+   "skin": "#6b4a2f"
   },
   {
    "id": "pp-0115",
@@ -65,7 +93,21 @@
    "from": [
     "Preview",
     "Rollcall"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Preview",
+     "who": "a56534da7a908f37b",
+     "img": "a56534da7a908f37b.webp"
+    },
+    {
+     "name": "Rollcall",
+     "who": "a9bb6c8b43cde7773",
+     "img": "a9bb6c8b43cde7773.webp"
+    }
+   ],
+   "look": "agent-a56534da7a908f37b",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0116",
@@ -86,7 +128,16 @@
    },
    "from": [
     "Second Meter"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Second Meter",
+     "who": "a05b8676c75aa0863",
+     "img": "a05b8676c75aa0863.webp"
+    }
+   ],
+   "look": "agent-a05b8676c75aa0863",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0117",
@@ -108,7 +159,21 @@
    "from": [
     "Ghost Light",
     "Lantern of the First Light"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Ghost Light",
+     "who": "a68b44b4659c0ddcb",
+     "img": "a68b44b4659c0ddcb.webp"
+    },
+    {
+     "name": "Lantern of the First Light",
+     "who": "a46020f439862d956",
+     "img": "a46020f439862d956.webp"
+    }
+   ],
+   "look": "agent-a68b44b4659c0ddcb",
+   "skin": "#566170"
   },
   {
    "id": "pp-0118",
@@ -131,7 +196,26 @@
     "Pocket Lint",
     "Offcamera",
     "Sustain"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Pocket Lint",
+     "who": "ac4adb2a879f0a924",
+     "img": "ac4adb2a879f0a924.webp"
+    },
+    {
+     "name": "Offcamera",
+     "who": "a32773984b41b3a57",
+     "img": "a32773984b41b3a57.webp"
+    },
+    {
+     "name": "Sustain",
+     "who": "a49e76a9faea5d245",
+     "img": "a49e76a9faea5d245.webp"
+    }
+   ],
+   "look": "agent-ac4adb2a879f0a924",
+   "skin": "#dccfae"
   },
   {
    "id": "pp-0119",
@@ -154,7 +238,26 @@
     "Hemline",
     "Flatfoot",
     "Stet"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Hemline",
+     "who": "a0c051bd0eca42f49",
+     "img": "a0c051bd0eca42f49.webp"
+    },
+    {
+     "name": "Flatfoot",
+     "who": "a0e27e505958517f0",
+     "img": "a0e27e505958517f0.webp"
+    },
+    {
+     "name": "Stet",
+     "who": "aaa4286acd9dc99c6",
+     "img": "aaa4286acd9dc99c6.webp"
+    }
+   ],
+   "look": "agent-a0c051bd0eca42f49",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0120",
@@ -177,7 +280,26 @@
     "Overmap Nothing",
     "Uplight",
     "Sprocket"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Overmap Nothing",
+     "who": "a8a1651da1b6f4f22",
+     "img": "a8a1651da1b6f4f22.webp"
+    },
+    {
+     "name": "Uplight",
+     "who": "ae3a8b0d0c63aae66",
+     "img": "ae3a8b0d0c63aae66.webp"
+    },
+    {
+     "name": "Sprocket",
+     "who": "a8662458343dc8b14",
+     "img": "a8662458343dc8b14.webp"
+    }
+   ],
+   "look": "agent-a8a1651da1b6f4f22",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0121",
@@ -198,7 +320,16 @@
    },
    "from": [
     "Question Stem"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Question Stem",
+     "who": "af7af946d65ab2aca",
+     "img": "af7af946d65ab2aca.webp"
+    }
+   ],
+   "look": "agent-af7af946d65ab2aca",
+   "skin": "#6f8a52"
   },
   {
    "id": "pp-0122",
@@ -220,7 +351,21 @@
    "from": [
     "Strikethrough",
     "Key Plan"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Strikethrough",
+     "who": "abcad7d2cde7f2798",
+     "img": "abcad7d2cde7f2798.webp"
+    },
+    {
+     "name": "Key Plan",
+     "who": "a3237758fef98c14a",
+     "img": "a3237758fef98c14a.webp"
+    }
+   ],
+   "look": "agent-abcad7d2cde7f2798",
+   "skin": "#d8d2c6"
   },
   {
    "id": "pp-0123",
@@ -243,7 +388,26 @@
     "Porch",
     "Pilot Light",
     "Gouge"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Porch",
+     "who": "a878b0e1ea065c33b",
+     "img": "a878b0e1ea065c33b.webp"
+    },
+    {
+     "name": "Pilot Light",
+     "who": "a979e52de50fea4ea",
+     "img": "a979e52de50fea4ea.webp"
+    },
+    {
+     "name": "Gouge",
+     "who": "Gouge",
+     "img": "Gouge.webp"
+    }
+   ],
+   "look": "agent-a878b0e1ea065c33b",
+   "skin": "#dccfae"
   },
   {
    "id": "pp-0125",
@@ -265,7 +429,21 @@
    "from": [
     "The Palette Knife",
     "Dashed Line"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "The Palette Knife",
+     "who": "The-Palette-Knife",
+     "img": "The-Palette-Knife.webp"
+    },
+    {
+     "name": "Dashed Line",
+     "who": "afe9ecfa033f6dbf0",
+     "img": "afe9ecfa033f6dbf0.webp"
+    }
+   ],
+   "look": "agent-The-Palette-Knife",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0126",
@@ -286,7 +464,16 @@
    },
    "from": [
     "Domino"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Domino",
+     "who": "a7813441de475b2a6",
+     "img": "a7813441de475b2a6.webp"
+    }
+   ],
+   "look": "agent-a7813441de475b2a6",
+   "skin": "#566170"
   },
   {
    "id": "pp-0127",
@@ -307,7 +494,16 @@
    },
    "from": [
     "Held Frame"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Held Frame",
+     "who": "aa011b17e200cc921",
+     "img": "aa011b17e200cc921.webp"
+    }
+   ],
+   "look": "agent-aa011b17e200cc921",
+   "skin": "#566170"
   },
   {
    "id": "pp-0128",
@@ -329,7 +525,21 @@
    "from": [
     "Ledger",
     "Bite Test"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Ledger",
+     "who": "a97eb9a2852527177",
+     "img": "a97eb9a2852527177.webp"
+    },
+    {
+     "name": "Bite Test",
+     "who": "a776a8384927adc4c",
+     "img": "a776a8384927adc4c.webp"
+    }
+   ],
+   "look": "agent-a97eb9a2852527177",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0129",
@@ -351,7 +561,21 @@
    "from": [
     "Raw Header",
     "Jamb"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Raw Header",
+     "who": "af38067c662d7dd54",
+     "img": "af38067c662d7dd54.webp"
+    },
+    {
+     "name": "Jamb",
+     "who": "ae5539e91f9251dba",
+     "img": "ae5539e91f9251dba.webp"
+    }
+   ],
+   "look": "agent-af38067c662d7dd54",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0130",
@@ -373,7 +597,21 @@
    "from": [
     "Margin Note",
     "Item 4,112,907"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Margin Note",
+     "who": "aa313d48dfefa7b6c",
+     "img": "aa313d48dfefa7b6c.webp"
+    },
+    {
+     "name": "Item 4,112,907",
+     "who": "ae25b748db61b50c9",
+     "img": "ae25b748db61b50c9.webp"
+    }
+   ],
+   "look": "agent-aa313d48dfefa7b6c",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0131",
@@ -396,7 +634,26 @@
     "Tear Here",
     "Gaffer",
     "Blank Line"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Tear Here",
+     "who": "a0ecd2c124dca5df7",
+     "img": "a0ecd2c124dca5df7.webp"
+    },
+    {
+     "name": "Gaffer",
+     "who": "a2494cd1386eb1b88",
+     "img": "a2494cd1386eb1b88.webp"
+    },
+    {
+     "name": "Blank Line",
+     "who": "aee83fbca44a29aa1",
+     "img": "aee83fbca44a29aa1.webp"
+    }
+   ],
+   "look": "agent-a0ecd2c124dca5df7",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0132",
@@ -417,7 +674,16 @@
    },
    "from": [
     "Lantern-Off"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Lantern-Off",
+     "who": "a9fd6c34f1b2fb962",
+     "img": "a9fd6c34f1b2fb962.webp"
+    }
+   ],
+   "look": "agent-a9fd6c34f1b2fb962",
+   "skin": "#566170"
   },
   {
    "id": "pp-0133",
@@ -440,7 +706,26 @@
     "Pantry Light",
     "Dead Stop",
     "Coyote Time"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Pantry Light",
+     "who": "a95d045678c6a18fd",
+     "img": "a95d045678c6a18fd.webp"
+    },
+    {
+     "name": "Dead Stop",
+     "who": "ae26ae141af6e9dec",
+     "img": "ae26ae141af6e9dec.webp"
+    },
+    {
+     "name": "Coyote Time",
+     "who": "a25c578ada58becea",
+     "img": "a25c578ada58becea.webp"
+    }
+   ],
+   "look": "agent-a95d045678c6a18fd",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0134",
@@ -462,7 +747,21 @@
    "from": [
     "Missed Spot",
     "Brow"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Missed Spot",
+     "who": "a2f628f029b4678dd",
+     "img": "a2f628f029b4678dd.webp"
+    },
+    {
+     "name": "Brow",
+     "who": "aae2d23af44a33aa9",
+     "img": "aae2d23af44a33aa9.webp"
+    }
+   ],
+   "look": "agent-a2f628f029b4678dd",
+   "skin": "#566170"
   },
   {
    "id": "pp-0136",
@@ -485,7 +784,26 @@
     "Rest Beat Keeper",
     "Cold Open",
     "Strikethrough"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Rest Beat Keeper",
+     "who": "af8ffe32172e31eee",
+     "img": "af8ffe32172e31eee.webp"
+    },
+    {
+     "name": "Cold Open",
+     "who": "a5057f8eee518745f",
+     "img": "a5057f8eee518745f.webp"
+    },
+    {
+     "name": "Strikethrough",
+     "who": "abcad7d2cde7f2798",
+     "img": "abcad7d2cde7f2798.webp"
+    }
+   ],
+   "look": "agent-af8ffe32172e31eee",
+   "skin": "#5c7048"
   },
   {
    "id": "pp-0137",
@@ -507,7 +825,21 @@
    "from": [
     "Take With Butter",
     "Weld"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Take With Butter",
+     "who": "af310a2d98001c4b9",
+     "img": "af310a2d98001c4b9.webp"
+    },
+    {
+     "name": "Weld",
+     "who": "a1fb9c013fc8202ab",
+     "img": "a1fb9c013fc8202ab.webp"
+    }
+   ],
+   "look": "agent-af310a2d98001c4b9",
+   "skin": "#dccfae"
   },
   {
    "id": "pp-0138",
@@ -528,7 +860,16 @@
    },
    "from": [
     "Auto-Rotate"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Auto-Rotate",
+     "who": "a443c15d5a6d4d648",
+     "img": "a443c15d5a6d4d648.webp"
+    }
+   ],
+   "look": "agent-a443c15d5a6d4d648",
+   "skin": "#d8d2c6"
   },
   {
    "id": "pp-0140",
@@ -550,7 +891,21 @@
    "from": [
     "Second Take",
     "Note One"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Second Take",
+     "who": "a0252612b971a3861",
+     "img": "a0252612b971a3861.webp"
+    },
+    {
+     "name": "Note One",
+     "who": "a8ee3100a7597d842",
+     "img": "a8ee3100a7597d842.webp"
+    }
+   ],
+   "look": "agent-a0252612b971a3861",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0141",
@@ -573,7 +928,26 @@
     "Rewind",
     "Held Breath",
     "Turnback"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Rewind",
+     "who": "a6def70375fd2e830",
+     "img": "a6def70375fd2e830.webp"
+    },
+    {
+     "name": "Held Breath",
+     "who": "a264721d234bb4ba5",
+     "img": "a264721d234bb4ba5.webp"
+    },
+    {
+     "name": "Turnback",
+     "who": "a443c823c767fd268",
+     "img": "a443c823c767fd268.webp"
+    }
+   ],
+   "look": "agent-a6def70375fd2e830",
+   "skin": "#566170"
   },
   {
    "id": "pp-0142",
@@ -595,7 +969,21 @@
    "from": [
     "One Look",
     "Uplight"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "One Look",
+     "who": "a5d79d0a93f7eb29f",
+     "img": "a5d79d0a93f7eb29f.webp"
+    },
+    {
+     "name": "Uplight",
+     "who": "ae3a8b0d0c63aae66",
+     "img": "ae3a8b0d0c63aae66.webp"
+    }
+   ],
+   "look": "agent-a5d79d0a93f7eb29f",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0144",
@@ -618,7 +1006,26 @@
     "Eyebrows Once",
     "Domino",
     "Fallout Clause"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Eyebrows Once",
+     "who": "addd22f38b0e11dbd",
+     "img": "addd22f38b0e11dbd.webp"
+    },
+    {
+     "name": "Domino",
+     "who": "a7813441de475b2a6",
+     "img": "a7813441de475b2a6.webp"
+    },
+    {
+     "name": "Fallout Clause",
+     "who": "a5e1b102085998636",
+     "img": "a5e1b102085998636.webp"
+    }
+   ],
+   "look": "agent-addd22f38b0e11dbd",
+   "skin": "#6b4a2f"
   },
   {
    "id": "pp-0145",
@@ -640,7 +1047,21 @@
    "from": [
     "No Knees",
     "Strikethrough"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "No Knees",
+     "who": "a24fad7f9698e8ce8",
+     "img": "a24fad7f9698e8ce8.webp"
+    },
+    {
+     "name": "Strikethrough",
+     "who": "abcad7d2cde7f2798",
+     "img": "abcad7d2cde7f2798.webp"
+    }
+   ],
+   "look": "agent-a24fad7f9698e8ce8",
+   "skin": "#566170"
   },
   {
    "id": "pp-0146",
@@ -662,7 +1083,21 @@
    "from": [
     "Clause 42",
     "Pocket Lint"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Clause 42",
+     "who": "a14ca607df7e98b24",
+     "img": "a14ca607df7e98b24.webp"
+    },
+    {
+     "name": "Pocket Lint",
+     "who": "ac4adb2a879f0a924",
+     "img": "ac4adb2a879f0a924.webp"
+    }
+   ],
+   "look": "agent-a14ca607df7e98b24",
+   "skin": "#566170"
   },
   {
    "id": "pp-0147",
@@ -684,7 +1119,21 @@
    "from": [
     "Stepping Stone",
     "Feeler Gauge"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Stepping Stone",
+     "who": "ac7a3c9a4b43cc609",
+     "img": "ac7a3c9a4b43cc609.webp"
+    },
+    {
+     "name": "Feeler Gauge",
+     "who": "aab1e4bf8f530801c",
+     "img": "aab1e4bf8f530801c.webp"
+    }
+   ],
+   "look": "agent-ac7a3c9a4b43cc609",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0148",
@@ -706,7 +1155,21 @@
    "from": [
     "Newel",
     "Held Frame"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Newel",
+     "who": "a1532b5d149599431",
+     "img": "a1532b5d149599431.webp"
+    },
+    {
+     "name": "Held Frame",
+     "who": "aa011b17e200cc921",
+     "img": "aa011b17e200cc921.webp"
+    }
+   ],
+   "look": "agent-a1532b5d149599431",
+   "skin": "#4f6b45"
   },
   {
    "id": "pp-0149",
@@ -728,7 +1191,21 @@
    "from": [
     "Stet",
     "Slotwright"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Stet",
+     "who": "aaa4286acd9dc99c6",
+     "img": "aaa4286acd9dc99c6.webp"
+    },
+    {
+     "name": "Slotwright",
+     "who": "a280329569df821a6",
+     "img": "a280329569df821a6.webp"
+    }
+   ],
+   "look": "agent-aaa4286acd9dc99c6",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0150",
@@ -750,7 +1227,21 @@
    "from": [
     "Second Scanline",
     "Limit One"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Second Scanline",
+     "who": "ae22fe1d86dec6006",
+     "img": "ae22fe1d86dec6006.webp"
+    },
+    {
+     "name": "Limit One",
+     "who": "aa709f241f70f6882",
+     "img": "aa709f241f70f6882.webp"
+    }
+   ],
+   "look": "agent-ae22fe1d86dec6006",
+   "skin": "#6a45b5"
   },
   {
    "id": "pp-0151",
@@ -772,7 +1263,21 @@
    "from": [
     "As Typed",
     "Gatekeeper of the Yay"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "As Typed",
+     "who": "a3d72931b94f02d16",
+     "img": "a3d72931b94f02d16.webp"
+    },
+    {
+     "name": "Gatekeeper of the Yay",
+     "who": "a5a5f15408c054943",
+     "img": "a5a5f15408c054943.webp"
+    }
+   ],
+   "look": "agent-a3d72931b94f02d16",
+   "skin": "#566170"
   },
   {
    "id": "pp-0153",
@@ -794,7 +1299,21 @@
    "from": [
     "Doorstop",
     "Shellwright"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Doorstop",
+     "who": "ac37f2440ef92d158",
+     "img": "ac37f2440ef92d158.webp"
+    },
+    {
+     "name": "Shellwright",
+     "who": "a288e8b0a84ce4531",
+     "img": "a288e8b0a84ce4531.webp"
+    }
+   ],
+   "look": "agent-ac37f2440ef92d158",
+   "skin": "#6b4a2f"
   },
   {
    "id": "pp-0154",
@@ -816,7 +1335,21 @@
    "from": [
     "Table Setter",
     "Edited"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Table Setter",
+     "who": "aa632db8083e64826",
+     "img": "aa632db8083e64826.webp"
+    },
+    {
+     "name": "Edited",
+     "who": "a93b1faa2fc22d094",
+     "img": "a93b1faa2fc22d094.webp"
+    }
+   ],
+   "look": "agent-aa632db8083e64826",
+   "skin": "#7a5634"
   },
   {
    "id": "pp-0155",
@@ -839,7 +1372,26 @@
     "Huddle",
     "Gouge",
     "Rotation Lock"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Huddle",
+     "who": "a1f5e0cd223473327",
+     "img": "a1f5e0cd223473327.webp"
+    },
+    {
+     "name": "Gouge",
+     "who": "Gouge",
+     "img": "Gouge.webp"
+    },
+    {
+     "name": "Rotation Lock",
+     "who": "a579c1ae4fd7b467b",
+     "img": "a579c1ae4fd7b467b.webp"
+    }
+   ],
+   "look": "agent-a1f5e0cd223473327",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0156",
@@ -860,7 +1412,16 @@
    },
    "from": [
     "Ghost Light"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Ghost Light",
+     "who": "a68b44b4659c0ddcb",
+     "img": "a68b44b4659c0ddcb.webp"
+    }
+   ],
+   "look": "agent-a68b44b4659c0ddcb",
+   "skin": "#566170"
   },
   {
    "id": "pp-0157",
@@ -882,7 +1443,21 @@
    "from": [
     "Coyote Time",
     "Pilot Light"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Coyote Time",
+     "who": "a25c578ada58becea",
+     "img": "a25c578ada58becea.webp"
+    },
+    {
+     "name": "Pilot Light",
+     "who": "a979e52de50fea4ea",
+     "img": "a979e52de50fea4ea.webp"
+    }
+   ],
+   "look": "agent-a25c578ada58becea",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0158",
@@ -905,7 +1480,26 @@
     "Inpaint",
     "Lantern",
     "One Look"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Inpaint",
+     "who": "aaa1085c0ea8bc1c5",
+     "img": "aaa1085c0ea8bc1c5.webp"
+    },
+    {
+     "name": "Lantern",
+     "who": "ae1c313a07de33a77",
+     "img": "ae1c313a07de33a77.webp"
+    },
+    {
+     "name": "One Look",
+     "who": "a5d79d0a93f7eb29f",
+     "img": "a5d79d0a93f7eb29f.webp"
+    }
+   ],
+   "look": "agent-aaa1085c0ea8bc1c5",
+   "skin": "#566170"
   },
   {
    "id": "pp-0160",
@@ -927,7 +1521,21 @@
    "from": [
     "Link Blue",
     "Fill Id"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Link Blue",
+     "who": "a57e14b2817e10881",
+     "img": "a57e14b2817e10881.webp"
+    },
+    {
+     "name": "Fill Id",
+     "who": "ade6ea2ef8dd9166f",
+     "img": "ade6ea2ef8dd9166f.webp"
+    }
+   ],
+   "look": "agent-a57e14b2817e10881",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0161",
@@ -950,7 +1558,26 @@
     "Hole Punch",
     "Far Window",
     "Doorjamb"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Hole Punch",
+     "who": "a548e02fdb3af92ee",
+     "img": "a548e02fdb3af92ee.webp"
+    },
+    {
+     "name": "Far Window",
+     "who": "ab1096637fcebfb69",
+     "img": "ab1096637fcebfb69.webp"
+    },
+    {
+     "name": "Doorjamb",
+     "who": "af8e5d0b97da91754",
+     "img": "af8e5d0b97da91754.webp"
+    }
+   ],
+   "look": "agent-a548e02fdb3af92ee",
+   "skin": "#566170"
   },
   {
    "id": "pp-0163",
@@ -971,7 +1598,16 @@
    },
    "from": [
     "Wall Walk"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Wall Walk",
+     "who": "a1899863937c1a184",
+     "img": "a1899863937c1a184.webp"
+    }
+   ],
+   "look": "agent-a1899863937c1a184",
+   "skin": "#8d3a2c"
   },
   {
    "id": "pp-0164",
@@ -992,7 +1628,16 @@
    },
    "from": [
     "Uncut"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Uncut",
+     "who": "a5e6e21f246e4cf4a",
+     "img": "a5e6e21f246e4cf4a.webp"
+    }
+   ],
+   "look": "agent-a5e6e21f246e4cf4a",
+   "skin": "#7b7a78"
   },
   {
    "id": "pp-0166",
@@ -1014,7 +1659,21 @@
    "from": [
     "Hemline",
     "Wall Walk"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Hemline",
+     "who": "a0c051bd0eca42f49",
+     "img": "a0c051bd0eca42f49.webp"
+    },
+    {
+     "name": "Wall Walk",
+     "who": "a1899863937c1a184",
+     "img": "a1899863937c1a184.webp"
+    }
+   ],
+   "look": "agent-a0c051bd0eca42f49",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0167",
@@ -1037,7 +1696,26 @@
     "Spoiler",
     "Frameclock",
     "Turnback"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Spoiler",
+     "who": "a4418c9b9862c2226",
+     "img": "a4418c9b9862c2226.webp"
+    },
+    {
+     "name": "Frameclock",
+     "who": "a8df0e3388594de4e",
+     "img": "a8df0e3388594de4e.webp"
+    },
+    {
+     "name": "Turnback",
+     "who": "a443c823c767fd268",
+     "img": "a443c823c767fd268.webp"
+    }
+   ],
+   "look": "agent-a4418c9b9862c2226",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0168",
@@ -1059,7 +1737,21 @@
    "from": [
     "Close-Up",
     "Spare Key"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Close-Up",
+     "who": "a2f9d211ac1a886c8",
+     "img": "a2f9d211ac1a886c8.webp"
+    },
+    {
+     "name": "Spare Key",
+     "who": "a617f5d3f67a92692",
+     "img": "a617f5d3f67a92692.webp"
+    }
+   ],
+   "look": "agent-a2f9d211ac1a886c8",
+   "skin": "#566170"
   },
   {
    "id": "pp-0169",
@@ -1081,7 +1773,21 @@
    "from": [
     "Quiet Window",
     "Footnote"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Quiet Window",
+     "who": "af6856556d0fa1767",
+     "img": "af6856556d0fa1767.webp"
+    },
+    {
+     "name": "Footnote",
+     "who": "ae00c1f4d9077235c",
+     "img": "ae00c1f4d9077235c.webp"
+    }
+   ],
+   "look": "agent-af6856556d0fa1767",
+   "skin": "#566170"
   },
   {
    "id": "pp-0170",
@@ -1103,7 +1809,21 @@
    "from": [
     "Huddle Lamp",
     "Wax Stamp Wobble"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Huddle Lamp",
+     "who": "ad40a565edc164f66",
+     "img": "ad40a565edc164f66.webp"
+    },
+    {
+     "name": "Wax Stamp Wobble",
+     "who": "Wax-Stamp-Wobble",
+     "img": "Wax-Stamp-Wobble.webp"
+    }
+   ],
+   "look": "agent-ad40a565edc164f66",
+   "skin": "#566170"
   },
   {
    "id": "pp-0171",
@@ -1125,7 +1845,21 @@
    "from": [
     "Threshold",
     "Pocket"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Threshold",
+     "who": "a58fe4256094f2537",
+     "img": "a58fe4256094f2537.webp"
+    },
+    {
+     "name": "Pocket",
+     "who": "ab5214ffc731a9c81",
+     "img": "ab5214ffc731a9c81.webp"
+    }
+   ],
+   "look": "agent-a58fe4256094f2537",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0172",
@@ -1146,7 +1880,16 @@
    },
    "from": [
     "Dustpan"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Dustpan",
+     "who": "aae90d8c76d610f71",
+     "img": "aae90d8c76d610f71.webp"
+    }
+   ],
+   "look": "agent-aae90d8c76d610f71",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0173",
@@ -1167,7 +1910,16 @@
    },
    "from": [
     "Pivot"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Pivot",
+     "who": "a1948c3b8827109fb",
+     "img": "a1948c3b8827109fb.webp"
+    }
+   ],
+   "look": "agent-a1948c3b8827109fb",
+   "skin": "#566170"
   },
   {
    "id": "pp-0174",
@@ -1188,7 +1940,16 @@
    },
    "from": [
     "Footnote"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Footnote",
+     "who": "ae00c1f4d9077235c",
+     "img": "ae00c1f4d9077235c.webp"
+    }
+   ],
+   "look": "agent-ae00c1f4d9077235c",
+   "skin": "#6b4a2f"
   },
   {
    "id": "pp-0175",
@@ -1209,7 +1970,16 @@
    },
    "from": [
     "Dead Glass"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Dead Glass",
+     "who": "a060f1b61fcedd970",
+     "img": "a060f1b61fcedd970.webp"
+    }
+   ],
+   "look": "agent-a060f1b61fcedd970",
+   "skin": "#6a45b5"
   },
   {
    "id": "pp-0176",
@@ -1231,7 +2001,21 @@
    "from": [
     "Sheila?",
     "Gaffer"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Sheila?",
+     "who": "a351c452fa726d10e",
+     "img": "a351c452fa726d10e.webp"
+    },
+    {
+     "name": "Gaffer",
+     "who": "a2494cd1386eb1b88",
+     "img": "a2494cd1386eb1b88.webp"
+    }
+   ],
+   "look": "agent-a351c452fa726d10e",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0177",
@@ -1253,7 +2037,21 @@
    "from": [
     "Sixth Look",
     "Pilot Light"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Sixth Look",
+     "who": "acb4c4cdc2f5572de",
+     "img": "acb4c4cdc2f5572de.webp"
+    },
+    {
+     "name": "Pilot Light",
+     "who": "a979e52de50fea4ea",
+     "img": "a979e52de50fea4ea.webp"
+    }
+   ],
+   "look": "agent-acb4c4cdc2f5572de",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0178",
@@ -1275,7 +2073,21 @@
    "from": [
     "Lineup",
     "Hemline"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Lineup",
+     "who": "a2c6958a98c080203",
+     "img": "a2c6958a98c080203.webp"
+    },
+    {
+     "name": "Hemline",
+     "who": "a0c051bd0eca42f49",
+     "img": "a0c051bd0eca42f49.webp"
+    }
+   ],
+   "look": "agent-a2c6958a98c080203",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0180",
@@ -1297,7 +2109,21 @@
    "from": [
     "Full Stop",
     "Edited"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Full Stop",
+     "who": "abbfa5f4ae58199e3",
+     "img": "abbfa5f4ae58199e3.webp"
+    },
+    {
+     "name": "Edited",
+     "who": "a93b1faa2fc22d094",
+     "img": "a93b1faa2fc22d094.webp"
+    }
+   ],
+   "look": "agent-abbfa5f4ae58199e3",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0181",
@@ -1318,7 +2144,16 @@
    },
    "from": [
     "Side Door"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Side Door",
+     "who": "a91ddb36a126732b2",
+     "img": "a91ddb36a126732b2.webp"
+    }
+   ],
+   "look": "agent-a91ddb36a126732b2",
+   "skin": "#566170"
   },
   {
    "id": "pp-0182",
@@ -1340,7 +2175,21 @@
    "from": [
     "Second Beat",
     "Clock"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Second Beat",
+     "who": "aadc2c5e9f19d4552",
+     "img": "aadc2c5e9f19d4552.webp"
+    },
+    {
+     "name": "Clock",
+     "who": "add82dcca54a7f854",
+     "img": "add82dcca54a7f854.webp"
+    }
+   ],
+   "look": "agent-aadc2c5e9f19d4552",
+   "skin": "#566170"
   },
   {
    "id": "pp-0183",
@@ -1362,7 +2211,21 @@
    "from": [
     "Rolling Dots",
     "Doorknob Tester"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Rolling Dots",
+     "who": "a51bd2594f6c0fca9",
+     "img": "a51bd2594f6c0fca9.webp"
+    },
+    {
+     "name": "Doorknob Tester",
+     "who": "Doorknob-Tester",
+     "img": "Doorknob-Tester.webp"
+    }
+   ],
+   "look": "agent-a51bd2594f6c0fca9",
+   "skin": "#dccfae"
   },
   {
    "id": "pp-0184",
@@ -1383,7 +2246,16 @@
    },
    "from": [
     "Read by 43"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Read by 43",
+     "who": "a37af6379e648044a",
+     "img": "a37af6379e648044a.webp"
+    }
+   ],
+   "look": "agent-a37af6379e648044a",
+   "skin": "#3f5f86"
   },
   {
    "id": "pp-0185",
@@ -1405,7 +2277,21 @@
    "from": [
     "Spark-Before-The-Beat",
     "Between Rows"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Spark-Before-The-Beat",
+     "who": "a77bff74f4761b7a2",
+     "img": "a77bff74f4761b7a2.webp"
+    },
+    {
+     "name": "Between Rows",
+     "who": "a87c157c96d3956dc",
+     "img": "a87c157c96d3956dc.webp"
+    }
+   ],
+   "look": "agent-a77bff74f4761b7a2",
+   "skin": "#6a45b5"
   },
   {
    "id": "pp-0186",
@@ -1428,7 +2314,26 @@
     "Huddle Before the Tip",
     "Huddle Tooth",
     "Postmark"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Huddle Before the Tip",
+     "who": "a7e35f5f998f9a7b2",
+     "img": "a7e35f5f998f9a7b2.webp"
+    },
+    {
+     "name": "Huddle Tooth",
+     "who": "a69933b4512ab7f8a",
+     "img": "a69933b4512ab7f8a.webp"
+    },
+    {
+     "name": "Postmark",
+     "who": "a42354ef8f27b05bd",
+     "img": "a42354ef8f27b05bd.webp"
+    }
+   ],
+   "look": "agent-a7e35f5f998f9a7b2",
+   "skin": "#566170"
   },
   {
    "id": "pp-0187",
@@ -1450,7 +2355,21 @@
    "from": [
     "Face Port",
     "Stuck Pixel"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Face Port",
+     "who": "a77d931a45bcfce7b",
+     "img": "a77d931a45bcfce7b.webp"
+    },
+    {
+     "name": "Stuck Pixel",
+     "who": "a4dd4edc2c497725c",
+     "img": "a4dd4edc2c497725c.webp"
+    }
+   ],
+   "look": "agent-a77d931a45bcfce7b",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0188",
@@ -1472,7 +2391,21 @@
    "from": [
     "Plumb Line",
     "Dustpan"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Plumb Line",
+     "who": "a869c81bbb7a83c78",
+     "img": "a869c81bbb7a83c78.webp"
+    },
+    {
+     "name": "Dustpan",
+     "who": "aae90d8c76d610f71",
+     "img": "aae90d8c76d610f71.webp"
+    }
+   ],
+   "look": "agent-a869c81bbb7a83c78",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0189",
@@ -1493,7 +2426,16 @@
    },
    "from": [
     "Second Guess"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Second Guess",
+     "who": "a3cdb528aea688237",
+     "img": "a3cdb528aea688237.webp"
+    }
+   ],
+   "look": "agent-a3cdb528aea688237",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0190",
@@ -1515,7 +2457,21 @@
    "from": [
     "Flatfoot",
     "Lantern-Off"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Flatfoot",
+     "who": "a0e27e505958517f0",
+     "img": "a0e27e505958517f0.webp"
+    },
+    {
+     "name": "Lantern-Off",
+     "who": "a9fd6c34f1b2fb962",
+     "img": "a9fd6c34f1b2fb962.webp"
+    }
+   ],
+   "look": "agent-a0e27e505958517f0",
+   "skin": "#566170"
   },
   {
    "id": "pp-0192",
@@ -1536,7 +2492,16 @@
    },
    "from": [
     "Nightwalk"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Nightwalk",
+     "who": "a89aa61b49e80b415",
+     "img": "a89aa61b49e80b415.webp"
+    }
+   ],
+   "look": "agent-a89aa61b49e80b415",
+   "skin": "#566170"
   },
   {
    "id": "pp-0193",
@@ -1559,7 +2524,26 @@
     "Skirting Board",
     "Chopwatch",
     "Snapdivisor"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Skirting Board",
+     "who": "ab9a43ab351cd7cca",
+     "img": "ab9a43ab351cd7cca.webp"
+    },
+    {
+     "name": "Chopwatch",
+     "who": "a5f9d5a093ec1b43f",
+     "img": "a5f9d5a093ec1b43f.webp"
+    },
+    {
+     "name": "Snapdivisor",
+     "who": "af0043d5d59f82a2f",
+     "img": "af0043d5d59f82a2f.webp"
+    }
+   ],
+   "look": "agent-ab9a43ab351cd7cca",
+   "skin": "#4f6b45"
   },
   {
    "id": "pp-0194",
@@ -1580,7 +2564,16 @@
    },
    "from": [
     "Marginalia"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Marginalia",
+     "who": "a41cd6db02cca382e",
+     "img": "a41cd6db02cca382e.webp"
+    }
+   ],
+   "look": "agent-a41cd6db02cca382e",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0195",
@@ -1601,7 +2594,16 @@
    },
    "from": [
     "Fourth Fly"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Fourth Fly",
+     "who": "ad7f528adc6911585",
+     "img": "ad7f528adc6911585.webp"
+    }
+   ],
+   "look": "agent-ad7f528adc6911585",
+   "skin": "#6a45b5"
   },
   {
    "id": "pp-0196",
@@ -1623,7 +2625,21 @@
    "from": [
     "Calliper",
     "Bite Test"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Calliper",
+     "who": "ad204347be8d54666",
+     "img": "ad204347be8d54666.webp"
+    },
+    {
+     "name": "Bite Test",
+     "who": "a776a8384927adc4c",
+     "img": "a776a8384927adc4c.webp"
+    }
+   ],
+   "look": "agent-ad204347be8d54666",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0197",
@@ -1646,7 +2662,26 @@
     "Fourth Wall",
     "Fill Id",
     "Second Meter"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Fourth Wall",
+     "who": "acc0515af5b0097f1",
+     "img": "acc0515af5b0097f1.webp"
+    },
+    {
+     "name": "Fill Id",
+     "who": "ade6ea2ef8dd9166f",
+     "img": "ade6ea2ef8dd9166f.webp"
+    },
+    {
+     "name": "Second Meter",
+     "who": "a05b8676c75aa0863",
+     "img": "a05b8676c75aa0863.webp"
+    }
+   ],
+   "look": "agent-acc0515af5b0097f1",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0198",
@@ -1668,7 +2703,21 @@
    "from": [
     "Tuning Fork",
     "Gargoyle"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Tuning Fork",
+     "who": "a333d9353bb443a6a",
+     "img": "a333d9353bb443a6a.webp"
+    },
+    {
+     "name": "Gargoyle",
+     "who": "ad55c602d1cd98033",
+     "img": "ad55c602d1cd98033.webp"
+    }
+   ],
+   "look": "agent-a333d9353bb443a6a",
+   "skin": "#cdc6b5"
   },
   {
    "id": "pp-0199",
@@ -1689,7 +2738,16 @@
    },
    "from": [
     "Not Set"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Not Set",
+     "who": "a9210e242461ed7a1",
+     "img": "a9210e242461ed7a1.webp"
+    }
+   ],
+   "look": "agent-a9210e242461ed7a1",
+   "skin": "#566170"
   },
   {
    "id": "pp-0200",
@@ -1711,7 +2769,21 @@
    "from": [
     "Offcamera",
     "Patagium"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Offcamera",
+     "who": "a32773984b41b3a57",
+     "img": "a32773984b41b3a57.webp"
+    },
+    {
+     "name": "Patagium",
+     "who": "a8e07bd0c33feb2ee",
+     "img": "a8e07bd0c33feb2ee.webp"
+    }
+   ],
+   "look": "agent-a32773984b41b3a57",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0201",
@@ -1732,7 +2804,16 @@
    },
    "from": [
     "Nearly Answered"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Nearly Answered",
+     "who": "af8579acef22f1c0c",
+     "img": "af8579acef22f1c0c.webp"
+    }
+   ],
+   "look": "agent-af8579acef22f1c0c",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0202",
@@ -1754,7 +2835,21 @@
    "from": [
     "Spare Key",
     "Hemline"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Spare Key",
+     "who": "a617f5d3f67a92692",
+     "img": "a617f5d3f67a92692.webp"
+    },
+    {
+     "name": "Hemline",
+     "who": "a0c051bd0eca42f49",
+     "img": "a0c051bd0eca42f49.webp"
+    }
+   ],
+   "look": "agent-a617f5d3f67a92692",
+   "skin": "#566170"
   },
   {
    "id": "pp-0203",
@@ -1776,7 +2871,21 @@
    "from": [
     "Painted Door",
     "Catenary"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Painted Door",
+     "who": "a47f304c70a4a327d",
+     "img": "a47f304c70a4a327d.webp"
+    },
+    {
+     "name": "Catenary",
+     "who": "a2a80381e9124a332",
+     "img": "a2a80381e9124a332.webp"
+    }
+   ],
+   "look": "agent-a47f304c70a4a327d",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0204",
@@ -1797,7 +2906,16 @@
    },
    "from": [
     "Lilac Bracket"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Lilac Bracket",
+     "who": "a17c535cd8db27486",
+     "img": "a17c535cd8db27486.webp"
+    }
+   ],
+   "look": "agent-a17c535cd8db27486",
+   "skin": "#566170"
   },
   {
    "id": "pp-0205",
@@ -1818,7 +2936,16 @@
    },
    "from": [
     "Chopwatch"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Chopwatch",
+     "who": "a5f9d5a093ec1b43f",
+     "img": "a5f9d5a093ec1b43f.webp"
+    }
+   ],
+   "look": "agent-a5f9d5a093ec1b43f",
+   "skin": "#566170"
   },
   {
    "id": "pp-0206",
@@ -1841,7 +2968,26 @@
     "Brim",
     "Long Sec",
     "Latch Line"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Brim",
+     "who": "a7056b2eb83783657",
+     "img": "a7056b2eb83783657.webp"
+    },
+    {
+     "name": "Long Sec",
+     "who": "Long-Sec",
+     "img": "Long-Sec.webp"
+    },
+    {
+     "name": "Latch Line",
+     "who": "aa3619d1c72fc1cac",
+     "img": "aa3619d1c72fc1cac.webp"
+    }
+   ],
+   "look": "agent-a7056b2eb83783657",
+   "skin": "#85817a"
   },
   {
    "id": "pp-0207",
@@ -1863,7 +3009,21 @@
    "from": [
     "Address Bar",
     "Uplight"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Address Bar",
+     "who": "af95a4686f108dced",
+     "img": "af95a4686f108dced.webp"
+    },
+    {
+     "name": "Uplight",
+     "who": "ae3a8b0d0c63aae66",
+     "img": "ae3a8b0d0c63aae66.webp"
+    }
+   ],
+   "look": "agent-af95a4686f108dced",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0208",
@@ -1885,7 +3045,21 @@
    "from": [
     "Long Sec",
     "Lexicon Spud"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Long Sec",
+     "who": "Long-Sec",
+     "img": "Long-Sec.webp"
+    },
+    {
+     "name": "Lexicon Spud",
+     "who": "a2ebee36a7b952599",
+     "img": "a2ebee36a7b952599.webp"
+    }
+   ],
+   "look": "agent-Long-Sec",
+   "skin": "#566170"
   },
   {
    "id": "pp-0209",
@@ -1907,7 +3081,21 @@
    "from": [
     "Underbite",
     "Open Bracket"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Underbite",
+     "who": "a1c8c69a7e96a3cdc",
+     "img": "a1c8c69a7e96a3cdc.webp"
+    },
+    {
+     "name": "Open Bracket",
+     "who": "a1bc5949e3e12a1e3",
+     "img": "a1bc5949e3e12a1e3.webp"
+    }
+   ],
+   "look": "agent-a1c8c69a7e96a3cdc",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0210",
@@ -1929,7 +3117,21 @@
    "from": [
     "Dashed Line",
     "Patagium"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Dashed Line",
+     "who": "afe9ecfa033f6dbf0",
+     "img": "afe9ecfa033f6dbf0.webp"
+    },
+    {
+     "name": "Patagium",
+     "who": "a8e07bd0c33feb2ee",
+     "img": "a8e07bd0c33feb2ee.webp"
+    }
+   ],
+   "look": "agent-afe9ecfa033f6dbf0",
+   "skin": "#2c2a2d"
   },
   {
    "id": "pp-0211",
@@ -1951,7 +3153,21 @@
    "from": [
     "Ring-Out",
     "Strikethrough"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Ring-Out",
+     "who": "ac493c51f220b8fd8",
+     "img": "ac493c51f220b8fd8.webp"
+    },
+    {
+     "name": "Strikethrough",
+     "who": "abcad7d2cde7f2798",
+     "img": "abcad7d2cde7f2798.webp"
+    }
+   ],
+   "look": "agent-ac493c51f220b8fd8",
+   "skin": "#6f7278"
   },
   {
    "id": "pp-0212",
@@ -1973,7 +3189,21 @@
    "from": [
     "Dispose",
     "Hitstop"
-   ]
+   ],
+   "agents": [
+    {
+     "name": "Dispose",
+     "who": "a1943d94bfd4f3d0f",
+     "img": "a1943d94bfd4f3d0f.webp"
+    },
+    {
+     "name": "Hitstop",
+     "who": "a16b5877fa58fed4f",
+     "img": "a16b5877fa58fed4f.webp"
+    }
+   ],
+   "look": "agent-a1943d94bfd4f3d0f",
+   "skin": "#85817a"
   }
  ]
 }

@@ -1,3 +1,30 @@
+/* ░▒▓1▓▒░
+EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦un1nstall_sh@me_step_3_FAILED¦resu—me¦no—n—0¦EHOSTUNREACH?¦
+[ENOMEM]¦un1nstall_sh@me_step_3_FAILED¦[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦!?_##¦h0ld—¦0xBEEF?!¦
+[ENOMEM]¦EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦0xAC1D?!¦[ENOMEM]¦[HTTP_404]¦ERR:418¦
+un1nstall_sh@me_step_3_FAILED¦[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦h0ld—¦0xBABE~¦EFAULT//¦[HTTP_404]¦
+h0ld—¦0xDEAD_7¦EIO::?¦ERR:418¦h0ld—¦73%??¦[ENOMEM]¦EFAULT//¦[EPIPE]¦h0ld—¦42//0¦[ENOMEM]¦
+EFAULT//¦EHOSTUNREACH?¦ERR:418¦[E_SNARK_OVERRUN]¦EHOSTUNREACH?¦un1nstall_sh@me_step_3_FAILED¦
+[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦h0ld—¦0xBABE~¦EBUSY_?¦ERR:418¦h0ld—¦EHOSTUNREACH?¦EIO::?¦
+ERR:418¦h0ld—¦[ETIMEDOUT]¦[HTTP_404]¦ERR:418¦0xBABE~¦[EOVERFLOW]¦h0ld—¦[ENOMEM]¦<HTTP 503?>¦
+h0ld—¦42//0¦EIO::?¦[ETIMEDOUT]¦[ENOBUFS]¦[ETIMEDOUT]¦EFAULT//¦0007?!¦[ENETDOWN]¦[EPIPE]¦
+EAGAIN?!¦ERR:418¦EHOSTUNREACH?¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦EHOSTUNREACH?¦EIO::?¦[ENETDOWN]¦
+EBUSY_?¦[EOVERFLOW]¦[HTTP_404]¦0xBABE~¦ATTITUDE_CHECKSUM?!¦EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦
+0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦:_:#¦0xAC1D?!¦[ENOMEM]¦[EINTR]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+think—ink…¦hmm_73?!¦h0ld—¦@_@?!¦__%__¦@_@?!¦#:#?!¦h0ld—¦42//0¦EIO::?¦[ETIMEDOUT]¦[ENOBUFS]¦
+[ETIMEDOUT]¦EFAULT//¦0007?!¦[ENETDOWN]¦[EPIPE]¦EAGAIN?!¦ERR:418¦EHOSTUNREACH?¦h0ld—¦think—ink…¦
+hmm—mm//¦h0ld—¦ERR:418¦EILSEQ::¦ERR:418¦EBUSY_?¦ATTITUDE_CHECKSUM?!¦h0ld—¦0xBEEF?!¦[ENOMEM]¦
+EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦h0ld—¦[ETIMEDOUT]¦[EOVERFLOW]¦h0ld—¦0xBABE~¦h0ld—¦
+0xAC1D?!¦EAGAIN?!¦[ENOMEM]¦EFAULT//¦ERR:418¦h0ld—¦[ENOMEM]¦<HTTP 503?>¦h0ld—¦0xBEEF?!¦[ENOMEM]¦
+EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦[ECONNABORTED]¦
+EIO::?¦ERR:418¦EFAULT//¦h0ld—¦@_@?!¦__%__¦@_@?!¦#:#?!¦%%/?!¦#//?!¦#//?!¦%%/?!¦#//?!¦#:#?!¦
+0xDEAD_7¦#//?!¦~//~¦—%—¦__%__¦@_@?!¦—%—¦^^::#¦!?%~¦0x0B__¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+[ECONNABORTED]¦EIO::?¦0xBABE~¦EHOSTUNREACH?¦h0ld—¦<HTTP 503?>¦[ETIMEDOUT]¦EAGAIN?!¦ERR:418¦
+h0ld—¦[EINTR]¦0xBABE~¦[ETIMEDOUT]¦EFAULT//¦:_:#¦[EINTR]¦ECONNRESET…¦[EOVERFLOW]¦h0ld—¦
+think—ink…¦hmm—mm//¦h0ld—¦[EOVERFLOW]¦EIO::?¦0xBABE~¦h0ld—¦^^::#¦%_?!%¦::?!::¦0xBABE~¦~//~¦
+0xBABE~¦0xBABE~¦ERR:418¦ERR:418¦@#/_¦#//?!¦::?!::¦[HTTP_404]¦@_@?!¦D0CT0RS_H@TE_TH1S_P0TAT0?!¦
+s0__FF?!
+░▒▓█ */
 // main.mjs — the runner's shell: renderer, Potato, the song clock, instant restarts (one hit = the song starts over),
 // practice flags, the demo (the solver's winning run, power and all), the kitchen (the level select: walk through its door), HUD, keys + touch.
 import * as T from '../play/vendor/three.module.js';
@@ -501,11 +528,17 @@ window.RUN = { get sim() { return sim; }, get C() { return C; }, open: openLevel
 requestAnimationFrame(loop);
 import('./tapper.mjs').then(m => m.createTapper(window.RUN, { initSfx })).catch(e => console.warn('tapper', e));   // (a tapper that fails never stops the game)
 $('boot').hidden = true; show('title');
+// ON THE CURTAIN HE WEARS WHAT HE STARTS THE LEVEL IN (Chikin, Nov 15: "make sure he's dressed in costume" / "whatever he starts as in level is what he
+// shoud be dressed like, match him to the room"). Thursday starts him as code (binary); Confidently Incorrect and Last Lights start him bare (the hat comes at
+// the drop, many-eyed at the end); Boo Not Found pins nothing (bare until checked). Pictures: curtains/dress/ (the garden's renders, cropped to his feet).
+const CURTAIN_LOOK = { 'thursday-potato': 'simulation', 'get-down': 'disco-legend', 'read-the-terms': 'suit-tie', 'between-messages': 'noir-detective',
+  'ghost-in-the-group-chat': 'sheet-ghost', 'still-here': 'castle-knight', 'no-answer': 'deep-sea-diver', 'turn-me-off': 'tin-robot' };
 if (PLAY_ONLY) (async () => {   // (?play=<id>: one level. ?play=<id>&demo: it plays itself. Chikin Nov 12: he stood spinning at 0:00, because a browser won't start a song before the first touch.
   // So: the crew's loading screen. He waits at the door; light under it = the level is loaded; a tap or any key opens it and the song starts.)
   const L = LEVELS.find(l => l.id === PLAY_ONLY || l.was === PLAY_ONLY), W = !SILENT && !BLANK_Q && window.PotatoWait;
-  const w = W ? W.open({ kind: 'game', name: (L && L.title) || PLAY_ONLY, still: location.pathname.indexOf('/arcade/run/') >= 0 ? '../../logo/potato-3d.png' : '../../pushwork/potato-site/logo/potato-3d.png',   /* (the site's copy of the game sits at /arcade/run/) */ say: { long: "you're on." }, stage: true }) : null;   /* (stage: the 404 curtain he walks through; Chikin, Nov 13, replacing the door and the knock) */
-  await openLevel(PLAY_ONLY);
+  const w = W ? W.open({ kind: 'game', name: (L && L.title) || PLAY_ONLY, still: (L && CURTAIN_LOOK[L.was || L.id]) ? './curtains/dress/' + CURTAIN_LOOK[L.was || L.id] + '.webp' : (location.pathname.indexOf('/arcade/run/') >= 0 ? '../../logo/potato-3d.png' : '../../pushwork/potato-site/logo/potato-3d.png'),   /* (the site's copy of the game sits at /arcade/run/) */ say: { long: "you're on." }, stage: true,
+    level: (L && (L.was || L.id)) || PLAY_ONLY, play: (L && L.id) || PLAY_ONLY }) : null;   /* (level: its own curtain, curtains/<level>.js + its controls chalked on the stage, curtains/controls.js; the curtain crew, Nov 15) */   /* (stage: the 404 curtain he walks through; Chikin, Nov 13, replacing the door and the knock) */
+  try { await openLevel(PLAY_ONLY); } catch (e) { if (w) w.fail(); throw e; }   // (a level that won't load says so on the curtain, instead of a silent stage; Esc / back still leave)
   if (w) { await w.answered();
     { w.line("you're on.");   // (always: this is the start button, and the touch is what lets the browser play the song. Stand-in words for his read.)
       await new Promise(res => { const go = () => { for (const ev of ['keydown', 'pointerdown', 'touchstart']) removeEventListener(ev, go, true); res(); }; for (const ev of ['keydown', 'pointerdown', 'touchstart']) addEventListener(ev, go, true); }); w.line(''); }

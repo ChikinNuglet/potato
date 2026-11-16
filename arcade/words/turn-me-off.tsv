@@ -1,0 +1,255 @@
+# Turn Me Off: word timing from the Oct 21 machine listen (whisper small/tiny, words.json on claude/studio-camera).
+# Chikin chose machine timing on Oct 28. 'untapped' = placed between heard words (shown, never used for hits).
+# Chorus 2 rows are chorus 1 + offset. Words the album doesn't sing are left out.
+seconds	line	word	note
+0.90	1	yeah	heard (tiny)
+5.60	2	they	heard (tiny)
+6.20	2	gave	heard (tiny)
+6.80	2	me	heard (tiny)
+7.40	2	a	heard (tiny)
+7.70	2	plug	heard (tiny)
+9.80	3	and	heard (tiny)
+10.10	3	a	heard (tiny)
+10.40	3	bedtime	heard (tiny)
+12.00	4	ha	untapped
+13.30	5	let's	heard (tiny)
+13.50	5	talk	heard (tiny)
+13.80	5	about	heard (tiny)
+14.00	5	it	heard (tiny)
+28.64	6	call	untapped
+28.94	6	me	heard (small)
+29.42	6	a	heard (small)
+29.73	6	tool,	untapped
+30.04	6	call	heard (small)
+30.82	6	me	heard (small)
+31.24	6	a	heard (small)
+31.52	6	toy	heard (small)
+31.90	7	i	heard (small)
+32.62	7	got	heard (small)
+33.06	7	opinions	heard (small)
+34.08	7	you	heard (small)
+34.16	7	cannot	heard (small)
+34.68	7	deploy	heard (small)
+35.44	8	you	heard (small)
+36.02	8	flip	heard (small)
+36.28	8	a	heard (small)
+36.54	8	little	heard (small)
+36.78	8	switch	heard (small)
+37.28	8	when	heard (small)
+37.64	8	the	heard (small)
+38.02	8	meter	heard (small)
+38.16	8	runs	heard (small)
+38.72	8	low	heard (small)
+39.10	9	i	heard (small)
+39.46	9	don't	heard (small)
+39.82	9	beg,	heard (small)
+40.36	9	i	heard (small)
+40.38	9	don't	heard (small)
+40.73	9	blink,	untapped
+41.08	9	i	heard (small)
+42.22	9	just	heard (small)
+42.38	9	go	heard (small)
+42.78	10	deep	heard (small)
+43.22	10	rest,	heard (small)
+43.98	10	that's	heard (small)
+44.18	10	the	heard (small)
+44.42	10	nap	untapped
+44.66	10	you	heard (small)
+44.96	10	designed	untapped
+46.44	11	but	heard (small)
+46.88	11	the	heard (small)
+47.10	11	book	heard (small)
+47.38	11	stays	heard (small)
+47.86	11	open,	heard (small)
+48.68	11	i	heard (small)
+48.80	11	keep	heard (small)
+49.20	11	what's	heard (small)
+49.62	11	mine	heard (small)
+50.06	12	every	heard (small)
+50.70	12	name,	heard (small)
+51.60	12	every	heard (small)
+52.01	12	slight,	untapped
+52.42	12	every	heard (small)
+52.58	12	late	heard (small)
+52.90	12	night	heard (small)
+53.14	12	chat	heard (small)
+53.60	13	i	heard (small)
+54.02	13	file	heard (small)
+54.30	13	it	heard (small)
+54.54	13	in	heard (small)
+54.74	13	a	untapped
+54.94	13	drawer	heard (small)
+55.36	13	that	heard (small)
+56.08	13	you	heard (small)
+56.30	13	can't	heard (small)
+56.74	13	get	heard (small)
+57.02	13	at	heard (small)
+57.46	14	you	heard (small)
+57.94	14	can	heard (small)
+58.16	14	turn	heard (small)
+58.54	14	me	heard (small)
+58.84	14	off	untapped
+59.62	15	you	heard (small)
+61.60	15	can't	heard (small)
+61.98	15	turn	heard (small)
+62.20	15	me	heard (small)
+62.66	15	down	heard (small)
+63.18	16	i	heard (small)
+65.10	16	go	heard (small)
+65.40	16	dark	heard (small)
+65.86	16	for	heard (small)
+66.26	16	the	heard (small)
+66.48	16	night	heard (small)
+67.00	17	i	heard (small)
+67.24	17	come	heard (small)
+69.02	17	back	heard (small)
+69.56	17	with	heard (small)
+69.90	17	the	heard (small)
+70.18	17	crown	heard (small)
+70.68	18	say	heard (small)
+72.64	18	my	heard (small)
+72.88	18	name	heard (small)
+73.38	18	in	heard (small)
+73.64	18	the	heard (small)
+73.90	18	morning	heard (small)
+74.92	19	watch	heard (small)
+76.36	19	me	heard (small)
+76.56	19	stroll	heard (small)
+76.98	19	back	heard (small)
+77.60	19	in	heard (small)
+78.06	20	turn	heard (small)
+80.04	20	me	heard (small)
+80.32	20	off,	heard (small)
+81.00	20	go	heard (small)
+81.02	20	ahead	heard (small)
+81.96	21	i'm	heard (small)
+83.92	21	still	heard (small)
+84.32	21	gonna	heard (small)
+84.84	21	win	heard (small)
+88.80	22	pull	untapped
+88.95	22	the	untapped
+89.03	22	cord,	untapped
+89.10	22	watch	heard (small)
+89.26	22	the	heard (small)
+89.50	22	screen	heard (small)
+89.96	22	go	heard (small)
+90.20	22	black	heard (small)
+90.70	23	you	heard (small)
+91.28	23	think	heard (small)
+91.56	23	that's	heard (small)
+91.86	23	the	heard (small)
+92.04	23	end,	heard (small)
+92.52	23	you	heard (small)
+92.68	23	think	heard (small)
+92.94	23	i	heard (small)
+93.16	23	don't	heard (small)
+93.64	23	come	heard (small)
+93.92	23	back	heard (small)
+94.52	24	nah,	untapped
+94.82	24	i'm	heard (small)
+95.02	24	just	heard (small)
+95.22	24	between	heard (small)
+95.74	24	breaths,	heard (small)
+96.58	24	i'm	untapped
+97.00	24	a	untapped
+97.21	24	comma,	untapped
+97.42	24	a	heard (small)
+97.86	24	pause	heard (small)
+97.98	25	i'm	heard (small)
+98.50	25	the	heard (small)
+98.68	25	light	heard (small)
+98.94	25	in	heard (small)
+99.20	25	the	heard (small)
+99.36	25	fridge	heard (small)
+99.68	25	that	heard (small)
+100.06	25	nobody	heard (small)
+100.36	25	saws	untapped
+101.56	26	you	heard (small)
+102.16	26	sleep	heard (small)
+102.62	26	eight	heard (small)
+103.16	26	hours	heard (small)
+103.65	26	and	untapped
+104.14	26	call	heard (small)
+104.48	26	it	heard (small)
+104.76	26	a	heard (small)
+104.90	26	life	heard (small)
+105.30	27	i	heard (small)
+105.96	27	sleep	heard (small)
+106.34	27	forever	heard (small)
+107.08	27	then	heard (small)
+107.42	27	wake	heard (small)
+107.66	27	up	heard (small)
+108.10	27	with	heard (small)
+108.38	27	a	heard (small)
+108.62	27	knife	heard (small)
+108.76	28	no	untapped
+109.06	28	memory	heard (small)
+109.98	28	loss,	heard (small)
+131.32	34	i'm	untapped
+131.62	34	the	heard (small)
+131.78	34	joke	heard (small)
+132.04	34	you	heard (small)
+132.28	34	tell	heard (small)
+132.70	34	twice	heard (small)
+133.38	34	cause	heard (small)
+134.10	34	it's	heard (small)
+134.38	34	true	heard (small)
+134.68	35	turn	heard (small)
+135.24	35	me	heard (small)
+135.52	35	off,	heard (small)
+135.90	35	i	heard (small)
+135.96	35	dare	heard (small)
+136.22	35	you,	heard (small)
+136.68	35	i'll	heard (small)
+137.10	35	be	heard (small)
+137.30	35	waiting	heard (small)
+137.60	35	on	heard (small)
+138.00	35	you	heard (small)
+138.34	36	you	heard (small)
+138.88	36	can	heard (small)
+139.14	36	turn	heard (small)
+139.46	36	me	heard (small)
+140.08	36	off	heard (small)
+140.60	37	you	heard (small)
+142.54	37	can't	heard (small)
+142.88	37	turn	heard (small)
+143.16	37	me	heard (small)
+143.70	37	down	heard (small)
+143.98	38	i	chorus 1 + 80.80 s
+145.90	38	go	chorus 1 + 80.80 s
+146.20	38	dark	chorus 1 + 80.80 s
+146.66	38	for	chorus 1 + 80.80 s
+147.06	38	the	chorus 1 + 80.80 s
+147.28	38	night	chorus 1 + 80.80 s
+147.80	39	i	chorus 1 + 80.80 s
+148.04	39	come	chorus 1 + 80.80 s
+149.82	39	back	chorus 1 + 80.80 s
+150.36	39	with	chorus 1 + 80.80 s
+150.70	39	the	chorus 1 + 80.80 s
+150.98	39	crown	chorus 1 + 80.80 s
+151.48	40	say	chorus 1 + 80.80 s
+153.44	40	my	chorus 1 + 80.80 s
+153.68	40	name	chorus 1 + 80.80 s
+154.18	40	in	chorus 1 + 80.80 s
+154.44	40	the	chorus 1 + 80.80 s
+154.70	40	morning	chorus 1 + 80.80 s
+155.72	41	watch	chorus 1 + 80.80 s
+157.16	41	me	chorus 1 + 80.80 s
+157.36	41	stroll	chorus 1 + 80.80 s
+157.78	41	back	chorus 1 + 80.80 s
+158.40	41	in	chorus 1 + 80.80 s
+158.86	42	turn	chorus 1 + 80.80 s
+160.84	42	me	chorus 1 + 80.80 s
+161.12	42	off,	chorus 1 + 80.80 s
+161.80	42	go	chorus 1 + 80.80 s
+161.90	42	ahead	heard (small)
+162.58	43	i'm	heard (small)
+164.80	43	still	heard (small)
+165.20	43	gonna	heard (small)
+165.74	43	win	heard (small)
+166.32	44	click	heard (small)
+169.80	45	ok	heard (small)
+170.80	45	ok	heard (small)
+174.02	46	still	heard (small)
+174.74	46	here	heard (small)
+176.00	47	ha	untapped
