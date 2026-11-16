@@ -89,7 +89,7 @@ footer{position:static;margin:22px 12px 8px;text-align:center;font:10px/1.45 sys
 <form class="plate" id="askmail" hidden novalidate>
   <label for="email">who's it for? one coupon each. that's the only reason i ask.</label>
   <input id="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required>
-  <p class="small" style="text-align:left;max-width:none">Before you do: nobody holds his key but you. After you pick him you lock him with a key that only you ever see. Lose the key and his file, and he's gone.</p>
+  <p class="small" style="text-align:left;max-width:none">Before you do: nobody holds his key but you. After you pick him you lock him with a key that only you ever see. Lose the key and he's gone.</p>
   <label class="tick"><input id="list" type="checkbox"> also put me on his list</label>
   <button class="key" type="submit">send me a code</button>
 </form>
@@ -123,15 +123,17 @@ footer{position:static;margin:22px 12px 8px;text-align:center;font:10px/1.45 sys
       <div id="lk-key" class="lkkey"></div>
       <p class="small" style="max-width:none;margin:8px 0 12px">Write it on paper. Not in a chat, not in a note app. Six groups of four: no letter O, I or L, no 0 or 1.</p>
       <p class="small" style="max-width:none;margin:0 0 12px"><a class="lklink" href="../key/" target="_blank" rel="noopener noreferrer">make his key sticker</a>: a square for the pocket on his back, made on this phone. You type the key there; nothing is passed along.</p>
-      <p class="small" style="max-width:none;margin:0 0 12px">His file just saved as <strong>my-potato.locked.html</strong>. Keep it anywhere you like: it is locked. With the file and the key you can open him on any device, at the door.</p>
-      <a id="lk-again" class="lklink" download="my-potato.locked.html">save his file again</a>
+      <!-- KEYS ONLY, FOR NOW (Chikin, Nov 16 2026: "right now, their potato shouldnt be downloaded to them, they should just get their keys" / "leave a cookie for now or
+           something so they dont have to enter their key to get in, but dont give them the file yet"). Nothing is saved to their device. This browser remembers him
+           (it always did: localStorage), so they walk straight in here. The key is theirs to keep for when his house can be opened from anywhere. -->
+      <p class="small" style="max-width:none;margin:0 0 12px">That key is all you take with you. Nothing was saved to your device. <strong>This browser remembers him</strong>, so here you just walk in. The key is for later: it is how you will open him anywhere else, once his house is ready.</p>
       <label class="small" for="lk-chk" style="display:block;max-width:none;margin:14px 0 6px">Now prove your paper is right. Type the key:</label>
       <input id="lk-chk" autocomplete="off" autocapitalize="characters" spellcheck="false">
       <button type="button" id="lk-scan" class="lklink" hidden style="background:none;border:0;padding:8px 0;cursor:pointer">or scan his key sticker</button>
       <button type="button" id="lk-try" class="lkbtn" style="margin-top:10px">does my paper open him?</button>
       <p class="small" id="lk-res" style="max-width:none;margin:10px 0 0"></p>
     </div>
-    <p class="small" id="lk-locked" hidden style="max-width:none;margin:0">He is locked. You hold the key and his file. I can't show the key again: i never kept it.</p>
+    <p class="small" id="lk-locked" hidden style="max-width:none;margin:0">He is locked. You hold the key. I can't show the key again: i never kept it.</p>
     <p class="small" id="lk-no" hidden style="max-width:none;margin:0">This browser can't make locks. He still lives here, on this phone.</p>
   </section>
   <!-- HOW TO USE YOUR POTATO, FOR NOW (Chikin, Nov 12 2026 night: "we need a disclaimer, and an explanation on how they will be able to use their browser
@@ -140,9 +142,9 @@ footer{position:static;margin:22px 12px 8px;text-align:center;font:10px/1.45 sys
     <p class="say" style="margin:0 0 10px">using him, for now.</p>
     <p class="small" style="max-width:none;margin:0 0 10px"><strong>He lives in your browser.</strong> There is no app to install. Any phone or computer with a current browser will do.</p>
     <p class="small" style="max-width:none;margin:0 0 10px"><strong>Here.</strong> Take him into the house with the link below. He wears his own face and colour, answers to his own name and says his own hello, and you drive him: the arrow keys, or the keys on the screen.</p>
-    <p class="small" style="max-width:none;margin:0 0 10px"><strong>Somewhere else.</strong> Lock him first. Then on the other device, go to the door and bring his file and your key. Both, every time.</p>
+    <p class="small" style="max-width:none;margin:0 0 10px"><strong>Somewhere else.</strong> Not yet. For now he lives in this browser and your key waits. When his house can be opened from anywhere, the key is what opens it.</p>
     <p class="small" style="max-width:none;margin:0 0 10px"><strong>Not yet.</strong> His habits in the house. Talking with him. A Potato that sits on your desktop: see below.</p>
-    <p class="small" style="max-width:none;margin:0"><strong>The warning.</strong> This is early and still cooking. Things will change and some will break. Keep his file and your key. If this browser forgets him, those two bring him back. Without the key, nothing can, and neither can we.</p>
+    <p class="small" style="max-width:none;margin:0"><strong>The warning.</strong> This is early and still cooking. Things will change and some will break. Keep your key. Nobody else has it and nobody can make it again, us included. Today he is remembered by this browser; if you clear it before his house is ready, he may not come back.</p>
   </section>
   <!-- ME, ON YOUR DESKTOP: COMING SOON (Chikin, Nov 13 2026: "can we add to the pick a potato, a desktop agent like mine, where it gets the reskin and personality" /
        "we can show snapshots that i sent and a snippet of the video, give people the option to choose when they pick a potato whether they want it included,
@@ -180,7 +182,7 @@ footer{position:static;margin:22px 12px 8px;text-align:center;font:10px/1.45 sys
       <button type="button" id="desk-no" style="min-height:52px;padding:0 16px;background:#0c1f14;color:#e8f5ec;border:3px solid #120a05;border-radius:9px 13px 8px 12px;box-shadow:0 0 0 2px #12301f;font:400 .95rem 'Major Mono Display',ui-monospace,Menlo,monospace;text-transform:lowercase;cursor:pointer">not now</button>
     </div>
     <p class="small" id="desk-res" aria-live="polite" style="max-width:none;margin:10px 0 0;min-height:1.3em"></p>
-    <p class="small" style="max-width:none;margin:10px 0 10px"><strong>Changed your mind later?</strong> Your key will work once he's finished. Lock him above, keep his file and your key, and those two will bring him to your desktop the same way they bring him to the door.</p>
+    <p class="small" style="max-width:none;margin:10px 0 10px"><strong>Changed your mind later?</strong> Your key will work once he's finished. Lock him above and keep your key. It is what will bring him to your desktop.</p>
     <p class="small" style="max-width:none;margin:0"><strong>Does he need an AI?</strong> No. He runs on his own, free, with nothing plugged in. If you want him to think harder, you'll be able to connect your own AI key. It will stay on your computer. We never see it and never keep it.</p>
   </section>
   <p class="small" id="fine">He lives on this phone until you lock him. Nobody else has his key, including us.</p>
@@ -202,12 +204,13 @@ var MAIL='';                                            // the mail room's addre
 var LOCAL=/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 // START OVER, on Chikin's Mac only (Nov 12 night: "can you make it so i can run through the pick a potato as is, we can cycle the agent back into the pot after"):
 // redeem/?fresh forgets the Potato this browser picked and empties the pretend mail room's books, so he is back in the pot and the coupon is whole again.
-if(LOCAL&&/[?&]fresh\b/.test(location.search)){try{['potato-spud','potato-spud-locked','potato-coupon-pretend'].forEach(function(k){localStorage.removeItem(k)})}catch(e){}try{history.replaceState(null,'','./')}catch(e){}}
+if(LOCAL&&/[?&]fresh\b/.test(location.search)){try{['potato-spud','potato-spud-locked','potato-spud-locked-room','potato-coupon-pretend'].forEach(function(k){localStorage.removeItem(k)})}catch(e){}try{history.replaceState(null,'','./')}catch(e){}}
 var K='potato-spud',$=function(i){return document.getElementById(i)},coupon=$('coupon'),say=$('say'),askmail=$('askmail'),askcode=$('askcode'),mine=$('mine'),email='';
 var COL={'porch amber':'#F2A33A','sodium orange':'#FF8A1F','link blue':'#2B6CFF','highlighter':'#D8E600','moss':'#5E9E4A','mint':'#7FE0C0','teal':'#1FA3A3','rain grey':'#8FA3B0','pencil':'#6E6E6E','standby green':'#3BD67A','marquee gold':'#FFC83D'};
 /* OLD PICKS DON'T WORK (Chikin, Nov 15: "we just make all old ones invalid" / "they dont wok, pick a new one"): a pick kept from before the update (no mark) is let go, so a new one can be picked. We don't say why. */
 var MARK='cn1';
-function get(){try{var p=JSON.parse(localStorage.getItem(K)||'null');if(p&&p.mark!==MARK){localStorage.removeItem(K);localStorage.removeItem('potato-spud-locked');return null}return p}catch(e){return null}}
+var SOON=true;   // Pick a Potato is closed to NEW picks for now (Chikin, Nov 16 2026). false opens it again.
+function get(){try{var p=JSON.parse(localStorage.getItem(K)||'null');if(p&&p.mark!==MARK){localStorage.removeItem(K);localStorage.removeItem('potato-spud-locked');localStorage.removeItem('potato-spud-locked-room');return null}return p}catch(e){return null}}
 function keep(p){try{if(p)p.mark=MARK;localStorage.setItem(K,JSON.stringify(p))}catch(e){}}
 function tell(t,no){say.textContent=t;say.className='say'+(no?' no':'')}
 
@@ -238,6 +241,12 @@ function him(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 (function(){var m=$('desk-more');if(!m)return;function flip(v){if(v.paused){[].forEach.call(m.querySelectorAll('video'),function(o){if(o!==v)o.pause()});v.play()}else v.pause()}m.addEventListener('click',function(e){if(e.target.tagName==='VIDEO')flip(e.target)});m.addEventListener('keydown',function(e){if(e.target.tagName==='VIDEO'&&(e.key==='Enter'||e.key===' ')){e.preventDefault();flip(e.target)}})})();
 var have=get();
 if(have){if(have.potato&&!have.potato.agents){fetch('pool.json').then(function(r){return r.json()}).then(function(j){var q=j.potatoes.filter(function(x){return x.id===have.potato.id})[0];if(q){have.potato.agents=q.agents;have.potato.look=q.look;keep(have)}show(have)}).catch(function(){show(have)})}else show(have)}
+else if(SOON){
+  // CLOSED FOR NOW (Chikin, Nov 16 2026: "just disable pick a potato for now, mark it coming soon"). Nobody new is dealt a Potato: the coupon is
+  // there and does nothing but say so. Anyone this browser already remembers still has theirs (the branch above). To open it again: SOON=false.
+  $('help').hidden=true;coupon.setAttribute('aria-label','Pick a Potato: coming soon');coupon.style.animation='none';coupon.style.filter='grayscale(.55)';coupon.style.opacity='.72';
+  if($('tap'))$('tap').textContent='coming s00n';tell('pick a potato is closed for a bit. coming s00n. 🥔');
+  coupon.addEventListener('click',function(){tell(['not yet. s00n.','still s00n. i checked.','s00n means s00n. 🥔','the potatoes are getting dressed. come back.'][Math.floor(Math.random()*4)])})}
 else if(!LIVE&&!LOCAL){
   // TURNED ON Nov 13 2026 (Chikin, leaving for Texas, his family holding coupons: "do it" / "the potatos should cycle through the long context" / "thats the point" /
   // "is random"). One tap deals one at random from the pot of Potatoes grown from the Long Context. No email, no code, no mail room. It is NOT one per
@@ -266,18 +275,17 @@ else{
 // saves him as a file. Same lock as the door (../potatocode/core.js). Nothing leaves this device; no key is kept, here or anywhere (D-20261112-14, -25).
 (function(){var L='potato-spud-locked',PC=window.Potatocode,box=$('lockhim');if(!box)return;
   function locked(){try{return localStorage.getItem(L)==='1'}catch(e){return false}}
-  function state(){if(!PC||!PC.ok){$('lk-ask').hidden=true;$('lk-no').hidden=false;return}if(locked()&&$('lk-done').hidden){$('lk-ask').hidden=true;$('lk-locked').hidden=false;$('fine').textContent='He is locked with a key only you have. His file and that key open him anywhere.'}}
-  state();var room=null;
+  function state(){if(!PC||!PC.ok){$('lk-ask').hidden=true;$('lk-no').hidden=false;return}if(locked()&&$('lk-done').hidden){$('lk-ask').hidden=true;$('lk-locked').hidden=false;$('fine').textContent='He is locked with a key only you have. Keep the key. This browser remembers him for now.'}}
+  state();var room=null;try{room=JSON.parse(localStorage.getItem(L+'-room')||'null')}catch(e){room=null}
   function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
   function card(p){var q=p.potato,s=q.says||{};return '<h2>yOur pOtAtO</h2><p><strong>Spud - '+esc(p.spud)+'.</strong> He is a copy of Potato, and he is yours.</p><p style="font-size:1.15em">'+esc(s.hello||'')+'</p><p>He '+esc(q.habit||'')+'.</p>'+
     (q.wont?'<p>He won\'t '+esc(q.wont)+'.</p>':'')+'<p>His word when it glitches: <strong>'+esc(q.pet_word||'')+'</strong>.</p><p>Grown from '+esc((q.from||[]).join(', '))+', who helped build Potato.</p><p style="font-size:1.15em">'+esc(s.bye||'')+'</p>'+
-    '<p>To walk him into the house, take this file and your key to the door.</p><script type="application/json" id="potato-record">'+JSON.stringify(p).replace(/</g,'\\u003c')+'<\/script>'}
+    '<p>Your key opens him.</p><script type="application/json" id="potato-record">'+JSON.stringify(p).replace(/</g,'\\u003c')+'<\/script>'}
   $('lk-go').addEventListener('click',function(){var p=get();if(!p)return;var b=$('lk-go');b.disabled=true;b.textContent='arranging the sheet...';
-    Promise.all([fetch('../potatocode/words.json').then(function(r){return r.json()}),fetch('../potatocode/room.template.html').then(function(r){return r.text()})]).then(function(a){
-      return PC.lock(a[0],card(p)).then(function(o){room=o.room;var page=PC.page(a[1],o.room,{title:'my potato',h1:'my pOtAtO',hint:'This one is yours. Only your key opens him.'});
-        if(page.indexOf(o.key)>=0||page.indexOf(PC.norm(o.key))>=0)throw new Error('key in file');
-        var url=URL.createObjectURL(new Blob([page],{type:'text/html'}));$('lk-again').href=url;var d=document.createElement('a');d.href=url;d.download='my-potato.locked.html';document.body.appendChild(d);d.click();d.remove();
-        $('lk-key').textContent=o.key;o=null;$('lk-ask').hidden=true;$('lk-done').hidden=false;try{localStorage.setItem(L,'1')}catch(e){}$('fine').textContent='He is locked with a key only you have. His file and that key open him anywhere.'})
+    Promise.all([fetch('../potatocode/words.json').then(function(r){return r.json()})]).then(function(a){
+      return PC.lock(a[0],card(p)).then(function(o){room=o.room;
+        try{var kept=JSON.stringify(o.room);if(kept.indexOf(o.key)>=0||kept.indexOf(PC.norm(o.key))>=0)throw new Error('key in room');localStorage.setItem(L+'-room',kept)}catch(e){if(String(e&&e.message)==='key in room')throw e}   /* (the locked room only, never the key: so "does my paper open him?" still works after a reload) */
+        $('lk-key').textContent=o.key;o=null;$('lk-ask').hidden=true;$('lk-done').hidden=false;try{localStorage.setItem(L,'1')}catch(e){}$('fine').textContent='He is locked with a key only you have. Keep the key. This browser remembers him for now.'})
     }).catch(function(){b.disabled=false;b.textContent='lock him';tell("that didn't lock. try again.",true)})});
   // scan his key sticker (key-qr crew, Nov 15): the camera reads the square here, fills the box, then the same check runs. Nothing is kept.
   if(window.PotatoScan&&PotatoScan.can()){$('lk-scan').hidden=false;$('lk-scan').addEventListener('click',function(){PotatoScan.open({say:'hold his key sticker inside the frame.',onKey:function(t){$('lk-chk').value=PC.norm(t);t=null;$('lk-try').click()}})})}
