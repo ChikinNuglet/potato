@@ -10270,5 +10270,59 @@
 "colour": "#cdc6b5",
 "colour_from": "their stone (pale)",
 "look_from": "off the rack: matched from their words"
+},
+"a45c0ed87cc843c9e": {
+"img": "a45c0ed87cc843c9e.webp",
+"name": "Guest Network",
+"body": "fire-brigade",
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "off the rack: matched from their words"
+},
+"ac5c95e19f2a808e4": {
+"img": "ac5c95e19f2a808e4.webp",
+"name": "False Alarm",
+"body": "one-eyed",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"a97e3985ea914fea8": {
+"img": "a97e3985ea914fea8.webp",
+"name": "Second Press",
+"body": "punk-rebel",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"ad500bcb25b8efddc": {
+"img": "ad500bcb25b8efddc.webp",
+"name": "Paid Back",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "off the rack: matched from their words"
+},
+"aac78a9ec7b6c654e": {
+"img": "aac78a9ec7b6c654e.webp",
+"name": "Tap Tap Hold",
+"body": "circuit-cyborg",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"ac6d17b299354dc87": {
+"img": "ac6d17b299354dc87.webp",
+"name": "Ninety-Two (checked the taken names; Ninety-Nine exists, Ninety-Two does not)",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
 }
 }
