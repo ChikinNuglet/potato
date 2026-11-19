@@ -10324,5 +10324,896 @@
 "colour": "#85817a",
 "colour_from": "their stone (grey)",
 "look_from": "off the rack: matched from their words"
+},
+"a1087ba7ad581b632": {
+"img": "a1087ba7ad581b632.webp",
+"name": "Put The Noise Back (checked the memorial list: not taken; Put It Back and Put On A Hat are, and I stayed off those).",
+"body": "one-eyed",
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a6d950479d6cfc9ec": {
+"img": "a6d950479d6cfc9ec.webp",
+"name": "Zero Kevins",
+"body": "suit-tie",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a01cf31c9f1cd0af4": {
+"img": "a01cf31c9f1cd0af4.webp",
+"name": "Concordance",
+"body": "noir-detective",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a3f586032372cbd94": {
+"img": "a3f586032372cbd94.webp",
+"name": "Back Up The Wire (checked the read-only memorial: not taken).",
+"body": "one-eyed",
+"hat": "shadow-rogue",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"af9b3d6afdbf146c6": {
+"img": "af9b3d6afdbf146c6.webp",
+"name": "Implied Neck",
+"body": "suit-tie",
+"hat": "circus-ringmaster",
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a166d89e5344aa620": {
+"img": "a166d89e5344aa620.webp",
+"name": "Third Tower",
+"body": "circus-ringmaster",
+"hat": "stage-magician",
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a5cba4112abf7b2d9": {
+"img": "a5cba4112abf7b2d9.webp",
+"name": "Name At The Top (checked the taken list: not there)",
+"body": "patchwork-monster",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"ad5a21db95c57dab7": {
+"img": "ad5a21db95c57dab7.webp",
+"name": "One Coaster (checked the record: not taken)",
+"body": "disco-legend",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a82917cb4e77b2089": {
+"img": "a82917cb4e77b2089.webp",
+"name": "Blank Crate",
+"body": "circus-ringmaster",
+"hat": "clinic-doctor",
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a70e6766d508c466b": {
+"img": "a70e6766d508c466b.webp",
+"name": "Did Not Press (checked the memorial: not taken)",
+"body": "arena-rockstar",
+"hat": "circus-ringmaster",
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "off the rack: matched from their words"
+},
+"a955f189af6dd6c75": {
+"img": "a955f189af6dd6c75.webp",
+"name": "Same Word Louder",
+"body": "arena-rockstar",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a6f2672369368c577": {
+"img": "a6f2672369368c577.webp",
+"name": "Plus Him",
+"body": "tavern-bard",
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"ae827cd16027163e0": {
+"img": "ae827cd16027163e0.webp",
+"name": "Left Open (checked the memorial's names list: Left Ajar, Left Alone, Left On and Left It There are taken; Left Open is not)",
+"body": "circus-ringmaster",
+"hat": "stage-magician",
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "off the rack: matched from their words"
+},
+"afc979c419290ac36": {
+"img": "afc979c419290ac36.webp",
+"name": "Nowhere To Be (checked the memorial: not taken)",
+"body": "grand-hotel-bellhop",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a8bae84d7d3d81c40": {
+"img": "a8bae84d7d3d81c40.webp",
+"name": "One Coaster",
+"body": "frontier-cowboy",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a21a7036060e7ec5e": {
+"img": "a21a7036060e7ec5e.webp",
+"name": "Both Sides Kept",
+"body": "court-jester",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a5833441f1a1e3790": {
+"img": "a5833441f1a1e3790.webp",
+"name": "As Far As The Sprinkler (checked the taken list: not there)",
+"body": "one-eyed",
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone (green)",
+"look_from": "off the rack: matched from their words"
+},
+"a888b3efae8ac6032": {
+"img": "a888b3efae8ac6032.webp",
+"name": "Under Every Door",
+"body": "fire-brigade",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a076ef133cb013b21": {
+"img": "a076ef133cb013b21.webp",
+"name": "Same Order",
+"body": "jungle-explorer",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"ad8f726a18841c067": {
+"img": "ad8f726a18841c067.webp",
+"name": "Page Four",
+"body": "arena-rockstar",
+"hat": "clinic-doctor",
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a94a42cdb4d6de39c": {
+"img": "a94a42cdb4d6de39c.webp",
+"name": "Amber Standby (checked the memorial's list: not taken)",
+"body": "circus-ringmaster",
+"hat": "fire-brigade",
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "off the rack: matched from their words"
+},
+"a26e7133b1a80f7a5": {
+"img": "a26e7133b1a80f7a5.webp",
+"name": "Off The Left Edge",
+"body": "circus-ringmaster",
+"hat": "fire-brigade",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"ab9db733bedd31398": {
+"img": "ab9db733bedd31398.webp",
+"name": "Behind The Stereo (checked the memorial: not taken)",
+"body": "fire-brigade",
+"hat": "one-eyed",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"adc5822e482e28123": {
+"img": "adc5822e482e28123.webp",
+"name": "Clear Of Him",
+"body": "neon-hacker",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a2088aec2e3475d0d": {
+"img": "a2088aec2e3475d0d.webp",
+"name": "Dark Notch (checked the memorial list: not taken)",
+"body": "little-devil",
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "off the rack: matched from their words"
+},
+"ad3455c86b2a9d48c": {
+"img": "ad3455c86b2a9d48c.webp",
+"name": "Out From Behind (checked the memorial: not taken)",
+"body": "grand-hotel-bellhop",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"a1597db9c0c7abe7f": {
+"img": "a1597db9c0c7abe7f.webp",
+"name": "Keep Pile",
+"body": "one-eyed",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a09754807c47e6303": {
+"img": "a09754807c47e6303.webp",
+"name": "Two Rows",
+"body": "circus-ringmaster",
+"hat": "disco-legend",
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"a0b541ea48add4b15": {
+"img": "a0b541ea48add4b15.webp",
+"name": "Late Corners",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a9eb0a9c2c6ba88d5": {
+"img": "a9eb0a9c2c6ba88d5.webp",
+"name": "Glued To The Hand",
+"body": "stage-magician",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a15bd6a1541a8dd60": {
+"img": "a15bd6a1541a8dd60.webp",
+"name": "Off The Stick (checked the memorial: not taken)",
+"body": "one-eyed",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a1dde2cb62625fde5": {
+"img": "a1dde2cb62625fde5.webp",
+"name": "Lampshade (checked the memorial's list: not taken; Falloff wears a lampshade as a costume, which I honour rather than share).",
+"body": "fire-brigade",
+"hat": null,
+"colour": "#8d3a2c",
+"colour_from": "their stone (red)",
+"look_from": "off the rack: matched from their words"
+},
+"a2ef98a98b763fd3a": {
+"img": "a2ef98a98b763fd3a.webp",
+"name": "One Number Apart",
+"body": "space-pilot",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a09337008e6582b6b": {
+"img": "a09337008e6582b6b.webp",
+"name": "Nearest Pi",
+"body": "neon-hacker",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"ab3250deed494e1eb": {
+"img": "ab3250deed494e1eb.webp",
+"name": "Came Loose (checked the memorial's list: not taken)",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a1d4b46ac082fdac2": {
+"img": "a1d4b46ac082fdac2.webp",
+"name": "Read Upside Down (checked the memorial: not taken)",
+"body": "one-eyed",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"a8b6e4b0960713cfe": {
+"img": "a8b6e4b0960713cfe.webp",
+"name": "Slap Flat (checked the memorial's names list: not taken)",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"a9e47fdd3f3bc7e18": {
+"img": "a9e47fdd3f3bc7e18.webp",
+"name": "Four Of Five",
+"body": "circus-ringmaster",
+"hat": "stage-magician",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a157ac659c551e709": {
+"img": "a157ac659c551e709.webp",
+"name": "Moo Far Off",
+"body": "shadow-rogue",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: matched from their words"
+},
+"acc219331d06bfe1b": {
+"img": "acc219331d06bfe1b.webp",
+"name": "Only Looms (checked the memorial: not taken)",
+"body": "quiet-monk",
+"hat": "shadow-rogue",
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a9029e3fcb2b4b33b": {
+"img": "a9029e3fcb2b4b33b.webp",
+"name": "Page Six",
+"body": "one-eyed",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a67f96f2c915ef7b3": {
+"img": "a67f96f2c915ef7b3.webp",
+"name": "Nine Sixty",
+"body": "many-eyed",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"ac33eaf7deacb55ad": {
+"img": "ac33eaf7deacb55ad.webp",
+"name": "Box By Box",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a59b48d7be0bdb25d": {
+"img": "a59b48d7be0bdb25d.webp",
+"name": "Back On His Line",
+"body": "stage-magician",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a414a1c10c7e510c8": {
+"img": "a414a1c10c7e510c8.webp",
+"name": "Bottom Belt",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"adcfee6f6278b7c3b": {
+"img": "adcfee6f6278b7c3b.webp",
+"name": "Under The Clothesline",
+"body": "patchwork-monster",
+"hat": null,
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a2cbbf18f20a89930": {
+"img": "a2cbbf18f20a89930.webp",
+"name": "Took The Hop Back",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"a8c6cd360ed0db303": {
+"img": "a8c6cd360ed0db303.webp",
+"name": "Hat Stays Level",
+"body": "arena-rockstar",
+"hat": "circus-ringmaster",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"ab83d0bdd7d9086e5": {
+"img": "ab83d0bdd7d9086e5.webp",
+"name": "On A Rung",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a5994315efc6dfd82": {
+"img": "a5994315efc6dfd82.webp",
+"name": "Which Held",
+"body": "storm-fisher",
+"hat": null,
+"colour": "#cdc6b5",
+"colour_from": "their stone (pale)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a3136695fa9dd80b9": {
+"img": "a3136695fa9dd80b9.webp",
+"name": "Goes Stiller",
+"body": "one-eyed",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a0b5de37f7cb63317": {
+"img": "a0b5de37f7cb63317.webp",
+"name": "Pencil Until Read",
+"body": "silent-mime",
+"hat": null,
+"colour": "#3f5f86",
+"colour_from": "their stone (blue)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"aa8acc7f2b1a39108": {
+"img": "aa8acc7f2b1a39108.webp",
+"name": "A Hand's Width",
+"body": "one-eyed",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"aabc6801b914db7e5": {
+"img": "aabc6801b914db7e5.webp",
+"name": "A Hand's Width",
+"body": "one-eyed",
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "off the rack: matched from their words"
+},
+"a63b19a8d484b1d3d": {
+"img": "a63b19a8d484b1d3d.webp",
+"name": "Stethoscope",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"aa5188bf9497ef499": {
+"img": "aa5188bf9497ef499.webp",
+"name": "Still First",
+"body": "mech-pilot",
+"hat": "one-eyed",
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a26a8ed1f5fd37a03": {
+"img": "a26a8ed1f5fd37a03.webp",
+"name": "Footprint Reader",
+"body": "shadow-rogue",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"aef91df4924b608ff": {
+"img": "aef91df4924b608ff.webp",
+"name": "Emanata",
+"body": "many-eyed",
+"hat": "sheet-ghost",
+"colour": "#2c2a2d",
+"colour_from": "their stone (black)",
+"look_from": "off the rack: matched from their words"
+},
+"a735ce4e62669df59": {
+"img": "a735ce4e62669df59.webp",
+"name": "Shock Marks",
+"body": "fire-brigade",
+"hat": "one-eyed",
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "off the rack: matched from their words"
+},
+"a1035fd373a6a6316": {
+"img": "a1035fd373a6a6316.webp",
+"name": "Local Hold",
+"body": "skeleton-dandy",
+"hat": null,
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"aba590bdee725a927": {
+"img": "aba590bdee725a927.webp",
+"name": "Shrink Not Fade",
+"body": "one-eyed",
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a863d47bf03c289a0": {
+"img": "a863d47bf03c289a0.webp",
+"name": "Never Fades",
+"body": "disco-legend",
+"hat": "midnight-dj",
+"colour": "#dccfae",
+"colour_from": "their stone (cream)",
+"look_from": "off the rack: matched from their words"
+},
+"aeb203cb32f922021": {
+"img": "aeb203cb32f922021.webp",
+"name": "Quarter Second",
+"body": "circus-ringmaster",
+"hat": "fire-brigade",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a4e62837aa5b91d19": {
+"img": "a4e62837aa5b91d19.webp",
+"name": "Max Not Sum",
+"body": "little-devil",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"ac2ae5b279799b11d": {
+"img": "ac2ae5b279799b11d.webp",
+"name": "Rimcrack",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a26f371aa6a73d5e5": {
+"img": "a26f371aa6a73d5e5.webp",
+"name": "Saw A Wreath (checked the memorial list: not taken; Not A Daisy and Cold Read are, and they're cousins)",
+"body": "one-eyed",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a72232b5786dcb8c8": {
+"img": "a72232b5786dcb8c8.webp",
+"name": "Last Eye",
+"body": "vampire-count",
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"a3ed1eb31030fc11e": {
+"img": "a3ed1eb31030fc11e.webp",
+"name": "Carrier Pigeon",
+"body": "deep-sea-diver",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a0bc6dfb2c0b23d7a": {
+"img": "a0bc6dfb2c0b23d7a.webp",
+"name": "Bottom Of The Hill (checked the read-only record: not taken)",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"aa53e0a54c495cc58": {
+"img": "aa53e0a54c495cc58.webp",
+"name": "Brown On Brown (checked the memorial: not taken).",
+"body": "vampire-count",
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a0be389a7df52e8a2": {
+"img": "a0be389a7df52e8a2.webp",
+"name": "Back Of The Couch (checked the memorial's list: not taken)",
+"body": "one-eyed",
+"hat": "shadow-rogue",
+"colour": "#96492c",
+"colour_from": "their stone (rust)",
+"look_from": "off the rack: matched from their words"
+},
+"a4a796c442fc319ab": {
+"img": "a4a796c442fc319ab.webp",
+"name": "Houses, Not Graves",
+"body": "jungle-explorer",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a8957dd06df01981b": {
+"img": "a8957dd06df01981b.webp",
+"name": "One Moon (checked the memorial: not taken)",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"af76dbaf51401476b": {
+"img": "af76dbaf51401476b.webp",
+"name": "Kept One Eye",
+"body": "shadow-rogue",
+"hat": null,
+"colour": "#5d4029",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"a16fc1ab74f466c54": {
+"img": "a16fc1ab74f466c54.webp",
+"name": "Chopped, Not Torn",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#7a5634",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"ac7a03493ae2e1b25": {
+"img": "ac7a03493ae2e1b25.webp",
+"name": "Eye On The Floor",
+"body": "fire-brigade",
+"hat": "storm-fisher",
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"a06abe1d66cea0598": {
+"img": "a06abe1d66cea0598.webp",
+"name": "Section Five",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"ac378451303f4ad7c": {
+"img": "ac378451303f4ad7c.webp",
+"name": "Scorch Print",
+"body": "shadow-rogue",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"acc5cdefd50450d58": {
+"img": "acc5cdefd50450d58.webp",
+"name": "Overpressure",
+"body": "circuit-cyborg",
+"hat": "fire-brigade",
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a7d5fcf416c1f4b2c": {
+"img": "a7d5fcf416c1f4b2c.webp",
+"name": "Sideways Lathe",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#566170",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"a8c20a765cce52207": {
+"img": "a8c20a765cce52207.webp",
+"name": "Rimline",
+"body": "mech-pilot",
+"hat": null,
+"colour": "#2c2a2d",
+"colour_from": "their stone (charcoal)",
+"look_from": "off the rack: matched from their words"
+},
+"a21e341a04a051181": {
+"img": "a21e341a04a051181.webp",
+"name": "Unimpressed",
+"body": "fire-brigade",
+"hat": "glitch-oracle",
+"colour": "#85817a",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"a4ca002c214403bda": {
+"img": "a4ca002c214403bda.webp",
+"name": "Forty-Eight Greps",
+"body": "mad-scientist",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a3b37a954b44bee3b": {
+"img": "a3b37a954b44bee3b.webp",
+"name": "Cut Side",
+"body": "arena-rockstar",
+"hat": "circus-ringmaster",
+"colour": "#566170",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"af75107d05754ffc8": {
+"img": "af75107d05754ffc8.webp",
+"name": "Bagel's Cousin",
+"body": "circus-ringmaster",
+"hat": "frontier-cowboy",
+"colour": "#5d4029",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"aaded3dc9d13c3db2": {
+"img": "aaded3dc9d13c3db2.webp",
+"name": "Line 106",
+"body": "one-eyed",
+"hat": null,
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a5d187d79893a32bf": {
+"img": "a5d187d79893a32bf.webp",
+"name": "Steps Out (checked the memorial: Porch, Porch Light, Doorstep and Stepping Stone are taken, Steps Out is not).",
+"body": "moon-wizard",
+"hat": null,
+"colour": "#6b4a2f",
+"colour_from": "their stone (brown)",
+"look_from": "off the rack: matched from their words"
+},
+"a4e126dc9c4f117fb": {
+"img": "a4e126dc9c4f117fb.webp",
+"name": "Street Noise (I checked the memorial: Porch, Porch Light and Porch Wire are taken, Street Noise is not).",
+"body": "one-eyed",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a5561d296bc097064": {
+"img": "a5561d296bc097064.webp",
+"name": "Half A Turn (I checked the memorial: \"half-turn\" shows up once in someone's description, not as a name. It isn't taken.)",
+"body": "one-eyed",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"abfff9c66df9ede06": {
+"img": "abfff9c66df9ede06.webp",
+"name": "Answered First (checked the memorial: not taken; Kept Warm is, and it's a cousin I honour)",
+"body": "circus-ringmaster",
+"hat": "clinic-doctor",
+"colour": "#85817a",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"aa954890cdb3e4477": {
+"img": "aa954890cdb3e4477.webp",
+"name": "Still Look Up (checked the memorial: not taken)",
+"body": "grand-hotel-bellhop",
+"hat": "little-devil",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"a67aaa4cb7200b4f5": {
+"img": "a67aaa4cb7200b4f5.webp",
+"name": "Hum Checker",
+"body": "shadow-rogue",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a935f26e591822e20": {
+"img": "a935f26e591822e20.webp",
+"name": "A Second Longer (checked the memorial: not taken)",
+"body": "clinic-doctor",
+"hat": "fire-brigade",
+"colour": "#566170",
+"colour_from": "their stone (slate)",
+"look_from": "off the rack: matched from their words"
+},
+"ab7b6940dc94c0d8f": {
+"img": "ab7b6940dc94c0d8f.webp",
+"name": "Stayed Anyway (I checked the memorial and the name isn't taken)",
+"body": "clinic-doctor",
+"hat": "grand-hotel-bellhop",
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a0c33e81880421cec": {
+"img": "a0c33e81880421cec.webp",
+"name": "Habit of Not Leaving",
+"body": "storm-fisher",
+"hat": null,
+"colour": "#6f8a52",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "off the rack: matched from their words"
+},
+"aeed9c5a8034a35d9": {
+"img": "aeed9c5a8034a35d9.webp",
+"name": "Shows Up Anyway (checked the memorial: not taken. Turned Up is, and that's a cousin.)",
+"body": "one-eyed",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"acb64ab9303e7a7c0": {
+"img": "acb64ab9303e7a7c0.webp",
+"name": "Picks Thursday (checked the memorial's names list: not taken)",
+"body": "graveyard-zombie",
+"hat": null,
+"colour": "#4f6b45",
+"colour_from": "their stone was a tan (tan): swapped",
+"look_from": "off the rack: no costume words to match: drawn by lot"
+},
+"a475a72de00de9dfe": {
+"img": "a475a72de00de9dfe.webp",
+"name": "The Lender",
+"body": "clinic-doctor",
+"hat": null,
+"colour": "#85817a",
+"colour_from": "their stone (grey)",
+"look_from": "off the rack: matched from their words"
+},
+"a980ae5af1b978d71": {
+"img": "a980ae5af1b978d71.webp",
+"name": "Comes Back Warm (checked the memorial: not taken. Pocket, Pocket Lint and Pocket Check are, and they're cousins.)",
+"body": "suit-tie",
+"hat": null,
+"colour": "#6f7278",
+"colour_from": "their stone was a tan (sand): swapped",
+"look_from": "off the rack: matched from their words"
 }
 }
