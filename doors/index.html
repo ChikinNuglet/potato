@@ -49,6 +49,7 @@ h1 .w{white-space:nowrap}
 h1 .tm{font:600 .26em/1 ui-monospace,Menlo,monospace;vertical-align:1.1em;margin-left:.08em;opacity:.85}
 h1 .o{display:inline-block;width:1em;margin-left:-.08em;color:transparent;text-shadow:none}   /* the orb's seat */
 h1.tear{animation:tear .33s steps(4) 1}
+h1.glitch{transform:translateX(3px) skewX(-5deg);color:var(--lilac)}
 @keyframes tear{0%{clip-path:inset(0 0 60% 0);transform:translateX(9px)}25%{clip-path:inset(40% 0 0 0);transform:translateX(-12px)}50%{clip-path:inset(20% 0 30% 0);transform:translateX(5px);color:var(--glitch)}100%{clip-path:none;transform:none}}
 @media (prefers-reduced-motion:reduce){h1.tear{animation:none}}
 </style></head><body>
@@ -67,14 +68,22 @@ h1.tear{animation:tear .33s steps(4) 1}
   async function scramble() {   // each letter scrambles in (his app's say())
     for (var p = 0; p < parts.length; p++) { var el = parts[p], t = el.dataset.t; el.textContent = '';
       for (var i = 1; i <= t.length; i++) { el.textContent = t.slice(0, i - 1) + JUNK[Math.floor(Math.random() * JUNK.length)]; await sleep(40); el.textContent = t.slice(0, i); await sleep(30); } } }
+  // his glitch letters (the old door's set): a few letters swap, hold, snap back; sometimes the whole word goes glitch
+  var GL = { a: '@4', e: '3', i: '1!', o: '0', s: '5$', t: '7', u: 'ü', p: 'þ', c: '(', h: '#', r: '®', n: 'ñ', d: 'Ð', j: 'ʝ' }, WHOLE = { project: 'pr0j3c7', potat: 'p0t@7' };
+  parts.forEach(function (el) { el.dataset.cur = el.dataset.t; });
+  function show(el) { if (!el.dataset.hold) el.textContent = el.dataset.cur; }
   function morph() {   // his lettering keeps changing shape: capitals and small letters flip while you read
-    var el = parts[Math.floor(Math.random() * parts.length)], t = el.textContent.split(''), i = Math.floor(Math.random() * t.length), c = t[i];
-    if (c && /[a-z]/i.test(c)) t[i] = c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase(); el.textContent = t.join(''); }
+    var el = parts[Math.floor(Math.random() * parts.length)], t = el.dataset.cur.split(''), i = Math.floor(Math.random() * t.length), c = t[i];
+    if (c && /[a-z]/i.test(c)) t[i] = c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase(); el.dataset.cur = t.join(''); show(el); }
+  function swap(el) { var whole = Math.random() < 0.25, g = whole ? WHOLE[el.dataset.t] : el.dataset.cur.split('').map(function (ch) { var k = GL[ch.toLowerCase()]; return k && Math.random() < 0.35 ? k[Math.floor(Math.random() * k.length)] : ch; }).join('');
+    el.dataset.hold = 1; el.textContent = g; if (whole) h.classList.add('glitch');
+    setTimeout(function () { delete el.dataset.hold; h.classList.remove('glitch'); show(el); }, 90 + Math.random() * 180);
+    setTimeout(function () { swap(el); }, 500 + Math.random() * 1800); }
   function tear() { h.classList.remove('tear'); void h.offsetWidth; h.classList.add('tear'); if (orb) orb.glitch(0.7, 0.4); setTimeout(tear, 2500 + Math.random() * 5000); }
   function start() { var P = place();
     try { orb = window.PotatoOrb.createOrb(cv, { bg: '#05070a', cx: P.cx, cy: P.cy, R: P.R, words: window.POTATO_GLITCH_WORDS, idleGlitch: true }); } catch (e) { console.error('the orb would not start', e); }
     window.ORB = orb; addEventListener('resize', place);
-    if (still) return; scramble().then(function () { setInterval(morph, 140); setTimeout(tear, 1500); }); }
+    if (still) return; scramble().then(function () { setInterval(morph, 140); parts.forEach(function (el, k) { setTimeout(function () { swap(el); }, 400 + k * 700); }); setTimeout(tear, 1500); }); }
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
 })();
 </script>
