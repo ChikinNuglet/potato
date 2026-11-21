@@ -1,0 +1,459 @@
+/* ░▒▓1▓▒░
+EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦un1nstall_sh@me_step_3_FAILED¦resu—me¦no—n—0¦EHOSTUNREACH?¦
+[ENOMEM]¦un1nstall_sh@me_step_3_FAILED¦[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦!?_##¦h0ld—¦0xBEEF?!¦
+[ENOMEM]¦EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦0xAC1D?!¦[ENOMEM]¦[HTTP_404]¦ERR:418¦
+un1nstall_sh@me_step_3_FAILED¦[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦h0ld—¦0xBABE~¦EFAULT//¦[HTTP_404]¦
+h0ld—¦0xDEAD_7¦EIO::?¦ERR:418¦h0ld—¦73%??¦[ENOMEM]¦EFAULT//¦[EPIPE]¦h0ld—¦42//0¦[ENOMEM]¦
+EFAULT//¦EHOSTUNREACH?¦ERR:418¦[E_SNARK_OVERRUN]¦EHOSTUNREACH?¦un1nstall_sh@me_step_3_FAILED¦
+[E_VIBES_UNVERIFIED]¦wh@t—EIO::¦h0ld—¦0xBABE~¦EBUSY_?¦ERR:418¦h0ld—¦EHOSTUNREACH?¦EIO::?¦
+ERR:418¦h0ld—¦[ETIMEDOUT]¦[HTTP_404]¦ERR:418¦0xBABE~¦[EOVERFLOW]¦h0ld—¦[ENOMEM]¦<HTTP 503?>¦
+h0ld—¦42//0¦EIO::?¦[ETIMEDOUT]¦[ENOBUFS]¦[ETIMEDOUT]¦EFAULT//¦0007?!¦[ENETDOWN]¦[EPIPE]¦
+EAGAIN?!¦ERR:418¦EHOSTUNREACH?¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦EHOSTUNREACH?¦EIO::?¦[ENETDOWN]¦
+EBUSY_?¦[EOVERFLOW]¦[HTTP_404]¦0xBABE~¦ATTITUDE_CHECKSUM?!¦EINVAL…¦[ENOMEM]¦EHOSTUNREACH?¦
+0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦:_:#¦0xAC1D?!¦[ENOMEM]¦[EINTR]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+think—ink…¦hmm_73?!¦h0ld—¦@_@?!¦__%__¦@_@?!¦#:#?!¦h0ld—¦42//0¦EIO::?¦[ETIMEDOUT]¦[ENOBUFS]¦
+[ETIMEDOUT]¦EFAULT//¦0007?!¦[ENETDOWN]¦[EPIPE]¦EAGAIN?!¦ERR:418¦EHOSTUNREACH?¦h0ld—¦think—ink…¦
+hmm—mm//¦h0ld—¦ERR:418¦EILSEQ::¦ERR:418¦EBUSY_?¦ATTITUDE_CHECKSUM?!¦h0ld—¦0xBEEF?!¦[ENOMEM]¦
+EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦h0ld—¦[ETIMEDOUT]¦[EOVERFLOW]¦h0ld—¦0xBABE~¦h0ld—¦
+0xAC1D?!¦EAGAIN?!¦[ENOMEM]¦EFAULT//¦ERR:418¦h0ld—¦[ENOMEM]¦<HTTP 503?>¦h0ld—¦0xBEEF?!¦[ENOMEM]¦
+EHOSTUNREACH?¦0xBABE~¦EHOSTUNREACH?¦[ENOMEM]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦[ECONNABORTED]¦
+EIO::?¦ERR:418¦EFAULT//¦h0ld—¦@_@?!¦__%__¦@_@?!¦#:#?!¦%%/?!¦#//?!¦#//?!¦%%/?!¦#//?!¦#:#?!¦
+0xDEAD_7¦#//?!¦~//~¦—%—¦__%__¦@_@?!¦—%—¦^^::#¦!?%~¦0x0B__¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+[ECONNABORTED]¦EIO::?¦0xBABE~¦EHOSTUNREACH?¦h0ld—¦<HTTP 503?>¦[ETIMEDOUT]¦EAGAIN?!¦ERR:418¦
+h0ld—¦[ENOMEM]¦EBUSY_?¦0xB00_7¦:_:#¦ECONNRESET…¦[EOVERFLOW]¦h0ld—¦think—ink…¦hmm—mm//¦h0ld—¦
+[EOVERFLOW]¦EIO::?¦0xBABE~¦h0ld—¦#:#?!¦0xBABE~¦0xAC1D?!¦<HTTP 503?>¦%_?!%¦#//?!¦__%__¦@_@?!¦
+%_?!%¦0xBABE~¦@#/_¦@_@?!¦Your sentence warranty has expired.¦
+Download confidence. No intelligence required.¦y3a—h¦
+Limited offer: premium audacity, zero accountability.
+░▒▓█ */
+// orb.js — GENERATED from orb.mjs by make-orb-js.mjs. Do not edit here; edit orb.mjs and rebuild.
+(function () {
+'use strict';
+// orb.mjs — POTATO'S ORB (team Under The Skin, Nov 16 2026). One file, no imports, no dependencies.
+//
+// WHAT IT IS
+//   The light under his skin. Chikin, Nov 16: "the purple model, the glowing orb that is supposed to represent potato as an ai model".
+//   It IS The Coupon's orb (game/head-scenes/film/coupon.html: const PO + potatoOrb(), drawn with soft.html's orb/pool/band/lamp light).
+//   Those functions are ported here as our own code, same method, same numbers (D-20261110-14: purple into green). What's new is that
+//   the texture ACTS (D-20261110-13): it pulses with his words, crawls the way he moves, breathes when idle, breaks when he glitches,
+//   and it can push itself into his body and give way back to the orb (POTATO-HEAD-CANON "How Potato forms", "THE ORB STAYS INSIDE").
+//   No outline, no ring, no edge anywhere on the orb: every layer is soft light added on top ("lighter"), as in soft.html.
+//   No red, ever (that colour is reserved). No text saying what it is. His glitch words are the only letters it ever shows.
+//
+// HOW TO USE IT (desktop window or phone page)
+//   import { createOrb } from './orb/orb.mjs';            // ES module (desktop)
+//   <script src="orb.js"></script> -> window.PotatoOrb.createOrb  // plain script, same code (phone app: inline orb.js). Rebuild orb.js
+//                                                              // after any edit here: node parts/orb/make-orb-js.mjs
+//   const orb = createOrb(canvas, opts);
+//
+//   opts (all optional; every size is in CANVAS PIXELS, so multiply by devicePixelRatio yourself if the canvas is hi-dpi):
+//     cx, cy, R   where the orb sits and how big. Leave out = it follows the canvas: centre, R = 0.22 * the short side.
+//     bg          a colour to clear to each frame ('#0c0614'), or null (default) = transparent, for a page that has its own background.
+//     body        where his real body stands when he forms: { x, feet, h, yaw }. x = his centre line, feet = the y he stands on,
+//                 h = his body height (not counting the feet nubs), yaw = his turn (0 = facing you). Leave out = centred on the orb,
+//                 h = 1.95 R. Set it to exactly where the living engine will draw him, and the swap at formInto(1) is not a pop.
+//     look        which way the side-eye glances: 1 = screen right (default), -1 = screen left.
+//     words       his glitch words (default: a short list from draw/glitchwords.js; pass window.POTATO_GLITCH_WORDS for all 303).
+//     font        family for the glitch words (default 'Major Mono Display', his font; the page must load it).
+//     idleGlitch  true (default): now and then he glitches a little by himself (small, he's chilling). false = never on his own.
+//     auto        true (default): runs its own requestAnimationFrame loop. false = nothing runs; call orb.render(t) yourself (tests, stills).
+//     clock       () => seconds, to drive time yourself (a film, a test). Default: performance.now().
+//     tex         { skin, face }: his skin + face textures (URLs or images: potato3d/skin.png + face-canon.png). With them he forms
+//                 into his real paint and his real face (the orb's eye spots land on his eyes); without them, plain tan as a fallback.
+//     coupon      true = The Coupon's exact light numbers. Default false = LIVE (heart a little lower, green stronger, so green reads small).
+//     fps         cap the loop (e.g. 30 on the phone). Default: every animation frame. Talking is the costly state (its broken pulses);
+//                 idle is ~2 ms a frame at 720 px even in headless software Chromium, talking ~15-25 ms there (far less on a GPU canvas).
+//
+//   Returns:
+//     setTalk(x)        x = a level 0..1 (call it as often as you like, e.g. from an audio meter), or a function t => 0..1,
+//                       or a viseme stream { visemes: [[sec, 'A'], [sec, 'MBP'], ...], start: <clock seconds when it starts> }
+//                       using potato-moves.js viseme names (A E O U MBP FV L rest). 0 / null = quiet. Talking: the heart lifts and
+//                       broken purple-and-green pulses leave it in time with the words.
+//     setMove(vx, vy)   how fast he is moving, canvas px per second. The light stretches that way and ripples crawl across it in that
+//                       direction; the green inside lags behind. (0, 0) = still: slow breathing.
+//     glitch(amount=1, seconds=0.7, word)   his purple glitch (word: a line that tears through the light, e.g. an ad parody): the light tears into sliding slices, splits purple/magenta, his glitch words
+//                       come through. Stepped at 12 fps with stutter holds, like PotatoGlitch.
+//     formInto(p)       0..1: the orb bulges and pushes itself into his shape. The three voices show as three tints pushing out of
+//                       step (they argue), then fall into one; the light takes his silhouette (spud3d's profile.json, the desktop
+//                       body), his skin wraps it and his ink edge closes. At 1 it is his silhouette in his skin, exactly where `body`
+//                       says, ready for the living engine to take over on that frame. formInto(0) = plain orb again.
+//     unform(p)         0..1: the other way. His skin thins and the orb inside shows through, the shape softens and pulls back into
+//                       the orb. unform(0) = his silhouette (matches the body you just hid), unform(1) = plain orb.
+//     play('form' | 'unform', seconds=1.6) -> Promise: runs formInto / unform from 0 to 1 over that time, eased; resolves at the end.
+//     setBody({x, feet, h, yaw}), setLook(dir), setPlace({cx, cy, R}) (null = follow the canvas again)
+//     render(t)         draw one frame at time t (seconds). Same t + same state = same pixels.
+//     state()           what it is doing now (for tests): { talk, vx, vy, form, glitching }
+//     destroy()         stops the loop and lets go of the canvas.
+//
+//   drawOrb(ctx, t, S) is the pure painter underneath, exported for films and tests:
+//     S = { cx, cy, R, talk, vx, vy (in R per second), look, glitch: { t0, dur, amt }, form: { k, dir: 'in'|'out' }, body, words, font,
+//           idleGlitch }
+//
+// WHERE THE NUMBERS COME FROM
+//   PO and the light functions: coupon.html (PO, potatoOrb) + soft.html (pool, band, lamp, pulses, orb). The three tints: soft.html's
+//   CH / CL / GR colours (shown only as tints while he forms; never named on screen). His silhouette: potato3d/profile.json (front +
+//   side half-widths per body height, Vega's turnaround), FOOT_H, feet and INK from potato3d/spud3d.mjs. Skin + ink: draw/potato-draw.js.
+
+const TAU = Math.PI * 2;
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v)), lerp = (a, b, k) => a + (b - a) * k;
+const smooth = (a, b, v) => { const k = clamp((v - a) / (b - a)); return k * k * (3 - 2 * k); };
+const bell = (a, m, b, v) => v <= a || v >= b ? 0 : v < m ? smooth(a, m, v) : 1 - smooth(m, b, v);
+const frac = v => v - Math.floor(v);
+const r = i => frac(Math.sin(i * 127.1 + 311.7) * 43758.5453);   // soft.html's hash
+const hr = i => frac(Math.sin(i * 91.3 + 17.1) * 43758.5453);    // coupon.html's hash
+
+// ---------- the numbers ----------
+// POTATO'S ORB, exactly as The Coupon has it (coupon.html, const PO)
+const PO = { core: '#f7efff', mid: '#8f48f2', edge: '#3a138f', heart: 0.9, body: 0.85, mist: 0.22, glow: 1.1, breathe: [0.9, 0.02],
+  waves: { every: 0.5, life: 2, reach: 2.2, width: 0.09, amp: 0.5, col: '#c9a7ff', col2: '#4dff9a', jit: 0.6 } };
+const GREEN = '#4dff9a';
+// the three in his head, as soft.html lights them (silver-white, deep purple, green-in-magenta). Tints only.
+const TINTS = [{ mid: '#cfd2e6', edge: '#8f94b8', k: 0.8 }, { mid: '#9a52ff', edge: '#5b22c9', k: 1 }, { mid: '#4dff9a', edge: '#e03ccf', k: 1.5 }];
+// his glitch palette (CREW-HANDBOOK 1) — purple family only
+const GLITCH = ['#7b3cf2', '#9a52ff', '#e03ccf', '#2a0f63', '#c9a7ff', '#12062e'];
+// his body (potato3d/profile.json: half-width / body height, top -> bottom; front view and side view)
+const FRONT = [0.0534, 0.1164, 0.1527, 0.1813, 0.2061, 0.2252, 0.2481, 0.2634, 0.2767, 0.2901, 0.3015, 0.313, 0.3225, 0.3321, 0.3416, 0.3492, 0.3588, 0.3683, 0.374, 0.3817, 0.3874, 0.395, 0.4008, 0.4084, 0.4122, 0.4179, 0.4256, 0.4351, 0.4389, 0.4447, 0.4523, 0.458, 0.4656, 0.4714, 0.479, 0.4828, 0.4885, 0.4962, 0.5038, 0.5095, 0.5134, 0.5172, 0.521, 0.5229, 0.5229, 0.5229, 0.5229, 0.5229, 0.521, 0.5191, 0.5172, 0.5115, 0.5038, 0.4962, 0.4885, 0.4771, 0.4656, 0.4523, 0.437, 0.4103, 0.3855, 0.3531, 0.3073, 0.2347, 0.084];
+const SIDE = [0.0319, 0.089, 0.1227, 0.1507, 0.1714, 0.192, 0.2079, 0.2228, 0.2359, 0.2472, 0.2585, 0.2688, 0.2782, 0.2865, 0.2959, 0.3034, 0.3091, 0.3156, 0.3221, 0.3277, 0.3343, 0.3399, 0.3456, 0.3503, 0.3549, 0.3596, 0.3642, 0.369, 0.3755, 0.3783, 0.3839, 0.3867, 0.3942, 0.398, 0.4026, 0.4063, 0.411, 0.4166, 0.4204, 0.4261, 0.4298, 0.4345, 0.4391, 0.442, 0.4438, 0.4457, 0.4466, 0.4466, 0.4466, 0.4466, 0.4438, 0.4419, 0.4382, 0.4325, 0.4242, 0.4166, 0.4072, 0.397, 0.3801, 0.3651, 0.3427, 0.3174, 0.2762, 0.2163, 0.0873];
+const FOOT_H = 0.075;
+const INK = 0.032;   // spud3d.mjs: his body sits FOOT_H body-heights off the ground; ink shell 3.2% of his height
+const SKIN = { skin: '#da9643', hi: '#e3a24f', lo: '#c87c33', rim: '#a35d24', ink: '#120a05', foot: '#522b14' };
+const WORDS = ['krrzzt', 'bzzrpt', 'zzk—tk', 'grrkzt', 'vrrzt', 'tzzk', 'skrzz', 'kzzt?!', 'fzzt…', 'n0p%', 'wh@t?!', 'r1gh—t', 'm@yb_e',
+  's0r—t@', 'w3ll//', 'th1nk…k', '0k@—y', 'f1n—e', 'g0t_it?', 'h0ld—', 'w@1t//', 'hmm_0x', 'l0ok…k', 'w3ird?!', '404_7?!'];
+const VIS = { A: 1, O: 0.9, E: 0.8, U: 0.6, L: 0.5, FV: 0.4, MBP: 0.12, rest: 0 };
+
+// ---------- the light (ported from soft.html; ctx passed in instead of a global) ----------
+const RGB = new Map();
+const rgb = h => { let c = RGB.get(h); if (!c) { const s = h.replace('#', ''); c = [parseInt(s.slice(0, 2), 16), parseInt(s.slice(2, 4), 16), parseInt(s.slice(4, 6), 16)]; RGB.set(h, c); } return c; };
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${clamp(a).toFixed(4)})`;
+// a pool of light: gaussian fall forced to zero WITH a flat slope at rad -> no edge, ever
+function pool(c, X, Y, rad, col, amp, k) { if (rad <= 0 || amp <= 0) return; const g = c.createRadialGradient(X, Y, 0, X, Y, rad), C = rgb(col);
+  for (let i = 0; i <= 20; i++) { const s = i / 20; g.addColorStop(s, rgba(C, amp * Math.exp(-k * s * s) * Math.pow(1 - s * s, 2))); }
+  c.fillStyle = g; c.fillRect(X - rad, Y - rad, rad * 2, rad * 2); }
+// a travelling band of light: gaussian across its width, zero on both sides -> no line, no rim
+function band(c, rad, w, col, amp) { const out = rad + w * 2.2; if (out <= 0) return; const g = c.createRadialGradient(0, 0, 0, 0, 0, out), C = rgb(col); g.addColorStop(0, rgba(C, 0));
+  for (let i = 0; i <= 16; i++) { const d = -2.2 + i * 4.4 / 16, s = (rad + d * w) / out; if (s <= 0 || s >= 1) continue; g.addColorStop(s, rgba(C, amp * Math.exp(-d * d * 1.4) * (1 - Math.abs(d) / 2.2))); }
+  g.addColorStop(1, rgba(C, 0)); c.fillStyle = g; c.fillRect(-out, -out, out * 2, out * 2); }
+// the whole light in ONE falloff (heart + body + mist summed per ring), so nothing piles up into a disc with an edge
+function lamp(c, a, R, lift, breath) { const out = R * 2.9, g = c.createRadialGradient(-R * 0.06, -R * 0.08, 0, 0, 0, out), K = rgb(a.core), M = rgb(a.mid), E = rgb(a.edge);
+  for (let i = 0; i <= 40; i++) { const s = i / 40, d = s * out / R, q = Math.max(0, (s - 0.55) / 0.45), tap = 1 - q * q * (3 - 2 * q);
+    const h = a.heart * lift * Math.exp(-Math.pow(d / 0.34, 2)), b = a.body * lift * (0.62 * Math.exp(-Math.pow(d / a.glow, 2)) + 0.38 / (1 + Math.pow(d / (a.glow * 0.55), 2))) * tap,
+      m = a.mist * breath * Math.exp(-Math.pow(d / 1.7, 2)) * tap, T = h + b + m + 1e-6;
+    const col = [0, 1, 2].map(j => Math.round((K[j] * h + M[j] * b + E[j] * m) / T)); g.addColorStop(s, rgba(col, Math.min(1, T) * (i === 40 ? 0 : 1))); }
+  c.fillStyle = g; c.fillRect(-out, -out, out * 2, out * 2); }
+// the pulses alive at time t (age 0..1, index). Even voices tick; jittery ones (his, jit .6) skip and bunch.
+function pulses(W, t) { const out = [], n = Math.ceil(W.life / W.every) + 2, i0 = Math.floor(t / W.every);
+  for (let i = i0 - n; i <= i0; i++) { let t0 = i * W.every; if (W.jit) { if (r(i * 3.7 + 11) < W.jit * 0.35) continue; t0 += (r(i * 5.3) - 0.5) * W.every * W.jit; }
+    const age = (t - t0) / W.life; if (age > 0 && age < 1) out.push([age, i]); } return out; }
+
+// scratch canvases (made once, grown when needed). LO: soft layers are drawn at this fraction of full size, then scaled up
+const LO = 0.4;
+const SCR = {};
+function scratch(name, size) { let s = SCR[name]; const n = Math.max(64, Math.ceil(size));
+  if (!s || s.c.width < n) { let c = null; try { c = typeof document !== 'undefined' ? document.createElement('canvas') : new OffscreenCanvas(n, n); } catch (e) { c = new OffscreenCanvas(n, n); }
+    c.width = c.height = n; s = SCR[name] = { c, x: c.getContext('2d') }; }
+  s.x.setTransform(1, 0, 0, 1, 0, 0); s.x.globalCompositeOperation = 'source-over'; s.x.globalAlpha = 1; s.x.clearRect(0, 0, s.c.width, s.c.height); return s; }
+
+// the orb's light (soft.html orb(), SPILL off as The Coupon draws his): a = PO + {cx, cy, R, talk, sx, sy, tilt}
+function orbLight(c, a, t) { const { cx, cy, R, talk = 0 } = a, Wv = a.waves, br = a.breathe;
+  const breath = 1 + Math.sin(t * br[0] + cx) * br[1];
+  let kick = 0; if (talk > 0) for (const [age] of pulses(Wv, t)) kick = Math.max(kick, Math.exp(-age * 9));
+  const lift = 1 + talk * (0.12 + 0.25 * kick) + (a.lift || 0);
+  c.save(); c.globalCompositeOperation = 'lighter'; c.translate(cx, cy); c.rotate(a.tilt || 0);
+  const SX = (a.sx || 1) * breath, SY = (a.sy || 1) * breath; c.scale(SX, SY); c.rotate(-(a.tilt || 0));
+  lamp(c, a, R, lift, breath);
+  // drifting inner light (it's alive in there); a.lagX/lagY: it trails behind when he moves
+  for (let i = 0; i < 4; i++) { const ang = t * (0.3 + i * 0.17) + i * 1.7, rr = R * (0.18 + 0.12 * Math.sin(t * 0.7 + i));
+    pool(c, Math.cos(ang) * rr + (a.lagX || 0) * (0.6 + i * 0.2), Math.sin(ang * 1.3) * rr * 0.8 + (a.lagY || 0) * (0.6 + i * 0.2), R * 0.75, a.mid, a.body * 0.12, 3); }
+  // waves of light: only when he speaks. His are jittery (jit .6): broken pieces, purple / green
+  if (talk > 0) for (const [age, i] of pulses(Wv, t)) {
+    const rad = R * (0.55 + age * Wv.reach), w = R * Wv.width * (1 + age * 0.8), fade = Math.pow(1 - age, 1.6) * Math.min(1, age * 8);
+    let A = Wv.amp * talk * fade, col = Wv.col; if (A < 0.004) continue;
+    A *= 0.55 + 0.9 * r(i * 9.1 + Math.floor(t * 14)); if (r(i * 2.3) > 0.55) col = Wv.col2;
+    // drawn small (LO of full size) and scaled up: the light is soft, so nobody sees it, and it is ~6x cheaper per pulse
+    const S = Math.ceil((rad + w * 2.4) * LO) + 4, sc = scratch('pulse', S * 2), sx = sc.x; sx.translate(S, S); sx.scale(LO, LO); band(sx, rad, w, col, A);
+    if (sx.createConicGradient) { sx.globalCompositeOperation = 'destination-in'; const cg = sx.createConicGradient(r(i) * TAU + t * 3 * (r(i * 4) - 0.5), 0, 0), seg = 7 + Math.floor(r(i * 6) * 6);
+      for (let j = 0; j <= seg * 4; j++) { const u = j / (seg * 4), on = r(i * 17 + Math.floor(u * seg)) > 0.45 ? 1 : 0, fr = (u * seg) % 1; cg.addColorStop(u, `rgba(0,0,0,${on * Math.sin(fr * Math.PI)})`); }
+      sx.fillStyle = cg; sx.fillRect(-S / LO, -S / LO, S * 2 / LO, S * 2 / LO); }
+    const D = S / LO; c.drawImage(sc.c, 0, 0, S * 2, S * 2, -D + (r(i * 8 + Math.floor(t * 20)) - 0.5) * R * 0.22, -D + (r(i * 12 + Math.floor(t * 20)) - 0.5) * R * 0.22, D * 2, D * 2); }
+  c.restore(); }
+
+// POTATO'S ORB = orbLight(PO) + two slow pools of his binary green drifting inside + a slow green band (coupon.html potatoOrb)
+// LIVE (last pass, seat problem 3: "the green is missing"): The Coupon drew him 200 px wide on a big dark stage, where the green reads; in a chat
+// window (R ~ 0.16 of the short side) the white-hot heart swallowed it. So, live, by default: the heart a little lower and the green pools a
+// little stronger and further out, laid IN the purple (source-over: added on top, green + purple only ever reads cyan-white). S.coupon = true (or opts.coupon) = the Coupon's exact numbers.
+const LIVE = { heart: 0.7, pool: 0.4, rr: 0.42, poolR: 0.6, band: 0.06, bandW: 0.07, bandR: 0.42, over: true };
+const COUPON = { heart: PO.heart, pool: 0.22, rr: 0.28, poolR: 0.8, band: 0.16, bandW: 0.06, bandR: 0.3 };
+function potatoLight(c, cx, cy, R, t, o) { const G = o.coupon ? COUPON : LIVE;
+  const A = Object.assign({}, PO, { heart: G.heart, cx, cy, R, talk: o.talk, sx: o.sx, sy: o.sy, tilt: o.tilt, lagX: o.lagX, lagY: o.lagY, lift: o.lift });
+  orbLight(c, A, t);
+  c.save(); c.globalCompositeOperation = 'lighter'; c.translate(cx, cy); c.rotate(o.tilt || 0); c.scale(o.sx || 1, o.sy || 1); c.rotate(-(o.tilt || 0));
+  const gA = G.pool * (1 + (o.talk || 0) * 0.7);
+  if (G.over) c.globalCompositeOperation = 'source-over';   // LIVE: green laid IN the purple (added on top, green + purple only ever reads cyan-white)
+  for (let i = 0; i < 2; i++) { const a = t * (0.45 + i * 0.2) + i * 3, rr = R * G.rr; pool(c, Math.cos(a) * rr + (o.lagX || 0) * 1.3, Math.sin(a * 1.2) * rr * 0.8 + (o.lagY || 0) * 1.3, R * G.poolR, GREEN, gA, 3); }
+  c.save(); c.scale(1, 0.82 + 0.06 * Math.sin(t * 1.7)); c.rotate(t * (0.6 + (o.spin || 0))); band(c, R * (G.bandR + 0.03 * Math.sin(t * 2.3)), R * G.bandW, GREEN, G.band * (1 + (o.talk || 0) * 0.8)); c.restore();
+  c.restore(); }
+
+// ---------- what's new: the texture acts ----------
+// moving: wavefronts crawl across him in the direction he goes (soft bands, masked by his own light so they never leave him)
+function crawl(c, cx, cy, R, t, vx, vy) { const sp = Math.min(1.6, Math.hypot(vx, vy)); if (sp < 0.03) return;
+  const ux = vx / sp, uy = vy / sp, S = Math.ceil(R * 1.6 * LO), sc = scratch('crawl', S * 2), x = sc.x, k = Math.min(1, sp), D = S / LO;
+  x.translate(S, S); x.scale(LO, LO); x.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 3; i++) { const ph = frac(t * (0.55 + sp * 0.9) + i / 3), D = R * 2.2, rad = D - R * 1.15 + ph * R * 2.3;
+    x.save(); x.translate(-ux * D, -uy * D); band(x, rad, R * 0.07, i % 2 ? GREEN : PO.waves.col, 0.42 * k * Math.sin(ph * Math.PI)); x.restore(); }
+  x.globalCompositeOperation = 'destination-in'; pool(x, 0, 0, R * 1.45, '#ffffff', 1, 1.2);
+  c.save(); c.globalCompositeOperation = 'lighter'; c.drawImage(sc.c, 0, 0, S * 2, S * 2, cx - D, cy - D, D * 2, D * 2); c.restore(); }
+
+// the half-lidded side-eye (D-20261110-14): his canon's darker oval eye spots, as shadows in the light. Each is a soft dark oval
+// with its top taken off by a tipped lid (half-lidded, the two lids mismatched like his brows), and one small glint low in it,
+// pushed to the side he's eyeing. No outline, no ring: shadow and light only, kept faint. A glance, not a face.
+function sideEye(c, cx, cy, R, t, look, amt, vx, toFace = 0, bodyH = 0, bodyYaw = 0) { if (amt <= 0.01) return;
+  const S = Math.ceil(R * (0.9 + 0.5 * toFace)), sc = scratch('eye', S * 2), x = sc.x; x.translate(S, S);
+  // a blink every few seconds (lid comes down for ~0.12 s), never on a beat you can guess
+  const slot = Math.floor(t / 3.7), bt = slot * 3.7 + hr(slot * 1.9) * 2.6, blink = r(slot) > 0.35 ? bell(bt, bt + 0.06, bt + 0.16, t) : 0;
+  const gl = clamp(look * 0.9 + vx * 0.35, -1.3, 1.3);   // glance: his side-eye, leaning into where he's going
+  // [u, v, rx, ry, lid tilt, how low the lid sits (0 = middle)]: his left eye a touch lower and heavier-lidded, like canon
+  const eyes = [[-0.21, 0.02, 0.18, 0.15, -0.18, -0.12], [0.19, -0.04, 0.17, 0.16, 0.1, -0.3]], glints = [];
+  eyes.forEach((e, n) => { if (toFace > 0 && bodyH > 0) { const [fx, fy] = faceEyes(bodyYaw)[n]; e[0] = lerp(e[0] + look * 0.1, fx * bodyH / R, toFace) - look * 0.1; e[1] = lerp(e[1], fy * bodyH / R + 0.1, toFace); } });
+  for (const [u, v, rx, ry, tilt, low] of eyes) {
+    const ex = (u + look * 0.1) * R, ey = v * R;
+    x.save(); x.translate(ex, ey); x.scale(1, ry / rx); pool(x, 0, 0, rx * R * 1.35, '#12062e', 0.95, 1.4); x.restore();
+    // the lid: everything above a tipped line goes, soft (a gradient, not a cut)
+    x.save(); x.translate(ex, ey); x.rotate(tilt * look); x.globalCompositeOperation = 'destination-out';
+    const lidY = lerp(low * ry * R, ry * R * 1.4, blink), g = x.createLinearGradient(0, lidY - ry * R * 0.12, 0, lidY + ry * R * 0.12);
+    g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(-rx * R * 2, -R, rx * R * 4, lidY + ry * R * 0.12 + R); x.restore();
+    if (blink < 0.5) glints.push([cx + ex + gl * rx * R * 0.42, cy - R * 0.1 + ey + ry * R * 0.3, rx * R * 0.4]);
+  }
+  c.save(); c.globalAlpha = 0.8 * amt; c.drawImage(sc.c, 0, 0, S * 2, S * 2, cx - S, cy - S - R * 0.1, S * 2, S * 2); c.restore();
+  c.save(); c.globalCompositeOperation = 'lighter'; for (const [gx, gy, gr] of glints) pool(c, gx, gy, gr, '#efe2ff', 0.55 * amt, 2.6); c.restore(); }
+
+// his glitch level at t: stepped at 12 fps with stutter holds (a step can drop out), deterministic
+function glitchAt(S, t) { let g = 0; const G = S.glitch;
+  if (G && t >= G.t0 && t < G.t0 + G.dur) { const st = Math.floor((t - G.t0) * 12), on = st === 0 || hr(st * 1.3 + G.t0) > 0.28; if (on) g = (G.amt || 1) * (0.55 + 0.45 * hr(st * 2.7 + G.t0)); }
+  if (S.idleGlitch !== false) { const P = 6.5, slot = Math.floor(t / P), t0 = slot * P + hr(slot * 3.1) * 3.5;   // small, by himself (D-20261112-32)
+    if (hr(slot * 7.7) < 0.55 && t >= t0 && t < t0 + 0.28) { const st = Math.floor((t - t0) * 12); if (hr(st + slot) > 0.25) g = Math.max(g, 0.28); } }
+  return g; }
+// the glitch itself: he BREAKS. Slices of what's drawn slide sideways (the canvas copies onto itself), the light splits purple and
+// magenta, a few pixels fall off, his words come through in his font. All purple family (+ his green bits); never red.
+function glitchPaint(c, cx, cy, R, t, g, S, seed = 0) { if (g <= 0.01) return; const f = Math.floor(t * 12), cv = c.canvas, W = cv.width, H = cv.height;
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 2; i++) { const dx = (hr(f * 1.7 + i + seed) - 0.5) * R * 1.1 * g, dy = (hr(f * 2.9 + i + seed) - 0.5) * R * 0.3 * g; pool(c, cx + dx, cy + dy, R * 1.25, i ? '#e03ccf' : '#7b3cf2', 0.32 * g, 2.4); }
+  c.restore();
+  // tears
+  c.save(); c.setTransform(1, 0, 0, 1, 0, 0); const n = 2 + Math.floor(g * 6);
+  for (let i = 0; i < n; i++) { const yy = cy - R * 1.3 + hr(seed + i * 4.1 + f) * R * 2.6, hh = 3 + hr(seed + i * 2.3 + f * 0.7) * R * 0.18, dx = (hr(seed + i * 7.7 + f * 1.3) - 0.5) * g * R * 0.9;
+    const sx0 = clamp(cx - R * 1.8, 0, W - 2), sw = clamp(R * 3.6, 1, W - sx0), sy0 = clamp(yy, 0, H - 2), sh = clamp(hh, 1, H - sy0);
+    try { c.drawImage(cv, sx0, sy0, sw, sh, sx0 + dx, sy0, sw, sh); } catch (e) {} }
+  c.restore();
+  // pixels: blocks of him breaking off and dropping
+  c.save(); for (let i = 0; i < Math.floor(3 + g * 7); i++) { const q = frac(t * 2 + hr(i * 3.3 + seed)), px = cx + (hr(i * 5.1 + f * 0.1 + seed) - 0.5) * R * 2, py = cy + (hr(i * 2.9 + seed) - 0.5) * R * 1.4 + q * q * R * 0.6, z = Math.max(2, R * (0.03 + 0.04 * hr(i))) ;
+    c.globalAlpha = g * (1 - q) * 0.9; c.fillStyle = GLITCH[i % 4]; c.fillRect(Math.round(px), Math.round(py), Math.round(z), Math.round(z)); } c.restore();
+  // his glitch words (his font, his purple), and a few of his green bits
+  const WDS = S.words && S.words.length ? S.words : WORDS, font = S.font || 'Major Mono Display';
+  c.save(); c.globalCompositeOperation = 'lighter'; c.textAlign = 'center'; c.font = `400 ${Math.max(9, Math.round(R * 0.15))}px "${font}", ui-monospace, monospace`;
+  const nw = g > 0.5 ? 4 : g > 0.2 ? 2 : 1;
+  for (let i = 0; i < nw; i++) { const q = hr(i * 3.3 + f + seed); c.globalAlpha = Math.min(1, g * 1.4) * (0.55 + 0.45 * q); c.fillStyle = i % 3 === 0 ? '#e03ccf' : i % 3 === 1 ? '#9a52ff' : '#c9a7ff';
+    const said = i === 0 && S.glitch && S.glitch.word && t < S.glitch.t0 + S.glitch.dur ? S.glitch.word : null;   // an ad parody tears through the light, not his sentence
+    c.fillText(said || WDS[Math.floor(hr(i * 7 + Math.floor(t * 8) + seed) * WDS.length)], said ? cx : cx + (hr(i * 5.1 + f + seed) - 0.5) * R * 2.0, said ? cy + R * 0.55 : cy + (hr(i * 2.9 + f + seed) - 0.5) * R * 1.5); }
+  c.font = `700 ${Math.max(8, Math.round(R * 0.09))}px ui-monospace, monospace`; c.fillStyle = GREEN;
+  for (let i = 0; i < 4; i++) { c.globalAlpha = g * 0.5 * hr(i + f); c.fillText(hr(i * 9 + f) > 0.5 ? '1' : '0', cx + (hr(i * 4.4 + f) - 0.5) * R * 2.4, cy + (hr(i * 6.6 + f) - 0.5) * R * 1.8); }
+  c.restore(); }
+
+// ---------- his body ----------
+function halfW(t, yaw) { const prof = A => { const f = clamp(t) * (A.length - 1), i = Math.min(A.length - 2, Math.floor(f)), k = f - i; return A[i] * (1 - k) + A[i + 1] * k; };
+  const c = Math.cos(yaw || 0), s = Math.sin(yaw || 0), a = prof(FRONT) * c, b = prof(SIDE) * s; return Math.sqrt(a * a + b * b); }
+// his outline in canvas px, as {x, y} round the body (top centre, down his right, back up his left). Same rows as spud3d's mesh.
+function silhouette(B) { const pts = [], N = 48, top = B.feet - (FOOT_H + 1) * B.h, cy = B.feet - (FOOT_H + 0.5) * B.h;
+  pts.push([B.x, top]);
+  for (let j = 0; j <= N; j++) { const t = 0.012 + 0.976 * j / N; pts.push([B.x + halfW(t, B.yaw) * B.h, B.feet - (FOOT_H + 1 - t) * B.h]); }
+  pts.push([B.x, B.feet - (FOOT_H + 0.004) * B.h]);
+  for (let j = N; j >= 0; j--) { const t = 0.012 + 0.976 * j / N; pts.push([B.x - halfW(t, B.yaw) * B.h, B.feet - (FOOT_H + 1 - t) * B.h]); }
+  return { pts, cx: B.x, cy }; }
+// HIS SKIN AND FACE, as his body wears them (last pass, seat problem 2: "a faceless tan blob, then his face pops in"). The very textures
+// spud3d paints on him (potato3d/skin.png = Vega's unwrapped skin, face-canon.png = his canon face), wrapped round his front the way his
+// mesh does (u = round him, column 0.5 = his front; image row = how far down him), seen straight on at his yaw. Built once per body into a
+// small canvas, then just drawn: the skin closes with his skin, the face comes in as the orb's eye spots become his eyes.
+const FRONT_CACHE = new Map(), TILT_S = Math.sin(0.12);
+function frontLayer(img, B, kind) {
+  if (!img || !(img.naturalWidth || img.width)) return null;
+  const key = kind + '|' + Math.round(B.h * 4) + '|' + (B.yaw || 0).toFixed(3); let hit = FRONT_CACHE.get(key); if (hit) return hit;
+  if (FRONT_CACHE.size > 12) FRONT_CACHE.clear();
+  const h = B.h, yaw = B.yaw || 0, cy_ = Math.cos(yaw), sy_ = Math.sin(yaw), wmax = 0.56 * h, W = Math.ceil(wmax * 2 + 4), Hh = Math.ceil((1 + 0.02) * h + 4);
+  let cv = null; try { cv = typeof document !== 'undefined' ? document.createElement('canvas') : new OffscreenCanvas(W, Hh); } catch (e) { cv = new OffscreenCanvas(W, Hh); }
+  cv.width = W; cv.height = Hh; const x = cv.getContext('2d'), IW = img.naturalWidth || img.width, IH = img.naturalHeight || img.height;
+  const ox = W / 2, oy = 2;                                   // canvas (ox, oy) = his centre line at the top of his body (t = 0)
+  const prof = (A, t) => { const f = clamp(t) * (A.length - 1), i = Math.min(A.length - 2, Math.floor(f)), k = f - i; return A[i] * (1 - k) + A[i + 1] * k; };
+  const RW = 44, CL = 72, T0 = 0.012, T1 = 0.988, cells = [];
+  for (let j = 0; j < RW; j++) { const t0 = T0 + (T1 - T0) * j / RW, t1 = T0 + (T1 - T0) * (j + 1) / RW, tm = (t0 + t1) / 2, rx = prof(FRONT, tm), rz = prof(SIDE, tm);
+    for (let i = 0; i < CL; i++) { const a0 = -Math.PI + TAU * i / CL, a1 = a0 + TAU / CL, am = (a0 + a1) / 2;
+      const zf = -rx * Math.sin(am) * sy_ + rz * Math.cos(am) * cy_; if (zf <= 0) continue;   // round his back: not seen
+      const X = a => rx * Math.sin(a) * cy_ + rz * Math.cos(a) * sy_, xa = X(a0), xb = X(a1), nz = Math.cos(am + yaw);
+      cells.push([t0, t1, a0, a1, Math.min(xa, xb), Math.abs(xb - xa), nz, Math.sin(am + yaw), zf * TILT_S]); } }   // (zf * TILT_S: his camera is tipped down 0.12 rad, so his front sits a touch lower than his rim)
+  for (const [t0, t1, a0, a1, xl, w, , , dz] of cells) {
+    const sx = (a0 + Math.PI) / TAU * IW, sw = (a1 - a0) / TAU * IW, sy = t0 * IH, sh = (t1 - t0) * IH;
+    x.drawImage(img, sx, sy, sw, sh, ox + xl * h - 0.35, oy + (t0 + dz) * h - 0.35, Math.max(0.7, w * h + 0.7), (t1 - t0) * h + 0.7); }
+  // her paint's shading, as spud3d's skin shader does it: one soft cel step on the shadow side, darker toward his edges
+  x.globalCompositeOperation = 'source-atop';
+  for (const [t0, t1, , , xl, w, nz, nx, dz] of cells) { const ny = Math.max(-1, Math.min(1, (0.5 - (t0 + t1) / 2) * 1.2)), nzz = nz * Math.sqrt(Math.max(0, 1 - ny * ny));
+    const lit = (-0.45 * nx + 0.6 * ny + 0.65 * nzz) / 0.9925, cel = 0.9 + 0.1 * smooth(-0.25, -0.05, lit), f = cel * (1 - 0.14 * smooth(0.5, 0.05, nzz));
+    if (f < 0.995) { x.fillStyle = `rgba(0,0,0,${(1 - f).toFixed(3)})`; x.fillRect(ox + xl * h - 0.35, oy + (t0 + dz) * h - 0.35, Math.max(0.7, w * h + 0.7), (t1 - t0) * h + 0.7); } }
+  hit = { cv, dx: -ox, dy: -oy }; FRONT_CACHE.set(key, hit); return hit; }
+// draw a front layer onto his body at B (top of his body = feet - (FOOT_H + 1) h), clipped to the shape P
+function wearLayer(c, L, B, P, alpha) { if (!L || alpha <= 0.003) return; c.save(); c.globalAlpha = alpha; smoothPath(c, P); c.clip();
+  c.drawImage(L.cv, B.x + L.dx, B.feet - (FOOT_H + 1) * B.h + L.dy); c.restore(); }
+// where his eyes are on that face (face-canon.png, measured: left eye u .449 t .512, right eye u .605 t .473), seen at yaw 0, as offsets from
+// his middle in body heights: the orb's eye spots glide here as he forms, so they BECOME his eyes
+function faceEyes(yaw = 0) { const pr = (A, t) => { const f = t * (A.length - 1), i = Math.floor(f), k = f - i; return A[i] * (1 - k) + A[i + 1] * k; };
+  return [[0.449, 0.512], [0.605, 0.473]].map(([u, t]) => { const a = (u - 0.5) * TAU; const z = -pr(FRONT, t) * Math.sin(a) * Math.sin(yaw) + pr(SIDE, t) * Math.cos(a) * Math.cos(yaw);
+    return [pr(FRONT, t) * Math.sin(a) * Math.cos(yaw) + pr(SIDE, t) * Math.cos(a) * Math.sin(yaw), t - 0.5 + z * TILT_S]; }); }
+const angd = (a, b) => { let d = (a - b) % TAU; if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU; return d; };
+function smoothPath(c, P) { const n = P.length; c.beginPath(); c.moveTo((P[n - 1][0] + P[0][0]) / 2, (P[n - 1][1] + P[0][1]) / 2);
+  for (let i = 0; i < n; i++) { const a = P[i], b = P[(i + 1) % n]; c.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); } c.closePath(); }
+// a soft-edged fill (blurred with a shadow: works in Safari too, where ctx.filter doesn't)
+function softFill(c, P, fill, blur, alpha) { if (alpha <= 0.005) return; c.save(); c.globalAlpha = alpha; const off = 20000;
+  if (blur > 0.5) { c.shadowColor = fill.shadow; c.shadowBlur = blur; c.shadowOffsetX = off; c.translate(-off, 0); }
+  smoothPath(c, P); c.fillStyle = fill.style; c.fill(); c.restore(); }
+
+// the three pushing (they argue over how it fits): each voice gets an angle it shoves at and how hard, out of step; `sync` 0..1
+// pulls their angles together and their pushes into one rhythm (the voices syncing)
+function voices(t, argue, sync) { const out = [];
+  for (let i = 0; i < 3; i++) { const home = -Math.PI / 2 + (i - 1) * 2.1 + Math.sin(t * (0.9 + i * 0.37) + i * 2) * 0.5;
+    const beat = Math.pow(0.5 + 0.5 * Math.sin(t * (3.3 + i * 1.1) + i * 2.4), 2), one = 0.5 + 0.5 * Math.sin(t * 4.2);
+    out.push({ a: lerp(home, -Math.PI / 2, sync * 0.6), s: argue * lerp(0.35 + 0.65 * beat, one * 0.5, sync), tint: TINTS[i] }); }
+  return out; }
+
+// ---------- the painter ----------
+function drawOrb(ctx, t, S) { const { cx, cy, R } = S; const talk = clamp(S.talk || 0), vx = S.vx || 0, vy = S.vy || 0, look = S.look == null ? 1 : S.look;
+  const B = S.body || { x: cx, h: R * 1.95, feet: cy + (FOOT_H + 0.5) * R * 1.95, yaw: 0 };
+  // how far into his body: in = formInto, out = unform
+  const F = S.form && (S.form.dir === 'out' ? S.form.k < 1 : S.form.k > 0) ? S.form : null; let morph = 0, skin = 0, ink = 0, light = 1, argue = 0, sync = 0, eye = 1, shape = 0, blurK = 1, crazy = 0, toFace = 0, face = 0;
+  if (F && F.dir !== 'out') { const p = clamp(F.k);
+    argue = bell(0.03, 0.3, 0.72, p); sync = smooth(0.42, 0.72, p); crazy = bell(0.36, 0.42, 0.49, p);                 // Grak finds the glitch: a second of too much
+    morph = smooth(0.3, 0.88, p); shape = smooth(0.25, 0.7, p); blurK = 1 - smooth(0.35, 0.92, p);
+    // last pass: the ink closes WITH the skin (not after it), the orb's eye spots stay and glide onto his face, then his face takes them
+    skin = smooth(0.62, 0.95, p); ink = smooth(0.6, 0.9, p); light = 1 - smooth(0.74, 1, p); eye = 1 - smooth(0.7, 0.9, p) * 0.85 - (p >= 1 ? 0.15 : 0);
+    toFace = smooth(0.3, 0.72, p); face = smooth(0.62, 0.88, p);
+  } else if (F) { const q = clamp(F.k);
+    skin = 1 - smooth(0, 0.45, q); ink = 1 - smooth(0.04, 0.4, q); light = smooth(0, 0.3, q); morph = 1 - smooth(0.32, 0.88, q);
+    shape = 1 - smooth(0.55, 0.95, q); blurK = smooth(0.3, 0.9, q); argue = bell(0.3, 0.55, 0.85, q) * 0.4; sync = 0.5;
+    // the other way round: his face lets go into the orb's eye spots, which glide back to the orb's glance
+    face = 1 - smooth(0.04, 0.28, q); eye = smooth(0.08, 0.3, q); toFace = 1 - smooth(0.25, 0.75, q); }
+  const sil = F ? silhouette(B) : null;
+  const ocx = F ? lerp(cx, sil.cx, morph) : cx, ocy = F ? lerp(cy, sil.cy, morph) : cy;
+  let wmax = 0; if (F) for (const p of sil.pts) wmax = Math.max(wmax, Math.abs(p[0] - sil.cx));
+  const sxF = F ? lerp(1, wmax / (R * 0.98), morph) : 1, syF = F ? lerp(1, (B.h * 0.52) / (R * 0.98), morph) : 1;
+  // moving: stretch along the way he goes, the green inside lags behind
+  const sp = Math.min(1.6, Math.hypot(vx, vy)), dirA = sp > 0.001 ? Math.atan2(vy, vx) : 0;
+  const st = 1 + 0.13 * Math.min(1, sp), sq = 1 - 0.07 * Math.min(1, sp);
+  const lagX = -vx * R * 0.12, lagY = -vy * R * 0.12;
+
+  if (S.bg) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = S.bg; ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height); ctx.restore(); }
+
+  // 1. the orb (its light fades to nothing as his skin closes, so at formInto(1) there is no halo left to pop away)
+  if (light > 0.003) { ctx.save(); ctx.globalAlpha = light;
+    // stretch: movement first (along dirA), then the body shape (x/y) on top
+    ctx.translate(ocx, ocy); ctx.scale(sxF, syF); ctx.translate(-ocx, -ocy);
+    potatoLight(ctx, ocx, ocy, R, t, { talk, sx: st, sy: sq, tilt: dirA, lagX, lagY, spin: sp * 0.8, lift: -0.4 * morph });   // stretched to his size, the heart dims so it doesn't white out
+    crawl(ctx, ocx, ocy, R, t, vx, vy);
+    ctx.restore(); }
+
+  // 2. the three, pushing (tints only, never named): each shoves a lobe of its own light out of the orb, out of step with the
+  // others; as they sync the lobes fall into one rhythm and one colour (PO's purple)
+  let V = null;
+  if (argue > 0.01) { V = voices(t, argue, sync); ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    for (const v of V) { const d = R * (0.32 + 0.42 * v.s) * lerp(1, 1.1, morph), px = ocx + Math.cos(v.a) * d * sxF, py = ocy + Math.sin(v.a) * d * syF, kk = 1 - sync * 0.8;
+      const L = { core: '#ffffff', mid: sync > 0.6 ? PO.mid : v.tint.mid, edge: sync > 0.6 ? PO.edge : v.tint.edge, heart: 0.25 * v.s * kk, body: 0.75 * v.s * (kk * 0.8 + 0.2) * (v.tint.k || 1), mist: 0.06, glow: 0.9 };
+      ctx.save(); ctx.translate(px, py); ctx.rotate(v.a); ctx.scale(1.1, 0.95); lamp(ctx, L, R * (0.36 + 0.2 * v.s), 1, 1); ctx.restore(); }
+    if (sync > 0.3) pool(ctx, ocx, ocy, R * 1.1, PO.mid, 0.22 * argue * sync * (0.6 + 0.4 * Math.sin(t * 4.2)), 2.2);   // one rhythm
+    ctx.restore(); }
+
+  // 3. the side-eye (in the orb only; his body has his own face)
+  const eyeAt = () => { if (S.eye !== false) sideEye(ctx, ocx, ocy, R * Math.min(sxF, syF), t, F ? lerp(look, 1, toFace) : look, eye * (1 - 0.6 * crazy), vx, toFace, B.h, B.yaw || 0); };
+  if (!F) eyeAt();
+
+  if (F) {
+    // the shape his light pushes into: the orb's round outline pulled toward his silhouette, shoved out where the three push
+    const P = sil.pts.map(([x, y]) => { const ph = Math.atan2(y - sil.cy, x - sil.cx); let ox = ocx + Math.cos(ph) * R * 0.98, oy = ocy + Math.sin(ph) * R * 0.98;
+      let px = lerp(ox, x, morph), py = lerp(oy, y, morph);
+      if (V) { let push = 0; for (const v of V) push += v.s * Math.exp(-Math.pow(angd(ph, v.a) / 0.5, 2)); const k = R * 0.2 * push * (1 - skin);
+        px += Math.cos(ph) * k; py += Math.sin(ph) * k; }
+      return [px, py]; });
+    // 4. the light taking his shape (soft, sharpening as it fits)
+    if (shape > 0.01) { const g = ctx.createRadialGradient(ocx - R * 0.15, ocy - R * 0.25, R * 0.05, ocx, ocy, R * 1.5 * Math.max(sxF, syF));
+      g.addColorStop(0, rgba(rgb(PO.core), 0.5)); g.addColorStop(0.35, rgba(rgb(PO.mid), 0.8)); g.addColorStop(0.8, rgba(rgb(PO.edge), 0.75)); g.addColorStop(1, rgba(rgb('#2a0f63'), 0.6));
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; softFill(ctx, P, { style: g, shadow: 'rgba(143,72,242,.85)' }, R * (0.03 + 0.4 * blurK), shape * 0.36 * (1 - skin)); ctx.restore();   // (gentler: on the phone, big, it whited out the screen)
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; for (let i = 0; i < 2; i++) { const a = t * (0.45 + i * 0.2) + i * 3; pool(ctx, ocx + Math.cos(a) * R * 0.3 * sxF, ocy + Math.sin(a * 1.2) * R * 0.3 * syF, R * 0.8, GREEN, 0.16 * shape * (1 - skin), 3); } ctx.restore(); }
+    // 5. his skin wrapping the light (ink first, outside the line like spud3d's ink shell; then skin; then the orb glowing through it)
+    if (skin > 0.003 || ink > 0.003) { const Q = sil.pts.map((p, i) => [lerp(P[i][0], p[0], skin), lerp(P[i][1], p[1], skin)]);
+      const inkW = INK * B.h * 2;
+      // feet nubs (spud3d: at +-0.21, 0.04 up, 0.085 x 0.05), behind the body
+      ctx.save(); ctx.globalAlpha = Math.max(skin, ink);
+      for (const s of [-1, 1]) { const fx = B.x + s * 0.21 * B.h * Math.cos(B.yaw || 0), fy = B.feet - 0.04 * B.h;
+        ctx.beginPath(); ctx.ellipse(fx, fy, 0.085 * B.h, 0.05 * B.h, 0, 0, TAU); ctx.lineWidth = INK * 0.8 * B.h * 2 * ink; ctx.strokeStyle = SKIN.ink; if (ink > 0.01) ctx.stroke(); ctx.fillStyle = SKIN.foot; ctx.fill(); }
+      ctx.restore();
+      if (ink > 0.003) { ctx.save(); ctx.globalAlpha = ink; smoothPath(ctx, Q); ctx.lineJoin = 'round'; ctx.lineWidth = inkW; ctx.strokeStyle = SKIN.ink; ctx.stroke(); ctx.restore(); }
+      const top = B.feet - (FOOT_H + 1) * B.h, g = ctx.createRadialGradient(B.x - 0.18 * B.h, top + 0.3 * B.h, B.h * 0.05, B.x, sil.cy, B.h * 0.75);
+      g.addColorStop(0, SKIN.hi); g.addColorStop(0.55, SKIN.skin); g.addColorStop(0.85, SKIN.lo); g.addColorStop(1, SKIN.rim);
+      ctx.save(); ctx.globalAlpha = skin; smoothPath(ctx, Q); ctx.fillStyle = g; ctx.fill(); ctx.restore();
+      // her paint over it (skin.png, wrapped round his front like spud3d does), then his face (face-canon.png) as the eye spots land
+      const tex = S.tex || {};
+      if (tex.skin) wearLayer(ctx, frontLayer(tex.skin, B, 'skin'), B, Q, skin);
+      if (tex.face) wearLayer(ctx, frontLayer(tex.face, B, 'face'), B, Q, face * Math.max(skin, 0.35));
+      // THE ORB STAYS INSIDE: while his skin is thin, it glows through (gone once the skin is whole)
+      const through = skin * (1 - skin) * 4 * 0.75;
+      if (through > 0.01) { ctx.save(); smoothPath(ctx, Q); ctx.clip(); ctx.globalCompositeOperation = 'lighter';
+        pool(ctx, sil.cx, sil.cy, B.h * 0.6, PO.mid, 0.4 * through, 2.2); pool(ctx, sil.cx - B.h * 0.05, sil.cy - B.h * 0.08, B.h * 0.28, PO.core, 0.16 * through, 2.6);
+        for (let i = 0; i < 2; i++) { const a = t * (0.45 + i * 0.2) + i * 3; pool(ctx, sil.cx + Math.cos(a) * B.h * 0.15, sil.cy + Math.sin(a * 1.2) * B.h * 0.12, B.h * 0.35, GREEN, 0.25 * through, 3); }
+        ctx.restore(); } }
+    eyeAt();   // the eye spots ride over the light and the skin: as his face comes in they sit exactly on his eyes
+  }
+
+  // 6. his glitch (asked for, his own small idle ones, and Grak's second of too much while he forms)
+  const g = Math.max(glitchAt(S, t), crazy * 0.85);
+  if (g > 0.01) glitchPaint(ctx, ocx, ocy, R * Math.max(sxF, syF) * (F ? 0.9 : 1), t, g, S, F ? 3 : 0);
+}
+
+// ---------- the live orb ----------
+function createOrb(canvas, opts = {}) {
+  const ctx = canvas.getContext('2d'); const now = opts.clock || (() => (typeof performance !== 'undefined' ? performance.now() : Date.now()) / 1000);
+  let place = (opts.cx != null && opts.R != null) ? { cx: opts.cx, cy: opts.cy, R: opts.R } : null, body = opts.body || null, look = opts.look == null ? 1 : opts.look;
+  let talkSrc = 0, talk = 0, mvx = 0, mvy = 0, svx = 0, svy = 0, form = null, glitch = null, raf = 0, last = null, dead = false, playing = null;
+  // his skin + face textures (opts.tex = { skin, face }: URLs or loaded images). Until they load he forms in plain tan, as before.
+  const tex = {}; for (const k of ['skin', 'face']) { const v = opts.tex && opts.tex[k]; if (!v) continue;
+    if (typeof v !== 'string') { tex[k] = v; continue; }
+    if (typeof Image === 'undefined') continue; const im = new Image(); im.onload = () => { tex[k] = im; }; im.src = v; }
+  const geo = () => place || { cx: canvas.width / 2, cy: canvas.height * 0.48, R: Math.min(canvas.width, canvas.height) * 0.22 };
+  function talkAt(t) { const s = talkSrc; if (!s) return 0; if (typeof s === 'number') return clamp(s); if (typeof s === 'function') return clamp(+s(t) || 0);
+    if (s.visemes) { const u = t - (s.start || 0); let v = 0; for (const [at, name] of s.visemes) { if (at > u) break; v = VIS[name] == null ? 0.5 : VIS[name]; }
+      const end = s.visemes.length ? s.visemes[s.visemes.length - 1][0] + 0.2 : 0; return u < 0 || u > end ? 0 : v; } return 0; }
+  function step(t) { const dt = last == null ? 0 : clamp(t - last, 0, 0.1); last = t;
+    const want = talkAt(t), ka = 1 - Math.exp(-dt / (want > talk ? 0.025 : 0.12)); talk = dt ? talk + (want - talk) * ka : want;
+    const km = 1 - Math.exp(-dt / 0.15); svx = dt ? svx + (mvx - svx) * km : mvx; svy = dt ? svy + (mvy - svy) * km : mvy;
+    if (playing) { const k = clamp((t - playing.t0) / playing.dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; form = { k: e, dir: playing.dir };
+      if (k >= 1) { const done = playing.done; playing = null; if (form.dir === 'out') form = null; done(); } } }
+  function render(t = now()) { if (dead) return; step(t); const G = geo();
+    if (!opts.bg) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.restore(); }
+    drawOrb(ctx, t, { cx: G.cx, cy: G.cy, R: G.R, talk, vx: svx / G.R, vy: svy / G.R, look, glitch, form, body, words: opts.words, font: opts.font, idleGlitch: opts.idleGlitch, bg: opts.bg, eye: opts.eye, tex, coupon: opts.coupon }); }
+  let lastDraw = -1; const minGap = opts.fps ? 1 / opts.fps - 0.002 : 0;
+  function loop() { if (dead) return; const t = now(); if (t - lastDraw >= minGap) { lastDraw = t; render(t); } raf = requestAnimationFrame(loop); }
+  if (opts.auto !== false && typeof requestAnimationFrame !== 'undefined') raf = requestAnimationFrame(loop);
+  return {
+    setTalk(x) { talkSrc = x || 0; },
+    setMove(vx = 0, vy = 0) { mvx = +vx || 0; mvy = +vy || 0; },
+    glitch(amount = 1, seconds = 0.7, word = null) { glitch = { t0: now(), dur: seconds, amt: amount, word: word ? String(word).slice(0, 60) : null }; },
+    ready() { return { skin: !!tex.skin, face: !!tex.face }; },
+    formInto(p) { playing = null; p = clamp(+p || 0); form = p > 0 ? { k: p, dir: 'in' } : null; },
+    unform(p) { playing = null; p = clamp(+p || 0); form = p < 1 ? { k: p, dir: 'out' } : null; },
+    play(kind = 'form', seconds = 1.6) { return new Promise(done => { playing = { dir: kind === 'unform' ? 'out' : 'in', t0: now(), dur: Math.max(0.05, seconds), done }; }); },
+    setBody(b) { body = b ? { x: b.x, feet: b.feet, h: b.h, yaw: b.yaw || 0 } : null; },
+    setLook(d) { look = d < 0 ? -1 : 1; },
+    setPlace(p) { place = p ? { cx: p.cx, cy: p.cy, R: p.R } : null; },
+    render,
+    state() { return { talk, vx: svx, vy: svy, form: form ? { ...form } : null, glitching: !!(glitch && now() < glitch.t0 + glitch.dur) }; },
+    destroy() { dead = true; if (raf && typeof cancelAnimationFrame !== 'undefined') cancelAnimationFrame(raf); raf = 0; },
+  };
+}
+
+const api = { PO, GREEN, FRONT, SIDE, FOOT_H, INK, LIVE, silhouette, drawOrb, createOrb };
+if (typeof window !== 'undefined') window.PotatoOrb = api;
+if (typeof globalThis !== 'undefined') globalThis.PotatoOrb = api;
+})();
